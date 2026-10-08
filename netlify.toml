@@ -1,3 +1,10 @@
+# Netlify now only forwards visitors to the new site on GitHub Pages.
 [build]
   publish = "."
   command = ""
+
+[[redirects]]
+  from = "/*"
+  to = "https://thegirlsclub246.github.io/:splat"
+  status = 301
+  force = true
