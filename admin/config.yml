@@ -1,13 +1,14 @@
 backend:
   name: github
-  repo: thegirlsclub246/thegirlsclub-website
+  repo: thegirlsclub246/thegirlsclub246.github.io
   branch: main
+  site_domain: thegirlsclub246.netlify.app
   commit_messages:
     update: "Update {{slug}} from admin"
     uploadMedia: "Upload {{path}}"
 
-site_url: https://thegirlsclub246.netlify.app
-display_url: https://thegirlsclub246.netlify.app
+site_url: https://thegirlsclub246.github.io
+display_url: https://thegirlsclub246.github.io
 logo_url: /img/icon-512.png
 
 media_folder: img
