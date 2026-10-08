@@ -1,0 +1,186 @@
+backend:
+  name: github
+  repo: thegirlsclub246/thegirlsclub-website
+  branch: main
+  commit_messages:
+    update: "Update {{slug}} from admin"
+    uploadMedia: "Upload {{path}}"
+
+site_url: https://thegirlsclub246.netlify.app
+display_url: https://thegirlsclub246.netlify.app
+logo_url: /img/icon-512.png
+
+media_folder: img
+public_folder: img
+
+collections:
+  - name: site
+    label: My website
+    editor:
+      preview: false
+    files:
+      - name: products
+        label: "🛍️ Shop products"
+        file: content/products.json
+        format: json
+        fields:
+          - name: products
+            label: Products
+            label_singular: Product
+            widget: list
+            summary: "{{fields.name}} · ${{fields.price}}"
+            hint: "Drag to change the order they show in the shop."
+            fields:
+              - {name: show, label: "Show on website", widget: boolean, default: true}
+              - {name: name, label: "Product name", widget: string}
+              - {name: type, label: "Style / type (small text above the name)", widget: string, required: false}
+              - name: category
+                label: Category
+                widget: select
+                options:
+                  - {label: "Lashes (counts for the free-tray giveaway)", value: lashes}
+                  - {label: "Kits (shown as the 'Don't forget your glue' add-on)", value: kits}
+                  - {label: "Lips (shown as lip add-ons in the bag)", value: lips}
+                default: lashes
+              - {name: price, label: "Price (BBD)", widget: number, value_type: float, min: 0}
+              - {name: was_price, label: "Old price (BBD), shown crossed out. Leave empty for no sale", widget: number, value_type: float, required: false}
+              - {name: description, label: Description, widget: text}
+              - {name: tag, label: "Little label (e.g. Launch sale, New, Best seller)", widget: string, required: false}
+              - {name: image, label: "Photo (square looks best)", widget: image, required: false}
+              - {name: image_alt, label: "Photo description (for screen readers)", widget: string, required: false}
+              - {name: options, label: "Choices customers pick from (e.g. flavours). Leave empty for none", widget: list, required: false, field: {name: option, label: Choice, widget: string}}
+              - {name: id, label: "Product code (leave as is; blank for new products)", widget: string, required: false}
+
+      - name: home
+        label: "🏠 Home page, sale banner & giveaway"
+        file: content/home.json
+        format: json
+        fields:
+          - {name: banner_on, label: "Show the scrolling banner at the top", widget: boolean, default: true}
+          - {name: banner, label: "Banner messages", widget: list, field: {name: text, label: Message, widget: string}}
+          - {name: giveaway_trays_left, label: "Free-tray giveaway: trays left (0 turns it off)", widget: number, value_type: int, min: 0}
+          - {name: giveaway_text, label: "Giveaway message", widget: string}
+          - {name: hero_eyebrow, label: "Top section: small text", widget: string}
+          - {name: hero_title, label: "Top section: big title", widget: string}
+          - {name: hero_text, label: "Top section: intro", widget: text}
+          - {name: hero_image, label: "Top section: photo", widget: image}
+          - {name: hero_caption_title, label: "Photo caption: title", widget: string, required: false}
+          - {name: hero_caption_text, label: "Photo caption: small text", widget: string, required: false}
+          - {name: highlights, label: "Highlights strip (under the top section)", widget: list, field: {name: text, label: Highlight, widget: string}}
+          - {name: shop_eyebrow, label: "Shop: small text", widget: string}
+          - {name: shop_title, label: "Shop: title", widget: string}
+          - {name: shop_intro, label: "Shop: intro", widget: text}
+
+      - name: academy
+        label: "🎓 Academy courses"
+        file: content/academy.json
+        format: json
+        fields:
+          - {name: show, label: "Show the Academy section", widget: boolean, default: true}
+          - {name: eyebrow, label: "Small text", widget: string}
+          - {name: title, label: Title, widget: string}
+          - {name: intro, label: Intro, widget: text}
+          - name: courses
+            label: Courses
+            label_singular: Course
+            widget: list
+            summary: "{{fields.title}} · BBD ${{fields.price}}"
+            fields:
+              - {name: show, label: "Show on website", widget: boolean, default: true}
+              - {name: title, label: "Course name", widget: string}
+              - {name: subtitle, label: "Subtitle on the course cover", widget: string, required: false}
+              - {name: badge, label: "Round badge (e.g. New, Launch price)", widget: string, required: false}
+              - {name: description, label: Description, widget: text, required: false}
+              - {name: points, label: "What's included", widget: list, required: false, field: {name: point, label: Point, widget: string}}
+              - {name: price, label: "Price (BBD) for local payment", widget: number, value_type: float, min: 0}
+              - {name: was_price, label: "Old price (BBD), shown crossed out. 0 or empty for none", widget: number, value_type: float, required: false}
+              - {name: payhip_id, label: "Payhip product code (the letters after payhip.com/b/). Empty hides the Enrol now button", widget: string, required: false}
+              - {name: usd_note, label: "Note under the Enrol now button", widget: string, required: false}
+              - {name: local_pay, label: "Allow paying with FirstPay / BPWCCUL", widget: boolean, default: true}
+          - {name: note, label: "Note under the courses", widget: text, required: false}
+
+      - name: booking
+        label: "📅 Appointments"
+        file: content/booking.json
+        format: json
+        fields:
+          - {name: show, label: "Show the appointments section", widget: boolean, default: true}
+          - {name: badge, label: "Badge", widget: string, required: false}
+          - {name: eyebrow, label: "Small text", widget: string}
+          - {name: title, label: Title, widget: string}
+          - {name: intro, label: Intro, widget: text}
+          - {name: points, label: "Points", widget: list, field: {name: point, label: Point, widget: string}}
+          - {name: fee, label: "Application fee (BBD)", widget: number, value_type: float, min: 0}
+          - {name: deposit, label: "Deposit to book (BBD)", widget: number, value_type: float, min: 0}
+          - {name: length_minutes, label: "Appointment length (minutes)", widget: number, value_type: int, min: 15}
+          - {name: weekday_open, label: "Mon–Fri start time (24-hour, e.g. 16:30). Empty = closed", widget: string, required: false, pattern: ['^$|^([01]?\d|2[0-3]):[0-5]\d$', "Use 24-hour time like 16:30"]}
+          - {name: weekday_close, label: "Mon–Fri finish time (e.g. 19:30)", widget: string, required: false, pattern: ['^$|^([01]?\d|2[0-3]):[0-5]\d$', "Use 24-hour time like 19:30"]}
+          - {name: weekend_open, label: "Sat–Sun start time (e.g. 09:00). Empty = closed", widget: string, required: false, pattern: ['^$|^([01]?\d|2[0-3]):[0-5]\d$', "Use 24-hour time like 09:00"]}
+          - {name: weekend_close, label: "Sat–Sun finish time (e.g. 19:30)", widget: string, required: false, pattern: ['^$|^([01]?\d|2[0-3]):[0-5]\d$', "Use 24-hour time like 19:30"]}
+          - {name: closed_dates, label: "Days you're not available", widget: list, required: false, field: {name: date, label: Date, widget: datetime, time_format: false, format: "YYYY-MM-DD", date_format: "D MMM YYYY"}}
+          - {name: note, label: "Small print", widget: text, required: false}
+
+      - name: gallery
+        label: "📸 Glow up gallery"
+        file: content/gallery.json
+        format: json
+        fields:
+          - {name: show, label: "Show the gallery", widget: boolean, default: true}
+          - {name: eyebrow, label: "Small text", widget: string}
+          - {name: title, label: Title, widget: string}
+          - {name: intro, label: Intro, widget: text}
+          - name: photos
+            label: Photos
+            label_singular: Photo
+            widget: list
+            summary: "{{fields.alt}}"
+            fields:
+              - {name: image, label: "Photo (portrait looks best)", widget: image}
+              - {name: alt, label: "Short description", widget: string}
+
+      - name: about
+        label: "💖 About me"
+        file: content/about.json
+        format: json
+        fields:
+          - {name: photo, label: Photo, widget: image}
+          - {name: eyebrow, label: "Small text", widget: string}
+          - {name: title, label: Title, widget: string}
+          - {name: badges, label: "Badges (also shown in the Academy)", widget: list, field: {name: badge, label: Badge, widget: string}}
+          - {name: paragraphs, label: "Your story", widget: list, field: {name: paragraph, label: Paragraph, widget: text}}
+          - {name: sign_off, label: "Sign-off", widget: string}
+
+      - name: soon
+        label: "✨ Coming soon"
+        file: content/coming-soon.json
+        format: json
+        fields:
+          - {name: show, label: "Show the Coming soon section", widget: boolean, default: true}
+          - {name: eyebrow, label: "Small text", widget: string}
+          - {name: title, label: Title, widget: string}
+          - {name: intro, label: Intro, widget: text}
+          - name: items
+            label: "Coming soon items"
+            label_singular: Item
+            widget: list
+            summary: "{{fields.name}}"
+            fields:
+              - {name: name, label: Name, widget: string}
+              - {name: text, label: "Short description", widget: string, required: false}
+
+      - name: settings
+        label: "⚙️ Contact, delivery & payments"
+        file: content/settings.json
+        format: json
+        fields:
+          - {name: whatsapp, label: "WhatsApp number (digits only, with 1 246)", widget: string}
+          - {name: instagram, label: "Instagram username (no @)", widget: string}
+          - {name: join_link, label: "'Join the club' sign-up form link", widget: string, required: false}
+          - {name: delivery_fee, label: "Delivery fee (BBD)", widget: number, value_type: float, min: 0}
+          - {name: collection_area, label: "Collection area", widget: string}
+          - {name: cash_on_collection, label: "Offer cash on collection", widget: boolean, default: false}
+          - {name: firstpay_number, label: "FirstPay number", widget: string}
+          - {name: firstpay_name, label: "FirstPay name", widget: string}
+          - {name: bpwccul_name, label: "BPWCCUL account name", widget: string, required: false}
+          - {name: bpwccul_number, label: "BPWCCUL account number (empty hides BPWCCUL)", widget: string, required: false}
+          - {name: paypal_link, label: "PayPal.Me link (empty hides PayPal)", widget: string, required: false}

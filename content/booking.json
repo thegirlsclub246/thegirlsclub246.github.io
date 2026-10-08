@@ -1,0 +1,17 @@
+{
+  "show": true,
+  "badge": "Limited spots each day",
+  "eyebrow": "In-person appointments",
+  "title": "Get them applied in person",
+  "intro": "Prefer to leave it to us? We apply cluster lashes in person. Spots are limited, so grab yours early.",
+  "points": ["Full cluster set, mapped to your eye shape", "About 45 minutes · lasts 10–15 days", "A $30 deposit holds your spot"],
+  "fee": 50,
+  "deposit": 30,
+  "length_minutes": 45,
+  "weekday_open": "16:30",
+  "weekday_close": "19:30",
+  "weekend_open": "09:00",
+  "weekend_close": "19:30",
+  "closed_dates": [],
+  "note": "Your deposit comes off the total on the day. Need to move it? Give us 24 hours' notice."
+}

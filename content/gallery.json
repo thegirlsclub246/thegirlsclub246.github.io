@@ -1,0 +1,15 @@
+{
+  "show": true,
+  "eyebrow": "Real Girls Club sets",
+  "title": "The glow up",
+  "intro": "Cluster sets we've applied in person. Soft, fluffy and made to suit your eyes.",
+  "photos": [
+    {"image": "img/client-1.jpg", "alt": "Client with a full cluster lash set"},
+    {"image": "img/client-2.jpg", "alt": "Client with wispy cluster lashes"},
+    {"image": "img/client-3.jpg", "alt": "Client with a soft natural set"},
+    {"image": "img/client-4.jpg", "alt": "Client with a fluffy cluster set"},
+    {"image": "img/client-5b.jpg", "alt": "Client with a volume set"},
+    {"image": "img/client-6.jpg", "alt": "Client with a hybrid cluster set"},
+    {"image": "img/client-7.jpg", "alt": "Client with a full glam set"}
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "show": true,
+  "eyebrow": "Coming soon",
+  "title": "DIY girly beauty",
+  "intro": "We're growing the club with more do-it-yourself cosmetics. Here's what's on the way.",
+  "items": [
+    {"name": "Lip gloss kit", "text": "Mix your own shade and flavour."},
+    {"name": "Press-on nails", "text": "Salon looks in five minutes."},
+    {"name": "Shimmer oil", "text": "Golden glow for beach days."},
+    {"name": "Brow kit", "text": "Fluffy, brushed-up brows at home."}
+  ]
+}

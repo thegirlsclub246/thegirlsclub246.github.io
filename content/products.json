@@ -1,0 +1,11 @@
+{
+  "products": [
+    {"id": "natural", "show": true, "name": "Barely There", "type": "Natural", "category": "lashes", "price": 38, "was_price": 44, "description": "Everyday lift. Looks like your lashes, only better.", "tag": "Launch sale", "image": "img/tray-kit.jpg", "image_alt": "Barely There natural cluster lash tray", "options": []},
+    {"id": "hybrid", "show": true, "name": "Flutter", "type": "Hybrid", "category": "lashes", "price": 38, "was_price": 44, "description": "Soft, fluttery mix of lengths for a light, wispy look.", "tag": "Launch sale", "image": "img/tray-natural.jpg", "image_alt": "Flutter hybrid cluster lash tray", "options": []},
+    {"id": "drama", "show": true, "name": "Main Character", "type": "Volume", "category": "lashes", "price": 38, "was_price": 44, "description": "Full volume for nights out and big events.", "tag": "Launch sale", "image": "img/tray-drama.jpg", "image_alt": "Main Character volume cluster lash tray", "options": []},
+    {"id": "mega", "show": true, "name": "Bajan Baddie", "type": "Mega Volume", "category": "lashes", "price": 38, "was_price": 44, "description": "Extra-full, fluffy clusters for maximum volume and drama.", "tag": "Launch sale", "image": "img/tray-wispy.jpg", "image_alt": "Bajan Baddie mega volume cluster lash tray", "options": []},
+    {"id": "appkit", "show": true, "name": "Glue & Go", "type": "Application Kit", "category": "kits", "price": 10, "description": "Glue ring, tweezers, glue, spoolie and lip brush. Everything you need to apply your clusters.", "tag": "Add-on", "image": "", "image_alt": "", "options": []},
+    {"id": "lipoil", "show": true, "name": "Lip Oil", "type": "Lip care", "category": "lips", "price": 4, "description": "Hydrating, nourishing lip oil for soft, glossy lips. Pick Rose or Jasmine.", "tag": "$4 add-on", "image": "img/lip-oil-mockup.jpg", "image_alt": "Rose and Jasmine lip oil tubes", "options": ["Rose", "Jasmine"]},
+    {"id": "plumpgloss", "show": true, "name": "Plumping Lip Gloss", "type": "Lip gloss", "category": "lips", "price": 4, "description": "Glossy plumping lip gloss for a juicy shine. Pick Grape, Kiwi, Banana or Blueberry.", "tag": "$4 add-on", "image": "img/lip-gloss-mockup.jpg", "image_alt": "Grape, kiwi, banana and blueberry plumping lip gloss tubes", "options": ["Grape", "Kiwi", "Banana", "Blueberry"]}
+  ]
+}

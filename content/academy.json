@@ -1,0 +1,35 @@
+{
+  "show": true,
+  "eyebrow": "Learn from home",
+  "title": "The Girls Club Academy",
+  "intro": "Online beauty courses with Marishka Gittens, a certified esthetician and trained teacher. Learn at your own pace, from your phone, with a certificate when you finish.",
+  "courses": [
+    {
+      "show": true,
+      "badge": "New · Launch price",
+      "title": "Cluster Lash Course",
+      "subtitle": "Natural, hybrid and volume cluster lashes",
+      "description": "Learn to apply cluster lashes safely and beautifully, step by step, so you can offer them to clients or do your own.",
+      "points": ["20 video modules, from the foundations to full sets on real clients", "Spikes, sealing, clamping, bottom lashes and safe removal", "12 downloadable resource guides", "Certificate of completion"],
+      "price": 30,
+      "was_price": 0,
+      "payhip_id": "9WzwH",
+      "usd_note": "PayPal or debit/credit card · charged as USD $15 · instant access",
+      "local_pay": true
+    },
+    {
+      "show": true,
+      "badge": "Launch price",
+      "title": "Eyelash Extension Course",
+      "subtitle": "Classic, hybrid and volume extensions",
+      "description": "Learn to apply eyelash extensions like a pro: classic, hybrid and volume sets, with a full training manual, homework and quiz.",
+      "points": ["Step-by-step video modules: eye anatomy, consultation, classic set on a mannequin, volume full set and aftercare", "Training manual, homework and quiz", "Certificate of completion"],
+      "price": 50,
+      "was_price": 98,
+      "payhip_id": "RXtba",
+      "usd_note": "PayPal or debit/credit card · charged as USD $25 · instant access",
+      "local_pay": true
+    }
+  ],
+  "note": "Pay by PayPal or card for instant access, or pay locally by FirstPay or BPWCCUL and we'll email your login once payment is in. You source your own kit; local beauty supply stores carry everything you need."
+}
