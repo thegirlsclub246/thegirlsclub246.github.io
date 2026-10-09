@@ -81,6 +81,7 @@ nav a:hover{border-bottom-color:var(--pink);color:#c4256b}
 .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .btn.alt{background:var(--yellow);color:var(--plum)}
 .btn.white{background:#fff;color:var(--plum)}
+.btn.academy{background:var(--plum);color:#fff}
 .cart-btn{padding:.45rem 1.05rem;box-shadow:none;font-size:.9rem;display:inline-flex;gap:.5rem;align-items:center}
 .cart-btn:hover{box-shadow:none;transform:none;background:var(--shade)}
 .cart-btn b{background:var(--yellow);color:var(--plum);border-radius:999px;min-width:1.4rem;line-height:1.4rem;font-size:.8rem;text-align:center;padding:0 .3rem}
@@ -348,6 +349,7 @@ window.tgcTrack=function(ev,data){try{if(window.fbq&&window.TGC_PIXEL_ID)fbq('tr
         <div class="row">
           <a class="btn alt" href="#lashes">Shop cluster lashes</a>
           <a class="btn white" href="#book">Book an appointment</a>
+          <a class="btn academy" href="#academy">🎓 Enrol in the Academy</a>
         </div>
       </div>
       <div class="hero-art">
@@ -777,6 +779,10 @@ renderDays();renderSlots();
  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!m.hidden)close()});})();
 document.querySelectorAll(".wa-link").forEach(a=>a.href=waLink("Hi The Girls Club! I have a question."));
 document.querySelectorAll(".wa-num").forEach(el=>el.textContent=WHATSAPP?("+"+WHATSAPP.replace(/^1(246)(\d{3})(\d{4})$/,"1 ($1) $2-$3")):"");
+
+/* page is built after load, so jump to #academy etc. once the content is in */
+const goHash=()=>{const h=decodeURIComponent(location.hash.slice(1));const el=h&&document.getElementById(h);if(el)el.scrollIntoView()};
+if(location.hash){if("scrollRestoration" in history)history.scrollRestoration="manual";goHash();window.addEventListener("load",goHash);setTimeout(goHash,600);}
 
 })();
 </script>
