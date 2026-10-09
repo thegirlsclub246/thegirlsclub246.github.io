@@ -781,7 +781,7 @@ document.querySelectorAll(".wa-link").forEach(a=>a.href=waLink("Hi The Girls Clu
 document.querySelectorAll(".wa-num").forEach(el=>el.textContent=WHATSAPP?("+"+WHATSAPP.replace(/^1(246)(\d{3})(\d{4})$/,"1 ($1) $2-$3")):"");
 
 /* page is built after load, so jump to #academy etc. once the content is in */
-const goHash=()=>{const h=decodeURIComponent(location.hash.slice(1));const el=h&&document.getElementById(h);if(el)el.scrollIntoView()};
+const goHash=()=>{const h=decodeURIComponent(location.hash.slice(1));const el=h&&document.getElementById(h);if(!el)return;const d=document.documentElement,sb=d.style.scrollBehavior;d.style.scrollBehavior="auto";el.scrollIntoView();d.style.scrollBehavior=sb};
 if(location.hash){if("scrollRestoration" in history)history.scrollRestoration="manual";goHash();window.addEventListener("load",goHash);setTimeout(goHash,600);}
 
 })();
