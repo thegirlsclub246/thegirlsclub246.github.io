@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="only light">
 <meta name="description" content="The Girls Club: DIY cluster lashes and in-person lash appointments in Barbados. Shop online 24/7 and pay by FirstPay, BPWCCUL or PayPal.">
-<meta name="theme-color" content="#ff4d94">
+<meta name="theme-color" content="#C2185B">
 <meta property="og:title" content="The Girls Club">
 <meta property="og:description" content="DIY cluster lashes and in-person appointments in Barbados. Launch sale: all trays BBD $38.">
 <meta property="og:image" content="https://thegirlsclub246.github.io/img/share.jpg">
@@ -308,6 +308,221 @@ legend{font-weight:700;margin-bottom:.5rem}
 .done h3{font-size:1.8rem;color:var(--pink);margin-bottom:.5rem}
 .linkish{border:0;background:none;text-decoration:underline;color:var(--muted);font-size:.92rem}
 </style>
+<style>
+/* ===== "Lashes, lips & learning" redesign (Oct 2026) ===== */
+:root{--bg:#FFF6FA;--card:#fff;--ink:#4A143D;--muted:#6B3A5C;--pink:#C2185B;--pink-soft:#FFC9DF;--blush:#FFE6F0;--yellow:#FFF4B0;--yellow-soft:#FFF9D9;--line:#F06292;--edge:#C2185B;--shade:#7E0F3C;--plum:#4A143D;--on-pink:#fff;--rose:#F06292}
+body{background:var(--bg);color:var(--ink);font-weight:600}
+h2{color:var(--plum)}
+/* marquee */
+.demo-bar{background:var(--pink);color:#fff;border:0;font-size:.95rem;letter-spacing:.04em;padding:.7rem 0}
+.mq-group span::after{content:"★";color:var(--yellow);margin-left:1.6rem}
+.mq-track{animation-duration:32s}
+/* header */
+header{background:var(--yellow);border-bottom:3px solid var(--rose);box-shadow:none}
+.bar{max-width:1200px;padding:.55rem 2rem;min-height:76px}
+.logo-text{display:block;font-family:"Pacifico","Brush Script MT",cursive;font-size:1.9rem;line-height:1.05;color:var(--pink);white-space:nowrap}
+.logo small{color:var(--plum);opacity:.75;font-size:.62rem;margin-top:.2rem}
+nav a{text-transform:none;letter-spacing:0;font-size:1rem;color:var(--plum);border:0}
+nav a:hover{color:var(--pink)}
+.tools .ig{text-transform:none;letter-spacing:0;font-size:1rem}
+.cart-btn{background:var(--pink);border-color:var(--pink);color:#fff;min-height:46px;padding:0 1.2rem;font-size:1rem}
+.cart-btn svg{width:20px;height:20px}
+.menu-btn{border-color:var(--rose)}
+@media (max-width:1280px){nav a,.tools .ig{font-size:.95rem;letter-spacing:0}}
+@media (max-width:1000px){nav a,.tools .ig{font-size:.9rem;letter-spacing:0}}
+@media (max-width:700px){.bar{padding:.5rem 1rem;min-height:0}.logo-text{font-size:1.45rem}}
+/* buttons */
+.btn{background:var(--pink);color:#fff;border:3px solid var(--pink);box-shadow:0 5px 0 var(--shade);min-height:54px;padding:0 1.7rem;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem;text-align:center}
+.btn:hover{transform:translateY(2px);box-shadow:0 3px 0 var(--shade)}
+.btn.white{background:#fff;color:var(--pink);border-color:var(--pink);box-shadow:0 5px 0 var(--pink)}
+.btn.white:hover{box-shadow:0 3px 0 var(--pink)}
+.btn.academy{background:var(--plum);border-color:var(--plum);color:#fff;box-shadow:0 5px 0 #240820}
+.btn.academy:hover{box-shadow:0 3px 0 #240820}
+.btn.alt{background:var(--yellow);color:var(--plum);border-color:var(--plum);box-shadow:0 5px 0 var(--plum)}
+.btn.alt:hover{box-shadow:0 3px 0 var(--plum)}
+.btn.ghost{background:#fff;color:var(--pink);border-color:var(--pink);box-shadow:0 5px 0 var(--pink)}
+.cart-btn,.cart-btn:hover{box-shadow:none;transform:none}
+.drawer .btn,.planner .btn,.row-btns .btn,.side-cta .btn{min-height:46px;font-size:.95rem;padding:0 1.1rem}
+/* hero */
+.hero{position:relative;overflow:hidden;color:var(--plum);background-color:#FFC9DF;background-image:radial-gradient(circle,#FFE6F0 0 7px,transparent 8px),radial-gradient(circle,#FFE6F0 0 7px,transparent 8px);background-size:56px 56px,56px 56px;background-position:0 0,28px 28px;padding:4.5rem 0 9.5rem}
+@media (prefers-reduced-motion:no-preference){.hero{animation:drift 18s linear infinite}.bob{animation:bob 5s ease-in-out infinite}}
+@keyframes drift{from{background-position:0 0,28px 28px}to{background-position:56px 56px,84px 84px}}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-14px) rotate(6deg)}}
+.hero .wrap{max-width:1200px;padding:0 2rem;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:2.5rem;align-items:center}
+.hero .eyebrow{display:inline-block;background:var(--yellow);border:3px solid var(--plum);border-radius:999px;padding:.35rem 1.1rem;font-size:.85rem;letter-spacing:.1em;color:var(--plum);opacity:1;margin:0}
+.hero h1{font-size:clamp(3rem,6.4vw,5.5rem);line-height:1.12;color:var(--plum);text-shadow:none;margin:1.3rem 0 1.1rem}
+.hero h1 span{display:block;color:var(--pink)}
+.hero p.lead-hero{font-size:1.25rem;line-height:1.55;font-weight:600;max-width:520px;margin:0;color:var(--plum)}
+.hero .row{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2rem}
+.hero .btn{box-shadow:0 5px 0 var(--shade)}
+.hero .btn.white{box-shadow:0 5px 0 var(--pink)}
+.hero .btn.academy{box-shadow:0 5px 0 #240820}
+.hero-art{position:relative;width:100%;height:540px;justify-self:stretch}
+.arch{position:absolute;border:4px solid var(--rose);border-radius:999px 999px 28px 28px;box-shadow:8px 8px 0 var(--pink);background:#fff;overflow:hidden}
+.arch img{display:block;width:100%;height:100%;object-fit:cover}
+.hero-art .sticker{position:absolute;right:2%;top:0;left:auto;width:150px;height:150px;border-radius:50%;background:var(--yellow);border:4px solid var(--plum);box-shadow:6px 6px 0 var(--plum);display:grid;place-items:center;text-align:center;transform:rotate(-10deg);font-family:"Pacifico",cursive;font-weight:400;font-size:1.35rem;line-height:1.2;color:var(--pink);padding:1rem;z-index:5;animation:none}
+.hero .wave{position:absolute;left:0;bottom:-1px;width:100%;height:60px;display:block}
+/* perks */
+.perks-row{max-width:1200px;margin:-60px auto 0;padding:0 2rem;position:relative;z-index:3;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.25rem}
+.perk{background:#fff;border:3px solid var(--rose);border-radius:24px;padding:1.35rem;box-shadow:6px 6px 0 var(--pink);display:flex;flex-direction:column;gap:.6rem}
+.perk .ico{width:52px;height:52px;border-radius:50%;background:var(--yellow);border:3px solid var(--plum);display:grid;place-items:center}
+.perk h3{font-family:"Quicksand",system-ui,sans-serif;font-size:1.12rem;font-weight:700;color:var(--plum)}
+.perk p{margin:0;font-size:.95rem;line-height:1.45;color:var(--muted)}
+/* section heads */
+section{padding:6rem 0}
+.wrap{max-width:1200px;padding:0 2rem}
+.sec-head{text-align:left;max-width:none;margin:0 0 2rem}
+.sec-head .eyebrow,.academy-intro .eyebrow,.book .eyebrow,.about-text .eyebrow{font-family:"Pacifico","Brush Script MT",cursive;font-weight:400;font-size:1.65rem;letter-spacing:0;text-transform:none;color:var(--pink);margin:0}
+h2{font-size:clamp(2.3rem,4.4vw,3.5rem);line-height:1.2;color:var(--plum);margin:.2rem 0 .6rem}
+.lead{margin:0;max-width:620px;font-size:1.12rem;line-height:1.55;color:var(--muted)}
+.sec-head .promo{margin-top:1rem}
+/* filters */
+.filters{justify-content:flex-start;gap:.75rem;margin:0 0 2.5rem}
+.chip{min-height:46px;padding:0 1.5rem;border:3px solid var(--rose);background:#fff;color:var(--pink);font-size:1rem;letter-spacing:0;text-transform:none}
+.chip:hover{border-color:var(--pink);color:var(--pink)}
+.chip[aria-pressed="true"]{background:var(--pink);border-color:var(--pink);color:#fff}
+/* product cards */
+.grid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:2rem}
+.card{border:3px solid var(--rose);border-radius:28px;box-shadow:8px 8px 0 var(--pink);padding:0;overflow:hidden}
+.card:hover{transform:translateY(-3px);box-shadow:8px 11px 0 var(--pink)}
+.thumb,.card:nth-child(even) .thumb{border-radius:0;margin:0 0 1rem;aspect-ratio:1;background-color:var(--blush);background-image:radial-gradient(circle,#FFC9DF 0 4px,transparent 5px);background-size:22px 22px}
+.thumb img{border-radius:0}
+.tag{top:14px;left:14px;background:var(--yellow);color:var(--plum);border:2px solid var(--plum);box-shadow:none;letter-spacing:.04em;text-transform:none;font-size:.78rem;padding:.2rem .75rem}
+.ptype{margin:0 1.25rem .1rem;color:var(--muted);letter-spacing:.08em}
+.card h3{font-family:"Quicksand",system-ui,sans-serif;font-weight:700;font-size:1.35rem;color:var(--plum);margin:0 1.25rem .35rem}
+.card .desc{margin:0 1.25rem 1rem;color:var(--muted);font-weight:600}
+.card .opt{margin:0 1.25rem 1rem;border:2px solid var(--rose)}
+.card .row{padding:0 1.25rem 1.4rem}
+.price{color:var(--pink);font-size:1.75rem}
+.price small{color:#7A4A6A}
+.was{opacity:.8;color:#7A4A6A}
+.add{background:var(--pink);border:3px solid var(--pink);box-shadow:0 5px 0 var(--shade);min-height:48px;font-size:1rem}
+.add:hover{box-shadow:0 3px 0 var(--shade)}
+.promo{background:var(--yellow);border:3px solid var(--plum);color:var(--plum)}
+/* booking */
+.book{background:var(--bg)}
+.scarce{border:3px solid var(--rose);color:var(--pink)}
+.scarce::before{background:var(--pink)}
+.hours{background:var(--yellow);border:3px solid var(--plum);border-radius:20px;font-weight:700;max-width:380px}
+.hours b{color:var(--pink)}
+.price-card b{color:var(--pink);font-size:2.6rem}
+.perks li::before{content:"♥";color:var(--pink)}
+.planner{border:4px solid var(--rose);border-radius:32px;box-shadow:10px 10px 0 var(--pink)}
+.day{border:2px solid var(--pink-soft);background:var(--bg)}
+.day[aria-pressed="true"]{background:var(--pink);border-color:var(--pink)}
+.slot{border:2px solid var(--pink-soft)}
+.slot[aria-pressed="true"]{background:var(--yellow);border-color:var(--plum);color:var(--plum)}
+/* academy */
+section.academy{position:relative;background:var(--pink);color:#fff;padding:7rem 0 6rem;margin-top:60px}
+.academy .wave-top{position:absolute;left:0;top:-59px;width:100%;height:60px;display:block}
+.academy-intro{text-align:left;max-width:none;margin:0}
+.academy-intro .eyebrow{color:var(--yellow)}
+.academy h2{color:#fff}
+.academy-intro p,.academy p{color:#FFE6F0;max-width:640px;margin:0;font-size:1.12rem;line-height:1.55}
+.academy-intro .creds{justify-content:flex-start}
+.academy .creds span{background:var(--yellow);border:2px solid var(--plum);color:var(--plum)}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.25rem;margin-top:2.6rem}
+.step{background:rgba(255,255,255,.14);border:2px solid rgba(255,255,255,.4);border-radius:24px;padding:1.35rem;display:flex;flex-direction:column;gap:.7rem}
+.step .num{width:48px;height:48px;border-radius:50%;background:var(--yellow);color:var(--plum);display:grid;place-items:center;font-weight:700;font-size:1.35rem}
+.step h3{font-family:"Quicksand",system-ui,sans-serif;font-weight:700;font-size:1.15rem;line-height:1.3;color:#fff}
+.step p{margin:0;font-size:.95rem;line-height:1.45;color:#FFE6F0}
+.steps-note{margin-top:1.2rem!important;font-size:.95rem!important;color:var(--yellow)!important}
+.courses{gap:2rem;margin-top:3rem}
+.course-card{background:#fff;color:var(--plum);border:3px solid var(--plum)!important;border-radius:32px;box-shadow:10px 10px 0 var(--plum);padding:1.4rem}
+.course-card p,.course-card .muted{color:var(--muted)!important}
+.course-card .desc{color:var(--muted)}
+.course-meta h3{color:var(--pink);font-size:1.8rem}
+.course-card .price{font-size:2.2rem}
+.course-card .perks li{color:var(--plum)}
+.academy-note{color:#FFE6F0!important}
+/* gallery */
+#results{padding-top:6rem}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.5rem}
+.gallery img{width:100%;border:3px solid var(--rose);border-radius:24px;box-shadow:6px 6px 0 var(--pink)}
+#results .sec-head + .gallery + div .btn{margin-top:.5rem}
+/* about */
+.about{background:var(--blush)}
+.about-photo::before{display:none}
+.about-photo img{border:4px solid var(--rose);border-radius:999px 999px 32px 32px;box-shadow:10px 10px 0 var(--pink)}
+.creds span{background:#fff;border:3px solid var(--plum);color:var(--plum);font-size:.85rem;letter-spacing:.02em;text-transform:none;padding:.4rem 1rem}
+.about-text p{color:var(--muted);font-size:1.1rem;line-height:1.65}
+.about-text .sign{color:var(--pink)}
+/* coming soon + join */
+.shelf div{border:3px dashed var(--rose)}
+.shelf small{background:var(--yellow);color:var(--plum)}
+.signup{background:var(--yellow);color:var(--plum);border:3px solid var(--plum);box-shadow:10px 10px 0 var(--plum);background-image:none}
+.signup h3{color:var(--pink)}
+.notify .btn{border-color:var(--pink);box-shadow:0 5px 0 var(--shade)}
+.notify .btn.alt{background:var(--pink);color:#fff}
+/* footer */
+footer{background:var(--plum);color:#FFE6F0;padding:4.5rem 0 2.5rem}
+footer h4{color:var(--yellow);font-size:.95rem;letter-spacing:.08em}
+footer a{color:#fff}
+footer a:hover{color:var(--yellow);text-decoration:none}
+footer .legal{border-top:2px solid rgba(255,255,255,.25);text-align:left}
+.foot-logo{font-family:"Pacifico",cursive;font-size:2rem;color:var(--yellow);line-height:1.1;margin:0 0 .6rem}
+/* drawer + menu */
+.drawer{border-left:4px solid var(--rose)}
+.drawer h2{color:var(--pink)}
+.side-menu{border-right:4px solid var(--rose)}
+.side-logo{font-family:"Pacifico",cursive;font-size:1.7rem;color:var(--pink)}
+.done h3{color:var(--pink)}
+/* responsive */
+@media (max-width:900px){
+  .hero .wrap{grid-template-columns:1fr}
+  .hero-art{height:440px}
+  .perks-row,.steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .courses{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  .wrap,.hero .wrap,.perks-row{padding:0 16px}
+  section{padding:3rem 0}
+  .hero{padding:2.2rem 0 7.5rem;text-align:left}
+  .hero h1{font-size:2.75rem;margin:1rem 0 .75rem}
+  .hero p.lead-hero{font-size:1.05rem;margin:0}
+  .hero .row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1.4rem;justify-content:stretch}
+  .hero .row .btn{padding:0 .6rem;font-size:.95rem;min-height:52px}
+  .hero .row .btn:last-child{grid-column:1/-1}
+  .hero-art{height:290px;width:100%}
+  .hero-art .sticker{width:92px;height:92px;font-size:.85rem;padding:.5rem;box-shadow:4px 4px 0 var(--plum)}
+  .perks-row{gap:.75rem}
+  .perk{padding:.9rem;gap:.45rem;box-shadow:4px 4px 0 var(--pink);border-radius:20px}
+  .perk .ico{width:40px;height:40px}
+  .perk h3{font-size:.95rem}
+  .perk p{font-size:.82rem}
+  .sec-head .eyebrow,.academy-intro .eyebrow,.book .eyebrow,.about-text .eyebrow{font-size:1.3rem}
+  .lead{font-size:1rem}
+  .filters{flex-wrap:nowrap;overflow-x:auto;gap:.5rem;margin:0 -16px 1.5rem;padding:0 16px 6px}
+  .chip{min-height:44px;padding:0 .9rem;font-size:.92rem;border-width:2px;flex:none}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem}
+  .card{border-radius:20px;box-shadow:5px 5px 0 var(--pink)}
+  .card h3{font-size:1rem;margin:0 .75rem .25rem}
+  .ptype,.card .desc,.card .opt{margin-left:.75rem;margin-right:.75rem}
+  .card .desc{font-size:.82rem}
+  .card .row{padding:0 .75rem .9rem}
+  .price{font-size:1.35rem}
+  .add{min-height:44px;font-size:.88rem;border-width:2px}
+  .tag{top:8px;left:8px;font-size:.68rem;padding:.1rem .5rem}
+  section.academy{padding:5rem 0 3rem;margin-top:44px}
+  .steps{gap:.75rem;margin-top:1.8rem}
+  .step{padding:.9rem;gap:.5rem;border-radius:18px}
+  .step .num{width:38px;height:38px;font-size:1.1rem}
+  .step h3{font-size:.95rem}
+  .step p{font-size:.82rem}
+  .course-card{padding:1rem;border-radius:24px;box-shadow:6px 6px 0 var(--plum)}
+  .gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}
+  .gallery img{border-radius:16px;box-shadow:4px 4px 0 var(--pink)}
+  footer{padding:3rem 0 1.8rem}
+}
+.hero-art svg.bob{stroke-width:inherit}
+.hero-art svg.bob.h1s{width:46px;height:46px;fill:#F06292;stroke:none}
+.hero-art svg.bob.h2s{width:36px;height:36px;fill:#C2185B;stroke:none}
+.hero-art svg.bob.st{width:34px;height:34px;fill:#FFF4B0;stroke:#4A143D;stroke-width:1.5}
+.hero .row{align-items:flex-start}
+.hero .row .btn{height:54px;flex:none}
+@media (max-width:600px){.hero .row .btn{height:52px}}
+@media (max-width:700px){.bar{flex-wrap:nowrap;gap:.6rem}.tools{gap:.5rem}.cart-btn{min-height:42px;padding:0 .8rem;font-size:.9rem}.logo-text{font-size:1.3rem}.logo small{font-size:.5rem}}
+</style>
 <!-- Meta Pixel: paste your Pixel ID between the quotes below (numbers only). Leave empty to switch tracking off. -->
 <script>
 window.TGC_PIXEL_ID="";
@@ -325,17 +540,17 @@ window.tgcTrack=function(ev,data){try{if(window.fbq&&window.TGC_PIXEL_ID)fbq('tr
 <header>
   <div class="bar">
     <button class="menu-btn" id="openMenu" aria-label="Open menu" aria-controls="sideMenu" aria-expanded="false"><span></span><span></span><span></span></button>
-    <a class="logo" href="#top" aria-label="The Girls Club home"><img src="img/logo-script-pink.png" alt="The Girls Club" width="383" height="120"><small>DIY beauty · Barbados</small></a>
+    <a class="logo" href="#top" aria-label="The Girls Club home"><span class="logo-text">The Girls Club</span><small>DIY beauty · Barbados</small></a>
     <nav aria-label="Main">
       <a href="#lashes">Shop</a>
-      <a href="#book">Book an appointment</a>
+      <a href="#book">Book</a>
       <a href="#academy">Academy</a>
-      <a href="#about">About Us</a>
+      <a href="#about">About</a>
       <a href="#soon">Coming soon</a>
     </nav>
     <div class="tools">
       <a class="ig" href="https://www.instagram.com/thegirlsclub246/" target="_blank" rel="noopener">Instagram</a>
-      <button class="btn cart-btn" id="openCart" aria-label="Open bag">Bag <b id="count">0</b></button>
+      <button class="btn cart-btn" id="openCart" aria-label="Open bag"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Bag <b id="count">0</b></button>
     </div>
   </div>
 </header>
@@ -345,26 +560,33 @@ window.tgcTrack=function(ev,data){try{if(window.fbq&&window.TGC_PIXEL_ID)fbq('tr
     <div class="wrap">
       <div>
         <span class="eyebrow" data-c="home.hero_eyebrow">DIY beauty · Barbados</span>
-        <h1 data-c="home.hero_title">The Girls Club</h1>
-        <p data-c="home.hero_text">Cluster lashes for the girls who love a glam moment. Do them yourself at home, or let us apply them for you.</p>
+        <h1>Lashes, lips <span>&amp; learning</span></h1>
+        <p class="lead-hero" data-c="home.hero_text">Cluster lash trays, lip treats and online lash courses, made by a certified esthetician. Shop, book or enrol any time, day or night.</p>
         <div class="row">
-          <a class="btn alt" href="#lashes">Shop cluster lashes</a>
+          <a class="btn" href="#lashes">Shop lashes</a>
           <a class="btn white" href="#book">Book an appointment</a>
-          <a class="btn academy" href="#academy">🎓 Enrol in the Academy</a>
+          <a class="btn academy" href="#academy">Enrol in the Academy</a>
         </div>
       </div>
       <div class="hero-art">
-        <div class="blob"></div>
-        <a class="sticker" href="#lashes">Shop<br>now</a>
-        <div class="frame">
-          <img class="hero-photo" id="heroImg" src="img/hero-trays.jpg" alt="Girls Club cluster lash trays on a pink background" width="800" height="800">
-          <strong data-c="home.hero_caption_title">Natural to mega volume</strong>
-          <small data-c="home.hero_caption_text">Launch sale · all trays $38</small>
-        </div>
+        <a class="sticker" href="#lashes">DIY beauty<br>Barbados</a>
+        <div class="arch" style="left:0;top:18%;width:38%;height:62%;transform:rotate(-4deg)"><img src="img/client-7.jpg" alt="Client wearing a Girls Club lash set" width="600" height="750"></div>
+        <div class="arch" style="left:28%;top:2%;width:44%;height:82%;transform:rotate(2deg);z-index:2"><img src="img/client-2.jpg" alt="Fluffy cluster lashes applied by Marishka" width="600" height="750"></div>
+        <div class="arch" style="left:62%;top:30%;width:36%;height:58%;transform:rotate(5deg);z-index:1"><img id="heroImg" src="img/hero-trays.jpg" alt="Girls Club cluster lash trays" width="800" height="800"></div>
+        <svg class="bob h1s" style="position:absolute;left:4%;top:2%;z-index:4" width="46" height="46" viewBox="0 0 24 24" fill="#F06292" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <svg class="bob h2s" style="position:absolute;right:8%;bottom:0;z-index:4;animation-delay:-2s" width="36" height="36" viewBox="0 0 24 24" fill="#C2185B" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <svg class="bob st" style="position:absolute;left:46%;bottom:-4%;z-index:4;animation-delay:-3.5s" width="34" height="34" viewBox="0 0 24 24" fill="#FFF4B0" stroke="#4A143D" stroke-width="1.5" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
       </div>
     </div>
+    <svg class="wave" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true"><path fill="#FFF6FA" d="M0 60 L0 30 Q60 0 120 30 T240 30 T360 30 T480 30 T600 30 T720 30 T840 30 T960 30 T1080 30 T1200 30 T1320 30 T1440 30 L1440 60 Z"/></svg>
   </div>
-  <div class="pays"><div class="wrap" id="highlights"></div></div>
+  <div class="perks-row">
+    <div class="perk"><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C2185B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><h3>Delivery $20 BBD</h3><p>Island-wide, or collect for free in St. Thomas.</p></div>
+    <div class="perk"><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C2185B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><h3>Shop open 24/7</h3><p>Order or enrol any time, day or night.</p></div>
+    <div class="perk"><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C2185B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><h3>Easy payment</h3><p>PayPal or card, FirstPay, BPWCCUL, or cash on collection.</p></div>
+    <div class="perk"><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C2185B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M15.48 12.89 17 22l-5-3-5 3 1.52-9.11"/></svg></div><h3>Certified esthetician</h3><p>Made and taught by Marishka Gittens.</p></div>
+  </div>
+  <div id="highlights" hidden></div>
 
   <section id="lashes">
     <div class="wrap">
@@ -412,6 +634,7 @@ window.tgcTrack=function(ev,data){try{if(window.fbq&&window.TGC_PIXEL_ID)fbq('tr
   </section>
 
   <section id="academy" class="academy">
+    <svg class="wave-top" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true"><path fill="#C2185B" d="M0 60 L0 30 Q60 0 120 30 T240 30 T360 30 T480 30 T600 30 T720 30 T840 30 T960 30 T1080 30 T1200 30 T1320 30 T1440 30 L1440 60 Z"/></svg>
     <div class="wrap">
       <div class="academy-intro">
         <span class="eyebrow" data-c="academy.eyebrow">Learn from home</span>
@@ -419,6 +642,13 @@ window.tgcTrack=function(ev,data){try{if(window.fbq&&window.TGC_PIXEL_ID)fbq('tr
         <div class="creds" id="academyCreds"></div>
         <p data-c="academy.intro"></p>
       </div>
+      <div class="steps">
+        <div class="step"><span class="num">1</span><h3>Choose your course</h3><p>Pick the cluster lash or eyelash extension course below.</p></div>
+        <div class="step"><span class="num">2</span><h3>Tap Enrol now</h3><p>A secure checkout opens right on this page.</p></div>
+        <div class="step"><span class="num">3</span><h3>Enter your email and pay</h3><p>Pay with PayPal or card. No account with us needed.</p></div>
+        <div class="step"><span class="num">4</span><h3>Start learning</h3><p>Your course link lands in your email straight away.</p></div>
+      </div>
+      <p class="steps-note">Card checkout shows US dollars: US$1 is BBD $2. Prefer FirstPay or BPWCCUL? Use the second button on your course and we'll enrol you.</p>
       <div class="courses" id="courses"></div>
       <p class="muted academy-note" data-c="academy.note"></p>
     </div>
@@ -471,7 +701,7 @@ window.tgcTrack=function(ev,data){try{if(window.fbq&&window.TGC_PIXEL_ID)fbq('tr
 <footer>
   <div class="wrap">
     <div class="cols">
-      <div class="brand"><img src="img/logo-tgc.png" alt="TGC, The Girls Club" width="420" height="160"><p>DIY beauty, made for Barbados girls.</p></div>
+      <div class="brand"><p class="foot-logo">The Girls Club</p><p>Lashes, lips &amp; learning. DIY beauty, made for Barbados girls.</p></div>
       <div><h4>Explore</h4><ul><li><a href="#lashes">Shop</a></li><li><a href="#book">Book an appointment</a></li><li><a href="#academy">Academy</a></li><li><a href="#about">About Us</a></li><li><a href="#soon">Coming soon</a></li><li><a href="https://www.instagram.com/thegirlsclub246/" target="_blank" rel="noopener">@thegirlsclub246</a></li></ul></div>
       <div><h4>Contact us</h4><ul><li><a class="wa-link" href="#" target="_blank" rel="noopener">WhatsApp us</a></li><li><a href="https://ig.me/m/thegirlsclub246" target="_blank" rel="noopener">DM on Instagram</a></li><li><span class="wa-num"></span></li><li>Collection: <span class="collect-area">St. Thomas</span>, Barbados</li></ul></div>
       <div><h4>We accept</h4><ul id="accepts"><li>FirstPay</li><li>BPWCCUL transfer</li><li>PayPal &amp; cards</li></ul></div>
@@ -483,7 +713,7 @@ window.tgcTrack=function(ev,data){try{if(window.fbq&&window.TGC_PIXEL_ID)fbq('tr
 <div class="menu-scrim" id="menuScrim" hidden></div>
 <aside class="side-menu" id="sideMenu" hidden aria-label="Menu">
   <div class="side-top">
-    <img src="img/logo-script-pink.png" alt="The Girls Club" width="383" height="120">
+    <span class="side-logo">The Girls Club</span>
     <button class="x" id="closeMenu" aria-label="Close menu">×</button>
   </div>
   <p class="side-tag">DIY beauty · Barbados</p>
