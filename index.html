@@ -379,6 +379,8 @@ window.tgcTrack=function(ev,data){try{if(window.fbq&&window.TGC_PIXEL_ID)fbq('tr
         <button class="chip" data-f="lashes" aria-pressed="false">Lashes</button>
         <button class="chip" data-f="kits" aria-pressed="false">Kits</button>
         <button class="chip" data-f="lips" aria-pressed="false">Lips</button>
+        <button class="chip" data-f="bundles" aria-pressed="false">Bundles</button>
+        <button class="chip" data-f="gifts" aria-pressed="false">🎄 Gifts</button>
       </div>
       <div class="grid" id="grid"></div>
     </div>
@@ -543,7 +545,7 @@ let lastOrder=null;
 const seenIds=new Set();
 const products=list(PR.products).filter(p=>p.show!==false&&p.name).map(p=>{
   let id=p.id||slug(p.name);while(seenIds.has(id))id+="-2";seenIds.add(id);
-  return{id,img:p.image||"",alt:p.image_alt||"",name:String(p.name),type:String(p.type||""),cat:p.category||"lashes",price:num(p.price),was:num(p.was_price)>num(p.price)?num(p.was_price):0,desc:String(p.description||""),tag:String(p.tag||""),opts:list(p.options).map(String)}});
+  return{id,img:p.image||"",alt:p.image_alt||"",name:String(p.name),type:String(p.type||""),cat:p.category||"lashes",price:num(p.price),was:num(p.was_price)>num(p.price)?num(p.was_price):0,desc:String(p.description||""),tag:String(p.tag||""),opts:list(p.options).map(String),digital:!!p.digital,course:String(p.course||"")}});
 
 /* ---- fill in the page from the content files ---- */
 {
@@ -609,7 +611,7 @@ function giftLine(){if(FREE_TRAYS_LEFT<=0)return "";
    :`<div class="gift"><small>🎁 ${esc(H.giveaway_text||"")}</small></div>`}
 function kitUp(){const K=products.find(p=>p.cat==="kits");if(!K||!hasTray()||cart.some(c=>c.id===K.id))return "";
   return `<div class="addon kit-up"><b>💕 Don't forget your glue!</b><p style="margin:.3rem 0 .5rem;font-size:.9rem">Add our <b>${esc(K.name)} ${esc(K.type)}</b>: ${esc(K.desc)}</p><button type="button" class="btn" data-kit style="width:100%">+ Add the kit · $${K.price}</button></div>`}
-function lipsUp(){const L=products.filter(p=>p.cat==="lips");if(!L.length||!cart.some(c=>!c.course))return "";
+function lipsUp(){const L=products.filter(p=>p.cat==="lips");if(!L.length||!cart.some(c=>!(c.course&&c.single)))return "";
   return `<div class="addon"><b>Treat your lips · add-ons</b>${L.map(p=>`<div class="addon-row"><img src="${p.img}" alt="" width="52" height="52"><div><span>${esc(p.name)}</span>${p.opts.length?`<select data-uopt="${p.id}" aria-label="Choose your ${esc(p.name)}">${p.opts.map(o=>`<option>${esc(o)}</option>`).join("")}</select>`:""}</div><button type="button" class="add" data-up="${p.id}">+ Add $${p.price}</button></div>`).join("")}</div>`}
 const money=v=>"$"+v.toFixed(2);
 function lashSvg(n,cx=150,cy=100,r=120,color="currentColor"){
@@ -623,6 +625,12 @@ function thumb(p){
     <path d="M182 36 L236 104" stroke="currentColor" stroke-width="7" stroke-linecap="round"/><path d="M196 34 L240 100" stroke="#c4256b" stroke-width="7" stroke-linecap="round"/>
     <path d="M40 150 H170" stroke="currentColor" stroke-width="7" stroke-linecap="round"/><g stroke="#c4256b" stroke-width="3" stroke-linecap="round">${Array.from({length:12},(_,i)=>`<path d="M${120+i*5} 138 v24"/>`).join("")}</g>
     <path d="M60 182 H222" stroke="#ff4d94" stroke-width="8" stroke-linecap="round"/><path d="M222 182 L256 182" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M252 177 Q266 182 252 187 Z" fill="currentColor"/>
+  </svg>`;
+  if(!p.img&&(p.cat==="gifts"||p.cat==="bundles"))return `<svg viewBox="0 0 300 220" aria-hidden="true">
+    <rect x="18" y="18" width="264" height="184" rx="26" fill="#fff" opacity=".75"/>
+    <rect x="90" y="92" width="120" height="96" rx="10" fill="#ff4d94"/><rect x="80" y="70" width="140" height="30" rx="8" fill="#c4256b"/>
+    <rect x="141" y="70" width="18" height="118" fill="#fff27a"/>
+    <path d="M150 70 C120 30 92 52 112 68 Z" fill="none" stroke="#fff27a" stroke-width="9" stroke-linejoin="round"/><path d="M150 70 C180 30 208 52 188 68 Z" fill="none" stroke="#fff27a" stroke-width="9" stroke-linejoin="round"/>
   </svg>`;
   if(p.img)return `<img src="${esc(p.img)}" alt="${esc(p.alt||p.name+" "+p.type)}" loading="lazy" width="600" height="600">`;
   if(p.cat==="tools"){
@@ -652,7 +660,7 @@ document.querySelectorAll(".chip").forEach(c=>c.addEventListener("click",()=>{
 let cart=[];
 const countEl=document.getElementById("count");
 function addItem(item){window.tgcTrack&&tgcTrack("AddToCart",{content_name:item.name,value:item.price,currency:"BBD"});const ex=cart.find(c=>c.id===item.id);if(ex&&!item.single)ex.qty++;else if(!ex)cart.push({...item,qty:1});update();openCart()}
-grid.addEventListener("click",e=>{const b=e.target.closest("[data-add]");if(!b)return;const p=products.find(x=>x.id===b.dataset.add);const sel=grid.querySelector(`[data-opt="${p.id}"]`),o=sel?sel.value:"";addItem({id:p.id+(o?"-"+o:""),name:p.name+" · "+(o||p.type),price:p.price})});
+grid.addEventListener("click",e=>{const b=e.target.closest("[data-add]");if(!b)return;const p=products.find(x=>x.id===b.dataset.add);const sel=grid.querySelector(`[data-opt="${p.id}"]`),o=sel?sel.value:"";addItem({id:p.id+(o?"-"+o:""),name:p.name+" · "+(o||p.type),price:p.price,...(p.digital?{noShip:true,note:"Digital · sent on WhatsApp"}:{}),...(p.course?{course:p.course}:{})})});
 function update(){countEl.textContent=cart.reduce((a,c)=>a+c.qty,0);renderDrawer()}
 
 const drawer=document.getElementById("drawer"),scrim=document.getElementById("scrim"),body=document.getElementById("drawerBody");
@@ -663,7 +671,7 @@ document.getElementById("openCart").onclick=()=>{stage="bag";openCart()};
 document.getElementById("closeCart").onclick=closeCart;scrim.onclick=closeCart;
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!drawer.hidden)closeCart()});
 
-function totals(){const sub=cart.reduce((a,c)=>a+c.price*c.qty,0);const hasShip=cart.some(c=>!c.single);const del=document.getElementById("delivery");const ship=hasShip&&(!del||del.value!=="pickup")?S.delivery_fee:0;return{sub,ship,total:sub+ship,hasShip}}
+function totals(){const sub=cart.reduce((a,c)=>a+c.price*c.qty,0);const hasShip=cart.some(c=>!c.single&&!c.noShip);const del=document.getElementById("delivery");const ship=hasShip&&(!del||del.value!=="pickup")?S.delivery_fee:0;return{sub,ship,total:sub+ship,hasShip}}
 function renderDrawer(){
   if(stage==="done"&&lastOrder){const o=lastOrder,P=PAY[o.method];
     const summary=`Hi The Girls Club! I placed an order.\nOrder: ${o.id}\n${o.items.join("\n")}\nTotal: BBD ${money(o.total)}\n${o.method==="cash"?"Payment":"Paid by"}: ${P.label}${o.method==="paypal"?" ("+usd(o.total)+")":""}${o.delivery?"\n"+o.delivery:""}\nName: ${o.name}\nPhone: ${o.phone}${o.email?"\nEmail: "+o.email:""}`;
