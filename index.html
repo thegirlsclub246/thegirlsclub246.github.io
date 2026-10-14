@@ -958,7 +958,7 @@ function renderDrawer(){
         name:document.getElementById("cname").value.trim(),phone:document.getElementById("cphone").value.trim(),email:document.getElementById("cemail")?document.getElementById("cemail").value.trim():"",
         delivery:t.hasShip?(dEl.value==="pickup"?"Collection ("+S.collection_area+")":"Delivery · "+pEl.value):"",
         items:cart.map(c=>`${c.qty>1?c.qty+" × ":""}${c.name}${c.single?" ("+c.note+")":""} – ${money(c.price*c.qty)}`).concat(giftOn()?["🎁 FREE surprise lash tray (first-10 giveaway) – $0.00"]:[])};
-      window.tgcTrack&&tgcTrack("Purchase",{value:lastOrder.total,currency:"BBD",order_id:lastOrder.id});cart=[];stage="done";update();
+      window.tgcTrack&&tgcTrack("Purchase",{value:lastOrder.total,currency:"BBD",order_id:lastOrder.id});try{const f=new FormData();f.append("entry.1906687622",JSON.stringify({id,date:new Date().toISOString(),items:lastOrder.items,sub:t.sub,ship:t.ship,total:t.total,method:lastOrder.method,delivery:lastOrder.delivery,name:lastOrder.name,phone:lastOrder.phone,email:lastOrder.email}));fetch("https://docs.google.com/forms/d/e/1FAIpQLSe2zjFlsue6VY21RyImvVa2xW-K2SlsKH4nhE1ABkPVO32a9g/formResponse",{method:"POST",mode:"no-cors",body:f})}catch(e){}cart=[];stage="done";update();
       if(pendingSlot){bookedSlots.add(pendingSlot);pendingSlot=null;renderDays();renderSlots()}});
     return;
   }
