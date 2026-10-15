@@ -545,8 +545,7 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
     <button class="menu-btn" id="openMenu" aria-label="Open menu" aria-controls="sideMenu" aria-expanded="false"><span></span><span></span><span></span></button>
     <a class="logo" href="#top" aria-label="The Girls Club home"><span class="logo-text">The Girls Club</span><small>DIY beauty · Barbados</small></a>
     <nav aria-label="Main">
-      <a href="#lashes">Shop</a>
-      <a href="#marketplace">Marketplace</a>
+      <a href="#lashes">Marketplace</a>
       <a href="#book">Book</a>
       <a href="#academy">Academy</a>
       <a href="#about">About</a>
@@ -567,7 +566,7 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
         <h1>Lashes, lips <span>&amp; learning</span></h1>
         <p class="lead-hero" data-c="home.hero_text">Cluster lash trays, lip treats and online lash courses, made by a certified esthetician. Shop, book or enrol any time, day or night.</p>
         <div class="row">
-          <a class="btn" href="#lashes">Shop lashes</a>
+          <a class="btn" href="#lashes">Shop the Marketplace</a>
           <a class="btn white" href="#book">Book an appointment</a>
           <a class="btn academy" href="#academy">Enrol in the Academy</a>
         </div>
@@ -592,7 +591,7 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
   </div>
   <div id="highlights" hidden></div>
 
-  <section id="lashes">
+  <section id="lashes" class="market">
     <div class="wrap">
       <div class="sec-head">
         <span class="eyebrow" data-c="home.shop_eyebrow">The shop</span>
@@ -609,11 +608,12 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
         <button class="chip" data-f="gifts" aria-pressed="false">🎄 Gifts</button>
       </div>
       <div class="grid" id="grid"></div>
+      <div class="mk-box" id="mkJoin" hidden></div>
     </div>
   </section>
 
   <style>
-.market .mk-sold{display:inline-block;font-size:.78rem;font-weight:700;letter-spacing:.04em;color:var(--shade);background:var(--blush,#FFE6F0);border-radius:999px;padding:3px 10px;margin-bottom:4px}
+.market .mk-sold{display:inline-block;align-self:flex-start;justify-self:start;width:auto;font-size:.78rem;font-weight:700;letter-spacing:.04em;color:var(--shade);background:var(--blush,#FFE6F0);border-radius:999px;padding:3px 10px;margin-bottom:4px}
 .market .mk-box{background:var(--card);border:3px solid var(--rose,#F06292);border-radius:26px;padding:22px 20px;text-align:center;display:grid;gap:10px;justify-items:center;margin-top:18px}
 .market .mk-box h3{margin:0;font-family:"Pacifico","Brush Script MT",cursive;font-weight:400;color:var(--pink);font-size:1.6rem;line-height:1.25}
 .market .mk-box p{margin:0;max-width:52ch;color:var(--muted)}
@@ -621,20 +621,7 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
 .market .mk-cats span{background:var(--yellow-soft,#FFF9D9);border:2px solid var(--yellow,#FFF4B0);border-radius:999px;padding:4px 12px;font-weight:700;font-size:.9rem;color:var(--ink)}
 .market .add[disabled]{opacity:.55;cursor:default}
 </style>
-<section id="marketplace" class="market" hidden>
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="eyebrow">The Girls Club Marketplace</span>
-        <h2 id="mkTitle">Bajan beauty brands, all in one place</h2>
-        <p class="lead" id="mkIntro">Hair, nails, skincare, perfume and more from women-owned brands across Barbados. One bag, one checkout, delivered together.</p>
-      </div>
-      <div class="filters" id="mkFilters" role="group" aria-label="Filter Marketplace products" hidden></div>
-      <div class="grid" id="mkGrid"></div>
-      <div class="mk-box" id="mkJoin"></div>
-    </div>
-  </section>
-
-  <section id="book" class="book">
+<section id="book" class="book">
     <div class="wrap">
       <div>
         <span class="scarce" data-c="booking.badge">Limited spots each day</span>
@@ -728,7 +715,7 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
   <div class="wrap">
     <div class="cols">
       <div class="brand"><p class="foot-logo">The Girls Club</p><p>Lashes, lips &amp; learning. DIY beauty, made for Barbados girls.</p></div>
-      <div><h4>Explore</h4><ul><li><a href="#lashes">Shop</a></li><li><a href="#marketplace">Marketplace</a></li><li><a href="#book">Book an appointment</a></li><li><a href="#academy">Academy</a></li><li><a href="#about">About Us</a></li><li><a href="#soon">Coming soon</a></li><li><a href="policies.html">Delivery, returns &amp; privacy</a></li><li><a href="https://www.instagram.com/thegirlsclub246/" target="_blank" rel="noopener">@thegirlsclub246</a></li></ul></div>
+      <div><h4>Explore</h4><ul><li><a href="#lashes">Marketplace</a></li><li><a href="#book">Book an appointment</a></li><li><a href="#academy">Academy</a></li><li><a href="#about">About Us</a></li><li><a href="#soon">Coming soon</a></li><li><a href="policies.html">Delivery, returns &amp; privacy</a></li><li><a href="https://www.instagram.com/thegirlsclub246/" target="_blank" rel="noopener">@thegirlsclub246</a></li></ul></div>
       <div><h4>Contact us</h4><ul><li><a class="wa-link" href="#" target="_blank" rel="noopener">WhatsApp us</a></li><li><a href="https://ig.me/m/thegirlsclub246" target="_blank" rel="noopener">DM on Instagram</a></li><li><span class="wa-num"></span></li><li>Collection: <span class="collect-area">St. Thomas</span>, Barbados</li></ul></div>
       <div><h4>We accept</h4><ul id="accepts"><li>Debit &amp; credit cards</li><li>FirstPay</li><li>BPWCCUL transfer</li></ul></div>
     </div>
@@ -745,8 +732,7 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
   <p class="side-tag">DIY beauty · Barbados</p>
   <nav class="side-links" aria-label="Menu links">
     <a href="#top">Home</a>
-    <a href="#lashes">Shop lashes</a>
-    <a href="#marketplace">Marketplace</a>
+    <a href="#lashes">Marketplace</a>
     <a href="#book">Book an appointment</a>
     <a href="#academy">Academy</a>
     <a href="#results">The glow up</a>
@@ -803,6 +789,11 @@ const seenIds=new Set();
 const products=list(PR.products).filter(p=>p.show!==false&&p.name).map(p=>{
   let id=p.id||slug(p.name);while(seenIds.has(id))id+="-2";seenIds.add(id);
   return{id,img:p.image||"",alt:p.image_alt||"",name:String(p.name),type:String(p.type||""),cat:p.category||"lashes",price:num(p.price),was:num(p.was_price)>num(p.price)?num(p.was_price):0,desc:String(p.description||""),tag:String(p.tag||""),opts:list(p.options).map(String),digital:!!p.digital,course:String(p.course||"")}});
+/* ==MARKETPLACE== partner brands (content/marketplace.json, synced from the vendor portal) sit in the same grid as our own products */
+let MK={};try{MK=await load("marketplace")}catch(e){MK={}}
+const mkBrands=list(MK.brands).filter(b=>b&&b.slug&&b.name);
+const brandName=s=>(mkBrands.find(b=>b.slug===s)||{}).name||"";
+list(MK.products).filter(p=>p&&p.id&&p.name&&brandName(p.brand)).forEach(p=>products.push({id:"mp-"+String(p.id),pid:String(p.id),vendor:String(p.brand),brand:brandName(p.brand),img:String(p.image||""),alt:String(p.name)+" by "+brandName(p.brand),name:String(p.name),type:String(p.category||""),cat:"v:"+String(p.category||"Other"),price:num(p.price),was:0,desc:String(p.description||""),tag:"",opts:list(p.options).map(String),digital:false,course:"",stock:(p.stock===null||p.stock===undefined||p.stock==="")?null:num(p.stock)}));
 
 /* ---- fill in the page from the content files ---- */
 {
@@ -904,11 +895,13 @@ function renderGrid(f="all"){
    <article class="card">
      <div class="thumb">${thumb(p)}</div>
      ${p.tag?`<span class="tag">${esc(p.tag)}</span>`:""}
-     <span class="ptype">${esc(p.type)}</span><h3>${esc(p.name)}</h3><p class="desc">${esc(p.desc)}</p>${p.opts.length?`<select class="opt" data-opt="${p.id}" aria-label="Choose your ${esc(p.name)}">${p.opts.map(o=>`<option>${esc(o)}</option>`).join("")}</select>`:""}
-     <div class="row"><span class="price"><small>BBD</small> ${p.was?`<s class="was" aria-label="Was ${money(p.was)}">${money(p.was)}</s> `:""}${money(p.price)}</span><button class="add" data-add="${p.id}">Add to bag</button></div>
+     <span class="mk-sold">By ${esc(p.brand||"The Girls Club")}</span><span class="ptype">${esc(p.type)}</span><h3>${esc(p.name)}</h3><p class="desc">${esc(p.desc)}</p>${p.opts.length?`<select class="opt" data-opt="${p.id}" aria-label="Choose your ${esc(p.name)}">${p.opts.map(o=>`<option>${esc(o)}</option>`).join("")}</select>`:""}
+     <div class="row"><span class="price"><small>BBD</small> ${p.was?`<s class="was" aria-label="Was ${money(p.was)}">${money(p.was)}</s> `:""}${money(p.price)}</span>${p.stock!==null&&p.stock!==undefined&&p.stock<=0?`<button class="add" type="button" disabled>Sold out</button>`:`<button class="add" data-add="${p.id}">Add to bag</button>`}</div>
    </article>`).join("");
 }
 renderGrid();
+{const fl=document.querySelector("#lashes .filters");if(fl)[...new Set(products.filter(p=>p.vendor).map(p=>p.cat))].forEach(c=>{const b=document.createElement("button");b.className="chip";b.dataset.f=c;b.setAttribute("aria-pressed","false");b.textContent=c.slice(2);fl.appendChild(b)});
+ const j=document.getElementById("mkJoin");if(j&&MK.show!==false){j.innerHTML=`<p><b>Own a beauty brand in Barbados?</b> Join The Girls Club Marketplace as a founding brand.</p><a class="btn ghost" href="${waLink("Hi Marishka! 💕 I have a beauty brand and I'd love to hear about selling on The Girls Club Marketplace.")}" target="_blank" rel="noopener">Sell with us</a>`;j.hidden=false}}
 document.querySelectorAll("#lashes .chip").forEach(c=>{if(c.dataset.f!=="all"&&!products.some(p=>p.cat===c.dataset.f))c.hidden=true});
 document.querySelectorAll("#lashes .chip").forEach(c=>c.addEventListener("click",()=>{
   document.querySelectorAll("#lashes .chip").forEach(x=>x.setAttribute("aria-pressed",x===c));renderGrid(c.dataset.f)}));
@@ -917,7 +910,7 @@ document.querySelectorAll("#lashes .chip").forEach(c=>c.addEventListener("click"
 let cart=[];
 const countEl=document.getElementById("count");
 function addItem(item){window.tgcTrack&&tgcTrack("AddToCart",{content_name:item.name,value:item.price,currency:"BBD"});const ex=cart.find(c=>c.id===item.id);if(ex&&!item.single)ex.qty++;else if(!ex)cart.push({...item,qty:1});update();openCart()}
-grid.addEventListener("click",e=>{const b=e.target.closest("[data-add]");if(!b)return;const p=products.find(x=>x.id===b.dataset.add);const sel=grid.querySelector(`[data-opt="${p.id}"]`),o=sel?sel.value:"";addItem({id:p.id+(o?"-"+o:""),name:p.name+" · "+(o||p.type),price:p.price,...(p.digital?{noShip:true,note:"Digital · sent on WhatsApp"}:{}),...(p.course?{course:p.course}:{})})});
+grid.addEventListener("click",e=>{const b=e.target.closest("[data-add]");if(!b)return;const p=products.find(x=>x.id===b.dataset.add);const sel=grid.querySelector(`[data-opt="${p.id}"]`),o=sel?sel.value:"";addItem({id:p.id+(o?"-"+o:""),name:p.name+" · "+(o||p.type)+(p.brand?" · "+p.brand:""),price:p.price,...(p.vendor?{vendor:p.vendor,pid:p.pid,opt:o}:{}),...(p.digital?{noShip:true,note:"Digital · sent on WhatsApp"}:{}),...(p.course?{course:p.course}:{})})});
 function update(){countEl.textContent=cart.reduce((a,c)=>a+c.qty,0);renderDrawer()}
 
 const drawer=document.getElementById("drawer"),scrim=document.getElementById("scrim"),body=document.getElementById("drawerBody");
@@ -996,36 +989,6 @@ function renderDrawer(){
 
 if(FREE_TRAYS_LEFT>0&&products.some(p=>p.cat==="lashes")){const pp=document.getElementById("promoPill");pp.hidden=false;pp.innerHTML=`🎁 <b>Giveaway:</b> ${esc(H.giveaway_text||"")}`}
 renderAcademy();
-
-/* ==MARKETPLACE== products from independent brands live in content/marketplace.json (synced from the vendor portal) */
-let MK={};try{MK=await load("marketplace")}catch(e){MK={}}
-const mkBrands=list(MK.brands).filter(b=>b&&b.slug&&b.name);
-const brandOf=s=>mkBrands.find(b=>b.slug===s)||{name:"",slug:s};
-const mkProducts=list(MK.products).filter(p=>p&&p.id&&p.name&&mkBrands.some(b=>b.slug===p.brand)).map(p=>({id:"mp-"+String(p.id),pid:String(p.id),brand:String(p.brand),img:String(p.image||""),name:String(p.name),cat:String(p.category||""),price:num(p.price),desc:String(p.description||""),opts:list(p.options).map(String),stock:(p.stock===null||p.stock===undefined||p.stock==="")?null:num(p.stock)}));
-const mkSec=document.getElementById("marketplace"),mkGrid=document.getElementById("mkGrid"),mkF=document.getElementById("mkFilters"),mkJoin=document.getElementById("mkJoin");
-const MK_CATS=["Hair","Nails","Lashes & brows","Skincare","Body care","Perfume","Makeup","Accessories"];
-function renderMarket(f="all"){
-  if(MK.show===false){mkSec.hidden=true;document.querySelectorAll('a[href="#marketplace"]').forEach(a=>{const li=a.closest("li");(li||a).hidden=true});return}
-  mkSec.hidden=false;
-  if(MK.title)document.getElementById("mkTitle").textContent=MK.title;
-  if(MK.intro)document.getElementById("mkIntro").textContent=MK.intro;
-  const joinLink=waLink("Hi Marishka! 💕 I have a beauty brand and I'd love to hear about selling on The Girls Club Marketplace.");
-  if(!mkProducts.length){mkF.hidden=true;mkGrid.innerHTML="";
-    mkJoin.innerHTML=`<h3>Opening soon</h3><p>We're bringing together Barbados' best women-owned beauty brands, so you can shop your whole look in one place.</p><div class="mk-cats">${MK_CATS.map(c=>`<span>${esc(c)}</span>`).join("")}</div><p><b>Own a beauty brand in Barbados?</b> We're choosing our founding brands now.</p><a class="btn" href="${joinLink}" target="_blank" rel="noopener">Sell with us</a>`;return}
-  const cats=[...new Set(mkProducts.map(p=>p.cat).filter(Boolean))];
-  mkF.hidden=cats.length<2;
-  mkF.innerHTML=["all",...cats].map(c=>`<button class="chip" type="button" data-mf="${esc(c)}" aria-pressed="${c===f}">${c==="all"?"All brands":esc(c)}</button>`).join("");
-  mkGrid.innerHTML=mkProducts.filter(p=>f==="all"||p.cat===f).map(p=>{const b=brandOf(p.brand),out=p.stock!==null&&p.stock<=0;return `
-   <article class="card">
-     <div class="thumb">${p.img?`<img src="${esc(p.img)}" alt="${esc(p.name+" by "+b.name)}" loading="lazy" width="600" height="600">`:""}</div>
-     <span class="mk-sold">Sold by ${esc(b.name)}</span><h3>${esc(p.name)}</h3><p class="desc">${esc(p.desc)}</p>${p.opts.length?`<select class="opt" data-mopt="${esc(p.id)}" aria-label="Choose your ${esc(p.name)}">${p.opts.map(o=>`<option>${esc(o)}</option>`).join("")}</select>`:""}
-     <div class="row"><span class="price"><small>BBD</small> ${money(p.price)}</span>${out?`<button class="add" type="button" disabled>Sold out</button>`:`<button class="add" type="button" data-madd="${esc(p.id)}">Add to bag</button>`}</div>
-   </article>`}).join("");
-  mkJoin.innerHTML=`<p><b>Own a beauty brand in Barbados?</b> Join The Girls Club Marketplace.</p><a class="btn ghost" href="${joinLink}" target="_blank" rel="noopener">Sell with us</a>`;
-}
-mkF.addEventListener("click",e=>{const b=e.target.closest("[data-mf]");if(b)renderMarket(b.dataset.mf)});
-mkGrid.addEventListener("click",e=>{const b=e.target.closest("[data-madd]");if(!b)return;const p=mkProducts.find(x=>x.id===b.dataset.madd);if(!p)return;const sel=mkGrid.querySelector(`[data-mopt="${p.id}"]`),o=sel?sel.value:"";const br=brandOf(p.brand);addItem({id:p.id+(o?"-"+slug(o):""),name:p.name+(o?" · "+o:"")+" · "+br.name,price:p.price,vendor:p.brand,pid:p.pid,opt:o})});
-renderMarket();
 
 /* booking */
 /* real hours: Mon–Fri 4:30–7:30pm, Sat–Sun 9am–7:30pm, 45-minute appointments */
