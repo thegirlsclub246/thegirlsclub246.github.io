@@ -546,6 +546,7 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
     <a class="logo" href="#top" aria-label="The Girls Club home"><span class="logo-text">The Girls Club</span><small>DIY beauty · Barbados</small></a>
     <nav aria-label="Main">
       <a href="#lashes">Shop</a>
+      <a href="#marketplace">Marketplace</a>
       <a href="#book">Book</a>
       <a href="#academy">Academy</a>
       <a href="#about">About</a>
@@ -608,6 +609,28 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
         <button class="chip" data-f="gifts" aria-pressed="false">🎄 Gifts</button>
       </div>
       <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <style>
+.market .mk-sold{display:inline-block;font-size:.78rem;font-weight:700;letter-spacing:.04em;color:var(--shade);background:var(--blush,#FFE6F0);border-radius:999px;padding:3px 10px;margin-bottom:4px}
+.market .mk-box{background:var(--card);border:3px solid var(--rose,#F06292);border-radius:26px;padding:22px 20px;text-align:center;display:grid;gap:10px;justify-items:center;margin-top:18px}
+.market .mk-box h3{margin:0;font-family:"Pacifico","Brush Script MT",cursive;font-weight:400;color:var(--pink);font-size:1.6rem;line-height:1.25}
+.market .mk-box p{margin:0;max-width:52ch;color:var(--muted)}
+.market .mk-cats{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.market .mk-cats span{background:var(--yellow-soft,#FFF9D9);border:2px solid var(--yellow,#FFF4B0);border-radius:999px;padding:4px 12px;font-weight:700;font-size:.9rem;color:var(--ink)}
+.market .add[disabled]{opacity:.55;cursor:default}
+</style>
+<section id="marketplace" class="market" hidden>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">The Girls Club Marketplace</span>
+        <h2 id="mkTitle">Bajan beauty brands, all in one place</h2>
+        <p class="lead" id="mkIntro">Hair, nails, skincare, perfume and more from women-owned brands across Barbados. One bag, one checkout, delivered together.</p>
+      </div>
+      <div class="filters" id="mkFilters" role="group" aria-label="Filter Marketplace products" hidden></div>
+      <div class="grid" id="mkGrid"></div>
+      <div class="mk-box" id="mkJoin"></div>
     </div>
   </section>
 
@@ -705,11 +728,11 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
   <div class="wrap">
     <div class="cols">
       <div class="brand"><p class="foot-logo">The Girls Club</p><p>Lashes, lips &amp; learning. DIY beauty, made for Barbados girls.</p></div>
-      <div><h4>Explore</h4><ul><li><a href="#lashes">Shop</a></li><li><a href="#book">Book an appointment</a></li><li><a href="#academy">Academy</a></li><li><a href="#about">About Us</a></li><li><a href="#soon">Coming soon</a></li><li><a href="https://www.instagram.com/thegirlsclub246/" target="_blank" rel="noopener">@thegirlsclub246</a></li></ul></div>
+      <div><h4>Explore</h4><ul><li><a href="#lashes">Shop</a></li><li><a href="#marketplace">Marketplace</a></li><li><a href="#book">Book an appointment</a></li><li><a href="#academy">Academy</a></li><li><a href="#about">About Us</a></li><li><a href="#soon">Coming soon</a></li><li><a href="policies.html">Delivery, returns &amp; privacy</a></li><li><a href="https://www.instagram.com/thegirlsclub246/" target="_blank" rel="noopener">@thegirlsclub246</a></li></ul></div>
       <div><h4>Contact us</h4><ul><li><a class="wa-link" href="#" target="_blank" rel="noopener">WhatsApp us</a></li><li><a href="https://ig.me/m/thegirlsclub246" target="_blank" rel="noopener">DM on Instagram</a></li><li><span class="wa-num"></span></li><li>Collection: <span class="collect-area">St. Thomas</span>, Barbados</li></ul></div>
       <div><h4>We accept</h4><ul id="accepts"><li>Debit &amp; credit cards</li><li>FirstPay</li><li>BPWCCUL transfer</li></ul></div>
     </div>
-    <p class="legal">&copy; 2026 The Girls Club · Shop online 24/7 · Island-wide delivery &amp; collection in St. Thomas · Prices in BBD (Barbados dollars)</p>
+    <p class="legal">&copy; 2026 The Girls Club · Shop online 24/7 · Island-wide delivery &amp; collection in St. Thomas · Prices in BBD (Barbados dollars) · <a href="policies.html" style="color:inherit">Shop policies</a></p>
   </div>
 </footer>
 
@@ -723,6 +746,7 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
   <nav class="side-links" aria-label="Menu links">
     <a href="#top">Home</a>
     <a href="#lashes">Shop lashes</a>
+    <a href="#marketplace">Marketplace</a>
     <a href="#book">Book an appointment</a>
     <a href="#academy">Academy</a>
     <a href="#results">The glow up</a>
@@ -885,9 +909,9 @@ function renderGrid(f="all"){
    </article>`).join("");
 }
 renderGrid();
-document.querySelectorAll(".chip").forEach(c=>{if(c.dataset.f!=="all"&&!products.some(p=>p.cat===c.dataset.f))c.hidden=true});
-document.querySelectorAll(".chip").forEach(c=>c.addEventListener("click",()=>{
-  document.querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed",x===c));renderGrid(c.dataset.f)}));
+document.querySelectorAll("#lashes .chip").forEach(c=>{if(c.dataset.f!=="all"&&!products.some(p=>p.cat===c.dataset.f))c.hidden=true});
+document.querySelectorAll("#lashes .chip").forEach(c=>c.addEventListener("click",()=>{
+  document.querySelectorAll("#lashes .chip").forEach(x=>x.setAttribute("aria-pressed",x===c));renderGrid(c.dataset.f)}));
 
 /* cart */
 let cart=[];
@@ -961,7 +985,7 @@ function renderDrawer(){
         name:document.getElementById("cname").value.trim(),phone:document.getElementById("cphone").value.trim(),email:document.getElementById("cemail")?document.getElementById("cemail").value.trim():"",
         delivery:t.hasShip?(dEl.value==="pickup"?"Collection ("+S.collection_area+")":"Delivery · "+pEl.value):"",
         items:cart.map(c=>`${c.qty>1?c.qty+" × ":""}${c.name}${c.single?" ("+c.note+")":""} – ${money(c.price*c.qty)}`).concat(giftOn()?["🎁 FREE surprise lash tray (first-10 giveaway) – $0.00"]:[])};
-      window.tgcTrack&&tgcTrack("Purchase",{value:lastOrder.total,currency:"BBD",order_id:lastOrder.id});try{const f=new FormData();f.append("entry.1906687622",JSON.stringify({id,date:new Date().toISOString(),items:lastOrder.items,sub:t.sub,ship:t.ship,total:t.total,method:lastOrder.method,delivery:lastOrder.delivery,name:lastOrder.name,phone:lastOrder.phone,email:lastOrder.email}));fetch("https://docs.google.com/forms/d/e/1FAIpQLSe2zjFlsue6VY21RyImvVa2xW-K2SlsKH4nhE1ABkPVO32a9g/formResponse",{method:"POST",mode:"no-cors",body:f})}catch(e){}cart=[];stage="done";update();
+      window.tgcTrack&&tgcTrack("Purchase",{value:lastOrder.total,currency:"BBD",order_id:lastOrder.id});try{const f=new FormData();f.append("entry.1906687622",JSON.stringify({id,date:new Date().toISOString(),items:lastOrder.items,sub:t.sub,ship:t.ship,total:t.total,method:lastOrder.method,delivery:lastOrder.delivery,name:lastOrder.name,phone:lastOrder.phone,email:lastOrder.email,lines:cart.map(c=>({id:c.id,name:c.name,qty:c.qty,price:c.price,vendor:c.vendor||"",pid:c.pid||"",opt:c.opt||""}))}));fetch("https://docs.google.com/forms/d/e/1FAIpQLSe2zjFlsue6VY21RyImvVa2xW-K2SlsKH4nhE1ABkPVO32a9g/formResponse",{method:"POST",mode:"no-cors",body:f})}catch(e){}cart=[];stage="done";update();
       if(pendingSlot){bookedSlots.add(pendingSlot);pendingSlot=null;renderDays();renderSlots()}});
     return;
   }
@@ -972,6 +996,36 @@ function renderDrawer(){
 
 if(FREE_TRAYS_LEFT>0&&products.some(p=>p.cat==="lashes")){const pp=document.getElementById("promoPill");pp.hidden=false;pp.innerHTML=`🎁 <b>Giveaway:</b> ${esc(H.giveaway_text||"")}`}
 renderAcademy();
+
+/* ==MARKETPLACE== products from independent brands live in content/marketplace.json (synced from the vendor portal) */
+let MK={};try{MK=await load("marketplace")}catch(e){MK={}}
+const mkBrands=list(MK.brands).filter(b=>b&&b.slug&&b.name);
+const brandOf=s=>mkBrands.find(b=>b.slug===s)||{name:"",slug:s};
+const mkProducts=list(MK.products).filter(p=>p&&p.id&&p.name&&mkBrands.some(b=>b.slug===p.brand)).map(p=>({id:"mp-"+String(p.id),pid:String(p.id),brand:String(p.brand),img:String(p.image||""),name:String(p.name),cat:String(p.category||""),price:num(p.price),desc:String(p.description||""),opts:list(p.options).map(String),stock:(p.stock===null||p.stock===undefined||p.stock==="")?null:num(p.stock)}));
+const mkSec=document.getElementById("marketplace"),mkGrid=document.getElementById("mkGrid"),mkF=document.getElementById("mkFilters"),mkJoin=document.getElementById("mkJoin");
+const MK_CATS=["Hair","Nails","Lashes & brows","Skincare","Body care","Perfume","Makeup","Accessories"];
+function renderMarket(f="all"){
+  if(MK.show===false){mkSec.hidden=true;document.querySelectorAll('a[href="#marketplace"]').forEach(a=>{const li=a.closest("li");(li||a).hidden=true});return}
+  mkSec.hidden=false;
+  if(MK.title)document.getElementById("mkTitle").textContent=MK.title;
+  if(MK.intro)document.getElementById("mkIntro").textContent=MK.intro;
+  const joinLink=waLink("Hi Marishka! 💕 I have a beauty brand and I'd love to hear about selling on The Girls Club Marketplace.");
+  if(!mkProducts.length){mkF.hidden=true;mkGrid.innerHTML="";
+    mkJoin.innerHTML=`<h3>Opening soon</h3><p>We're bringing together Barbados' best women-owned beauty brands, so you can shop your whole look in one place.</p><div class="mk-cats">${MK_CATS.map(c=>`<span>${esc(c)}</span>`).join("")}</div><p><b>Own a beauty brand in Barbados?</b> We're choosing our founding brands now.</p><a class="btn" href="${joinLink}" target="_blank" rel="noopener">Sell with us</a>`;return}
+  const cats=[...new Set(mkProducts.map(p=>p.cat).filter(Boolean))];
+  mkF.hidden=cats.length<2;
+  mkF.innerHTML=["all",...cats].map(c=>`<button class="chip" type="button" data-mf="${esc(c)}" aria-pressed="${c===f}">${c==="all"?"All brands":esc(c)}</button>`).join("");
+  mkGrid.innerHTML=mkProducts.filter(p=>f==="all"||p.cat===f).map(p=>{const b=brandOf(p.brand),out=p.stock!==null&&p.stock<=0;return `
+   <article class="card">
+     <div class="thumb">${p.img?`<img src="${esc(p.img)}" alt="${esc(p.name+" by "+b.name)}" loading="lazy" width="600" height="600">`:""}</div>
+     <span class="mk-sold">Sold by ${esc(b.name)}</span><h3>${esc(p.name)}</h3><p class="desc">${esc(p.desc)}</p>${p.opts.length?`<select class="opt" data-mopt="${esc(p.id)}" aria-label="Choose your ${esc(p.name)}">${p.opts.map(o=>`<option>${esc(o)}</option>`).join("")}</select>`:""}
+     <div class="row"><span class="price"><small>BBD</small> ${money(p.price)}</span>${out?`<button class="add" type="button" disabled>Sold out</button>`:`<button class="add" type="button" data-madd="${esc(p.id)}">Add to bag</button>`}</div>
+   </article>`}).join("");
+  mkJoin.innerHTML=`<p><b>Own a beauty brand in Barbados?</b> Join The Girls Club Marketplace.</p><a class="btn ghost" href="${joinLink}" target="_blank" rel="noopener">Sell with us</a>`;
+}
+mkF.addEventListener("click",e=>{const b=e.target.closest("[data-mf]");if(b)renderMarket(b.dataset.mf)});
+mkGrid.addEventListener("click",e=>{const b=e.target.closest("[data-madd]");if(!b)return;const p=mkProducts.find(x=>x.id===b.dataset.madd);if(!p)return;const sel=mkGrid.querySelector(`[data-mopt="${p.id}"]`),o=sel?sel.value:"";const br=brandOf(p.brand);addItem({id:p.id+(o?"-"+slug(o):""),name:p.name+(o?" · "+o:"")+" · "+br.name,price:p.price,vendor:p.brand,pid:p.pid,opt:o})});
+renderMarket();
 
 /* booking */
 /* real hours: Mon–Fri 4:30–7:30pm, Sat–Sun 9am–7:30pm, 45-minute appointments */
