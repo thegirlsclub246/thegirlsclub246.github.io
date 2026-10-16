@@ -901,7 +901,7 @@ function renderGrid(f="all"){
 }
 renderGrid();
 {const fl=document.querySelector("#lashes .filters");if(fl)[...new Set(products.filter(p=>p.vendor).map(p=>p.cat))].forEach(c=>{const b=document.createElement("button");b.className="chip";b.dataset.f=c;b.setAttribute("aria-pressed","false");b.textContent=c.slice(2);fl.appendChild(b)});
- const j=document.getElementById("mkJoin");if(j&&MK.show!==false){j.innerHTML=`<p><b>Own a beauty brand in Barbados?</b> Join The Girls Club Marketplace as a founding brand.</p><a class="btn ghost" href="${waLink("Hi Marishka! 💕 I have a beauty brand and I'd love to hear about selling on The Girls Club Marketplace.")}" target="_blank" rel="noopener">Sell with us</a>`;j.hidden=false}}
+ const j=document.getElementById("mkJoin");if(j&&MK.show!==false){j.innerHTML=`<p><b>Own a beauty brand in Barbados?</b> Join The Girls Club Marketplace as a founding brand.</p><a class="btn ghost" href="brands.html">Sell with us</a>`;j.hidden=false}}
 document.querySelectorAll("#lashes .chip").forEach(c=>{if(c.dataset.f!=="all"&&!products.some(p=>p.cat===c.dataset.f))c.hidden=true});
 document.querySelectorAll("#lashes .chip").forEach(c=>c.addEventListener("click",()=>{
   document.querySelectorAll("#lashes .chip").forEach(x=>x.setAttribute("aria-pressed",x===c));renderGrid(c.dataset.f)}));

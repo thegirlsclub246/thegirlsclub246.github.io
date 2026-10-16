@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sell with us · The Girls Club Marketplace</title>
+<meta name="description" content="Join The Girls Club Marketplace as a founding brand. Keep 85% of every sale, $0 to join, paid every Monday. For women-owned beauty brands in Barbados.">
+<meta property="og:title" content="Become a founding brand · The Girls Club Marketplace">
+<meta property="og:description" content="Barbados' beauty store, all in one place. Keep 85% of every sale, $0 to join, paid every Monday.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thegirlsclub246.github.io/brands">
+<meta name="theme-color" content="#FFF4B0">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@500;600;700&display=swap">
+<style>
+:root{
+  --bg:#FFF6FA; --card:#FFFFFF; --ink:#4A143D; --muted:#7A4A6A; --pink:#FF4D94; --deep:#C4256B;
+  --lemon:#FFF4B0; --blush:#FFE6F0; --rose:#F06292;
+  --display:"Pacifico","Brush Script MT",cursive; --body:"Quicksand","Nunito","Segoe UI",system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;font-weight:500}
+img{max-width:100%}
+.band{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.in{max-width:980px;margin:0 auto}
+h1,h2,h3{margin:0;text-wrap:balance}
+p{margin:0}
+a{color:var(--deep)}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--deep)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-weight:700;font-size:17px;border-radius:999px;padding:14px 26px;background:var(--pink);color:#fff;border:3px solid var(--pink);box-shadow:4px 4px 0 var(--ink)}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
+.btn:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+@media (prefers-reduced-motion:no-preference){.btn{transition:transform .15s,box-shadow .15s}}
+
+.hero{background:var(--lemon);border-bottom:4px solid var(--rose);padding-block:30px 46px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:34px}
+.logo{font-family:var(--display);font-size:26px;color:var(--pink);line-height:1.2;text-decoration:none}
+.logo small{display:block;font-family:var(--body);font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink)}
+.pill{font-size:13px;font-weight:700;background:#fff;border:2px solid var(--rose);border-radius:999px;padding:6px 14px}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(40px,8.5vw,76px);line-height:1.12;color:var(--ink);margin:12px 0 18px;max-width:14ch}
+.hero h1 em{font-style:normal;color:var(--pink)}
+.hero .lead{font-size:clamp(18px,2.6vw,21px);max-width:58ch}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:26px;align-items:center}
+.hero .ctas span{font-weight:600;color:var(--muted)}
+
+.dream{padding-block:52px}
+.dream .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:34px;align-items:center}
+@media (max-width:760px){.dream .grid{grid-template-columns:1fr}}
+.dream h2{font-family:var(--display);font-weight:400;font-size:clamp(30px,5vw,44px);line-height:1.2;color:var(--deep);margin:8px 0 14px}
+.dream p+p{margin-top:12px}
+.shelf{background:var(--card);border:3px solid var(--rose);border-radius:28px;padding:22px;box-shadow:8px 8px 0 var(--blush)}
+.shelf h3{font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.cats{display:flex;flex-wrap:wrap;gap:10px}
+.cats span{background:var(--blush);border-radius:999px;padding:8px 16px;font-weight:700}
+.cats span:nth-child(3n){background:var(--lemon)}
+.shelf p{margin-top:16px;font-size:15px;color:var(--muted)}
+
+.deal{background:var(--ink);color:#fff;padding-block:54px}
+.deal .eyebrow{color:var(--lemon)}
+.deal h2{font-family:var(--display);font-weight:400;font-size:clamp(30px,5vw,44px);line-height:1.2;margin:8px 0 26px}
+.nums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width:820px){.nums{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.num{background:rgba(255,255,255,.07);border:2px solid rgba(255,255,255,.18);border-radius:22px;padding:18px}
+.num b{display:block;font-size:clamp(34px,5vw,48px);line-height:1.05;color:var(--lemon);font-variant-numeric:tabular-nums}
+.num span{display:block;font-weight:700;margin-top:6px}
+.num small{display:block;color:#F5D6E6;font-size:14px;margin-top:4px}
+.example{margin-top:22px;background:var(--pink);border-radius:22px;padding:18px 20px;font-size:18px}
+.example b{font-variant-numeric:tabular-nums}
+
+.steps{padding-block:54px}
+.steps h2,.look h2,.faq h2{font-family:var(--display);font-weight:400;font-size:clamp(30px,5vw,44px);line-height:1.2;color:var(--deep);margin:8px 0 24px}
+ol.how{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;counter-reset:s}
+@media (max-width:820px){ol.how{grid-template-columns:1fr 1fr}}
+@media (max-width:460px){ol.how{grid-template-columns:1fr}}
+ol.how li{counter-increment:s;background:var(--card);border:2px solid var(--blush);border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:8px}
+ol.how li::before{content:counter(s);width:40px;height:40px;border-radius:50%;background:var(--lemon);border:2px solid var(--ink);display:grid;place-items:center;font-weight:700;font-size:18px}
+ol.how b{font-size:18px}
+ol.how p{color:var(--muted);font-size:15.5px}
+
+.gets{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:30px}
+@media (max-width:700px){.gets{grid-template-columns:1fr}}
+.get{background:var(--blush);border-radius:22px;padding:18px 20px}
+.get b{display:block;font-size:18px;margin-bottom:4px}
+
+.look{background:var(--card);border-block:3px solid var(--blush);padding-block:54px}
+.look .grid{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+@media (max-width:760px){.look .grid{grid-template-columns:1fr}}
+ul.ticks{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+ul.ticks li{padding-left:34px;position:relative}
+ul.ticks li::before{content:"";position:absolute;left:0;top:3px;width:22px;height:22px;border-radius:50%;background:var(--pink);box-shadow:inset 0 0 0 6px #fff,0 0 0 2px var(--pink)}
+.proof{background:var(--lemon);border-radius:24px;padding:22px}
+.proof b.big{display:block;font-size:44px;line-height:1.05;color:var(--deep);font-variant-numeric:tabular-nums}
+.proof p+p{margin-top:10px}
+.proof .small{font-size:14px;color:var(--muted)}
+
+.faq{padding-block:54px}
+.faq details{background:var(--card);border:2px solid var(--blush);border-radius:18px;padding:14px 18px;margin-bottom:12px}
+.faq summary{font-weight:700;cursor:pointer;font-size:17.5px}
+.faq details p{margin-top:10px;color:var(--muted)}
+.faq summary:focus-visible{outline:3px solid var(--pink);outline-offset:4px;border-radius:6px}
+
+.close{background:var(--pink);color:#fff;padding-block:54px;text-align:center}
+.close h2{font-family:var(--display);font-weight:400;font-size:clamp(32px,6vw,52px);line-height:1.15;margin-bottom:14px}
+.close p{max-width:56ch;margin:0 auto 24px;font-size:18px}
+.close .btn{background:var(--lemon);color:var(--ink);border-color:var(--ink)}
+.close .contact{margin-top:20px;font-weight:700}
+.close .contact a{color:#fff}
+footer{padding-block:22px;text-align:center;font-size:14px;color:var(--muted)}
+footer a{color:var(--deep);font-weight:700;text-decoration:none}
+</style>
+</head>
+<body>
+
+<header class="band hero">
+  <div class="in">
+    <div class="top">
+      <a class="logo" href="./">The Girls Club<small>Marketplace · Barbados</small></a>
+      <span class="pill">Founding brands wanted 🎀</span>
+    </div>
+    <span class="eyebrow">For Bajan beauty brands</span>
+    <h1>Barbados' beauty store, <em>all in one place.</em></h1>
+    <p class="lead">We're building one website where women in Barbados can shop their whole look from local, women-owned brands. Hair, nails, lashes, skincare, perfume and body care, in one bag, delivered to their door. We'd love your brand to be in it.</p>
+    <div class="ctas">
+      <a class="btn" data-wa href="https://wa.me/12468504460?text=Hi%20Marishka!%20%F0%9F%92%95%20I'd%20love%20to%20join%20The%20Girls%20Club%20Marketplace%20as%20a%20founding%20brand." target="_blank" rel="noopener">Become a founding brand</a>
+      <span>or WhatsApp 1 (246) 850-4460</span>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="band dream">
+  <div class="in grid">
+    <div>
+      <span class="eyebrow">The picture</span>
+      <h2>One website. Her whole glam routine.</h2>
+      <p>She's getting ready for a fete, a wedding, or just a soft life weekend. Right now she hops between ten Instagram pages, waits on DMs and drives across the island to find what she needs.</p>
+      <p>On The Girls Club Marketplace she opens one site, finds trusted Bajan brands side by side, checks out once and gets it all delivered together. Your products, your name and your story are right there when she's ready to buy.</p>
+    </div>
+    <div class="shelf" aria-label="What shoppers will find">
+      <h3>On the shelf</h3>
+      <div class="cats"><span>Hair</span><span>Nails</span><span>Lashes &amp; brows</span><span>Skincare</span><span>Body care</span><span>Perfume</span><span>Makeup</span><span>Accessories</span></div>
+      <p>Sold next to The Girls Club's own cluster lashes, lip treats and Academy courses.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band deal">
+  <div class="in">
+    <span class="eyebrow">The deal</span>
+    <h2>Simple, fair, and paid every week.</h2>
+    <div class="nums">
+      <div class="num"><b>85%</b><span>of every sale is yours</span><small>Founding brand rate until 31 Jan 2027, then 80%</small></div>
+      <div class="num"><b>$0</b><span>to join</span><small>No listing fees, no monthly fees</small></div>
+      <div class="num"><b>Mon</b><span>payouts every week</span><small>Bank transfer, FirstPay or BPWCCUL</small></div>
+      <div class="num"><b>60</b><span>days per stock batch</span><small>Then renew, swap or collect</small></div>
+    </div>
+    <p class="example">Example: you sell a <b>BBD $40</b> body butter. You get <b>BBD $34</b>, paid the Monday after the week it sells.</p>
+  </div>
+</section>
+
+<section class="band steps">
+  <div class="in">
+    <span class="eyebrow">How it works</span>
+    <h2>From your shelf to her door in four steps.</h2>
+    <ol class="how">
+      <li><b>Join</b><p>Sign in to your own vendor page, add your brand story and sign the agreement online.</p></li>
+      <li><b>Add your products</b><p>Upload photos, set your prices in BBD and say how many you have. Marishka reviews them.</p></li>
+      <li><b>Drop off stock</b><p>Bring a few pieces to St. Thomas. We log every piece so you always know what's here.</p></li>
+      <li><b>We sell, you earn</b><p>We take the payment, deliver island-wide and answer customers. You get paid every Monday.</p></li>
+    </ol>
+    <div class="gets">
+      <div class="get"><b>Your own vendor page</b>Change prices and stock any time, and see your sales, payouts, website visits and product views.</div>
+      <div class="get"><b>We handle the hard parts</b>Card, FirstPay and BPWCCUL payments, island-wide delivery, collection and customer questions.</div>
+      <div class="get"><b>Your brand, front and centre</b>Every product shows "Sold by" your brand, with your story, so shoppers find you again.</div>
+      <div class="get"><b>Promotion included</b>Founding brands are featured on @thegirlsclub246 as the Marketplace launches for Christmas.</div>
+    </div>
+  </div>
+</section>
+
+<section class="band look">
+  <div class="in grid">
+    <div>
+      <span class="eyebrow">Who we're looking for</span>
+      <h2>Brands we'd shop ourselves.</h2>
+      <ul class="ticks">
+        <li>Women-owned and based in Barbados</li>
+        <li>Beauty and self-care: hair, nails, lashes, skin, body, perfume, makeup or accessories</li>
+        <li>Products that are legal, genuine and labelled with ingredients and your brand name</li>
+        <li>Clear photos and enough stock to keep a few pieces with us</li>
+      </ul>
+    </div>
+    <div class="proof">
+      <span class="eyebrow">Already reaching Bajan women</span>
+      <b class="big">432</b>
+      <p>visits to our website from our ads in just 5 days this October, from women across Barbados.</p>
+      <p class="small">Every visit to the website is now counted, and you'll see the latest numbers in your vendor page.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band faq">
+  <div class="in">
+    <span class="eyebrow">Questions</span>
+    <h2>Good to know.</h2>
+    <details><summary>Who sets my prices?</summary><p>You do. You set every price in BBD on your vendor page, and we never discount your products without your OK.</p></details>
+    <details><summary>Can I still sell on my own page and in my shop?</summary><p>Yes. Keep selling everywhere you do now. We only ask that you don't advertise the same product for less than its Marketplace price.</p></details>
+    <details><summary>How and when do I get paid?</summary><p>Every Monday, for everything sold the week before, by bank transfer, FirstPay or BPWCCUL. Your vendor page shows each sale and payout.</p></details>
+    <details><summary>What if something doesn't sell?</summary><p>Each batch stays with us for 60 days. Then you can renew it, swap it for new stock, or collect it. Your products stay yours until they sell.</p></details>
+    <details><summary>What about returns and damaged items?</summary><p>We handle customer questions and returns. If an item is faulty because of the product, it comes back to you and the refund comes out of your next payout. If we damage something, we pay you for it.</p></details>
+    <details><summary>What do I need to sign up?</summary><p>A free sign-in for your vendor page (we'll walk you through it), your product photos and prices, and how you'd like to be paid.</p></details>
+    <details><summary>Is there a contract?</summary><p>Yes, a short consignment agreement you read and sign on your vendor page. Either of us can end it with 14 days' notice.</p></details>
+  </div>
+</section>
+
+<section class="band close">
+  <div class="in">
+    <h2>Be one of our founding brands.</h2>
+    <p>We're choosing a small group of founding brands to launch the Marketplace before Christmas, the busiest shopping season of the year. Founding brands keep 85% of every sale until 31 January.</p>
+    <a class="btn" data-wa href="https://wa.me/12468504460?text=Hi%20Marishka!%20%F0%9F%92%95%20I'd%20love%20to%20join%20The%20Girls%20Club%20Marketplace%20as%20a%20founding%20brand." target="_blank" rel="noopener">Message Marishka on WhatsApp</a>
+    <p class="contact">WhatsApp <a href="https://wa.me/12468504460" target="_blank" rel="noopener">1 (246) 850-4460</a> · Instagram <a href="https://instagram.com/thegirlsclub246" target="_blank" rel="noopener">@thegirlsclub246</a></p>
+  </div>
+</section>
+</main>
+
+<footer class="band"><div class="in">The Girls Club · St. Thomas, Barbados · <a href="./">Home</a> · <a href="./#lashes">Marketplace</a> · <a href="policies.html">Policies</a></div></footer>
+
+<script>
+document.querySelectorAll("[data-wa]").forEach(a=>a.addEventListener("click",()=>{try{window.goatcounter&&goatcounter.count({path:"brands-whatsapp",title:"Brands page WhatsApp click",event:true})}catch(e){}}));
+</script>
+<script data-goatcounter="https://thegirlsclub246.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
