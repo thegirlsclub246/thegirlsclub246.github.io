@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Sell with us · The Girls Club Marketplace</title>
-<meta name="description" content="Join The Girls Club Marketplace as a founding brand. Keep 85% of every sale, $0 to join, paid every Monday. For women-owned beauty brands in Barbados.">
+<meta name="description" content="Join The Girls Club Marketplace as a founding brand. Your first month is free on any plan, and you get paid every Monday. For women-owned beauty brands in Barbados.">
 <meta property="og:title" content="Become a founding brand · The Girls Club Marketplace">
-<meta property="og:description" content="Barbados' beauty store, all in one place. Keep 85% of every sale, $0 to join, paid every Monday.">
+<meta property="og:description" content="Barbados' beauty store, all in one place. First month free, paid every Monday.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://thegirlsclub246.github.io/brands">
 <meta name="theme-color" content="#FFF4B0">
@@ -70,6 +70,25 @@ a{color:var(--deep)}
 .num small{display:block;color:#F5D6E6;font-size:14px;margin-top:4px}
 .example{margin-top:22px;background:var(--pink);border-radius:22px;padding:18px 20px;font-size:18px}
 .example b{font-variant-numeric:tabular-nums}
+.free{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;background:var(--lemon);color:var(--ink);border-radius:22px;padding:16px 22px;margin-bottom:22px;box-shadow:5px 5px 0 var(--pink)}
+.free b{font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,34px);color:var(--deep);line-height:1.2}
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:860px){.plans{grid-template-columns:1fr}}
+.plan{position:relative;background:#fff;color:var(--ink);border-radius:24px;padding:22px;display:flex;flex-direction:column;gap:10px}
+.plan h3{font-family:var(--display);font-weight:400;font-size:32px;line-height:1.25;color:var(--pink)}
+.plan .lead{font-weight:700}
+.plan ul{list-style:none;margin:0;padding:0;display:grid;gap:7px;flex:1}
+.plan li{padding-left:24px;position:relative;font-size:16px}
+.plan li::before{content:"\2665";position:absolute;left:0;color:var(--pink)}
+.plan li.plus{padding-left:0;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.plan li.plus::before{content:none}
+.plan .price{font-size:15px;font-weight:600;color:var(--muted);border-top:2px solid var(--blush);padding-top:10px}
+.plan .price b{font-size:20px;color:var(--ink)}
+.plan.spot{background:var(--pink);color:#fff}.plan.spot h3{color:#fff}.plan.spot li::before{color:var(--lemon)}.plan.spot li.plus,.plan.spot .price{color:#FFE6F0}.plan.spot .price b{color:#fff}.plan.spot .price{border-color:rgba(255,255,255,.35)}
+.plan.sig{background:var(--lemon)}.plan.sig h3{color:var(--deep)}.plan.sig .price{border-color:rgba(74,20,61,.15)}
+.plan .tag{position:absolute;top:-12px;right:18px;background:var(--ink);color:#fff;font-size:12px;font-weight:700;letter-spacing:.1em;padding:5px 12px;border-radius:999px}
+.deal .after{margin-top:20px;display:flex;flex-wrap:wrap;gap:10px 22px;font-weight:700}
+.deal .after span::before{content:"\2665  ";color:var(--pink)}
 
 .steps{padding-block:54px}
 .steps h2,.look h2,.faq h2{font-family:var(--display);font-weight:400;font-size:clamp(30px,5vw,44px);line-height:1.2;color:var(--deep);margin:8px 0 24px}
@@ -150,15 +169,21 @@ footer a{color:var(--deep);font-weight:700;text-decoration:none}
 
 <section class="band deal">
   <div class="in">
-    <span class="eyebrow">The deal</span>
-    <h2>Simple, fair, and paid every week.</h2>
-    <div class="nums">
-      <div class="num"><b>85%</b><span>of every sale is yours</span><small>Founding brand rate until 31 Jan 2027, then 80%</small></div>
-      <div class="num"><b>$0</b><span>to join</span><small>No listing fees, no monthly fees</small></div>
-      <div class="num"><b>Mon</b><span>payouts every week</span><small>Bank transfer, FirstPay or BPWCCUL</small></div>
-      <div class="num"><b>60</b><span>days per stock batch</span><small>Then renew, swap or collect</small></div>
+    <span class="eyebrow">Pick your plan</span>
+    <h2>Grow your brand, your way.</h2>
+    <div class="free"><b>Your first month is FREE</b><span>on any plan. Try it out, watch the sales come in, and see if it's the right fit.</span></div>
+    <div class="plans">
+      <div class="plan"><h3>Essentials</h3><p class="lead">Your brand, online and selling.</p>
+        <ul><li>Your own vendor profile and storefront</li><li>A &ldquo;Sold by&rdquo; label on every product</li><li>Secure checkout: card, bank and cash</li><li>We handle orders and customer questions</li><li>Weekly payouts, straight to you</li></ul>
+        <p class="price"><b>$40</b>/month + 5% per sale</p></div>
+      <div class="plan spot"><span class="tag">MORE CUSTOMERS</span><h3>Spotlight</h3><p class="lead">We put your brand in front of more girls.</p>
+        <ul><li class="plus">Everything in Essentials, plus</li><li>Featured Brands spot on our homepage</li><li>Shown first in your category</li><li>Monthly Instagram and Facebook shout-outs</li><li>In our seasonal gift guides and promos</li></ul>
+        <p class="price"><b>$75</b>/month + 5% per sale</p></div>
+      <div class="plan sig"><span class="tag">BIGGEST PUSH</span><h3>Signature</h3><p class="lead">Our biggest push for your brand.</p>
+        <ul><li class="plus">Everything in Spotlight, plus</li><li>Top homepage banner placement</li><li>Your own posts and a Reel every month</li><li>First pick at Girls Club pop-ups and events</li><li>Monthly check-in on what's selling</li></ul>
+        <p class="price"><b>$125</b>/month + 5% per sale</p></div>
     </div>
-    <p class="example">Example: you sell a <b>BBD $40</b> body butter. You get <b>BBD $34</b>, paid the Monday after the week it sells.</p>
+    <p class="after"><span>Paid every Monday</span><span>No long contracts</span><span>Upgrade or switch plans anytime</span><span>Prices in BBD</span></p>
   </div>
 </section>
 
@@ -167,7 +192,7 @@ footer a{color:var(--deep);font-weight:700;text-decoration:none}
     <span class="eyebrow">How it works</span>
     <h2>From your shelf to her door in four steps.</h2>
     <ol class="how">
-      <li><b>Join</b><p>Sign in to your own vendor page, add your brand story and sign the agreement online.</p></li>
+      <li><b>Join</b><p>Pick your plan, sign in to your own vendor page, add your brand story and sign the agreement online.</p></li>
       <li><b>Add your products</b><p>Upload photos, set your prices in BBD and say how many you have. Marishka reviews them.</p></li>
       <li><b>Drop off stock</b><p>Bring a few pieces to St. Thomas. We log every piece so you always know what's here.</p></li>
       <li><b>We sell, you earn</b><p>We take the payment, deliver island-wide and answer customers. You get paid every Monday.</p></li>
@@ -176,7 +201,7 @@ footer a{color:var(--deep);font-weight:700;text-decoration:none}
       <div class="get"><b>Your own vendor page</b>Change prices and stock any time, and see every sale and payout as it happens.</div>
       <div class="get"><b>We handle the hard parts</b>Card, FirstPay and BPWCCUL payments, island-wide delivery, collection and customer questions.</div>
       <div class="get"><b>Your brand, front and centre</b>Every product shows "Sold by" your brand, with your story, so shoppers find you again.</div>
-      <div class="get"><b>Promotion included</b>Founding brands are featured on @thegirlsclub246 as the Marketplace launches for Christmas.</div>
+      <div class="get"><b>Launch promo</b>Founding brands are featured on @thegirlsclub246 as the Marketplace launches for Christmas.</div>
     </div>
   </div>
 </section>
@@ -210,7 +235,10 @@ footer a{color:var(--deep);font-weight:700;text-decoration:none}
     <details><summary>How and when do I get paid?</summary><p>Every Monday, for everything sold the week before, by bank transfer, FirstPay or BPWCCUL. Your vendor page shows each sale and payout.</p></details>
     <details><summary>What if something doesn't sell?</summary><p>Each batch stays with us for 60 days. Then you can renew it, swap it for new stock, or collect it. Your products stay yours until they sell.</p></details>
     <details><summary>What about returns and damaged items?</summary><p>We handle customer questions and returns. If an item is faulty because of the product, it comes back to you and the refund comes out of your next payout. If we damage something, we pay you for it.</p></details>
-    <details><summary>What do I need to sign up?</summary><p>A free sign-in for your vendor page (we'll walk you through it), your product photos and prices, and how you'd like to be paid.</p></details>
+    <details><summary>How does the free month work?</summary><p>Your first month on any plan is free. When you join, you set up your monthly plan payment by card through PayPal's secure page, but nothing is charged until your second month starts. Change or cancel your plan anytime before then.</p></details>
+    <details><summary>What is the 5% per sale for?</summary><p>It covers the card and payment fees on your orders, so you never have to deal with them. Everything else from the sale is yours.</p></details>
+    <details><summary>Can I change my plan?</summary><p>Yes. Upgrade, downgrade or switch anytime. The new plan starts from your next monthly payment.</p></details>
+    <details><summary>What do I need to sign up?</summary><p>A free sign-in for your vendor page (we'll walk you through it), your product photos and prices, how you'd like to be paid, and a debit or credit card for your plan (charged from month two).</p></details>
     <details><summary>Is there a contract?</summary><p>Yes, a short consignment agreement you read and sign on your vendor page. Either of us can end it with 14 days' notice.</p></details>
   </div>
 </section>
@@ -218,7 +246,7 @@ footer a{color:var(--deep);font-weight:700;text-decoration:none}
 <section class="band close">
   <div class="in">
     <h2>Be one of our founding brands.</h2>
-    <p>We're choosing a small group of founding brands to launch the Marketplace before Christmas, the busiest shopping season of the year. Founding brands keep 85% of every sale until 31 January.</p>
+    <p>We're choosing a small group of founding brands to launch the Marketplace before Christmas, the busiest shopping season of the year. Your first month is free, so there's never been a better time to try.</p>
     <a class="btn" data-wa href="https://wa.me/12468504460?text=Hi%20Marishka!%20%F0%9F%92%95%20I'd%20love%20to%20join%20The%20Girls%20Club%20Marketplace%20as%20a%20founding%20brand." target="_blank" rel="noopener">Message Marishka on WhatsApp</a>
     <p class="contact">WhatsApp <a href="https://wa.me/12468504460" target="_blank" rel="noopener">1 (246) 850-4460</a> · Instagram <a href="https://instagram.com/thegirlsclub246" target="_blank" rel="noopener">@thegirlsclub246</a></p>
   </div>
