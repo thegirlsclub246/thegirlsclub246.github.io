@@ -20,6 +20,11 @@
 .courses .course-card{max-width:none}
 .course-card .perks{margin:.4rem .3rem 1rem;font-size:.95rem}
 .course-card .desc{margin:0 .3rem;color:var(--muted)}
+.course-card .paywith{margin:1rem 0 .5rem;text-align:center;font-weight:700;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--pink)}
+.course-card .paynote{text-align:center;margin:.5rem 0 .9rem;font-size:.88rem}
+.course-card .localpay{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.course-card .localpay .btn{width:100%;padding:0 .6rem;font-size:.95rem;background:var(--plum,#4A143D);border-color:var(--plum,#4A143D);color:#fff}
+@media (max-width:380px){.course-card .localpay{grid-template-columns:1fr}}
 .course-cover strong{font-size:clamp(1.6rem,4vw,2.1rem)}
 .academy-intro{text-align:center;max-width:60ch;margin:0 auto}
 .academy-intro .creds{justify-content:center}
@@ -657,11 +662,11 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
       </div>
       <div class="steps">
         <div class="step"><span class="num">1</span><h3>Choose your course</h3><p>Pick the cluster lash or eyelash extension course below.</p></div>
-        <div class="step"><span class="num">2</span><h3>Tap Enrol now</h3><p>A secure checkout opens right on this page.</p></div>
-        <div class="step"><span class="num">3</span><h3>Enter your email and pay</h3><p>Pay by debit or credit card. No account needed.</p></div>
-        <div class="step"><span class="num">4</span><h3>Start learning</h3><p>Your course link lands in your email straight away.</p></div>
+        <div class="step"><span class="num">2</span><h3>Pick how to pay</h3><p>Card, FirstPay or BPWCCUL. All three work.</p></div>
+        <div class="step"><span class="num">3</span><h3>Enter your email and pay</h3><p>Card gives instant access. FirstPay or BPWCCUL: we email your login once payment is in.</p></div>
+        <div class="step"><span class="num">4</span><h3>Start learning</h3><p>Your course link lands in your email.</p></div>
       </div>
-      <p class="steps-note">Card checkout shows US dollars: US$1 is BBD $2. Prefer FirstPay or BPWCCUL? Use the second button on your course and we'll enrol you.</p>
+      <p class="steps-note">💳 Card · 📱 FirstPay · 🏦 BPWCCUL. Card checkout shows US dollars (US$1 = BBD $2). FirstPay and BPWCCUL are paid in BBD.</p>
       <div class="courses" id="courses"></div>
       <p class="muted academy-note" data-c="academy.note"></p>
     </div>
@@ -847,11 +852,12 @@ function renderAcademy(){
     <div class="course-meta"><div><span class="ptype">Online course</span><h3>${esc(c.title)}</h3></div><span class="price"><small>BBD</small> ${was>pr?`<s class="was" aria-label="Was ${money(was)}">${money(was)}</s> `:""}${money(pr)}</span></div>
     ${c.description?`<p class="desc">${esc(c.description)}</p>`:""}
     ${list(c.points).length?`<ul class="perks">${list(c.points).map(p=>`<li>${esc(p)}</li>`).join("")}</ul>`:""}
-    ${c.payhip_id?`<a class="btn payhip-buy-button" href="https://payhip.com/b/${encodeURIComponent(c.payhip_id)}" data-theme="none" data-product="${esc(c.payhip_id)}" style="display:block;width:100%;text-align:center">Enrol now · instant access</a>${c.usd_note?`<p class="muted" style="text-align:center;margin:.6rem 0 .9rem">${esc(c.usd_note)}</p>`:""}`:""}
-    ${c.local_pay!==false?`<a class="btn ghost" data-course="${i}" href="#" style="display:block;width:100%;text-align:center">Pay with FirstPay or BPWCCUL</a><p class="muted" style="text-align:center;margin:.6rem 0 0">Pay locally in BBD · we enrol you and email your login once payment is in</p>`:""}
+    <p class="paywith">Choose how to pay</p>
+    ${c.payhip_id?`<a class="btn payhip-buy-button" href="https://payhip.com/b/${encodeURIComponent(c.payhip_id)}" data-theme="none" data-product="${esc(c.payhip_id)}" style="display:flex;width:100%;text-align:center">💳 Pay by card</a>${c.usd_note?`<p class="muted paynote">${esc(c.usd_note)}</p>`:""}`:""}
+    ${c.local_pay!==false?`<div class="localpay"><a class="btn" data-course="${i}" data-pay="firstpay" href="#">📱 Pay with FirstPay</a><a class="btn" data-course="${i}" data-pay="bpwccul" href="#">🏦 Pay with BPWCCUL</a></div><p class="muted paynote">Pay in BBD ${money(pr)} · we email your login once payment is in</p>`:""}
   </div>`}).join("");
-  el.onclick=e=>{const b=e.target.closest("[data-course]");if(!b)return;e.preventDefault();const c=cs[+b.dataset.course];
-    addItem({id:"course-"+slug(c.title),course:c.title,name:"The Girls Club Academy · "+c.title,price:num(c.price),single:true,note:"Digital · sent after payment"})};
+  el.onclick=e=>{const b=e.target.closest("[data-course]");if(!b)return;e.preventDefault();const c=cs[+b.dataset.course];window.tgcPrefPay=b.dataset.pay||"";
+    addItem({id:"course-"+slug(c.title),course:c.title,name:"The Girls Club Academy · "+c.title,price:num(c.price),single:true,note:"Digital · sent after payment"});if(window.tgcPrefPay){stage="checkout";renderDrawer()}};
   if(cs.some(c=>c.payhip_id)){const s=document.createElement("script");s.src="https://payhip.com/payhip.js";s.async=true;document.head.appendChild(s)}
 }
 function giftLine(){if(FREE_TRAYS_LEFT<=0)return "";
@@ -968,7 +974,7 @@ function renderDrawer(){
       <p class="secure">Next, you'll see our payment details and your order number.</p>
       <button type="button" class="muted" id="back" style="border:0;background:none;text-decoration:underline;display:block;margin:4px auto">Back to bag</button></form>`;
     const drawTot=()=>{const t=totals();document.getElementById("tot").innerHTML=`<div><span>Subtotal</span><span>BBD ${money(t.sub)}</span></div><div><span>Delivery</span><span>${money(t.ship)}</span></div>${giftOn()?`<div><span>🎁 Free surprise tray</span><span>$0.00</span></div>`:""}<div class="grand"><span>Total</span><span>BBD ${money(t.total)}</span></div>`};
-    drawTot();const d=document.getElementById("delivery");const CASH_ON_COLLECTION=!!S.cash_on_collection;const cashOk=()=>CASH_ON_COLLECTION&&!!d&&d.value==="pickup"&&!cart.some(c=>c.id==="deposit");const syncCash=()=>{const co=document.getElementById("cashOpt");co.hidden=!cashOk();if(co.hidden&&co.querySelector("input").checked)document.querySelector('input[name="pay"][value="firstpay"]').checked=true};syncCash();
+    drawTot();if(window.tgcPrefPay){const pr=document.querySelector(`input[name="pay"][value="${window.tgcPrefPay}"]`);if(pr)pr.checked=true;window.tgcPrefPay=""}const d=document.getElementById("delivery");const CASH_ON_COLLECTION=!!S.cash_on_collection;const cashOk=()=>CASH_ON_COLLECTION&&!!d&&d.value==="pickup"&&!cart.some(c=>c.id==="deposit");const syncCash=()=>{const co=document.getElementById("cashOpt");co.hidden=!cashOk();if(co.hidden&&co.querySelector("input").checked)document.querySelector('input[name="pay"][value="firstpay"]').checked=true};syncCash();
     if(d)d.onchange=()=>{document.getElementById("parishField").hidden=d.value==="pickup";document.getElementById("pickupNote").hidden=d.value!=="pickup";syncCash();drawTot()};
     document.getElementById("back").onclick=()=>{stage="bag";renderDrawer()};
     document.getElementById("co").addEventListener("submit",e=>{e.preventDefault();
