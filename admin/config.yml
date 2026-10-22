@@ -7,8 +7,8 @@ backend:
     update: "Update {{slug}} from admin"
     uploadMedia: "Upload {{path}}"
 
-site_url: https://thegirlsclub246.github.io
-display_url: https://thegirlsclub246.github.io
+site_url: https://thegirlsclub246.com
+display_url: https://thegirlsclub246.com
 logo_url: /img/icon-512.png
 
 media_folder: img
