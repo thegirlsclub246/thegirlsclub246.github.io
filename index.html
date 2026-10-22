@@ -7,7 +7,7 @@
 <meta name="description" content="The Girls Club: DIY cluster lashes and in-person lash appointments in Barbados. Shop online 24/7 and pay by card, FirstPay or BPWCCUL.">
 <meta name="theme-color" content="#ff4d94">
 <meta property="og:title" content="The Girls Club">
-<meta property="og:description" content="DIY cluster lashes and in-person appointments in Barbados. Pink October sale: all trays BBD $21.99 till Oct 31.">
+<meta property="og:description" content="DIY cluster lashes and in-person appointments in Barbados. Pinktober sale: all trays BBD $21.99 till Oct 31.">
 <meta property="og:image" content="https://thegirlsclub246.github.io/img/share.jpg">
 <meta property="og:url" content="https://thegirlsclub246.github.io/">
 <meta property="og:type" content="website">
@@ -993,7 +993,7 @@ function renderDrawer(){
 }
 
 
-if(FREE_TRAYS_LEFT>0&&products.some(p=>p.cat==="lashes")){const pp=document.getElementById("promoPill");pp.hidden=false;pp.innerHTML=`🎁 <b>Giveaway:</b> ${esc(H.giveaway_text||"")}`}
+{const pp=document.getElementById("promoPill");if(FREE_TRAYS_LEFT>0&&products.some(p=>p.cat==="lashes")){pp.hidden=false;pp.innerHTML=`🎁 <b>Giveaway:</b> ${esc(H.giveaway_text||"")}`}else if(H.promo_text){pp.hidden=false;pp.innerHTML=`${H.promo_title?`<b>${esc(H.promo_title)}</b> `:""}${esc(H.promo_text)}`}}
 renderAcademy();
 
 /* booking */
