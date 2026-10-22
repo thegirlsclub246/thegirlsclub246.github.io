@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Sell with us · The Girls Club Marketplace</title>
-<meta name="description" content="Join The Girls Club Marketplace as a founding brand. Your first month is free on any plan, and you get paid every Monday. For women-owned beauty brands in Barbados.">
+<meta name="description" content="Join The Girls Club Marketplace as a founding brand. Start free or get your first month free on any paid plan, sign up online in minutes, and get paid every Monday. For women-owned beauty brands in Barbados.">
 <meta property="og:title" content="Become a founding brand · The Girls Club Marketplace">
 <meta property="og:description" content="Barbados' beauty store, all in one place. First month free, paid every Monday.">
 <meta property="og:type" content="website">
@@ -73,8 +73,10 @@ a{color:var(--deep)}
 .example b{font-variant-numeric:tabular-nums}
 .free{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;background:var(--lemon);color:var(--ink);border-radius:22px;padding:16px 22px;margin-bottom:22px;box-shadow:5px 5px 0 var(--pink)}
 .free b{font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,34px);color:var(--deep);line-height:1.2}
-.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-@media (max-width:860px){.plans{grid-template-columns:1fr}}
+.plans{display:grid;grid-template-columns:1fr;gap:16px}
+@media (min-width:640px){.plans{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1100px){.plans{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.plan.starter{background:#fff;border:3px dashed var(--lemon)}.plan.starter h3{color:var(--deep)}
 .plan{position:relative;background:#fff;color:var(--ink);border-radius:24px;padding:22px;display:flex;flex-direction:column;gap:10px}
 .plan h3{font-family:var(--display);font-weight:400;font-size:32px;line-height:1.25;color:var(--pink)}
 .plan .lead{font-weight:700}
@@ -129,6 +131,45 @@ ul.ticks li::before{content:"";position:absolute;left:0;top:3px;width:22px;heigh
 .close .btn{background:var(--lemon);color:var(--ink);border-color:var(--ink)}
 .close .contact{margin-top:20px;font-weight:700}
 .close .contact a{color:#fff}
+.join{background:var(--blush);padding-block:54px;scroll-margin-top:10px}
+.join h2{font-family:var(--display);font-weight:400;font-size:clamp(30px,5vw,44px);line-height:1.2;color:var(--deep);margin:8px 0 10px}
+.join .intro{max-width:60ch;margin-bottom:22px}
+.jf{background:#fff;border:3px solid var(--rose);border-radius:28px;padding:20px 16px;display:grid;gap:22px;box-shadow:8px 8px 0 var(--lemon);max-width:720px}
+@media (min-width:600px){.jf{padding:28px}}
+.jf fieldset{border:0;margin:0;padding:0;display:grid;gap:14px;min-width:0}
+.jf legend{font-weight:700;font-size:19px;padding:0;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.jf legend i{font-style:normal;width:30px;height:30px;border-radius:50%;background:var(--lemon);border:2px solid var(--ink);display:grid;place-items:center;font-size:15px;flex:none}
+.jf label.f{display:grid;gap:6px;font-weight:700;font-size:16px}
+.jf .hint{font-weight:500;color:var(--muted);font-size:14px}
+.jf input[type=text],.jf input[type=email],.jf input[type=tel],.jf select,.jf textarea{font:inherit;font-weight:500;font-size:17px;color:var(--ink);background:var(--bg);border:2px solid var(--blush);border-radius:14px;padding:12px 14px;width:100%;min-height:50px}
+.jf textarea{min-height:96px;resize:vertical}
+.jf input:focus-visible,.jf select:focus-visible,.jf textarea:focus-visible{outline:3px solid var(--pink);outline-offset:1px;border-color:var(--pink)}
+.jf .two{display:grid;gap:14px}
+@media (min-width:600px){.jf .two{grid-template-columns:1fr 1fr}}
+.pick{display:grid;gap:10px}
+@media (min-width:600px){.pick{grid-template-columns:1fr 1fr}}
+.pick label{position:relative;display:flex;gap:12px;align-items:flex-start;background:var(--bg);border:2px solid var(--blush);border-radius:18px;padding:14px;cursor:pointer;font-weight:500;min-height:50px}
+.pick input{width:22px;height:22px;margin:2px 0 0;accent-color:var(--pink);flex:none}
+.pick b{display:block;font-size:17px}
+.pick span{font-size:14.5px;color:var(--muted)}
+.pick label:has(input:checked){border-color:var(--pink);background:#fff;box-shadow:3px 3px 0 var(--pink)}
+.pick.small label{padding:12px 14px}
+.agreebox{background:var(--bg);border:2px solid var(--blush);border-radius:18px;padding:14px 16px;font-size:15.5px}
+.agreebox summary{font-weight:700;cursor:pointer;color:var(--deep);margin-top:10px}
+.agreebox ol{margin:10px 0 0;padding-left:22px;display:grid;gap:8px;font-size:14.5px;max-height:340px;overflow-y:auto}
+.chk{display:flex;gap:12px;align-items:flex-start;font-weight:600;cursor:pointer}
+.chk input{width:22px;height:22px;margin:2px 0 0;accent-color:var(--pink);flex:none}
+.jf .err{display:none;background:#FFE3E3;color:#8A1C1C;border-radius:12px;padding:10px 14px;font-weight:700;font-size:15px}
+.jf .err.on{display:block}
+.jf button[type=submit]{width:100%;cursor:pointer;font-family:inherit;min-height:54px}
+.jf button[disabled]{opacity:.6;cursor:wait}
+.hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;overflow:hidden}
+.done{background:#fff;border:3px solid var(--pink);border-radius:28px;padding:24px 18px;max-width:720px;box-shadow:8px 8px 0 var(--lemon);display:grid;gap:14px}
+.done h3{font-family:var(--display);font-weight:400;font-size:clamp(30px,6vw,40px);color:var(--pink);line-height:1.2}
+.done ol{margin:0;padding-left:22px;display:grid;gap:10px}
+.done .btn{width:100%}
+.sig-ink{font-family:var(--display);font-size:24px}
+.jf[hidden],.done[hidden]{display:none}
 footer{padding-block:22px;text-align:center;font-size:14px;color:var(--muted)}
 footer a{color:var(--deep);font-weight:700;text-decoration:none}
 </style>
@@ -145,8 +186,8 @@ footer a{color:var(--deep);font-weight:700;text-decoration:none}
     <h1>Barbados' beauty store, <em>all in one place.</em></h1>
     <p class="lead">We're building one website where women in Barbados can shop their whole look from local, women-owned brands. Hair, nails, lashes, skincare, perfume and body care, in one bag, delivered to their door. We'd love your brand to be in it.</p>
     <div class="ctas">
-      <a class="btn" data-wa href="https://wa.me/12468504460?text=Hi%20Marishka!%20%F0%9F%92%95%20I'd%20love%20to%20join%20The%20Girls%20Club%20Marketplace%20as%20a%20founding%20brand." target="_blank" rel="noopener">Become a founding brand</a>
-      <span>or WhatsApp 1 (246) 850-4460</span>
+      <a class="btn" href="#join" data-join>Sign up now</a>
+      <span>Takes about 5 minutes · or <a data-wa href="https://wa.me/12468504460?text=Hi%20Marishka!%20%F0%9F%92%95%20I'd%20love%20to%20join%20The%20Girls%20Club%20Marketplace%20as%20a%20founding%20brand." target="_blank" rel="noopener">WhatsApp us</a></span>
     </div>
   </div>
 </header>
@@ -172,8 +213,11 @@ footer a{color:var(--deep);font-weight:700;text-decoration:none}
   <div class="in">
     <span class="eyebrow">Pick your plan</span>
     <h2>Grow your brand, your way.</h2>
-    <div class="free"><b>Your first month is FREE</b><span>on any plan. Try it out, watch the sales come in, and see if it's the right fit.</span></div>
+    <div class="free"><b>Start FREE</b><span>on Starter, or get your first month free on any paid plan. Try it out, watch the sales come in, and see if it's the right fit.</span></div>
     <div class="plans">
+      <div class="plan starter"><span class="tag">FREE</span><h3>Starter</h3><p class="lead">Start selling with no monthly fee.</p>
+        <ul><li>Your own vendor profile and storefront</li><li>A &ldquo;Sold by&rdquo; label on every product</li><li>Secure checkout: card, bank and cash</li><li>We handle orders and customer questions</li><li>Weekly payouts, straight to you</li></ul>
+        <p class="price"><b>$0</b>/month + 15% per sale</p></div>
       <div class="plan"><h3>Essentials</h3><p class="lead">Your brand, online and selling.</p>
         <ul><li>Your own vendor profile and storefront</li><li>A &ldquo;Sold by&rdquo; label on every product</li><li>Secure checkout: card, bank and cash</li><li>We handle orders and customer questions</li><li>Weekly payouts, straight to you</li></ul>
         <p class="price"><b>$40</b>/month + 5% per sale</p></div>
@@ -184,6 +228,7 @@ footer a{color:var(--deep);font-weight:700;text-decoration:none}
         <ul><li class="plus">Everything in Spotlight, plus</li><li>Top homepage banner placement</li><li>Your own posts and a Reel every month</li><li>First pick at Girls Club pop-ups and events</li><li>Monthly check-in on what's selling</li></ul>
         <p class="price"><b>$125</b>/month + 5% per sale</p></div>
     </div>
+    <p style="margin-top:22px"><a class="btn" href="#join" data-join style="background:var(--lemon);color:var(--ink);border-color:var(--lemon)">Pick a plan and sign up</a></p>
     <p class="after"><span>Paid every Monday</span><span>No long contracts</span><span>Upgrade or switch plans anytime</span><span>Prices in BBD</span></p>
   </div>
 </section>
@@ -193,13 +238,13 @@ footer a{color:var(--deep);font-weight:700;text-decoration:none}
     <span class="eyebrow">How it works</span>
     <h2>From your shelf to her door in four steps.</h2>
     <ol class="how">
-      <li><b>Join</b><p>Pick your plan, sign in to your own vendor page, add your brand story and sign the agreement online.</p></li>
-      <li><b>Add your products</b><p>Upload photos, set your prices in BBD and say how many you have. Marishka reviews them.</p></li>
+      <li><b>Sign up here</b><p>Fill in the short form on this page: your brand, your plan, and sign the agreement online. No account or password needed.</p></li>
+      <li><b>Send your products</b><p>WhatsApp us your product photos, prices in BBD and how many you have. Marishka reviews them and puts them live.</p></li>
       <li><b>Drop off stock</b><p>Bring a few pieces to St. Thomas. We log every piece so you always know what's here.</p></li>
       <li><b>We sell, you earn</b><p>We take the payment, deliver island-wide and answer customers. You get paid every Monday.</p></li>
     </ol>
     <div class="gets">
-      <div class="get"><b>Your own vendor page</b>Change prices and stock any time, and see every sale and payout as it happens.</div>
+      <div class="get"><b>Always in the loop</b>Change prices and stock any time with a WhatsApp, and get a statement of every sale with each Monday payout.</div>
       <div class="get"><b>We handle the hard parts</b>Card, FirstPay and BPWCCUL payments, island-wide delivery, collection and customer questions.</div>
       <div class="get"><b>Your brand, front and centre</b>Every product shows "Sold by" your brand, with your story, so shoppers find you again.</div>
       <div class="get"><b>Launch promo</b>Founding brands are featured on @thegirlsclub246 as the Marketplace launches for Christmas.</div>
@@ -227,20 +272,102 @@ footer a{color:var(--deep);font-weight:700;text-decoration:none}
   </div>
 </section>
 
+<section class="band join" id="join">
+  <div class="in">
+    <span class="eyebrow">Sign up</span>
+    <h2>Join The Girls Club Marketplace.</h2>
+    <p class="intro">Fill this in on your phone in about 5 minutes. No account or password needed. Marishka checks every sign-up and gets back to you on WhatsApp within 2 working days.</p>
+
+    <form class="jf" id="jf" novalidate>
+      <fieldset>
+        <legend><i>1</i>Your brand</legend>
+        <label class="f">Brand or business name<input type="text" name="brand" required maxlength="80" autocomplete="organization"></label>
+        <label class="f">Your full name<input type="text" name="owner" required maxlength="80" autocomplete="name"></label>
+        <div class="two">
+          <label class="f">WhatsApp number<input type="tel" name="phone" required maxlength="30" autocomplete="tel" inputmode="tel" placeholder="246 ..."></label>
+          <label class="f">Email<input type="email" name="email" required maxlength="120" autocomplete="email"></label>
+        </div>
+        <div class="two">
+          <label class="f">Instagram <span class="hint">optional</span><input type="text" name="instagram" maxlength="60" placeholder="@yourbrand"></label>
+          <label class="f">What you sell<select name="category" required>
+            <option value="">Choose one</option>
+            <option>Hair &amp; bonnets</option><option>Nails</option><option>Lashes &amp; brows</option><option>Skincare &amp; body</option><option>Perfume &amp; scents</option><option>Makeup &amp; lips</option><option>Jewellery</option><option>Bags &amp; accessories</option><option>Candles &amp; self-care</option><option>Other</option>
+          </select></label>
+        </div>
+        <label class="f">Tell shoppers about your brand <span class="hint">optional · a few lines for your brand page</span><textarea name="bio" maxlength="600"></textarea></label>
+      </fieldset>
+
+      <fieldset>
+        <legend><i>2</i>Your plan</legend>
+        <div class="pick" id="plans">
+          <label><input type="radio" name="plan" value="starter" required><div><b>Starter · FREE</b><span>$0 a month + 15% per sale. No card needed.</span></div></label>
+          <label><input type="radio" name="plan" value="essentials"><div><b>Essentials · $40/month</b><span>+ 5% per sale. First month free.</span></div></label>
+          <label><input type="radio" name="plan" value="spotlight"><div><b>Spotlight · $75/month</b><span>+ 5% per sale. Homepage feature and shout-outs. First month free.</span></div></label>
+          <label><input type="radio" name="plan" value="signature"><div><b>Signature · $125/month</b><span>+ 5% per sale. Our biggest push. First month free.</span></div></label>
+        </div>
+        <p class="hint" id="planNote">Prices in BBD. You can change your plan anytime.</p>
+      </fieldset>
+
+      <fieldset>
+        <legend><i>3</i>Your products</legend>
+        <label class="f">What would you like to sell first? <span class="hint">optional · name, price in BBD and how many you have</span><textarea name="products" maxlength="1500" placeholder="Vanilla body butter 8oz, $35, 10 in stock&#10;Bonnet (pink satin), $25, 6 in stock"></textarea></label>
+        <p class="hint">You'll send your product photos on WhatsApp after you sign up.</p>
+      </fieldset>
+
+      <fieldset>
+        <legend><i>4</i>How you get paid</legend>
+        <div class="pick small">
+          <label><input type="radio" name="payout" value="Bank transfer" required><div><b>Bank transfer</b></div></label>
+          <label><input type="radio" name="payout" value="FirstPay"><div><b>FirstPay</b></div></label>
+          <label><input type="radio" name="payout" value="BPWCCUL"><div><b>BPWCCUL</b></div></label>
+        </div>
+        <p class="hint">Paid every Monday. Marishka will ask for your account details privately on WhatsApp. Never type card or bank numbers here.</p>
+      </fieldset>
+
+      <fieldset>
+        <legend><i>5</i>Sign the agreement</legend>
+        <div class="agreebox">
+          <p id="agreeSum">Pick a plan above to see your terms.</p>
+          <details><summary>Read the full agreement (17 points)</summary><ol id="agreeList"></ol></details>
+        </div>
+        <label class="f">Sign: type your full name<input type="text" name="sign" required maxlength="80" autocomplete="name"></label>
+        <label class="chk"><input type="checkbox" name="agree" required><span>I have read and agree to the consignment agreement for my brand.</span></label>
+      </fieldset>
+
+      <label class="hp" aria-hidden="true">Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+      <p class="err" id="jerr" role="alert"></p>
+      <button class="btn" type="submit" id="jbtn">Send my sign-up</button>
+    </form>
+
+    <div class="done" id="jdone" hidden tabindex="-1">
+      <h3>You're in! 🎀</h3>
+      <p>Thank you, <b id="dName"></b>. Your sign-up for <b id="dBrand"></b> on the <b id="dPlan"></b> plan is with Marishka.</p>
+      <ol>
+        <li><b>Send your product photos.</b> Tap the button below to WhatsApp Marishka your photos, prices and stock.</li>
+        <li id="dPay"><b>Set up your plan payment.</b> Marishka sends you a secure PayPal link. Nothing is charged in your first month.</li>
+        <li><b>Drop off your stock</b> in St. Thomas once your products are approved. Then we sell, and you get paid every Monday.</li>
+      </ol>
+      <a class="btn" id="dWa" href="https://wa.me/12468504460" target="_blank" rel="noopener">Send my photos on WhatsApp</a>
+    </div>
+  </div>
+</section>
+
 <section class="band faq">
   <div class="in">
     <span class="eyebrow">Questions</span>
     <h2>Good to know.</h2>
-    <details><summary>Who sets my prices?</summary><p>You do. You set every price in BBD on your vendor page, and we never discount your products without your OK.</p></details>
+    <details><summary>Who sets my prices?</summary><p>You do. You set every price in BBD, and we never discount your products without your OK.</p></details>
     <details><summary>Can I still sell on my own page and in my shop?</summary><p>Yes. Keep selling everywhere you do now. We only ask that you don't advertise the same product for less than its Marketplace price.</p></details>
-    <details><summary>How and when do I get paid?</summary><p>Every Monday, for everything sold the week before, by bank transfer, FirstPay or BPWCCUL. Your vendor page shows each sale and payout.</p></details>
+    <details><summary>How and when do I get paid?</summary><p>Every Monday, for everything sold the week before, by bank transfer, FirstPay or BPWCCUL, with a statement of each sale.</p></details>
     <details><summary>What if something doesn't sell?</summary><p>Each batch stays with us for 60 days. Then you can renew it, swap it for new stock, or collect it. Your products stay yours until they sell.</p></details>
     <details><summary>What about returns and damaged items?</summary><p>We handle customer questions and returns. If an item is faulty because of the product, it comes back to you and the refund comes out of your next payout. If we damage something, we pay you for it.</p></details>
-    <details><summary>How does the free month work?</summary><p>Your first month on any plan is free. When you join, you set up your monthly plan payment by card through PayPal's secure page, but nothing is charged until your second month starts. Change or cancel your plan anytime before then.</p></details>
-    <details><summary>What is the 5% per sale for?</summary><p>It covers the card and payment fees on your orders, so you never have to deal with them. Everything else from the sale is yours.</p></details>
+    <details><summary>Is Starter really free?</summary><p>Yes. Starter has no monthly fee and needs no card. We take 15% of each sale, which covers card fees, checkout, order handling and customer care. You keep 85%.</p></details>
+    <details><summary>Which plan should I pick?</summary><p>Starter is perfect to try us out. Once you sell more than about $400 a month, Essentials works out cheaper (only 5% per sale), and Spotlight or Signature get your brand seen by more shoppers.</p></details>
+    <details><summary>How does the free month work?</summary><p>Your first month on any paid plan is free. When you join, you set up your monthly plan payment by card through PayPal's secure page, but nothing is charged until your second month starts. Change or cancel your plan anytime before then.</p></details>
+    <details><summary>What is the 5% per sale for?</summary><p>On paid plans, it covers the card and payment fees on your orders, so you never have to deal with them. Everything else from the sale is yours.</p></details>
     <details><summary>Can I change my plan?</summary><p>Yes. Upgrade, downgrade or switch anytime. The new plan starts from your next monthly payment.</p></details>
-    <details><summary>What do I need to sign up?</summary><p>A free sign-in for your vendor page (we'll walk you through it), your product photos and prices, how you'd like to be paid, and a debit or credit card for your plan (charged from month two).</p></details>
-    <details><summary>Is there a contract?</summary><p>Yes, a short consignment agreement you read and sign on your vendor page. Either of us can end it with 14 days' notice.</p></details>
+    <details><summary>What do I need to sign up?</summary><p>Just the form on this page: your brand details, your plan and how you'd like to be paid. No account or password. Then WhatsApp us your product photos and prices. On a paid plan you'll also need a debit or credit card for PayPal (charged from month two).</p></details>
+    <details><summary>Is there a contract?</summary><p>Yes, a short consignment agreement you read and sign in the sign-up form on this page. Either of us can end it with 14 days' notice.</p></details>
   </div>
 </section>
 
@@ -248,7 +375,7 @@ footer a{color:var(--deep);font-weight:700;text-decoration:none}
   <div class="in">
     <h2>Be one of our founding brands.</h2>
     <p>We're choosing a small group of founding brands to launch the Marketplace before Christmas, the busiest shopping season of the year. Your first month is free, so there's never been a better time to try.</p>
-    <a class="btn" data-wa href="https://wa.me/12468504460?text=Hi%20Marishka!%20%F0%9F%92%95%20I'd%20love%20to%20join%20The%20Girls%20Club%20Marketplace%20as%20a%20founding%20brand." target="_blank" rel="noopener">Message Marishka on WhatsApp</a>
+    <a class="btn" href="#join" data-join>Sign up now</a>
     <p class="contact">WhatsApp <a href="https://wa.me/12468504460" target="_blank" rel="noopener">1 (246) 850-4460</a> · Instagram <a href="https://instagram.com/thegirlsclub246" target="_blank" rel="noopener">@thegirlsclub246</a></p>
   </div>
 </section>
@@ -257,7 +384,71 @@ footer a{color:var(--deep);font-weight:700;text-decoration:none}
 <footer class="band"><div class="in">The Girls Club · St. Thomas, Barbados · <a href="./">Home</a> · <a href="./#lashes">Marketplace</a> · <a href="policies.html">Policies</a></div></footer>
 
 <script>
-document.querySelectorAll("[data-wa]").forEach(a=>a.addEventListener("click",()=>{try{window.goatcounter&&goatcounter.count({path:"brands-whatsapp",title:"Brands page WhatsApp click",event:true})}catch(e){}}));
+(function(){
+var FORM="https://docs.google.com/forms/d/e/1FAIpQLSfGTId0Oa7jR23yfKmouDejd1AVFxPNZA8QMfMkK3JWV0mCFA/formResponse", FIELD="entry.858011822";
+var VERSION="2026-10-22-web";
+var PLANS={starter:{name:"Starter",fee:0,rate:15},essentials:{name:"Essentials",fee:40,rate:5},spotlight:{name:"Spotlight",fee:75,rate:5},signature:{name:"Signature",fee:125,rate:5}};
+var f=document.getElementById("jf"); if(!f) return;
+var $=function(n){return f.elements[n]};
+function gc(path,title){try{window.goatcounter&&goatcounter.count({path:path,title:title,event:true})}catch(e){}}
+document.querySelectorAll("[data-wa]").forEach(function(a){a.addEventListener("click",function(){gc("brands-whatsapp","Brands page WhatsApp click")})});
+document.querySelectorAll("[data-join]").forEach(function(a){a.addEventListener("click",function(){gc("brands-join-click","Brands page Sign up click")})});
+function plan(){var r=f.querySelector("input[name=plan]:checked");return r?r.value:""}
+function clauses(p){var pl=PLANS[p],r=pl?pl.rate:5,why=p==="starter"?"covers card fees, checkout, order handling and customer care":"covers card and payment fees";return [
+["Plan and monthly fee","The Vendor chooses a plan: Starter (free, no monthly fee, 15% per sale) or a paid plan with 5% per sale: Essentials ($40 a month), Spotlight ($75 a month) or Signature ($125 a month), in BBD."+(pl?" The Vendor has chosen "+pl.name+(pl.fee?" ($"+pl.fee+" a month).":" (free)."):"")+" The first month on any paid plan is free. For a paid plan, the Vendor sets up the monthly fee by debit or credit card through The Girls Club's secure PayPal sign-up link; it is charged automatically each month from the start of the second month. The Vendor may change or cancel the plan at any time; a change applies from the next monthly payment. If a monthly payment fails, The Girls Club may take it from the Vendor's next payout."],
+["Stock","The Vendor delivers products to The Girls Club in St. Thomas (or as agreed). Each delivery is logged on a Stock Received form signed by both."],
+["Ownership","The Vendor owns all products until they are sold. Ownership passes straight from the Vendor to the customer at the time of sale."],
+["Prices","The Vendor sets the retail price of each product, in BBD. Price changes go live once The Girls Club updates the website, normally within 2 working days. The Girls Club will not discount a Vendor's product without the Vendor's written OK. Shop-wide discount codes are paid for by The Girls Club, so the Vendor's share is worked out on the full listed price."],
+["Selling and payments","The Girls Club lists, sells and delivers the products, and collects payment from customers. The Vendor does not take payment for Marketplace orders."],
+["Per-sale fee",r+"% of each sale to The Girls Club, which "+why+"; the Vendor keeps "+(100-r)+"%. Each sale uses the rate in force on the day it is sold. Apart from the plan's monthly fee (none on Starter) and this per-sale fee, there are no listing or hidden fees."],
+["Payouts","Every Monday, The Girls Club pays the Vendor their share of all items sold the week before (Monday to Sunday), by the payout method the Vendor chose, with a statement. A sale is paid out only once the customer's payment has cleared. If a Monday is a public holiday, payout is the next working day."],
+["Customer returns","The Girls Club handles customer questions and returns. If an item is returned for a fault, damage or wrong description that is the Vendor's responsibility, the refund is taken from the Vendor's next payout and the item goes back to the Vendor. Returns caused by The Girls Club are paid for by The Girls Club."],
+["Unsold stock","Each batch stays on consignment for 60 days. After that the Vendor may renew it, swap it for new stock, or collect it within 14 days. Stock not collected within 30 days after a written reminder may be returned to the Vendor at the Vendor's cost."],
+["Care, loss and damage","The Girls Club stores products clean, dry and out of direct sun. If a product is lost, stolen or damaged in The Girls Club's care through its fault, The Girls Club pays the Vendor its share of the listed price. The Girls Club is not responsible for events outside its control (such as hurricane, flood or fire) or for products that expire naturally."],
+["Product quality and safety","The Vendor promises every product is legal to sell in Barbados, genuine, theirs to sell, and matches its description and photos. Cosmetics, skincare, food and candles must be labelled with ingredients, the Vendor's business name and a use-by or batch date where relevant. The Vendor is responsible for any claim caused by a faulty or unsafe product. The Girls Club may refuse or remove any product."],
+["Photos and marketing","The Vendor allows The Girls Club to use their business name, logo, product photos and descriptions to promote the products during this agreement and for 30 days after, and confirms they own or may use these photos."],
+["Records","The Vendor keeps product details, prices and stock up to date with The Girls Club. Sales figures and statements are for information and may be approximate; payouts follow the actual cleared sales."],
+["Customer information","The Girls Club shares only what the Vendor needs to fulfil an order. The Vendor uses it only for that order, keeps it private and does not contact customers to sell outside The Girls Club Marketplace, in line with the Data Protection Act, 2019."],
+["Selling elsewhere","The Vendor may keep selling in their own shop and online, but will not advertise the same product publicly for less than its price on The Girls Club Marketplace during this agreement."],
+["Ending the agreement","Either side may end this agreement with 14 days' written notice (WhatsApp or email), and the monthly plan payment is then cancelled. The Girls Club then pays all sales owed at the next Monday payout, and the Vendor collects unsold stock within 14 days. The Girls Club may end it at once if the Vendor breaks the Product quality and safety point."],
+["General","The Vendor and The Girls Club are independent businesses; this is not a partnership or employment. Changes must be agreed in writing by both. This agreement is governed by the laws of Barbados."]];}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function drawAgree(){var p=plan(),pl=PLANS[p];
+  document.getElementById("agreeSum").innerHTML=pl?("Consignment with The Girls Club on the <b>"+pl.name+"</b> plan: "+(pl.fee?"$"+pl.fee+" a month (first month free, then by card through PayPal)":"no monthly fee")+", plus <b>"+pl.rate+"%</b> per sale. You keep <b>"+(100-pl.rate)+"%</b>. Paid every Monday. 60-day stock periods. 14 days' notice to end."):"Pick a plan above to see your terms.";
+  document.getElementById("agreeList").innerHTML=clauses(p).map(function(c){return "<li><b>"+esc(c[0])+".</b> "+esc(c[1])+"</li>"}).join("");
+  document.getElementById("planNote").textContent=p==="starter"?"Starter needs no card. You can move to a paid plan anytime.":(pl?"Your first month is free. Marishka sends you a secure PayPal link for your card; nothing is charged until month two.":"Prices in BBD. You can change your plan anytime.");}
+f.addEventListener("change",function(e){if(e.target.name==="plan")drawAgree()});
+drawAgree();
+var started=false;f.addEventListener("input",function(){if(!started){started=true;gc("brands-signup-start","Vendor sign-up started")}},{once:false});
+function err(m,el){var b=document.getElementById("jerr");b.textContent=m;b.classList.toggle("on",!!m);if(el){el.focus();el.scrollIntoView({block:"center",behavior:"smooth"})}}
+f.addEventListener("submit",function(e){e.preventDefault();err("");
+  var v=function(n){return ($(n)&&$(n).value||"").trim()};
+  var need=[["brand","your brand name"],["owner","your full name"],["phone","your WhatsApp number"],["email","your email"],["category","what you sell"]];
+  for(var i=0;i<need.length;i++){if(!v(need[i][0]))return err("Please add "+need[i][1]+".",$(need[i][0]))}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v("email")))return err("Please check your email address.",$("email"));
+  if((v("phone").replace(/\D/g,"")).length<7)return err("Please check your WhatsApp number.",$("phone"));
+  if(!plan())return err("Please pick a plan.",f.querySelector("input[name=plan]"));
+  var pay=f.querySelector("input[name=payout]:checked");if(!pay)return err("Please choose how you'd like to be paid.",f.querySelector("input[name=payout]"));
+  if(v("sign").length<3)return err("Please sign by typing your full name.",$("sign"));
+  if(!$("agree").checked)return err("Please tick the box to agree to the agreement.",$("agree"));
+  if(v("website"))return;
+  var p=plan(),pl=PLANS[p],now=new Date().toISOString();
+  var data={type:"vendor-signup",submittedAt:now,brand:v("brand"),owner:v("owner"),phone:v("phone"),email:v("email"),instagram:v("instagram"),category:v("category"),bio:v("bio"),plan:p,planName:pl.name,monthlyFee:pl.fee,products:v("products"),payoutMethod:pay.value,contract:{name:v("sign"),signedAt:now,version:VERSION,rates:{now:pl.rate,free:p==="starter"}},page:location.href};
+  var btn=document.getElementById("jbtn");btn.disabled=true;btn.textContent="Sending…";
+  var fd=new FormData();fd.append(FIELD,JSON.stringify(data));
+  fetch(FORM,{method:"POST",mode:"no-cors",body:fd}).then(function(){
+    gc("brands-signup","Vendor sign-up sent");
+    document.getElementById("dName").textContent=data.owner.split(" ")[0];
+    document.getElementById("dBrand").textContent=data.brand;
+    document.getElementById("dPlan").textContent=pl.name;
+    document.getElementById("dPay").hidden=p==="starter";
+    var msg="Hi Marishka! 💕 I just signed up on your website: "+data.brand+" ("+pl.name+" plan). Here are my product photos:";
+    document.getElementById("dWa").href="https://wa.me/12468504460?text="+encodeURIComponent(msg);
+    f.hidden=true;var d=document.getElementById("jdone");d.hidden=false;d.focus();d.scrollIntoView({block:"start",behavior:"smooth"});
+  }).catch(function(){btn.disabled=false;btn.textContent="Send my sign-up";err("That didn't send. Check your internet and try again, or WhatsApp us on 1 (246) 850-4460.")});
+});
+})();
+
 </script>
 <script data-goatcounter="https://thegirlsclub246.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
