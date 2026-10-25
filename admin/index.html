@@ -80,6 +80,36 @@ ol.steps{padding-left:1.3rem;margin:.4rem 0}
 ol.steps li{margin:.35rem 0}
 code{background:#ffe3ef;padding:1px 6px;border-radius:6px;font-size:.92em;word-break:break-all}
 [hidden]{display:none!important}
+/* live preview sidebar: slides in on phones, docks on the right on big screens */
+.pvbtn{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:8;min-height:50px;padding:0 20px;border:0;border-radius:999px;background:var(--plum);color:#fff;font:700 16px Quicksand,sans-serif;box-shadow:0 6px 18px rgba(74,20,61,.35);cursor:pointer}
+body.dirty .pvbtn{bottom:calc(84px + env(safe-area-inset-bottom));background:var(--pink);animation:pvpulse 1.6s ease-in-out 2}
+@keyframes pvpulse{50%{transform:scale(1.08)}}
+.pv{position:fixed;top:0;right:0;bottom:0;width:100%;max-width:460px;z-index:30;background:var(--plum);display:flex;flex-direction:column;transform:translateX(105%);transition:transform .25s ease;box-shadow:-8px 0 24px rgba(74,20,61,.25);padding-top:env(safe-area-inset-top)}
+.pv.on{transform:none}
+.pvh{display:flex;align-items:center;gap:8px;padding:10px 12px;color:#fff}
+.pvt{flex:1;min-width:0}
+.pvt b{display:block;font-size:1rem}
+.pvt small{display:block;font-size:.8rem;opacity:.9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pv.changed .pvt small{color:var(--lemon);opacity:1}
+.seg{display:flex;background:#ffffff22;border-radius:999px;padding:3px}
+.seg button,.pvh .x{min-width:44px;min-height:44px;border:0;border-radius:999px;background:transparent;color:#fff;font-size:1.15rem;cursor:pointer}
+.seg button[aria-pressed="true"]{background:#fff}
+.pvh .x{background:#ffffff22;font-weight:700}
+.stage{position:relative;flex:1;overflow:hidden;background:#2b0d24;margin:0 8px;border-radius:16px}
+.stage iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;background:var(--bg);transform-origin:0 0}
+.stage iframe.off{visibility:hidden}
+.pvload{position:absolute;inset:auto 0 45%;text-align:center;color:#fff;margin:0;font-weight:700}
+.pvsave{display:none;padding:10px 12px 0}
+.pv.changed .pvsave{display:block}
+.pvnote{margin:0;padding:8px 14px calc(10px + env(safe-area-inset-bottom));color:#f3d6e8;font-size:.8rem;text-align:center}
+@media (min-width:1100px){
+  body.pvdock{padding-right:460px}
+  body.pvdock .savebar{right:460px}
+  body.pvdock .pvbtn{display:none}
+  .pv.changed .pvsave{display:none}
+  .pv{width:460px;box-shadow:none}
+  .pvh .x{font-size:.85rem;padding:0 12px}
+}
 @media (min-width:600px){.links{grid-template-columns:1fr 1fr}h1{font-size:1.9rem}}
 @media (max-width:340px){.row2{grid-template-columns:1fr}}
 </style>
@@ -227,6 +257,26 @@ code{background:#ffe3ef;padding:1px 6px;border-radius:6px;font-size:.92em;word-b
 </div></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<!-- LIVE PREVIEW SIDEBAR -->
+<button class="pvbtn" id="pvBtn" type="button" hidden aria-controls="pv">👁 Preview</button>
+<aside class="pv" id="pv" aria-label="Live preview" aria-hidden="true">
+  <div class="pvh">
+    <div class="pvt"><b>👁 Live preview</b><small id="pvState">Same as your website</small></div>
+    <div class="seg" role="group" aria-label="Preview size">
+      <button type="button" id="pvPhone" aria-pressed="true" title="Phone size">📱</button>
+      <button type="button" id="pvDesk" aria-pressed="false" title="Computer size">💻</button>
+    </div>
+    <button type="button" class="x" id="pvClose" aria-label="Close preview">✕</button>
+  </div>
+  <div class="stage" id="pvStage">
+    <iframe id="pvA" title="Website preview" tabindex="-1"></iframe>
+    <iframe id="pvB" title="Website preview" tabindex="-1" class="off"></iframe>
+    <p class="pvload" id="pvLoad">Loading preview…</p>
+  </div>
+  <div class="pvsave"><button class="btn" type="button" id="pvSave">Save to website</button></div>
+  <p class="pvnote">Preview only. Buttons and checkout don't work here. Tap <b>Save to website</b> to make it real.</p>
+</aside>
+
 <script>
 (function(){
 "use strict";
@@ -262,7 +312,7 @@ async function signIn(t,quiet){
     await Promise.all(Object.keys(FILES).map(loadFile));
     store(KEY,token);
     $("#signin").hidden=true;$("#app").hidden=false;
-    $("#who").textContent="Signed in. Saves go straight to thegirlsclub246.com.";renderAll();go(location.hash.slice(1)||"today");loadStatus();
+    $("#who").textContent="Signed in. Saves go straight to thegirlsclub246.com.";renderAll();go(location.hash.slice(1)||"today");loadStatus();pvStart();
   }catch(e){
     token="";$("#signin").hidden=false;$("#app").hidden=true;
     $("#signMsg").textContent=e.message;if(quiet)store(KEY,null);
@@ -278,7 +328,7 @@ function go(tab){
   $$("section.tab").forEach(function(s){s.classList.toggle("on",s.id==="t-"+tab)});
   $$(".chip[data-tab]").forEach(function(c){c.setAttribute("aria-current",c.dataset.tab===tab?"true":"false")});
   if(location.hash.slice(1)!==tab)history.replaceState(null,"","#"+tab);
-  window.scrollTo(0,0);
+  window.scrollTo(0,0);pvJump(tab);
 }
 $$(".chip[data-tab]").forEach(function(c){c.onclick=function(){go(c.dataset.tab)}});
 
@@ -301,6 +351,7 @@ function bind(root){$$("[data-f]",root||document).forEach(function(el){writeInpu
 function markDirty(name){
   if(JSON.stringify(F[name].data)===JSON.stringify(F[name].orig))delete dirty[name];else dirty[name]=1;
   $("#savebar").classList.toggle("on",Object.keys(dirty).length>0);
+  pvChanged();
 }
 
 /* ---------- render ---------- */
@@ -341,7 +392,7 @@ function renderNow(){
   ];
   $("#now").innerHTML=items.map(function(x){return '<li><b>'+esc(x[0])+'</b><small>'+esc(x[1])+'</small></li>'}).join("");
 }
-function renderAll(){bind(document.querySelector("#t-home"));bind($("#acadCard"));renderShop();renderCourses();renderNow();$("#savebar").classList.remove("on")}
+function renderAll(){bind(document.querySelector("#t-home"));bind($("#acadCard"));renderShop();renderCourses();renderNow();$("#savebar").classList.remove("on");pvChanged()}
 
 /* ---------- status ---------- */
 function ago(iso){var m=Math.round((Date.now()-new Date(iso))/60000);if(m<1)return"just now";if(m<60)return m+" min ago";var h=Math.round(m/60);if(h<24)return h+" h ago";return Math.round(h/24)+" days ago"}
@@ -377,12 +428,94 @@ async function saveAll(){
     toast("Saved ✓ Your website updates in a few minutes.");
     renderNow();setTimeout(loadStatus,4000);
   }catch(e){toast(e.message,true);renderAll()}
-  finally{btn.disabled=false;btn.textContent="Save to website";$("#savebar").classList.toggle("on",Object.keys(dirty).length>0)}
+  finally{btn.disabled=false;btn.textContent="Save to website";$("#savebar").classList.toggle("on",Object.keys(dirty).length>0);pvChanged()}
 }
 $("#saveBtn").onclick=saveAll;
 $("#undoBtn").onclick=function(){Object.keys(dirty).forEach(function(n){F[n].data=clone(F[n].orig)});dirty={};renderAll();toast("Changes undone.")};
 function confirmLeave(){return window.confirm("You have changes that aren't saved. Leave anyway?")}
 window.addEventListener("beforeunload",function(e){if(Object.keys(dirty).length){e.preventDefault();e.returnValue=""}});
+
+
+/* ---------- live preview sidebar ---------- */
+// Runs inside the preview frame before the site's own scripts: serves the unsaved drafts
+// instead of content/*.json, and switches off visit counting, the pixel, order sending and leaving the page.
+function pvInject(){
+  var D=parent.__tgcDraft||{};
+  try{Object.defineProperty(window,"TGC_PIXEL_ID",{get:function(){return ""},set:function(){}})}catch(e){}
+  window.goatcounter={no_onload:true,count:function(){}};
+  var of=window.fetch.bind(window);
+  window.fetch=function(u,o){var s=String(u&&u.url||u),m=s.match(/content\/([\w-]+)\.json/);
+    if(m&&D[m[1]])return Promise.resolve(new Response(JSON.stringify(D[m[1]]),{headers:{"Content-Type":"application/json"}}));
+    if(/docs\.google\.com|goatcounter|zgo\.at|facebook/.test(s))return Promise.resolve(new Response("{}"));
+    return of(u,o)};
+  window.open=function(){return null};
+  document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href]");if(!a)return;var h=a.getAttribute("href")||"";
+    if(h.charAt(0)==="#"){e.preventDefault();var t=h.length>1&&document.getElementById(decodeURIComponent(h.slice(1)));if(t)t.scrollIntoView({behavior:"smooth"})}
+    else e.preventDefault()},true);
+  document.addEventListener("submit",function(e){e.preventDefault()},true);
+}
+var PV={open:false,html:null,mode:"phone",t:null,busy:false,again:false,cur:"pvA",jump:null};
+var JUMP={shop:"lashes",courses:"academy",home:"",today:"",biz:""};
+function wide(){return window.matchMedia("(min-width:1100px)").matches}
+async function pvHtml(){
+  if(PV.html)return PV.html;
+  var r=await fetch("/index.html?pv="+Date.now(),{cache:"no-store"});var s=await r.text();
+  s=s.replace(/<script[^>]*gc\.zgo\.at[^>]*><\/script>/g,"");
+  var inj='<base href="/"><script>('+pvInject.toString()+')()<\/script>';
+  s=s.replace(/<head[^>]*>/i,function(m){return m+inj});
+  return PV.html=s;
+}
+function pvFit(){
+  var st=$("#pvStage"),w=st.clientWidth,h=st.clientHeight;
+  ["pvA","pvB"].forEach(function(id){var f=document.getElementById(id);
+    if(PV.mode==="desk"){var k=w/1280;f.style.width="1280px";f.style.height=(h/k)+"px";f.style.transform="scale("+k+")"}
+    else{f.style.width="100%";f.style.height="100%";f.style.transform="none"}});
+}
+function pvChanged(){
+  var n=Object.keys(dirty).length;document.body.classList.toggle("dirty",n>0);
+  $("#pv").classList.toggle("changed",n>0);
+  $("#pvState").textContent=n?"Showing your changes · not saved yet":"Same as your website";
+  if(PV.open){clearTimeout(PV.t);PV.t=setTimeout(pvRender,450)}
+}
+async function pvRender(){
+  if(!PV.open)return;if(PV.busy){PV.again=true;return}PV.busy=true;
+  try{
+    var show=document.getElementById(PV.cur),next=document.getElementById(PV.cur==="pvA"?"pvB":"pvA"),y=0;
+    try{y=show.contentWindow.scrollY||0}catch(e){}
+    window.__tgcDraft={home:clone(F.home.data),products:clone(F.products.data),academy:clone(F.academy.data)};
+    var html=await pvHtml();
+    await new Promise(function(res){next.onload=function(){setTimeout(res,350)};next.srcdoc=html});
+    try{var id=PV.jump;PV.jump=null;var w=next.contentWindow;
+      if(id!==null&&id!==undefined){var el=id&&next.contentDocument.getElementById(id);w.scrollTo(0,el?el.getBoundingClientRect().top+w.scrollY:0)}else w.scrollTo(0,y)}catch(e){}
+    next.classList.remove("off");show.classList.add("off");PV.cur=next.id;$("#pvLoad").hidden=true;
+  }catch(e){$("#pvLoad").hidden=false;$("#pvLoad").textContent="Preview couldn't load. Tap ✕ and try again."}
+  finally{PV.busy=false;if(PV.again){PV.again=false;pvRender()}}
+}
+function pvJump(tab){
+  var id=JUMP[tab];if(id===undefined)return;
+  if(!PV.open||PV.busy||!$("#pvLoad").hidden){PV.jump=id;return}
+  try{var f=document.getElementById(PV.cur),w=f.contentWindow,el=id&&f.contentDocument.getElementById(id);w.scrollTo({top:el?el.getBoundingClientRect().top+w.scrollY:0,behavior:"smooth"})}catch(e){PV.jump=id}
+}
+function pvOpen(on){
+  PV.open=on;var pv=$("#pv");pv.classList.toggle("on",on);pv.setAttribute("aria-hidden",on?"false":"true");
+  document.body.classList.toggle("pvdock",on&&wide());
+  $("#pvBtn").hidden=on&&wide();$("#pvClose").textContent=wide()?"Hide":"✕";
+  if(on){if(PV.jump===null){var t=(location.hash.slice(1)||"today");PV.jump=JUMP[t]===undefined?"":JUMP[t]}pvFit();pvRender()}
+  store("tgc-admin-pv",on?"1":"0");
+}
+function pvStart(){
+  $("#pvBtn").hidden=false;
+  var pref=store("tgc-admin-pv");
+  if(wide()&&pref!=="0")pvOpen(true);
+}
+$("#pvBtn").onclick=function(){pvOpen(true)};
+$("#pvSave").onclick=function(){if(!wide())pvOpen(false);saveAll()};
+$("#pvClose").onclick=function(){pvOpen(false)};
+function pvMode(m){PV.mode=m;$("#pvPhone").setAttribute("aria-pressed",m==="phone");$("#pvDesk").setAttribute("aria-pressed",m==="desk");pvFit()}
+$("#pvPhone").onclick=function(){pvMode("phone")};
+$("#pvDesk").onclick=function(){pvMode("desk")};
+window.addEventListener("resize",function(){if(PV.open){document.body.classList.toggle("pvdock",wide());$("#pvBtn").hidden=wide();pvFit()}});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&PV.open&&!wide())pvOpen(false)});
 
 /* ---------- start ---------- */
 var saved=store(KEY);
