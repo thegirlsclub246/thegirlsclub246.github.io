@@ -118,6 +118,7 @@ collections:
           - {name: weekday_close, label: "Mon–Fri finish time (e.g. 19:30)", widget: string, required: false, pattern: ['^$|^([01]?\d|2[0-3]):[0-5]\d$', "Use 24-hour time like 19:30"]}
           - {name: weekend_open, label: "Sat–Sun start time (e.g. 09:00). Empty = closed", widget: string, required: false, pattern: ['^$|^([01]?\d|2[0-3]):[0-5]\d$', "Use 24-hour time like 09:00"]}
           - {name: weekend_close, label: "Sat–Sun finish time (e.g. 19:30)", widget: string, required: false, pattern: ['^$|^([01]?\d|2[0-3]):[0-5]\d$', "Use 24-hour time like 19:30"]}
+          - {name: book_ahead_days, label: "How far ahead people can book (days, e.g. 90 = about 3 months)", widget: number, value_type: int, min: 7, default: 90, required: false}
           - {name: closed_dates, label: "Days you're not available", widget: list, required: false, field: {name: date, label: Date, widget: datetime, time_format: false, format: "YYYY-MM-DD", date_format: "D MMM YYYY"}}
           - {name: note, label: "Small print", widget: text, required: false}
 
