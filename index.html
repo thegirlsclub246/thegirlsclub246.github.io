@@ -27,6 +27,11 @@
 .course-card .localpay{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
 .course-card .localpay .btn{width:100%;padding:0 .6rem;font-size:.95rem;background:var(--plum,#4A143D);border-color:var(--plum,#4A143D);color:#fff}
 @media (max-width:380px){.course-card .localpay{grid-template-columns:1fr}}
+.course-card{scroll-margin-top:84px}
+.course-card .ask-wa{display:flex;align-items:center;justify-content:center;gap:.4rem;min-height:46px;margin:.2rem 0 .4rem;border-radius:999px;border:2px solid #1f9d55;color:#157a41;background:#fff;font-weight:700;text-decoration:none;font-size:.98rem}
+.academy .proof{display:inline-block;margin:1.1rem 0 0!important;background:var(--yellow);color:var(--plum)!important;border:2px solid var(--plum);border-radius:16px;padding:.55rem .9rem;font-weight:700;font-size:1rem!important}
+.academy .how-title{color:#fff;margin:2.4rem 0 0;font-size:1.4rem}
+.academy .courses{margin-top:1.6rem}
 .course-cover strong{font-size:clamp(1.6rem,4vw,2.1rem)}
 .academy-intro{text-align:center;max-width:60ch;margin:0 auto}
 .academy-intro .creds{justify-content:center}
@@ -665,6 +670,9 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
         <div class="creds" id="academyCreds"></div>
         <p data-c="academy.intro"></p>
       </div>
+      <p class="proof" id="academyProof" hidden></p>
+      <div class="courses" id="courses"></div>
+      <h3 class="how-title">How it works</h3>
       <div class="steps">
         <div class="step"><span class="num">1</span><h3>Choose your course</h3><p>Pick the cluster lash or eyelash extension course below.</p></div>
         <div class="step"><span class="num">2</span><h3>Pick how to pay</h3><p>Card, FirstPay or BPWCCUL. All three work.</p></div>
@@ -672,7 +680,6 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
         <div class="step"><span class="num">4</span><h3>Start learning</h3><p>Your course link lands in your email.</p></div>
       </div>
       <p class="steps-note">💳 Card · 📱 FirstPay · 🏦 BPWCCUL. Card checkout shows US dollars (US$1 = BBD $2). FirstPay and BPWCCUL are paid in BBD.</p>
-      <div class="courses" id="courses"></div>
       <p class="muted academy-note" data-c="academy.note"></p>
     </div>
   </section>
@@ -852,7 +859,7 @@ function renderAcademy(){
   const el=document.getElementById("courses");
   const cs=list(A.courses).filter(c=>c.show!==false&&c.title);
   if(!cs.length){if(A.show!==false){document.getElementById("academy").hidden=true}return}
-  el.innerHTML=cs.map((c,i)=>{const pr=num(c.price),was=num(c.was_price);return `<div class="course-card">
+  el.innerHTML=cs.map((c,i)=>{const pr=num(c.price),was=num(c.was_price);return `<div class="course-card" id="course-${slug(c.title)}">
     <div class="course-cover">${c.badge?`<span class="seal">${esc(c.badge)}</span>`:""}<div><small>The Girls Club</small><strong>Academy</strong><svg viewBox="0 0 300 110" aria-hidden="true"><path d="M30 40 Q150 120 270 40" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><g transform="translate(0,-48)">${lashSvg(9,150,100,120,"#fff")}</g></svg><small>${esc(c.subtitle||"Online course")}</small></div></div>
     <div class="course-meta"><div><span class="ptype">Online course</span><h3>${esc(c.title)}</h3></div><span class="price"><small>BBD</small> ${was>pr?`<s class="was" aria-label="Was ${money(was)}">${money(was)}</s> `:""}${money(pr)}</span></div>
     ${c.description?`<p class="desc">${esc(c.description)}</p>`:""}
@@ -860,7 +867,10 @@ function renderAcademy(){
     <p class="paywith">Choose how to pay</p>
     ${c.payhip_id?`<a class="btn payhip-buy-button" href="https://payhip.com/b/${encodeURIComponent(c.payhip_id)}" data-theme="none" data-product="${esc(c.payhip_id)}" style="display:flex;width:100%;text-align:center">💳 Pay by card</a>${c.usd_note?`<p class="muted paynote">${esc(c.usd_note)}</p>`:""}`:""}
     ${c.local_pay!==false?`<div class="localpay"><a class="btn" data-course="${i}" data-pay="firstpay" href="#">📱 Pay with FirstPay</a><a class="btn" data-course="${i}" data-pay="bpwccul" href="#">🏦 Pay with BPWCCUL</a></div><p class="muted paynote">Pay in BBD ${money(pr)} · we email your login once payment is in</p>`:""}
+    <a class="ask-wa" data-ask="${esc(c.title)}" href="${waLink("Hi The Girls Club! I'm interested in the "+c.title+" (BBD "+money(pr)+"). Can you help me enrol?")}" target="_blank" rel="noopener">💬 Questions? Enrol on WhatsApp</a>
   </div>`}).join("");
+  const pf=document.getElementById("academyProof");if(pf&&A.proof){pf.textContent=A.proof;pf.hidden=false}
+  el.addEventListener("click",e=>{const a=e.target.closest("[data-ask]");if(a){try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/course-wa-ask/"+slug(a.dataset.ask),event:true})}catch(x){}}});
   el.onclick=e=>{const b=e.target.closest("[data-course]");if(!b)return;e.preventDefault();const c=cs[+b.dataset.course];window.tgcPrefPay=b.dataset.pay||"";
     addItem({id:"course-"+slug(c.title),course:c.title,name:"The Girls Club Academy · "+c.title,price:num(c.price),single:true,note:"Digital · sent after payment"});if(window.tgcPrefPay){stage="checkout";renderDrawer()}};
   if(cs.some(c=>c.payhip_id)){const s=document.createElement("script");s.src="https://payhip.com/payhip.js";s.async=true;document.head.appendChild(s)}
@@ -1064,7 +1074,8 @@ document.querySelectorAll(".wa-link").forEach(a=>a.href=waLink("Hi The Girls Clu
 document.querySelectorAll(".wa-num").forEach(el=>el.textContent=WHATSAPP?("+"+WHATSAPP.replace(/^1(246)(\d{3})(\d{4})$/,"1 ($1) $2-$3")):"");
 
 /* page is built after load, so jump to #academy etc. once the content is in */
-const goHash=()=>{const h=decodeURIComponent(location.hash.slice(1));const el=h&&document.getElementById(h);if(!el)return;const d=document.documentElement,sb=d.style.scrollBehavior;d.style.scrollBehavior="auto";el.scrollIntoView();d.style.scrollBehavior=sb};
+const ALIAS={eyelash:"course-eyelash-extension-course",cluster:"course-cluster-lash-course"};
+const goHash=()=>{let h=decodeURIComponent(location.hash.slice(1));if(ALIAS[h])h=ALIAS[h];if(h==="academy"){const u=(new URLSearchParams(location.search).get("utm_campaign")||"").toLowerCase();for(const k in ALIAS)if(u.includes(k)&&document.getElementById(ALIAS[k])){h=ALIAS[k];break}}const el=h&&document.getElementById(h);if(!el)return;const d=document.documentElement,sb=d.style.scrollBehavior;d.style.scrollBehavior="auto";el.scrollIntoView();d.style.scrollBehavior=sb};
 if(location.hash){if("scrollRestoration" in history)history.scrollRestoration="manual";goHash();window.addEventListener("load",goHash);setTimeout(goHash,600);}
 
 })();
