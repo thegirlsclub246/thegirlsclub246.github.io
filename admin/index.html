@@ -2,12 +2,392 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex">
-<title>The Girls Club · Admin</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#4A143D">
+<title>TGC Admin</title>
 <link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#ff4d94;--pink-d:#c4256b;--plum:#4A143D;--lemon:#FFF4B0;--rose:#F06292;--bg:#FFF6FA;--card:#fff;--line:#f7c6dc;--ink:#2b1026;--muted:#7a5470;--ok:#1f7a4d;--bad:#b3261e}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 17px/1.45 Quicksand,system-ui,sans-serif;padding-bottom:calc(80px + env(safe-area-inset-bottom))}
+a{color:var(--pink-d)}
+h1,h2{font-family:Pacifico,cursive;font-weight:400;color:var(--plum);margin:0}
+h1{font-size:1.6rem}
+h2{font-size:1.45rem;margin:0 0 .3rem}
+h3{margin:0 0 .4rem;font-size:1.05rem;color:var(--plum)}
+p{margin:.3rem 0 .7rem}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+header.top{background:var(--plum);color:#fff;padding:14px 0 12px;padding-top:calc(14px + env(safe-area-inset-top))}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:10px}
+header.top h1{color:#fff;font-size:1.35rem}
+header.top small{display:block;font-size:.8rem;opacity:.85}
+.chips{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chips .wrap{display:flex;gap:8px;padding-top:10px;padding-bottom:10px}
+.chip{flex:none;min-height:44px;padding:0 16px;border-radius:999px;border:2px solid var(--line);background:#fff;color:var(--plum);font:700 15px Quicksand,sans-serif;cursor:pointer;display:inline-flex;align-items:center;text-decoration:none}
+.chip[aria-current="true"]{background:var(--pink);border-color:var(--pink);color:#fff}
+.chip.plum{background:var(--plum);border-color:var(--plum);color:#fff}
+section.tab{display:none;padding:18px 0}
+section.tab.on{display:block}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:16px;margin:0 0 14px}
+.card.lemon{background:var(--lemon);border-color:#f3dd6b}
+.card.plum{background:var(--plum);border-color:var(--plum);color:#fff}
+.card.plum h3{color:#fff}
+.muted{color:var(--muted);font-size:.92rem}
+label{display:block;font-weight:700;font-size:.95rem;color:var(--plum);margin:.7rem 0 .25rem}
+input[type=text],input[type=number],input[type=password],textarea{width:100%;min-height:46px;padding:10px 12px;border:2px solid var(--line);border-radius:14px;font:600 17px Quicksand,sans-serif;color:var(--ink);background:#fff}
+textarea{min-height:110px;resize:vertical;line-height:1.4}
+input:focus,textarea:focus{outline:3px solid #ffc2da;border-color:var(--pink)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row2 label{margin-top:.5rem}
+.toggle{display:flex;align-items:center;gap:10px;min-height:44px;font-weight:700;color:var(--plum);margin:.3rem 0;cursor:pointer}
+.toggle input{width:26px;height:26px;accent-color:var(--pink);flex:none}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:50px;padding:10px 16px;border:0;border-radius:999px;background:var(--pink);color:#fff;font:700 17px Quicksand,sans-serif;cursor:pointer;text-decoration:none;text-align:center}
+.btn:disabled{opacity:.5;cursor:wait}
+.btn.plum{background:var(--plum)}
+.btn.ghost{background:#fff;color:var(--plum);border:2px solid var(--line)}
+.btn+.btn{margin-top:10px}
+.links{display:grid;grid-template-columns:1fr;gap:10px}
+.links a{display:flex;align-items:center;gap:12px;min-height:60px;padding:10px 14px;background:#fff;border:2px solid var(--line);border-radius:18px;text-decoration:none;color:var(--ink)}
+.links a b{display:block;color:var(--plum)}
+.links a span.e{font-size:1.6rem;flex:none;width:34px;text-align:center}
+.links a small{color:var(--muted);font-size:.85rem;display:block}
+.prod{border-top:2px dashed var(--line);padding-top:12px;margin-top:12px}
+.prod:first-of-type{border-top:0;margin-top:0;padding-top:0}
+.prod h3{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.prod h3 small{font-weight:600;color:var(--muted);font-size:.85rem}
+.savebar{position:fixed;left:0;right:0;bottom:0;z-index:9;background:rgba(255,246,250,.97);border-top:2px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:none}
+.savebar.on{display:block}
+.savebar .wrap{padding:0;display:flex;gap:10px;align-items:center}
+.savebar .btn{flex:1}
+.savebar .btn.ghost{flex:0 0 auto;width:auto;padding:0 18px}
+.toast{position:fixed;left:16px;right:16px;bottom:calc(90px + env(safe-area-inset-bottom));z-index:10;max-width:560px;margin:0 auto;background:var(--plum);color:#fff;border-radius:16px;padding:14px 16px;font-weight:700;box-shadow:0 8px 24px rgba(74,20,61,.3);display:none}
+.toast.on{display:block}
+.toast.bad{background:var(--bad)}
+.list{list-style:none;padding:0;margin:0}
+.list li{padding:10px 0;border-top:1px solid var(--line)}
+.list li:first-child{border-top:0}
+.list small{display:block;color:var(--muted)}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.82rem;font-weight:700;background:#ffe3ef;color:var(--pink-d)}
+.pill.ok{background:#dcf3e6;color:var(--ok)}
+.pill.bad{background:#fde2e0;color:var(--bad)}
+ol.steps{padding-left:1.3rem;margin:.4rem 0}
+ol.steps li{margin:.35rem 0}
+code{background:#ffe3ef;padding:1px 6px;border-radius:6px;font-size:.92em;word-break:break-all}
+[hidden]{display:none!important}
+@media (min-width:600px){.links{grid-template-columns:1fr 1fr}h1{font-size:1.9rem}}
+@media (max-width:340px){.row2{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-<script src="https://unpkg.com/@sveltia/cms@0.231.0/dist/sveltia-cms.js"></script>
+<header class="top"><div class="wrap">
+  <div><h1>The Girls Club</h1><small>Website admin</small></div>
+  <a class="chip plum" style="border-color:#fff3;min-height:40px" href="/" target="_blank" rel="noopener">View site ↗</a>
+</div></header>
+
+<!-- SIGN IN -->
+<main id="signin" class="wrap" style="padding-top:18px" hidden>
+  <div class="card">
+    <h2>Sign in</h2>
+    <p>This admin edits your website through GitHub. It needs your <b>GitHub key</b> (you make it once). The key is saved only on this phone or computer.</p>
+    <label for="tok">Your GitHub key</label>
+    <input id="tok" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="github_pat_…">
+    <p class="muted" id="signMsg"></p>
+    <button class="btn" id="signBtn">Sign in</button>
+  </div>
+  <div class="card lemon">
+    <h3>How to make your GitHub key (one time, about 2 minutes)</h3>
+    <ol class="steps">
+      <li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → new fine-grained key</a> (signed in as <b>thegirlsclub246</b>).</li>
+      <li>Name: <code>TGC admin</code>. Expiration: <b>1 year</b> (custom).</li>
+      <li>Repository access: <b>Only select repositories</b> → <code>thegirlsclub246.github.io</code>.</li>
+      <li>Permissions → Repository: <b>Contents: Read and write</b>. Optional: <b>Pages: Read</b> (shows if your change is live).</li>
+      <li>Tap <b>Generate token</b>, copy it, paste it above.</li>
+    </ol>
+    <p class="muted">Keep it private like a password. Lost phone? Delete the key on that same GitHub page and make a new one.</p>
+  </div>
+</main>
+
+<!-- APP -->
+<div id="app" hidden>
+  <nav class="chips" aria-label="Admin sections"><div class="wrap">
+    <button class="chip" data-tab="today">🏠 Today</button>
+    <button class="chip" data-tab="shop">🛍️ Shop & prices</button>
+    <button class="chip" data-tab="home">📣 Homepage</button>
+    <button class="chip" data-tab="courses">🎓 Courses</button>
+    <button class="chip" data-tab="biz">💰 Orders & money</button>
+    <a class="chip plum" href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK" target="_blank" rel="noopener">✨ Hub ↗</a>
+    <a class="chip" href="/admin/editor.html">✏️ Full editor</a>
+  </div></nav>
+
+  <main class="wrap">
+    <!-- TODAY -->
+    <section class="tab" id="t-today">
+      <h2>Hi Marishka</h2>
+      <p class="muted" id="who"></p>
+      <div class="card plum">
+        <h3>Your other pages</h3>
+        <p style="margin-bottom:12px">Reels, captions, posts and pictures live in your Hub. Money lives in your Money Book.</p>
+        <a class="btn" href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK" target="_blank" rel="noopener">✨ Open The Girls Club Hub</a>
+        <a class="btn ghost" href="https://claude.ai/artifact/YBNTrLoFu1vcYGsVJiUuDA" target="_blank" rel="noopener">💰 Open Money Book</a>
+      </div>
+      <div class="card">
+        <h3>Is the website up to date?</h3>
+        <p id="deploy" class="muted">Checking…</p>
+      </div>
+      <div class="card">
+        <h3>Latest changes to the website</h3>
+        <ul class="list" id="commits"><li class="muted">Loading…</li></ul>
+      </div>
+      <div class="card">
+        <h3>Right now on the site</h3>
+        <ul class="list" id="now"></ul>
+      </div>
+      <button class="btn ghost" id="signOut">Sign out on this device</button>
+    </section>
+
+    <!-- SHOP -->
+    <section class="tab" id="t-shop">
+      <h2>Shop & prices</h2>
+      <p class="muted">Prices in BBD. "Old price" shows crossed out (leave empty for no sale). Photos, descriptions and new products: <a href="/admin/editor.html">Full editor</a>.</p>
+      <div class="card" id="shopList"></div>
+    </section>
+
+    <!-- HOMEPAGE -->
+    <section class="tab" id="t-home">
+      <h2>Homepage & banners</h2>
+      <div class="card">
+        <label class="toggle"><input type="checkbox" data-f="home.banner_on"> Show the scrolling banner</label>
+        <label for="h-banner">Banner messages (one per line)</label>
+        <textarea id="h-banner" data-f="home.banner" data-lines="1"></textarea>
+        <label for="h-eye">Small line above "The Girls Club"</label>
+        <input id="h-eye" type="text" data-f="home.hero_eyebrow">
+        <label for="h-cap">Caption on the big tray photo</label>
+        <input id="h-cap" type="text" data-f="home.hero_caption_text">
+        <label for="h-cap2">Caption title</label>
+        <input id="h-cap2" type="text" data-f="home.hero_caption_title">
+      </div>
+      <div class="card">
+        <h3>Yellow shop promo</h3>
+        <p class="muted">Leave both empty to hide it.</p>
+        <label for="h-pt">Promo title</label>
+        <input id="h-pt" type="text" data-f="home.promo_title">
+        <label for="h-px">Promo text</label>
+        <textarea id="h-px" data-f="home.promo_text" style="min-height:90px"></textarea>
+      </div>
+      <div class="card">
+        <h3>Free-tray giveaway</h3>
+        <label for="h-gl">Trays left (0 turns it off)</label>
+        <input id="h-gl" type="number" inputmode="numeric" min="0" data-f="home.giveaway_trays_left" data-num="1">
+        <label for="h-gt">Giveaway text</label>
+        <textarea id="h-gt" data-f="home.giveaway_text" style="min-height:80px"></textarea>
+      </div>
+    </section>
+
+    <!-- COURSES -->
+    <section class="tab" id="t-courses">
+      <h2>Courses</h2>
+      <div class="card lemon"><p style="margin:0"><b>Card price lives in Payhip too.</b> When you change a price here, change it in <a href="https://payhip.com/products" target="_blank" rel="noopener">Payhip</a> as well (US$ = BBD ÷ 2).</p></div>
+      <div class="card" id="acadCard">
+        <label class="toggle"><input type="checkbox" data-f="academy.show"> Show the Academy on the website</label>
+        <label for="a-intro">Academy intro</label>
+        <textarea id="a-intro" data-f="academy.intro"></textarea>
+      </div>
+      <div id="courseList"></div>
+    </section>
+
+    <!-- BUSINESS -->
+    <section class="tab" id="t-biz">
+      <h2>Orders, money & vendors</h2>
+      <p class="muted">These open your private pages (signed in as you). Customer details and money never go on the public website.</p>
+      <div class="links">
+        <a href="https://claude.ai/artifact/YBNTrLoFu1vcYGsVJiUuDA" target="_blank" rel="noopener"><span class="e">💰</span><span><b>Money Book</b><small>All income + expenses, updated daily</small></span></a>
+        <a href="https://docs.google.com/spreadsheets/d/1JvWskTq8NsXLs-dvZjVsKWWrlPYeDl2goi6Nvel6TjA/edit" target="_blank" rel="noopener"><span class="e">🧾</span><span><b>Website orders</b><small>Every order + contact details</small></span></a>
+        <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#money" target="_blank" rel="noopener"><span class="e">✅</span><span><b>Mark orders paid</b><small>In your Hub</small></span></a>
+        <a href="https://payhip.com/customers" target="_blank" rel="noopener"><span class="e">🎓</span><span><b>Payhip students</b><small>Card sales, enrolments, progress</small></span></a>
+        <a href="https://claude.ai/artifact/WMJEaNreenhaz9QdGxXEcC" target="_blank" rel="noopener"><span class="e">🎟️</span><span><b>Enrolment Desk</b><small>Free codes for FirstPay/BPWCCUL students</small></span></a>
+        <a href="https://docs.google.com/spreadsheets/d/1LB7EZ7vrhCRJ_OMLr3dJ0pOKETtEY8Nn7bSy8hnf2R0/edit" target="_blank" rel="noopener"><span class="e">🛍️</span><span><b>Vendor sign-ups</b><small>Brands who joined on /brands</small></span></a>
+        <a href="https://claude.ai/artifact/Mou7LDyFJCbgUCDETaebKD" target="_blank" rel="noopener"><span class="e">🏪</span><span><b>Vendor Portal</b><small>Vendor products + payouts</small></span></a>
+        <a href="https://thegirlsclub246.goatcounter.com" target="_blank" rel="noopener"><span class="e">📈</span><span><b>Website visits</b><small>GoatCounter</small></span></a>
+        <a href="https://adsmanager.facebook.com/adsmanager/manage/campaigns?act=3484154528408165" target="_blank" rel="noopener"><span class="e">📣</span><span><b>Meta ads</b><small>Ads Manager</small></span></a>
+        <a href="/brands" target="_blank" rel="noopener"><span class="e">💼</span><span><b>For Brands page</b><small>What vendors see</small></span></a>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="savebar" id="savebar"><div class="wrap">
+  <button class="btn ghost" id="undoBtn">Undo</button>
+  <button class="btn" id="saveBtn">Save to website</button>
+</div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+var REPO="thegirlsclub246/thegirlsclub246.github.io", API="https://api.github.com/repos/"+REPO, KEY="tgc-admin-key";
+var FILES={home:"content/home.json",products:"content/products.json",academy:"content/academy.json"};
+var token="", F={}, dirty={}, $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+function store(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){return null}}
+function toast(msg,bad){var t=$("#toast");t.textContent=msg;t.className="toast on"+(bad?" bad":"");clearTimeout(toast.t);toast.t=setTimeout(function(){t.className="toast"},bad?7000:3500)}
+function gh(path,opt){opt=opt||{};opt.headers=Object.assign({"Authorization":"Bearer "+token,"Accept":"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"},opt.headers||{});opt.cache="no-store";return fetch(API+path,opt)}
+function b64dec(s){var bin=atob(s.replace(/\n/g,"")),u=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);return new TextDecoder().decode(u)}
+function b64enc(s){var u=new TextEncoder().encode(s),bin="";for(var i=0;i<u.length;i+=8192)bin+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(bin)}
+function clone(o){return JSON.parse(JSON.stringify(o))}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+
+async function loadFile(name){
+  var r=await gh("/contents/"+FILES[name]+"?ref=main");
+  if(!r.ok)throw new Error("Couldn't open "+FILES[name]+" ("+r.status+")");
+  var j=await r.json(),raw=b64dec(j.content);
+  F[name]={sha:j.sha,raw:raw,pretty:/^\{\s*\n/.test(raw),data:JSON.parse(raw)};F[name].orig=clone(F[name].data);
+}
+function serialize(name){var f=F[name];return f.pretty?JSON.stringify(f.data,null,2)+"\n":JSON.stringify(f.data)}
+
+/* ---------- sign in ---------- */
+async function signIn(t,quiet){
+  token=t.trim();if(!token){$("#signMsg").textContent="Paste your key first.";return}
+  $("#signBtn").disabled=true;$("#signMsg").textContent="Checking your key…";
+  try{
+    var r=await gh("");
+    if(r.status===401)throw new Error("GitHub didn't accept that key. Check you copied all of it, or make a new one.");
+    if(!r.ok)throw new Error("GitHub said "+r.status+". Try again in a minute.");
+    var repo=await r.json();
+    if(!repo.permissions||!repo.permissions.push)throw new Error("This key can only read. Give it Contents: Read and write for thegirlsclub246.github.io.");
+    await Promise.all(Object.keys(FILES).map(loadFile));
+    store(KEY,token);
+    $("#signin").hidden=true;$("#app").hidden=false;
+    $("#who").textContent="Signed in. Saves go straight to thegirlsclub246.com.";renderAll();go(location.hash.slice(1)||"today");loadStatus();
+  }catch(e){
+    token="";$("#signin").hidden=false;$("#app").hidden=true;
+    $("#signMsg").textContent=e.message;if(quiet)store(KEY,null);
+  }finally{$("#signBtn").disabled=false}
+}
+$("#signBtn").onclick=function(){signIn($("#tok").value)};
+$("#tok").addEventListener("keydown",function(e){if(e.key==="Enter")signIn(this.value)});
+$("#signOut").onclick=function(){if(Object.keys(dirty).length&&!confirmLeave())return;store(KEY,null);location.hash="";location.reload()};
+
+/* ---------- tabs ---------- */
+function go(tab){
+  if(!$("#t-"+tab))tab="today";
+  $$("section.tab").forEach(function(s){s.classList.toggle("on",s.id==="t-"+tab)});
+  $$(".chip[data-tab]").forEach(function(c){c.setAttribute("aria-current",c.dataset.tab===tab?"true":"false")});
+  if(location.hash.slice(1)!==tab)history.replaceState(null,"","#"+tab);
+  window.scrollTo(0,0);
+}
+$$(".chip[data-tab]").forEach(function(c){c.onclick=function(){go(c.dataset.tab)}});
+
+/* ---------- binding ---------- */
+function getPath(path){var p=path.split("."),o=F[p[0]].data;for(var i=1;i<p.length;i++){if(o==null)return undefined;o=o[p[i]]}return o}
+function setPath(path,v){var p=path.split("."),o=F[p[0]].data;for(var i=1;i<p.length-1;i++)o=o[p[i]];var k=p[p.length-1];if(v===undefined)delete o[k];else o[k]=v;markDirty(p[0])}
+function readInput(el){
+  if(el.type==="checkbox")return el.checked;
+  if(el.dataset.lines)return el.value.split("\n").map(function(s){return s.trim()}).filter(Boolean);
+  if(el.dataset.num){var s=el.value.trim();if(s==="")return el.dataset.empty==="delete"?undefined:0;var n=parseFloat(s);return isNaN(n)?0:Math.round(n*100)/100}
+  return el.value;
+}
+function writeInput(el,v){
+  if(el.type==="checkbox")el.checked=!!v;
+  else if(el.dataset.lines)el.value=(v||[]).join("\n");
+  else if(el.dataset.num)el.value=(v===undefined||v===null||(v===0&&el.dataset.empty))?"":v;
+  else el.value=v==null?"":v;
+}
+function bind(root){$$("[data-f]",root||document).forEach(function(el){writeInput(el,getPath(el.dataset.f));el.oninput=el.onchange=function(){setPath(el.dataset.f,readInput(el))}})}
+function markDirty(name){
+  if(JSON.stringify(F[name].data)===JSON.stringify(F[name].orig))delete dirty[name];else dirty[name]=1;
+  $("#savebar").classList.toggle("on",Object.keys(dirty).length>0);
+}
+
+/* ---------- render ---------- */
+function renderShop(){
+  var list=F.products.data.products||[];
+  $("#shopList").innerHTML=list.map(function(p,i){
+    var b="products.products."+i+".";
+    return '<div class="prod"><h3>'+esc(p.name)+' <small>'+esc(p.type||p.category||"")+'</small></h3>'+
+      '<label class="toggle"><input type="checkbox" data-f="'+b+'show"> Show in shop</label>'+
+      '<div class="row2"><div><label for="p'+i+'a">Price $</label><input id="p'+i+'a" type="number" inputmode="decimal" step="0.01" min="0" data-num="1" data-f="'+b+'price"></div>'+
+      '<div><label for="p'+i+'b">Old price $</label><input id="p'+i+'b" type="number" inputmode="decimal" step="0.01" min="0" data-num="1" data-empty="delete" data-f="'+b+'was_price"></div></div>'+
+      '<label for="p'+i+'c">Little label</label><input id="p'+i+'c" type="text" data-f="'+b+'tag" placeholder="e.g. Bestseller"></div>';
+  }).join("")||'<p class="muted">No products found.</p>';
+  bind($("#shopList"));
+}
+function renderCourses(){
+  var list=F.academy.data.courses||[];
+  $("#courseList").innerHTML=list.map(function(c,i){
+    var b="academy.courses."+i+".";
+    return '<div class="card"><h3>'+esc(c.title)+'</h3>'+
+      '<label class="toggle"><input type="checkbox" data-f="'+b+'show"> Show this course</label>'+
+      '<div class="row2"><div><label for="c'+i+'a">Price BBD $</label><input id="c'+i+'a" type="number" inputmode="decimal" min="0" data-num="1" data-f="'+b+'price"></div>'+
+      '<div><label for="c'+i+'b">Old price $</label><input id="c'+i+'b" type="number" inputmode="decimal" min="0" data-num="1" data-empty="zero" data-f="'+b+'was_price"></div></div>'+
+      '<label for="c'+i+'c">Badge</label><input id="c'+i+'c" type="text" data-f="'+b+'badge">'+
+      '<label for="c'+i+'d">Card payment note</label><input id="c'+i+'d" type="text" data-f="'+b+'usd_note">'+
+      '<p class="muted" style="margin-top:.6rem">Payhip id: <code>'+esc(c.payhip_id||"")+'</code> · <a href="https://payhip.com/b/'+esc(c.payhip_id||"")+'" target="_blank" rel="noopener">see on Payhip</a></p></div>';
+  }).join("");
+  bind($("#courseList"));
+}
+function renderNow(){
+  var h=F.home.data,p=(F.products.data.products||[]).filter(function(x){return x.show!==false}),a=F.academy.data;
+  var trays=p.filter(function(x){return x.category==="lashes"}).map(function(x){return "$"+x.price}).filter(function(v,i,s){return s.indexOf(v)===i});
+  var items=[
+    ["Banner",h.banner_on?(h.banner||[]).join(" · "):"Off"],
+    ["Lash trays",trays.join(" / ")||"–"],
+    ["Courses",(a.courses||[]).filter(function(c){return c.show!==false}).map(function(c){return c.title.replace(/ Course$/,"")+" $"+c.price}).join(" · ")],
+    ["Yellow promo",(h.promo_title||h.promo_text)?((h.promo_title||"")+" "+(h.promo_text||"")):"Hidden"]
+  ];
+  $("#now").innerHTML=items.map(function(x){return '<li><b>'+esc(x[0])+'</b><small>'+esc(x[1])+'</small></li>'}).join("");
+}
+function renderAll(){bind(document.querySelector("#t-home"));bind($("#acadCard"));renderShop();renderCourses();renderNow();$("#savebar").classList.remove("on")}
+
+/* ---------- status ---------- */
+function ago(iso){var m=Math.round((Date.now()-new Date(iso))/60000);if(m<1)return"just now";if(m<60)return m+" min ago";var h=Math.round(m/60);if(h<24)return h+" h ago";return Math.round(h/24)+" days ago"}
+async function loadStatus(){
+  try{
+    var r=await gh("/commits?sha=main&per_page=6");var cs=await r.json();
+    $("#commits").innerHTML=cs.map(function(c){return '<li>'+esc(c.commit.message.split("\n")[0])+'<small>'+ago(c.commit.author.date)+'</small></li>'}).join("");
+    var last=cs[0];
+    var b=await gh("/pages/builds/latest");
+    if(b.ok){var j=await b.json();var live=j.status==="built"&&j.commit===last.sha;
+      $("#deploy").innerHTML=live?'<span class="pill ok">Live</span> Your latest change is on the website. Phones may take a few minutes to refresh.':(j.status==="errored"?'<span class="pill bad">Problem</span> The last update failed to publish. Ask Claude to check it.':'<span class="pill">Updating</span> Your latest change is publishing. Usually takes 1–10 minutes.');
+      if(!live&&j.status!=="errored")setTimeout(loadStatus,30000);
+    }else $("#deploy").innerHTML='Changes usually show on the website within 10 minutes. <span class="muted">(Add "Pages: Read" to your key to see live status here.)</span>';
+  }catch(e){$("#deploy").textContent="Couldn't check right now."}
+}
+
+/* ---------- save ---------- */
+var LABEL={home:"homepage",products:"shop prices",academy:"courses"};
+async function saveAll(){
+  var names=Object.keys(dirty);if(!names.length)return;
+  var btn=$("#saveBtn");btn.disabled=true;btn.textContent="Saving…";
+  try{
+    for(var i=0;i<names.length;i++){
+      var n=names[i];
+      var r=await gh("/contents/"+FILES[n],{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:"Admin: update "+LABEL[n],content:b64enc(serialize(n)),sha:F[n].sha,branch:"main"})});
+      if(r.status===409||r.status===422){
+        await loadFile(n);
+        throw new Error("The "+LABEL[n]+" were changed somewhere else (maybe the full editor or Claude). I reloaded the newest version, so please make your change again.");
+      }
+      if(!r.ok)throw new Error("GitHub said "+r.status+" while saving the "+LABEL[n]+".");
+      var j=await r.json();F[n].sha=j.content.sha;F[n].orig=clone(F[n].data);delete dirty[n];
+    }
+    toast("Saved ✓ Your website updates in a few minutes.");
+    renderNow();setTimeout(loadStatus,4000);
+  }catch(e){toast(e.message,true);renderAll()}
+  finally{btn.disabled=false;btn.textContent="Save to website";$("#savebar").classList.toggle("on",Object.keys(dirty).length>0)}
+}
+$("#saveBtn").onclick=saveAll;
+$("#undoBtn").onclick=function(){Object.keys(dirty).forEach(function(n){F[n].data=clone(F[n].orig)});dirty={};renderAll();toast("Changes undone.")};
+function confirmLeave(){return window.confirm("You have changes that aren't saved. Leave anyway?")}
+window.addEventListener("beforeunload",function(e){if(Object.keys(dirty).length){e.preventDefault();e.returnValue=""}});
+
+/* ---------- start ---------- */
+var saved=store(KEY);
+if(saved){signIn(saved,true)}else{$("#signin").hidden=false}
+})();
+</script>
 </body>
 </html>
