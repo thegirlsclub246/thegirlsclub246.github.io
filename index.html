@@ -427,6 +427,39 @@ h2{font-size:clamp(2.3rem,4.4vw,3.5rem);line-height:1.2;color:var(--plum);margin
 .day[aria-pressed="true"]{background:var(--pink);border-color:var(--pink)}
 .slot{border:2px solid var(--pink-soft)}
 .slot[aria-pressed="true"]{background:var(--yellow);border-color:var(--plum);color:var(--plum)}
+/* month calendar (mobile first, 25 Oct 2026) */
+.planner{padding:1.1rem;border-radius:26px;box-shadow:6px 6px 0 var(--pink)}
+.planner h3{font-size:1.1rem;margin-bottom:.7rem}
+.cal-step{display:flex;align-items:center;gap:.5rem;margin:.2rem 0 .6rem;font-weight:700;color:var(--plum);font-size:1rem}
+.cal-step em{font-style:normal}
+.cal-step span{display:inline-grid;place-items:center;width:1.7rem;height:1.7rem;border-radius:50%;background:var(--pink);color:#fff;font-size:.9rem;flex:none}
+.cal-head{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-bottom:.4rem}
+.cal-head b{font-size:1.15rem;color:var(--plum);font-weight:700}
+.cal-nav{width:46px;height:46px;border-radius:50%;border:2px solid var(--pink-soft);background:var(--card);color:var(--pink);font-size:1.7rem;line-height:1;font-weight:700;display:grid;place-items:center;padding:0 0 .15rem;cursor:pointer;flex:none}
+.cal-nav:hover:not(:disabled){border-color:var(--pink)}
+.cal-nav:disabled{opacity:.3;cursor:not-allowed}
+.cal-wk,.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.cal-wk{margin-bottom:4px}
+.cal-wk span{text-align:center;font-size:.8rem;font-weight:700;color:var(--muted)}
+.days{margin-bottom:.6rem}
+.day{height:44px;min-width:0;padding:0;border-radius:14px;border:2px solid var(--pink-soft);background:var(--card);font-size:1.05rem;letter-spacing:0;text-transform:none;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;display:grid;place-items:center;position:relative;cursor:pointer;text-decoration:none}
+.day.blank{border:0;background:none;cursor:default}
+.day:disabled{opacity:1;color:#c9a9b9;background:transparent;border-color:transparent;text-decoration:none;cursor:not-allowed}
+.day.today::after{content:"";position:absolute;bottom:5px;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--pink)}
+.day[aria-pressed="true"]{background:var(--pink);border-color:var(--pink);color:#fff}
+.day[aria-pressed="true"].today::after{background:#fff}
+.cal-key{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem .9rem;font-size:.82rem;color:var(--muted);margin:0 0 1rem}
+.cal-key i{display:inline-block;width:14px;height:14px;border-radius:4px;margin-right:-.5rem;vertical-align:-2px}
+.k-open{border:2px solid var(--pink-soft);background:#fff}.k-sel{background:var(--pink)}
+.slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem;margin-bottom:1rem;min-height:0}
+.slots .muted{grid-column:1/-1}
+.slot{min-height:46px;padding:.3rem .2rem;font-size:.98rem;border-radius:14px;text-align:center}
+.planner .foot{flex-direction:column;align-items:stretch;text-align:center}
+.planner .foot .btn{width:100%;min-height:50px;font-size:1rem!important}
+#pickMsg{font-weight:700;color:var(--plum);font-size:1rem}
+@media (max-width:340px){.slots{grid-template-columns:repeat(2,minmax(0,1fr))}.planner{padding:.85rem}}
+@media (min-width:600px){.planner{padding:1.6rem}.slots{grid-template-columns:repeat(4,minmax(0,1fr))}.day{height:48px}}
+@media (min-width:821px){.slots{grid-template-columns:repeat(3,minmax(0,1fr))}}
 /* academy */
 section.academy{position:relative;background:var(--pink);color:#fff;padding:7rem 0 6rem;margin-top:60px}
 .academy .wave-top{position:absolute;left:0;top:-59px;width:100%;height:60px;display:block}
@@ -651,10 +684,19 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
       </div>
       <div class="planner">
         <h3>Choose your appointment</h3>
-        <div class="days" id="days"></div>
+        <p class="cal-step"><span>1</span> Pick a date</p>
+        <div class="cal-head">
+          <button type="button" class="cal-nav" id="calPrev" aria-label="Previous month">&#8249;</button>
+          <b id="calTitle" aria-live="polite"></b>
+          <button type="button" class="cal-nav" id="calNext" aria-label="Next month">&#8250;</button>
+        </div>
+        <div class="cal-wk" aria-hidden="true"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+        <div class="days" id="days" role="grid"></div>
+        <p class="cal-key"><i class="k-open"></i>Open <i class="k-sel"></i>Picked <span>Faded = full or closed</span></p>
+        <p class="cal-step" id="timeStep"><span>2</span> <em id="timeTitle">Pick a time</em></p>
         <div class="slots" id="slots"></div>
         <div class="foot">
-          <span class="muted" id="pickMsg">Pick a day, then a time.</span>
+          <span class="muted" id="pickMsg">Pick a date, then a time.</span>
           <button class="btn" id="bookBtn" disabled style="padding:.6rem 1.2rem;font-size:.92rem">Add deposit to bag</button>
         </div>
       </div>
@@ -1031,35 +1073,54 @@ const HOURS={weekday:[mins(B.weekday_open),mins(B.weekday_close)],weekend:[mins(
 const CLOSED=new Set((B.closed_dates||[]).map(x=>String(x).slice(0,10)));
 const DN=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 const fmt=m=>{const h=Math.floor(m/60),mm=m%60,h12=((h+11)%12)+1;return `${h12}:${String(mm).padStart(2,"0")}${h<12?"am":"pm"}`};
-function buildSchedule(){
-  const out=[],now=new Date();
-  for(let i=0;i<7;i++){
-    const d=new Date(now.getFullYear(),now.getMonth(),now.getDate()+i);
-    const wk=d.getDay()===0||d.getDay()===6;const [st,en]=wk?HOURS.weekend:HOURS.weekday;
-    const iso=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");const times=[];if(!CLOSED.has(iso)&&st!=null&&en!=null)for(let m=st;m+SLOT_MIN<=en;m+=SLOT_MIN){
-      if(i===0&&m<=now.getHours()*60+now.getMinutes()+60)continue; // need an hour's notice today
-      times.push(fmt(m))}
-    out.push({key:d.toDateString(),d:DN[d.getDay()],n:d.getDate(),mon:MN[d.getMonth()],times,today:i===0});
-  }
-  return out;
+const AHEAD=Math.max(7,+B.book_ahead_days||90);
+const ymd=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
+const today0=(()=>{const n=new Date();return new Date(n.getFullYear(),n.getMonth(),n.getDate())})();
+const lastDay=new Date(today0.getFullYear(),today0.getMonth(),today0.getDate()+AHEAD-1);
+function dayInfo(d){
+  const now=new Date(),isToday=+d===+today0;
+  const wk=d.getDay()===0||d.getDay()===6;const [st,en]=wk?HOURS.weekend:HOURS.weekday;
+  const iso=ymd(d),times=[];
+  if(d>=today0&&d<=lastDay&&!CLOSED.has(iso)&&st!=null&&en!=null)for(let m=st;m+SLOT_MIN<=en;m+=SLOT_MIN){
+    if(isToday&&m<=now.getHours()*60+now.getMinutes()+60)continue; // need an hour's notice today
+    times.push(fmt(m))}
+  return {key:d.toDateString(),d:DN[d.getDay()],n:d.getDate(),mon:MN[d.getMonth()],times,today:isToday,date:d};
 }
-const schedule=buildSchedule();
 const bookedSlots=new Set();
-let selDay=null,selSlot=null,pendingSlot=null;
+let viewY=today0.getFullYear(),viewM=today0.getMonth(),selDay=null,selSlot=null,pendingSlot=null;
 const daysEl=document.getElementById("days"),slotsEl=document.getElementById("slots"),bookBtn=document.getElementById("bookBtn"),msg=document.getElementById("pickMsg");
+const calTitle=document.getElementById("calTitle"),calPrev=document.getElementById("calPrev"),calNext=document.getElementById("calNext"),timeTitle=document.getElementById("timeTitle");
 function openCount(day){return day.times.filter(t=>!bookedSlots.has(day.key+" "+t)).length}
+// start on the first month that still has an open day (e.g. late in the month)
+(function(){for(let i=0;i<AHEAD;i++){const d=new Date(today0.getFullYear(),today0.getMonth(),today0.getDate()+i);if(dayInfo(d).times.length){viewY=d.getFullYear();viewM=d.getMonth();return}}})();
 function renderDays(){
-  daysEl.innerHTML=schedule.map((s,i)=>`<button class="day" data-i="${i}" ${openCount(s)?"":"disabled"} aria-pressed="${selDay===i}">${s.today?"Today":s.d}<b>${s.n}</b>${s.mon}</button>`).join("");
+  calTitle.textContent=MONTHS[viewM]+" "+viewY;
+  calPrev.disabled=viewY<today0.getFullYear()||(viewY===today0.getFullYear()&&viewM<=today0.getMonth());
+  calNext.disabled=new Date(viewY,viewM+1,1)>lastDay;
+  const first=new Date(viewY,viewM,1),n=new Date(viewY,viewM+1,0).getDate();let h="";
+  for(let i=0;i<first.getDay();i++)h+=`<span class="day blank" aria-hidden="true"></span>`;
+  for(let k=1;k<=n;k++){const s=dayInfo(new Date(viewY,viewM,k)),open=openCount(s);
+    const lab=`${s.d} ${k} ${MONTHS[viewM]}${s.today?" (today)":""}${open?`, ${open} times open`:", not available"}`;
+    h+=`<button type="button" class="day${s.today?" today":""}" data-k="${s.key}" ${open?"":"disabled"} aria-pressed="${selDay&&selDay.key===s.key}" aria-label="${lab}">${k}</button>`}
+  daysEl.innerHTML=h;
 }
 function renderSlots(){
-  if(selDay===null){slotsEl.innerHTML=`<span class="muted">Open times show here.</span>`;return}
-  const s=schedule[selDay];
-  slotsEl.innerHTML=s.times.length?s.times.map(t=>{const k=s.key+" "+t;return `<button class="slot" data-k="${k}" data-t="${t}" ${bookedSlots.has(k)?"disabled":""} aria-pressed="${selSlot===k}">${t}</button>`}).join(""):`<span class="muted">No times left today. Try another day.</span>`;
+  if(!selDay){timeTitle.textContent="Pick a time";slotsEl.innerHTML=`<span class="muted">Tap a date above to see open times.</span>`;return}
+  const s=selDay;timeTitle.textContent=`Pick a time · ${s.d} ${s.n} ${s.mon}`;
+  slotsEl.innerHTML=s.times.length?s.times.map(t=>{const k=s.key+" "+t;return `<button type="button" class="slot" data-k="${k}" data-t="${t}" ${bookedSlots.has(k)?"disabled":""} aria-pressed="${selSlot===k}">${t}</button>`}).join(""):`<span class="muted">No times left on this day. Try another date.</span>`;
 }
-daysEl.addEventListener("click",e=>{const b=e.target.closest(".day");if(!b||b.disabled)return;selDay=+b.dataset.i;selSlot=null;bookBtn.disabled=true;msg.textContent="Now pick a time.";renderDays();renderSlots()});
+function goMonth(dir){viewM+=dir;if(viewM<0){viewM=11;viewY--}if(viewM>11){viewM=0;viewY++}renderDays()}
+calPrev.onclick=()=>{if(!calPrev.disabled)goMonth(-1)};calNext.onclick=()=>{if(!calNext.disabled)goMonth(1)};
+{let x0=null,y0=0;daysEl.addEventListener("touchstart",e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
+ daysEl.addEventListener("touchend",e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;x0=null;
+  if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.5){const b=dx<0?calNext:calPrev;if(!b.disabled)goMonth(dx<0?1:-1)}},{passive:true})}
+daysEl.addEventListener("click",e=>{const b=e.target.closest(".day");if(!b||b.disabled||!b.dataset.k)return;selDay=dayInfo(new Date(b.dataset.k));selSlot=null;bookBtn.disabled=true;msg.textContent="Now pick a time.";renderDays();renderSlots();
+  const ts=document.getElementById("timeStep");if(ts&&window.innerWidth<821){const r=ts.getBoundingClientRect();if(r.bottom>window.innerHeight-80)ts.scrollIntoView({behavior:"smooth",block:"start"})}});
 let selTime="";
-slotsEl.addEventListener("click",e=>{const b=e.target.closest(".slot");if(!b||b.disabled)return;selSlot=b.dataset.k;selTime=b.dataset.t;bookBtn.disabled=false;const s=schedule[selDay];msg.textContent=`${s.d} ${s.n} ${s.mon} at ${selTime}`;renderSlots()});
-bookBtn.onclick=()=>{const s=schedule[selDay];cart=cart.filter(c=>c.id!=="deposit");pendingSlot=selSlot;
+slotsEl.addEventListener("click",e=>{const b=e.target.closest(".slot");if(!b||b.disabled)return;selSlot=b.dataset.k;selTime=b.dataset.t;bookBtn.disabled=false;const s=selDay;msg.textContent=`${s.d} ${s.n} ${s.mon} at ${selTime}`;renderSlots();
+  if(window.innerWidth<821){const f=bookBtn.getBoundingClientRect();if(f.bottom>window.innerHeight-10)bookBtn.scrollIntoView({behavior:"smooth",block:"center"})}});
+bookBtn.onclick=()=>{const s=selDay;cart=cart.filter(c=>c.id!=="deposit");pendingSlot=selSlot;
   addItem({id:"deposit",name:"Appointment deposit",price:B.deposit,single:true,note:`${s.d} ${s.n} ${s.mon}, ${selTime}`})};
 renderDays();renderSlots();
 
