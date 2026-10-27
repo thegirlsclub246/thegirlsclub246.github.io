@@ -13,7 +13,7 @@
 <link rel="canonical" href="https://thegirlsclub246.com/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"The Girls Club","url":"https://thegirlsclub246.com/"},{"@type":"LocalBusiness","name":"The Girls Club","url":"https://thegirlsclub246.com/","image":"https://thegirlsclub246.com/img/share.jpg","logo":"https://thegirlsclub246.com/img/logo-tgc.png","telephone":"+1-246-850-4460","address":{"@type":"PostalAddress","addressLocality":"St. Thomas","addressCountry":"BB"},"areaServed":"Barbados","currenciesAccepted":"BBD","sameAs":["https://www.instagram.com/thegirlsclub246/"]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"The Girls Club","url":"https://thegirlsclub246.com/","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://thegirlsclub246.com/?q={search_term_string}"},"query-input":"required name=search_term_string"}},{"@type":"LocalBusiness","name":"The Girls Club","url":"https://thegirlsclub246.com/","image":"https://thegirlsclub246.com/img/share.jpg","logo":"https://thegirlsclub246.com/img/logo-tgc.png","telephone":"+1-246-850-4460","address":{"@type":"PostalAddress","addressLocality":"St. Thomas","addressCountry":"BB"},"areaServed":"Barbados","currenciesAccepted":"BBD","sameAs":["https://www.instagram.com/thegirlsclub246/"]}]}</script>
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <style>:root{color-scheme:only light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}img{max-width:100%}[hidden]{display:none!important}.btn.ghost{background:var(--card,#fff);color:var(--pink);border-color:var(--pink);box-shadow:0 5px 0 var(--pink-soft)}
@@ -601,6 +601,7 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
     </nav>
     <div class="tools">
       <a class="ig" href="https://www.instagram.com/thegirlsclub246/" target="_blank" rel="noopener">Instagram</a>
+      <button class="search-btn" id="openSearch" type="button" aria-label="Search the website" aria-controls="searchPanel" aria-expanded="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></svg></button>
       <button class="btn cart-btn" id="openCart" aria-label="Open bag"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Bag <b id="count">0</b></button>
     </div>
   </div>
@@ -782,6 +783,54 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
   </div>
 </footer>
 
+<style>
+/* ==SEARCH== mobile first */
+.search-btn{display:inline-grid;place-content:center;width:2.6rem;height:2.6rem;border-radius:50%;border:2px solid var(--rose,#F06292);background:#fff;color:var(--shade);padding:0;cursor:pointer;flex:none}
+.search-btn:hover{background:var(--pink-soft)}
+.tools{gap:.7rem}
+.search-scrim{position:fixed;inset:0;background:rgba(74,22,54,.45);z-index:60}
+.search-panel{position:fixed;left:0;right:0;top:0;width:100%;z-index:61;background:var(--bg,#FFF6FA);max-height:100dvh;height:100dvh;overflow-y:auto;overscroll-behavior:contain;padding:calc(env(safe-area-inset-top,0px) + 12px) 16px 28px;box-sizing:border-box}
+@media (min-width:700px){.search-panel{top:6vh;left:50%;right:auto;width:min(640px,92vw);transform:translateX(-50%);height:auto;max-height:84vh;border-radius:26px;border:3px solid var(--pink);box-shadow:0 18px 50px rgba(74,22,54,.25);padding:18px 20px 24px}}
+.search-top{display:flex;gap:8px;align-items:center;position:sticky;top:-12px;background:var(--bg,#FFF6FA);padding:6px 0 10px;z-index:1}
+.search-field{flex:1;min-width:0;display:flex;align-items:center;gap:8px;background:#fff;border:2px solid var(--pink);border-radius:999px;padding:0 14px;min-height:50px;color:var(--shade)}
+.search-field input{flex:1;min-width:0;border:0;outline:0;background:transparent;font:inherit;font-size:17px;color:var(--ink);padding:10px 0}
+.search-field input::-webkit-search-cancel-button{display:none}
+.search-clear{border:0;background:var(--pink-soft);color:var(--shade);border-radius:999px;width:28px;height:28px;font-size:18px;line-height:1;cursor:pointer;flex:none}
+.search-close{flex:none;border:0;background:transparent;color:var(--shade);font:inherit;font-weight:700;font-size:1rem;min-height:44px;padding:0 6px;cursor:pointer}
+.search-sugg p{margin:6px 2px 10px;font-weight:700;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:var(--pink)}
+.search-sugg .chips{display:flex;flex-wrap:wrap;gap:8px}
+.search-sugg button{border:2px solid var(--pink-soft);background:#fff;color:var(--ink);border-radius:999px;padding:8px 14px;font:inherit;font-weight:700;font-size:.95rem;min-height:42px;cursor:pointer}
+.sr-group{margin:14px 0 4px;font-weight:700;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;color:var(--pink)}
+.sr-item{display:flex;gap:12px;align-items:center;background:#fff;border:2px solid var(--pink-soft);border-radius:18px;padding:10px;margin:8px 0;cursor:pointer;text-decoration:none;color:var(--ink)}
+.sr-item:hover,.sr-item:focus-visible{border-color:var(--pink)}
+.sr-thumb{width:62px;height:62px;flex:none;border-radius:14px;overflow:hidden;background:var(--pink-soft);display:grid;place-content:center;color:var(--plum)}
+.sr-thumb img{width:62px;height:62px;object-fit:cover;display:block}
+.sr-thumb svg{width:58px;height:46px}
+.sr-ico{font-size:1.6rem}
+.sr-text{flex:1;min-width:0}
+.sr-text b{display:block;line-height:1.25}
+.sr-text small{display:block;color:var(--muted);font-size:.85rem;line-height:1.3;margin-top:2px}
+.sr-text .sr-price{color:var(--shade);font-weight:700;font-size:.95rem}
+.sr-add{flex:none;border:0;background:var(--pink);color:#fff;border-radius:999px;font:inherit;font-weight:700;font-size:.9rem;padding:0 14px;min-height:42px;cursor:pointer}
+.sr-add.view{background:#fff;color:var(--shade);border:2px solid var(--pink)}
+.sr-add[disabled]{opacity:.55;cursor:default}
+.sr-none{text-align:center;background:#fff;border:2px dashed var(--pink-soft);border-radius:22px;padding:20px 16px;margin-top:12px}
+.sr-none p{margin:0 0 12px}
+.sr-none .btn{display:flex;width:100%;justify-content:center;margin-top:8px;box-sizing:border-box}
+.card.sr-flash{animation:srFlash 1.6s ease 2}
+@keyframes srFlash{0%,100%{box-shadow:0 0 0 0 rgba(255,77,148,0)}50%{box-shadow:0 0 0 6px rgba(255,77,148,.55)}}
+@media (prefers-reduced-motion:reduce){.card.sr-flash{animation:none;outline:4px solid var(--pink)}}
+</style>
+<div class="search-scrim" id="searchScrim" hidden></div>
+<div class="search-panel" id="searchPanel" role="dialog" aria-modal="true" aria-label="Search the website" hidden>
+  <div class="search-top">
+    <label class="search-field"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></svg><input id="searchInput" type="search" placeholder="Search lashes, lip gloss, courses…" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-label="Search" aria-controls="searchResults"><button class="search-clear" id="searchClear" type="button" aria-label="Clear search" hidden>×</button></label>
+    <button class="search-close" id="closeSearch" type="button">Close</button>
+  </div>
+  <div class="search-sugg" id="searchSugg"><p>Popular searches</p><div class="chips"><button type="button">Cluster lashes</button><button type="button">Lip gloss</button><button type="button">Lash course</button><button type="button">Gift voucher</button><button type="button">Book appointment</button><button type="button">Delivery</button></div></div>
+  <div id="searchResults" aria-live="polite"></div>
+</div>
+
 <div class="menu-scrim" id="menuScrim" hidden></div>
 <aside class="side-menu" id="sideMenu" hidden aria-label="Menu">
   <div class="side-top">
@@ -790,6 +839,7 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
   </div>
   <p class="side-tag">DIY beauty · Barbados</p>
   <nav class="side-links" aria-label="Menu links">
+    <a href="#search" data-open-search>🔍 Search</a>
     <a href="#top">Home</a>
     <a href="#lashes">Marketplace</a>
     <a href="#book">Book an appointment</a>
@@ -955,7 +1005,7 @@ function thumb(p){
 const grid=document.getElementById("grid");
 function renderGrid(f="all"){
   grid.innerHTML=products.filter(p=>f==="all"||p.cat===f).map(p=>`
-   <article class="card">
+   <article class="card" data-card="${p.id}">
      <div class="thumb">${thumb(p)}</div>
      ${p.tag?`<span class="tag">${esc(p.tag)}</span>`:""}
      <span class="mk-sold">By ${esc(p.brand||"The Girls Club")}</span><span class="ptype">${esc(p.type)}</span><h3>${esc(p.name)}</h3><p class="desc">${esc(p.desc)}</p>${p.opts.length?`<select class="opt" data-opt="${p.id}" aria-label="Choose your ${esc(p.name)}">${p.opts.map(o=>`<option>${esc(o)}</option>`).join("")}</select>`:""}
@@ -1133,6 +1183,79 @@ renderDays();renderSlots();
  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!m.hidden)close()});})();
 document.querySelectorAll(".wa-link").forEach(a=>a.href=waLink("Hi The Girls Club! I have a question."));
 document.querySelectorAll(".wa-num").forEach(el=>el.textContent=WHATSAPP?("+"+WHATSAPP.replace(/^1(246)(\d{3})(\d{4})$/,"1 ($1) $2-$3")):"");
+
+/* ==SEARCH== one box that finds products (ours + partner brands), courses, booking and help pages */
+(function(){
+ const panel=document.getElementById("searchPanel"),scrimS=document.getElementById("searchScrim"),inp=document.getElementById("searchInput"),out=document.getElementById("searchResults"),sugg=document.getElementById("searchSugg"),clr=document.getElementById("searchClear"),btn=document.getElementById("openSearch");
+ if(!panel||!inp)return;
+ const norm=t=>String(t||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/&/g," and ").replace(/[^a-z0-9$]+/g," ").trim();
+ const stem=w=>w.length>4&&/ies$/.test(w)?w.slice(0,-3)+"y":w.length>3&&/(ses|xes|ches|shes)$/.test(w)?w.slice(0,-2):w.length>3&&/s$/.test(w)&&!/ss$/.test(w)?w.slice(0,-1):w;
+ const near=(a,b)=>{if(Math.abs(a.length-b.length)>1)return false;let i=0,j=0,e=0;while(i<a.length&&j<b.length){if(a[i]===b[j]){i++;j++;continue}if(++e>1)return false;if(a.length>b.length)i++;else if(b.length>a.length)j++;else{i++;j++}}return e+(a.length-i)+(b.length-j)<=1};
+ const CAT={lashes:"lash lashes cluster clusters eyelash eyelashes tray trays diy wispy fluffy volume natural strip",kits:"glue bond seal tweezers applicator kit tools remover",lips:"lip lips gloss oil balm plump",bundles:"bundle deal set starter student",gifts:"gift gifts christmas present voucher xmas"};
+ const idx=[];
+ products.forEach(p=>idx.push({k:"product",p,title:p.name,words:[p.name,p.type,p.brand||"",p.vendor?"partner brand local":"girls club"].join(" "),body:[p.desc,(p.opts||[]).join(" "),CAT[p.cat]||String(p.cat).replace(/^v:/,"")+" "+(p.type||"")].join(" ")}));
+ list(A.courses).filter(c=>c&&c.show!==false&&c.title&&A.show!==false).forEach(c=>idx.push({k:"course",title:c.title,sub:(c.subtitle||"Online course")+" · BBD "+money(num(c.price)),target:"course-"+slug(c.title),icon:"🎓",words:c.title+" "+(c.subtitle||""),body:[c.description,list(c.points).join(" "),"course courses class classes training train learn academy online certificate certified enrol enroll lesson tech technician"].join(" ")}));
+ const PAGES=[
+  {title:"Book a lash appointment",sub:"Pick a day and time · deposit to hold your spot",target:"book",icon:"📅",words:"book booking appointment",body:list(B.points).join(" ")+" lash set install full set refill fill appointment deposit slot time date calendar schedule",show:B.show!==false},
+  {title:"Delivery & collection",sub:"Island-wide delivery $"+num(S.delivery_fee)+" BBD · free collection in "+(S.collection_area||"St. Thomas"),href:"policies.html",icon:"🚚",words:"delivery collection",body:"deliver delivery shipping ship collect collection pickup pick up st thomas parish island wide how long"},
+  {title:"Returns, exchanges & shop policies",sub:"Exchanges, faulty items, deposits and courses",href:"policies.html",icon:"📄",words:"policies returns",body:"return returns refund refunds exchange faulty broken policy policies terms cancel cancellation deposit"},
+  {title:"How to pay",sub:"Card, FirstPay, BPWCCUL or cash on collection",target:"accepts",icon:"💳",words:"pay payment",body:"pay payment card debit credit visa mastercard firstpay first pay bpwccul credit union cash transfer"},
+  {title:"The glow up · client results",sub:"Real lash sets by Marishka",target:"results",icon:"✨",words:"results gallery",body:"photos pictures before after glow up results gallery reviews work"},
+  {title:"About Marishka & The Girls Club",sub:"Certified esthetician in Barbados",target:"about",icon:"💕",words:"about marishka",body:"about owner esthetician who certified story barbados"},
+  {title:"Sell your brand with us",sub:"Join The Girls Club Marketplace",href:"brands.html",icon:"🛍️",words:"sell vendor",body:"sell vendor vendors brand brands partner marketplace join business seller stock"},
+  {title:"Coming soon",sub:"New things on the way",target:"soon",icon:"⏳",words:"coming soon new",body:"coming soon new launch next",show:SO.show!==false},
+  {title:"Message us on WhatsApp",sub:"Questions, custom orders, help",href:waLink("Hi The Girls Club! I have a question."),ext:true,icon:"💬",words:"whatsapp contact",body:"contact message chat whatsapp phone call help question instagram dm talk"}
+ ];
+ PAGES.filter(x=>x.show!==false&&(!x.target||document.getElementById(x.target))).forEach(x=>idx.push({k:"page",...x}));
+ idx.forEach(e=>{if(e.p&&e.p.cat!=="gifts"&&CAT[e.p.cat])e.cw=norm(CAT[e.p.cat]).split(" ").map(stem);e.tw=norm(e.words).split(" ").filter(Boolean).map(stem);e.bw=[...new Set(norm(e.words+" "+e.body).split(" ").filter(Boolean).map(stem))];e.nt=norm(e.title)});
+ const tokMatch=(q,ws)=>{let best=0;for(const w of ws){if(w===q)return 3;if(w.startsWith(q)&&q.length>=2)best=Math.max(best,2);else if(q.length>=5&&near(q,w))best=Math.max(best,1)}return best};
+ const STOP=new Set(["a","an","the","for","and","of","to","in","on","my","me","i","do","you","with","by","is","it","what","how","can","want","need","some"]);
+ function find(q){const nq=norm(q);const toks=nq.split(" ").filter(t=>t&&!STOP.has(t)).map(stem);if(!toks.length)return[];
+  const res=[];for(const e of idx){let sc=0,ok=true;for(const t of toks){const a=tokMatch(t,e.tw),b=tokMatch(t,e.bw);if(!a&&!b){ok=false;break}sc+=a?a*3:b}
+   if(!ok)continue;if(e.nt.includes(nq))sc+=8;if(e.k==="product")sc+=1;if(e.k==="course")sc+=3;if(e.p&&e.p.cat==="gifts"&&!/gift|voucher|christmas|xmas|present/.test(nq))sc-=8;if(e.cw&&toks.some(t=>e.cw.includes(t)))sc+=18;if(e.p&&e.p.stock!==null&&e.p.stock!==undefined&&e.p.stock<=0)sc-=2;res.push([sc,e])}
+  return res.sort((a,b)=>b[0]-a[0]).map(r=>r[1])}
+ const soldOut=p=>p.stock!==null&&p.stock!==undefined&&p.stock<=0;
+ function row(e,i){
+  if(e.k==="product"){const p=e.p;const act=soldOut(p)?`<button class="sr-add" type="button" disabled>Sold out</button>`:p.opts.length?`<button class="sr-add view" type="button" data-sr-go="${i}">Choose</button>`:`<button class="sr-add" type="button" data-sr-add="${i}">Add</button>`;
+   return `<div class="sr-item" role="button" tabindex="0" data-sr-go="${i}"><div class="sr-thumb">${thumb(p)}</div><div class="sr-text"><b>${esc(p.name)}</b><small>By ${esc(p.brand||"The Girls Club")}${p.type?" · "+esc(p.type):""}</small><span class="sr-price">BBD ${money(p.price)}</span></div>${act}</div>`}
+  const link=e.href?`href="${esc(e.href)}"${e.ext?' target="_blank" rel="noopener"':""}`:`href="#${esc(e.target)}"`;
+  return `<a class="sr-item" ${link} data-sr-go="${i}"><div class="sr-thumb"><span class="sr-ico" aria-hidden="true">${e.icon||"🔎"}</span></div><div class="sr-text"><b>${esc(e.title)}</b>${e.sub?`<small>${esc(e.sub)}</small>`:""}</div></a>`}
+ let shown=[],lastQ="",tracked=new Set();
+ function track(q){q=norm(q);if(q.length<2||tracked.has(q))return;tracked.add(q);try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/search/"+slug(q)+(shown.length?"":"/no-results"),title:"Search: "+q,event:true})}catch(x){}}
+ function render(){const q=inp.value;clr.hidden=!q;sugg.hidden=!!q.trim();lastQ=q;
+  if(!q.trim()){out.innerHTML="";shown=[];return}
+  shown=find(q);
+  if(!shown.length){out.innerHTML=`<div class="sr-none"><p><b>No match for “${esc(q.trim())}” yet.</b><br>Tell us what you're looking for and we'll help you find it 💕</p><a class="btn" href="${esc(waLink("Hi The Girls Club! I searched your website for \""+q.trim()+"\". Do you have it?"))}" target="_blank" rel="noopener" data-sr-wa>💬 Ask us on WhatsApp</a><a class="btn ghost" href="#lashes" data-sr-browse>Browse the Marketplace</a></div>`;return}
+  const g={product:[],course:[],page:[]},order=[];shown.forEach((e,i)=>{if(!order.includes(e.k))order.push(e.k);g[e.k].push(row(e,i))});
+  const HEAD={product:"Shop · "+g.product.length,course:"Academy courses",page:"Book & help"};
+  out.innerHTML=order.map(k=>`<div class="sr-group">${HEAD[k]}</div>`+g[k].join("")).join("")}
+ let tmr;inp.addEventListener("input",()=>{clearTimeout(tmr);tmr=setTimeout(render,120)});
+ inp.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();track(inp.value);inp.blur();const f=out.querySelector("[data-sr-go]");if(f&&shown.length===1)f.click()}});
+ clr.onclick=()=>{inp.value="";render();inp.focus()};
+ sugg.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;inp.value=b.textContent;render();track(inp.value)});
+ let wasOpen=false;
+ function open(q){if(typeof q==="string"){inp.value=q}panel.hidden=false;scrimS.hidden=false;btn&&btn.setAttribute("aria-expanded","true");document.documentElement.style.overflow="hidden";render();wasOpen=true;setTimeout(()=>inp.focus(),30)}
+ function close(){if(!wasOpen)return;track(lastQ);panel.hidden=true;scrimS.hidden=true;btn&&btn.setAttribute("aria-expanded","false");document.documentElement.style.overflow="";wasOpen=false}
+ window.tgcSearch=open;
+ btn&&(btn.onclick=()=>open());
+ document.getElementById("closeSearch").onclick=close;scrimS.onclick=close;
+ document.querySelectorAll("[data-open-search]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();setTimeout(()=>open(),60)}));
+ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!panel.hidden){close();btn&&btn.focus();return}
+  if(e.key==="/"&&panel.hidden&&!/^(INPUT|TEXTAREA|SELECT)$/.test((document.activeElement||{}).tagName||"")&&drawer.hidden){e.preventDefault();open()}});
+ function goTo(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"})}
+ function showProduct(p){document.querySelectorAll("#lashes .chip").forEach(x=>x.setAttribute("aria-pressed",x.dataset.f==="all"));renderGrid("all");
+  const c=grid.querySelector(`[data-card="${CSS.escape(p.id)}"]`);if(!c)return goTo("lashes");c.scrollIntoView({behavior:"smooth",block:"center"});c.classList.remove("sr-flash");void c.offsetWidth;c.classList.add("sr-flash");setTimeout(()=>c.classList.remove("sr-flash"),3400)}
+ out.addEventListener("click",e=>{
+  const ad=e.target.closest("[data-sr-add]");if(ad){e.stopPropagation();const p=shown[+ad.dataset.srAdd].p;close();addItem({id:p.id,name:p.name+" · "+p.type+(p.brand?" · "+p.brand:""),price:p.price,...(p.vendor?{vendor:p.vendor,pid:p.pid,opt:""}:{}),...(p.digital?{noShip:true,note:"Digital · sent on WhatsApp"}:{}),...(p.course?{course:p.course}:{})});return}
+  if(e.target.closest("[data-sr-wa]")){track(inp.value);return}
+  if(e.target.closest("[data-sr-browse]")){e.preventDefault();close();showProduct({id:""});goTo("lashes");return}
+  const go=e.target.closest("[data-sr-go]");if(!go)return;const it=shown[+go.dataset.srGo];if(!it)return;
+  if(it.href){track(inp.value);if(it.ext)return;close();return}
+  e.preventDefault();close();if(it.k==="product")showProduct(it.p);else goTo(it.target)});
+ out.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.matches("div.sr-item")){e.preventDefault();e.target.click()}});
+ /* links like thegirlsclub246.com/?q=lip+gloss or /#search open the search */
+ const q0=new URLSearchParams(location.search).get("q");if(q0)open(q0);else if(location.hash==="#search")open();
+})();
 
 /* page is built after load, so jump to #academy etc. once the content is in */
 const ALIAS={eyelash:"course-eyelash-extension-course",cluster:"course-cluster-lash-course"};
