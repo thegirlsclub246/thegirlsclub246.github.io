@@ -1087,6 +1087,19 @@ const products=list(PR.products).filter(p=>p.show!==false&&p.name).map(p=>{
 let MK={};try{MK=await load("marketplace")}catch(e){MK={}}
 const mkBrands=list(MK.brands).filter(b=>b&&b.slug&&b.name);
 const brandName=s=>(mkBrands.find(b=>b.slug===s)||{}).name||"";
+/* ==VENDOR PORTAL== live products from the vendor portal (Supabase, thegirlsclub246.com/vendors); only approved products of approved, signed vendors are public */
+try{
+  const SBU="https://pnahwnwnodwdjrqenlav.supabase.co",SBK="sb_publishable_hk2JKCG5HZZrWR5enw9MfQ_-S8R7W_1";
+  const ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),3500);
+  const vp=await fetch(SBU+"/rest/v1/marketplace_products?select=*&order=updated_at.desc",{headers:{apikey:SBK},signal:ctl.signal}).then(r=>r.ok?r.json():[]).catch(()=>[]);clearTimeout(tm);
+  if(!Array.isArray(MK.products))MK.products=[];
+  const pic=x=>x?SBU+"/storage/v1/object/public/product-photos/"+String(x).split("/").map(encodeURIComponent).join("/"):"";
+  list(vp).filter(p=>p&&p.id&&p.name&&p.vendor_slug).forEach(p=>{
+    if(!mkBrands.some(b=>b.slug===p.vendor_slug))mkBrands.push({slug:p.vendor_slug,name:String(p.vendor_name||""),story:String(p.vendor_bio||""),instagram:String(p.vendor_instagram||"")});
+    if(list(MK.products).some(x=>x&&String(x.id)===String(p.id)))return;
+    MK.products.push({id:p.id,brand:p.vendor_slug,name:p.name,category:p.category,price:p.price,description:p.description,options:p.variants,stock:p.digital?null:p.stock,image:pic((p.photos||[])[0]),digital:p.digital});
+  });
+}catch(e){}
 list(MK.products).filter(p=>p&&p.id&&p.name&&brandName(p.brand)).forEach(p=>products.push({id:"mp-"+String(p.id),pid:String(p.id),vendor:String(p.brand),brand:brandName(p.brand),img:String(p.image||""),alt:String(p.name)+" by "+brandName(p.brand),name:String(p.name),type:String(p.category||""),cat:"v:"+String(p.category||"Other"),price:num(p.price),was:0,desc:String(p.description||""),tag:"",opts:list(p.options).map(String),digital:!!p.digital||/digital/i.test(String(p.category||"")),course:"",stock:(p.stock===null||p.stock===undefined||p.stock==="")?null:num(p.stock)}));
 
 /* ---- fill in the page from the content files ---- */

@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Vendor Portal · The Girls Club Marketplace</title>
+<meta name="description" content="Sign in to manage your brand on The Girls Club Marketplace: add products and photos, see your sales and Sunday payouts.">
+<meta name="robots" content="noindex,follow">
+<link rel="canonical" href="https://thegirlsclub246.com/vendors">
+<meta name="theme-color" content="#FFF4B0">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@500;600;700&display=swap">
+<style>
+:root{
+  --bg:#FFF6FA; --card:#FFFFFF; --ink:#4A143D; --muted:#7A4A6A; --pink:#FF4D94; --deep:#C4256B;
+  --lemon:#FFF4B0; --blush:#FFE6F0; --rose:#F06292; --line:#F3C6DA; --ok:#1E7A4C; --okbg:#E3F6EC; --warn:#8A5A00; --warnbg:#FFF1CC;
+  --display:"Pacifico","Brush Script MT",cursive; --body:"Quicksand","Nunito","Segoe UI",system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;font-weight:500;min-height:100vh}
+img{max-width:100%;display:block}
+h1,h2,h3{margin:0;text-wrap:balance}
+p{margin:0}
+a{color:var(--deep)}
+button,input,select,textarea{font:inherit;color:inherit}
+[hidden]{display:none!important}
+.wrap{max-width:760px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-left,0px)) 90px}
+
+/* header */
+.top{background:var(--lemon);border-bottom:4px solid var(--rose);padding:14px max(16px,env(safe-area-inset-left,0px))}
+.top .row{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.logo{font-family:var(--display);font-size:23px;color:var(--pink);line-height:1.15;text-decoration:none}
+.logo small{display:block;font-family:var(--body);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
+.who{font-size:13px;font-weight:700;text-align:right;color:var(--muted);max-width:50%;overflow:hidden;text-overflow:ellipsis}
+
+/* tabs */
+.tabs{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:2px solid var(--line);display:flex;gap:6px;overflow-x:auto;padding:10px max(16px,env(safe-area-inset-left,0px));scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:0 0 auto;min-height:44px;border:2px solid var(--line);background:#fff;border-radius:999px;padding:8px 16px;font-weight:700;font-size:15px;cursor:pointer;white-space:nowrap}
+.tabs button[aria-selected=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+.tabs .count{display:inline-block;min-width:22px;padding:0 6px;margin-left:4px;border-radius:999px;background:var(--pink);color:#fff;font-size:13px}
+
+/* blocks */
+h1.page{font-family:var(--display);font-weight:400;font-size:clamp(30px,8vw,42px);line-height:1.2;color:var(--ink);margin:22px 0 6px}
+h2.sec{font-size:20px;font-weight:700;margin:26px 0 10px}
+.lead{color:var(--muted)}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:18px;margin-top:14px}
+.card.pinkbox{border-color:var(--rose);box-shadow:6px 6px 0 var(--blush)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.stat{background:#fff;border:2px solid var(--line);border-radius:18px;padding:14px}
+.stat b{display:block;font-size:26px;line-height:1.2}
+.stat span{font-size:14px;color:var(--muted);font-weight:600}
+.stat.big{grid-column:1/-1;background:var(--ink);border-color:var(--ink);color:#fff}
+.stat.big span{color:#F7CDE0}
+.stat.big b{font-size:34px}
+.note{border-radius:14px;padding:12px 14px;font-weight:600;margin-top:14px}
+.note.ok{background:var(--okbg);color:var(--ok)}
+.note.warn{background:var(--warnbg);color:var(--warn)}
+.note.info{background:var(--blush);color:var(--ink)}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-weight:700;font-size:17px;border-radius:999px;min-height:48px;padding:12px 24px;background:var(--pink);color:#fff;border:3px solid var(--pink);box-shadow:4px 4px 0 var(--ink);cursor:pointer}
+.btn:disabled{opacity:.6;cursor:wait}
+.btn.full{width:100%}
+.btn.ghost{background:#fff;color:var(--ink);border-color:var(--ink);box-shadow:none}
+.btn.plum{background:var(--ink);border-color:var(--ink);box-shadow:4px 4px 0 var(--pink)}
+.btn.sm{min-height:44px;padding:8px 16px;font-size:15px;box-shadow:none}
+.btn.green{background:var(--ok);border-color:var(--ok);box-shadow:none}
+.btn.red{background:#fff;color:#A3123F;border-color:#A3123F;box-shadow:none}
+.btn:focus-visible,.tabs button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.btnrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.btnrow .btn{flex:1 1 140px}
+.linkbtn{background:none;border:0;padding:8px 0;color:var(--deep);font-weight:700;text-decoration:underline;cursor:pointer;min-height:44px}
+
+/* forms */
+.f{display:block;font-weight:700;margin-top:14px}
+.f input,.f select,.f textarea{display:block;width:100%;margin-top:6px;border:2px solid var(--line);border-radius:14px;padding:12px 14px;font-size:17px;background:#fff;font-weight:600;min-height:48px}
+.f textarea{min-height:96px;resize:vertical}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 3px var(--blush)}
+.hint{display:block;font-weight:500;font-size:14px;color:var(--muted);margin-top:4px}
+.two{display:grid;grid-template-columns:1fr;gap:0 12px}
+@media(min-width:600px){.two{grid-template-columns:1fr 1fr}}
+.pick{display:grid;gap:10px;margin-top:10px}
+.pick label{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--line);border-radius:16px;padding:14px;cursor:pointer}
+.pick input{width:22px;height:22px;margin-top:2px;accent-color:var(--pink);flex:0 0 auto}
+.pick label:has(input:checked){border-color:var(--pink);background:#FFF0F6}
+.pick b{display:block}
+.pick span{font-size:14px;color:var(--muted)}
+.chk{display:flex;gap:12px;align-items:flex-start;margin-top:14px;font-weight:600}
+.chk input{width:24px;height:24px;flex:0 0 auto;accent-color:var(--pink);margin-top:1px}
+.switch{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;border:2px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:14px;font-weight:700}
+.switch input{width:24px;height:24px;accent-color:var(--pink)}
+fieldset{border:0;padding:0;margin:22px 0 0}
+legend{font-size:19px;font-weight:700;padding:0;display:flex;align-items:center;gap:10px}
+legend i{font-style:normal;display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--pink);color:#fff;font-size:16px}
+.err{color:#A3123F;font-weight:700;margin-top:12px;min-height:0}
+.err:empty{display:none}
+.agree{max-height:320px;overflow:auto;background:#FFFDF2;border:2px solid var(--lemon);border-radius:14px;padding:4px 14px;margin-top:10px;font-size:15px}
+.agree li{margin:8px 0}
+details summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center}
+
+/* products */
+.plist{display:grid;gap:12px;margin-top:14px}
+.prod{display:grid;grid-template-columns:84px 1fr;gap:12px;background:#fff;border:2px solid var(--line);border-radius:18px;padding:12px;align-items:start}
+.prod .ph{width:84px;height:84px;border-radius:12px;background:var(--blush) center/cover no-repeat;display:grid;place-items:center;font-size:30px}
+.prod h3{font-size:17px;line-height:1.3}
+.prod .meta{font-size:14px;color:var(--muted);margin-top:2px}
+.prod .acts{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px}
+.prod .acts .btn{flex:1 1 120px}
+.chip{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:3px 10px;margin-top:6px}
+.chip.pending{background:var(--warnbg);color:var(--warn)}
+.chip.live{background:var(--okbg);color:var(--ok)}
+.chip.changes{background:#FFE0E6;color:#A3123F}
+.chip.hidden,.chip.paused{background:#EEE;color:#555}
+.chip.approved{background:var(--okbg);color:var(--ok)}
+.fromher{background:#FFE0E6;color:#7A0F33;border-radius:12px;padding:8px 12px;font-size:14px;font-weight:600;margin-top:8px}
+
+/* photos */
+.photos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+@media(min-width:600px){.photos{grid-template-columns:repeat(4,1fr)}}
+.photo{position:relative;aspect-ratio:1;border-radius:14px;background:var(--blush) center/cover no-repeat;border:2px solid var(--line)}
+.photo button{position:absolute;top:4px;right:4px;width:34px;height:34px;border-radius:50%;border:0;background:rgba(74,20,61,.85);color:#fff;font-size:18px;cursor:pointer}
+.photo .first{position:absolute;left:4px;bottom:4px;background:#fff;border-radius:999px;font-size:11px;font-weight:700;padding:2px 8px}
+.addphoto{aspect-ratio:1;border-radius:14px;border:2px dashed var(--rose);background:#fff;display:grid;place-items:center;text-align:center;font-weight:700;font-size:14px;color:var(--deep);cursor:pointer;padding:6px}
+.addphoto input{position:absolute;width:1px;height:1px;opacity:0}
+.keep{background:var(--blush);border-radius:12px;padding:10px 14px;margin-top:8px;font-weight:600;font-size:15px}
+
+/* tables as cards */
+.rows{display:grid;gap:8px;margin-top:10px}
+.r{background:#fff;border:2px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.r .l{min-width:0}
+.r .l b{display:block;overflow-wrap:anywhere}
+.r .l span{font-size:14px;color:var(--muted)}
+.r .v{font-weight:700;white-space:nowrap;text-align:right}
+.r .v span{display:block;font-size:13px;color:var(--muted);font-weight:600}
+.empty{background:#fff;border:2px dashed var(--line);border-radius:16px;padding:20px;text-align:center;color:var(--muted);font-weight:600;margin-top:12px}
+
+/* sheet (add/edit) */
+.sheet{position:fixed;inset:0;z-index:20;background:rgba(74,20,61,.45);display:flex;align-items:flex-end;justify-content:center}
+.sheet .panel{background:var(--bg);width:100%;max-width:760px;max-height:94vh;overflow:auto;border-radius:24px 24px 0 0;padding:18px max(16px,env(safe-area-inset-left,0px)) 28px}
+@media(min-width:800px){.sheet{align-items:center}.sheet .panel{border-radius:24px}}
+.sheet .head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.sheet .head h2{font-size:21px}
+.x{width:44px;height:44px;border-radius:50%;border:2px solid var(--line);background:#fff;font-size:22px;cursor:pointer}
+
+/* auth */
+.auth{max-width:460px;margin:0 auto}
+.auth .card{padding:20px}
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:999px;padding:12px 20px;font-weight:700;z-index:40;max-width:calc(100% - 32px);text-align:center;box-shadow:0 6px 20px rgba(0,0,0,.2)}
+.loading{text-align:center;padding:60px 0;color:var(--muted);font-weight:700}
+.vpick{margin-top:14px}
+footer{text-align:center;font-size:14px;color:var(--muted);padding:30px 16px}
+</style>
+</head>
+<body>
+<header class="top"><div class="row">
+  <a class="logo" href="./">The Girls Club<small>Vendor Portal</small></a>
+  <span class="who" id="who"></span>
+</div></header>
+<nav class="tabs" id="tabs" role="tablist" hidden></nav>
+<main class="wrap" id="app"><p class="loading">Loading your portal…</p></main>
+<footer>The Girls Club Marketplace · St. Thomas, Barbados · <a href="brands.html">For brands</a> · <a href="policies.html">Policies</a> · <a href="https://wa.me/12468504460" target="_blank" rel="noopener">WhatsApp help</a></footer>
+<div id="toast" class="toast" role="status" hidden></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.79.0/dist/umd/supabase.js"></script>
+<script src="vendor-agreement.js"></script>
+<script>
+(function(){
+"use strict";
+var SB_URL="https://pnahwnwnodwdjrqenlav.supabase.co";
+var SB_KEY="sb_publishable_hk2JKCG5HZZrWR5enw9MfQ_-S8R7W_1"; /* public key: safe in the browser, the database rules protect the data */
+var BUCKET="product-photos";
+var WA="12468504460";
+var FORM="https://docs.google.com/forms/d/e/1FAIpQLSfGTId0Oa7jR23yfKmouDejd1AVFxPNZA8QMfMkK3JWV0mCFA/formResponse", FIELD="entry.858011822";
+var CATS=["Hair & bonnets","Nails","Lashes & brows","Skincare & body","Perfume & scents","Makeup & lips","Jewellery","Bags & accessories","Candles & self-care","Digital","Other"];
+var A=window.TGC_AGREE||{PLANS:{},clauses:function(){return[]},VERSION:""};
+var PLANS=A.PLANS;
+var app=document.getElementById("app"), tabsEl=document.getElementById("tabs"), whoEl=document.getElementById("who");
+var sb=null;
+try{sb=window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}})}catch(e){}
+
+/* ---------- helpers ---------- */
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function waNum(p){var d=String(p||"").replace(/\D/g,"");if(d.length===7)return"1246"+d;if(d.length===10&&d.indexOf("246")===0)return"1"+d;return d}
+function money(n){n=Number(n)||0;return "$"+n.toFixed(2).replace(/\.00$/,"")}
+function money2(n){return "$"+(Number(n)||0).toFixed(2)}
+function photoUrl(p){return p?SB_URL+"/storage/v1/object/public/"+BUCKET+"/"+String(p).split("/").map(encodeURIComponent).join("/"):""}
+function fmtDate(d){if(!d)return"";var x=new Date(String(d).length<=10?d+"T12:00:00":d);return x.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short"})}
+function today(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function weekStart(){var d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-d.getDay());return d} /* Sunday */
+function iso(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function nextSunday(){var d=weekStart();d.setDate(d.getDate()+7);return d}
+var toastT;function toast(m){var t=document.getElementById("toast");t.textContent=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(function(){t.hidden=true},3200)}
+function gc(path,title){try{window.goatcounter&&goatcounter.count({path:path,title:title,event:true})}catch(e){}}
+function rateOf(v){var p=PLANS[(v&&v.plan)||"starter"];return p?p.rate/100:0.05}
+function q(sel,root){return (root||document).querySelector(sel)}
+function qa(sel,root){return Array.prototype.slice.call((root||document).querySelectorAll(sel))}
+function setErr(el,m){if(el){el.textContent=m||"";if(m)el.scrollIntoView({block:"center",behavior:"smooth"})}}
+function friendly(e){var m=(e&&(e.message||e.error_description||e.msg))||String(e||"");
+  if(/Invalid login/i.test(m))return"That email and password don't match. Try again or tap \"Forgot password\".";
+  if(/Email not confirmed/i.test(m))return"Please confirm your email first: open the email we sent you and tap the link.";
+  if(/already registered|already been registered/i.test(m))return"There's already an account with this email. Sign in instead.";
+  if(/rate limit|too many/i.test(m))return"Too many tries right now. Please wait a few minutes and try again, or WhatsApp us.";
+  if(/Password should be/i.test(m))return"Your password needs at least 8 characters.";
+  if(/Failed to fetch|NetworkError|network/i.test(m))return"No internet connection. Check your signal and try again.";
+  return m||"Something went wrong. Please try again.";}
+function busy(btn,on,label){if(!btn)return;if(on){btn.dataset.l=btn.textContent;btn.disabled=true;btn.textContent=label||"Saving…"}else{btn.disabled=false;if(btn.dataset.l)btn.textContent=btn.dataset.l}}
+
+/* ---------- state ---------- */
+var S={user:null,isAdmin:false,vendor:null,products:[],sales:[],payouts:[],tab:"home",
+       all:{vendors:[],products:[],sales:[],payouts:[]},adminTab:"approve",viewAs:null};
+
+if(!sb){app.innerHTML='<div class="card"><h2>We couldn\'t load the portal.</h2><p class="muted" style="margin-top:8px">Please check your internet and refresh the page. If it keeps happening, WhatsApp us on 1 (246) 850-4460.</p></div>';return}
+
+/* ---------- auth screens ---------- */
+var params=new URLSearchParams(location.search);
+var wantPlan=params.get("plan");
+function authScreen(mode,msg){
+  tabsEl.hidden=true;whoEl.textContent="";
+  mode=mode||"signin";
+  var titles={signin:"Welcome back",signup:"Create your vendor account",forgot:"Reset your password",newpass:"Choose a new password",check:"Check your email"};
+  var h='<div class="auth"><h1 class="page">'+titles[mode]+'</h1>';
+  if(mode==="signup")h+='<p class="lead">For brands joining The Girls Club Marketplace. Takes about 5 minutes: create your login, then set up your shop and sign the agreement.</p>';
+  if(mode==="signin")h+='<p class="lead">Sign in to add your products and photos, and see your sales and Sunday payouts.</p>';
+  if(msg)h+='<div class="note info">'+msg+'</div>';
+  h+='<form class="card pinkbox" id="af" novalidate>';
+  if(mode==="check"){
+    h+='<p>We sent a link to <b id="ckEmail"></b>. Open it on this phone to confirm your email, then you\'ll come straight back here to set up your shop.</p><p class="small muted" style="margin-top:10px">Can\'t find it? Check Spam or Promotions. It can take a few minutes.</p><div class="btnrow"><button class="btn ghost" type="button" data-go="signin">Back to sign in</button></div>';
+  }else{
+    if(mode!=="newpass")h+='<label class="f">Email<input type="email" name="email" autocomplete="email" inputmode="email" required></label>';
+    if(mode!=="forgot")h+='<label class="f">'+(mode==="signin"?"Password":"Make a password")+'<input type="password" name="password" autocomplete="'+(mode==="signin"?"current-password":"new-password")+'" minlength="8" required>'+(mode!=="signin"?'<span class="hint">At least 8 characters. Don\'t use your bank or email password.</span>':'')+'</label>';
+    h+='<p class="err" id="aerr" role="alert"></p>';
+    var lbl={signin:"Sign in",signup:"Create my account",forgot:"Send me a reset link",newpass:"Save my new password"}[mode];
+    h+='<div class="btnrow"><button class="btn full" type="submit" id="abtn">'+lbl+'</button></div>';
+    if(mode==="signin")h+='<p style="margin-top:14px;text-align:center"><button class="linkbtn" type="button" data-go="forgot">Forgot password?</button></p><p style="text-align:center">New brand? <button class="linkbtn" type="button" data-go="signup">Create your vendor account</button></p>';
+    if(mode==="signup"||mode==="forgot")h+='<p style="margin-top:14px;text-align:center">Already have an account? <button class="linkbtn" type="button" data-go="signin">Sign in</button></p>';
+  }
+  h+='</form>';
+  if(mode==="signup")h+='<p class="small muted" style="margin-top:14px">Not sure yet? Read about the plans on <a href="brands.html">our For Brands page</a> or WhatsApp us on <a href="https://wa.me/'+WA+'" target="_blank" rel="noopener">1 (246) 850-4460</a>.</p>';
+  h+='</div>';
+  app.innerHTML=h;
+  qa("[data-go]").forEach(function(b){b.onclick=function(){authScreen(b.getAttribute("data-go"))}});
+  var f=q("#af"),err=q("#aerr");
+  if(mode==="check"){q("#ckEmail").textContent=sessionStorageGet("tgcEmail")||"your email";return}
+  f.onsubmit=function(e){e.preventDefault();setErr(err,"");
+    var email=f.email?f.email.value.trim():"", pw=f.password?f.password.value:"";
+    if(f.email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return setErr(err,"Please check your email address.");
+    if(f.password&&pw.length<8)return setErr(err,"Your password needs at least 8 characters.");
+    var btn=q("#abtn");busy(btn,true,"One moment…");
+    var back=location.origin+location.pathname;
+    var p;
+    if(mode==="signin")p=sb.auth.signInWithPassword({email:email,password:pw});
+    else if(mode==="signup")p=sb.auth.signUp({email:email,password:pw,options:{emailRedirectTo:back+(wantPlan?"?plan="+encodeURIComponent(wantPlan):"")}});
+    else if(mode==="forgot")p=sb.auth.resetPasswordForEmail(email,{redirectTo:back});
+    else p=sb.auth.updateUser({password:pw});
+    p.then(function(r){busy(btn,false);if(r.error)return setErr(err,friendly(r.error));
+      if(mode==="signup"){gc("vendor-portal-signup","Vendor account created");if(!r.data.session){sessionStorageSet("tgcEmail",email);return authScreen("check")}}
+      if(mode==="forgot")return authScreen("signin","If that email has an account, we've sent a reset link. Open it on this phone.");
+      if(mode==="newpass")toast("Password saved 💕");
+      boot();
+    }).catch(function(x){busy(btn,false);setErr(err,friendly(x))});
+  };
+}
+function sessionStorageGet(k){try{return sessionStorage.getItem(k)}catch(e){return null}}
+function sessionStorageSet(k,v){try{sessionStorage.setItem(k,v)}catch(e){}}
+
+/* ---------- boot ---------- */
+var recovering=false;
+sb.auth.onAuthStateChange(function(ev){if(ev==="PASSWORD_RECOVERY"){recovering=true;authScreen("newpass")}});
+function boot(){
+  app.innerHTML='<p class="loading">Loading your portal…</p>';
+  sb.auth.getSession().then(function(r){
+    if(recovering)return;
+    var s=r&&r.data&&r.data.session;
+    if(!s){var h=location.hash.replace("#","");return authScreen(h==="signup"||wantPlan?"signup":"signin")}
+    S.user=s.user;whoEl.textContent=s.user.email||"";
+    return sb.from("admins").select("uid").eq("uid",s.user.id).maybeSingle().then(function(a){
+      S.isAdmin=!!(a&&a.data);
+      if(S.isAdmin)return loadAdmin().then(function(){renderAdmin()});
+      return loadVendor().then(function(){if(!S.vendor)return setupShop();renderVendor()});
+    });
+  }).catch(function(e){app.innerHTML='<div class="card"><h2>We couldn\'t load your portal.</h2><p class="muted" style="margin-top:8px">'+esc(friendly(e))+'</p><div class="btnrow"><button class="btn" onclick="location.reload()">Try again</button></div></div>'});
+}
+function signOut(){sb.auth.signOut().then(function(){S.vendor=null;S.isAdmin=false;S.viewAs=null;authScreen("signin","You're signed out.")})}
+
+/* ---------- vendor data ---------- */
+function must(r){if(r&&r.error)throw r.error;return r?r.data:null}
+function loadVendor(){
+  var uid=S.user.id;
+  return Promise.all([
+    sb.from("vendors").select("*").eq("id",uid).maybeSingle(),
+    sb.from("products").select("*").eq("vendor_id",uid).order("updated_at",{ascending:false}),
+    sb.from("sales").select("*").eq("vendor_id",uid).order("sale_date",{ascending:false}),
+    sb.from("payouts").select("*").eq("vendor_id",uid).order("paid_on",{ascending:false})
+  ]).then(function(r){S.vendor=must(r[0]);S.products=must(r[1])||[];S.sales=must(r[2])||[];S.payouts=must(r[3])||[]});
+}
+function money_owed(sales,payouts){
+  var ws=iso(weekStart()),earned=0,due=0,thisWeek=0,paid=0;
+  sales.forEach(function(s){var v=Number(s.vendor_share)||0;earned+=v;if(s.sale_date<ws)due+=v;else thisWeek+=v});
+  payouts.forEach(function(p){paid+=Number(p.amount)||0});
+  return{earned:earned,paid:paid,dueSunday:Math.max(0,due-paid),thisWeek:thisWeek,owed:Math.max(0,earned-paid)};
+}
+
+/* ---------- set up my shop (first time) ---------- */
+function setupShop(){
+  tabsEl.hidden=true;
+  var plan=PLANS[wantPlan]?wantPlan:"";
+  var h='<h1 class="page">Set up your shop</h1><p class="lead">Tell shoppers about your brand, pick your plan and sign the agreement. Then you can add your products and photos.</p>';
+  h+='<form id="sf" novalidate>'+
+  '<fieldset><legend><i>1</i>Your brand</legend>'+
+  '<label class="f">Brand or business name<input name="business" required maxlength="80" autocomplete="organization"></label>'+
+  '<label class="f">Your full name<input name="owner_name" required maxlength="80" autocomplete="name"></label>'+
+  '<div class="two"><label class="f">WhatsApp number<input type="tel" name="phone" required maxlength="30" autocomplete="tel" inputmode="tel" placeholder="246 ..."></label>'+
+  '<label class="f">Instagram <span class="hint">optional</span><input name="instagram" maxlength="60" placeholder="@yourbrand"></label></div>'+
+  '<label class="f">What you sell<select name="category" required><option value="">Choose one</option>'+CATS.filter(function(c){return c!=="Digital"}).map(function(c){return'<option>'+esc(c)+'</option>'}).join("")+'</select></label>'+
+  '<label class="f">About your brand <span class="hint">optional · a few lines shoppers will see</span><textarea name="bio" maxlength="600"></textarea></label></fieldset>'+
+  '<fieldset><legend><i>2</i>Your plan</legend><div class="pick">'+
+  Object.keys(PLANS).map(function(k){var p=PLANS[k];return'<label><input type="radio" name="plan" value="'+k+'"'+(k===plan?" checked":"")+'><div><b>'+p.name+' · '+(p.fee?"$"+p.fee+"/month":"FREE")+'</b><span>'+(p.fee?"+ "+p.rate+"% per sale. First month free.":"$0 a month + "+p.rate+"% per sale. No card needed.")+'</span></div></label>'}).join("")+
+  '</div><p class="hint">Prices in BBD. You can change your plan anytime.</p></fieldset>'+
+  '<fieldset><legend><i>3</i>How you get paid</legend><div class="pick">'+
+  ["Bank transfer","FirstPay","BPWCCUL"].map(function(m){return'<label><input type="radio" name="payout" value="'+m+'"><div><b>'+m+'</b></div></label>'}).join("")+
+  '</div><p class="hint">Paid every Sunday for the week before. Marishka asks for your account details privately on WhatsApp. Never type card or bank numbers here.</p></fieldset>'+
+  '<fieldset><legend><i>4</i>Sign the agreement</legend><div class="note info" id="agSum">Pick a plan above to see your terms.</div>'+
+  '<details><summary>Read the full agreement (18 points)</summary><ol class="agree" id="agList"></ol></details>'+
+  '<label class="f">Sign: type your full name<input name="sign" required maxlength="80" autocomplete="name"></label>'+
+  '<label class="chk"><input type="checkbox" name="agree"><span>I have read and agree to the consignment agreement for my brand.</span></label></fieldset>'+
+  '<p class="err" id="serr" role="alert"></p>'+
+  '<div class="btnrow"><button class="btn full" type="submit" id="sbtn">Open my shop</button></div>'+
+  '<p style="text-align:center;margin-top:10px"><button class="linkbtn" type="button" id="sout">Sign out</button></p></form>';
+  app.innerHTML=h;
+  var f=q("#sf");q("#sout").onclick=signOut;
+  function draw(){var r=f.querySelector("input[name=plan]:checked"),p=r?r.value:"",pl=PLANS[p];
+    q("#agSum").innerHTML=pl?("Consignment with The Girls Club on the <b>"+pl.name+"</b> plan: "+(pl.fee?"$"+pl.fee+" a month (first month free, then by card through PayPal)":"no monthly fee")+", plus <b>"+pl.rate+"%</b> per sale. You keep <b>"+(100-pl.rate)+"%</b>. Paid every Sunday. 14 days' notice to end."):"Pick a plan above to see your terms.";
+    q("#agList").innerHTML=A.clauses(p).map(function(c){return"<li><b>"+esc(c[0])+".</b> "+esc(c[1])+"</li>"}).join("")}
+  f.addEventListener("change",function(e){if(e.target.name==="plan")draw()});draw();
+  f.onsubmit=function(e){e.preventDefault();var err=q("#serr");setErr(err,"");
+    var v=function(n){return(f.elements[n]&&f.elements[n].value||"").trim()};
+    var need=[["business","your brand name"],["owner_name","your full name"],["phone","your WhatsApp number"],["category","what you sell"]];
+    for(var i=0;i<need.length;i++)if(!v(need[i][0])){f.elements[need[i][0]].focus();return setErr(err,"Please add "+need[i][1]+".")}
+    if(v("phone").replace(/\D/g,"").length<7)return setErr(err,"Please check your WhatsApp number.");
+    var pr=f.querySelector("input[name=plan]:checked");if(!pr)return setErr(err,"Please pick a plan.");
+    var po=f.querySelector("input[name=payout]:checked");if(!po)return setErr(err,"Please choose how you'd like to be paid.");
+    if(v("sign").length<3)return setErr(err,"Please sign by typing your full name.");
+    if(!f.agree.checked)return setErr(err,"Please tick the box to agree to the agreement.");
+    var pl=PLANS[pr.value],now=new Date().toISOString();
+    var row={business:v("business"),owner_name:v("owner_name"),phone:v("phone"),email:S.user.email,instagram:v("instagram").replace(/^@?/,v("instagram")?"@":""),category:v("category"),bio:v("bio"),plan:pr.value,payout_method:po.value,
+      contract:{name:v("sign"),signedAt:now,version:A.VERSION,plan:pr.value,rates:{now:pl.rate,free:pr.value==="starter"}}};
+    var btn=q("#sbtn");busy(btn,true,"Opening your shop…");
+    sb.from("vendors").insert(row).select().single().then(function(r){
+      if(r.error){busy(btn,false);return setErr(err,friendly(r.error))}
+      S.vendor=r.data;gc("vendor-portal-shop","Vendor shop set up");
+      /* copy to Marishka's sign-ups sheet so she is notified like before */
+      try{var fd=new FormData();fd.append(FIELD,JSON.stringify({type:"vendor-signup",source:"vendor-portal",submittedAt:now,brand:row.business,owner:row.owner_name,phone:row.phone,email:row.email,instagram:row.instagram,category:row.category,bio:row.bio,plan:row.plan,planName:pl.name,monthlyFee:pl.fee,payoutMethod:row.payout_method,contract:row.contract,page:location.href}));fetch(FORM,{method:"POST",mode:"no-cors",body:fd}).catch(function(){})}catch(x){}
+      S.tab="products";renderVendor();toast("Your shop is set up 🎀 Add your first product!");
+    }).catch(function(x){busy(btn,false);setErr(err,friendly(x))});
+  };
+}
+
+/* ---------- vendor screens ---------- */
+function vendorTabs(){
+  var pend=S.products.filter(function(p){return p.status==="changes"}).length;
+  var t=[["home","Home"],["products","My products"+(pend?'<span class="count">'+pend+'</span>':"")],["money","Sales & payouts"],["business","My business"]];
+  tabsEl.innerHTML=(S.viewAs?'<button type="button" id="backAdmin" class="" style="background:var(--lemon)">← Overseer</button>':"")+t.map(function(x){return'<button type="button" role="tab" data-t="'+x[0]+'" aria-selected="'+(S.tab===x[0])+'">'+x[1]+'</button>'}).join("");
+  tabsEl.hidden=false;
+  qa("[data-t]",tabsEl).forEach(function(b){b.onclick=function(){S.tab=b.getAttribute("data-t");renderVendor();window.scrollTo(0,0)}});
+  var ba=q("#backAdmin");if(ba)ba.onclick=function(){S.viewAs=null;renderAdmin()};
+}
+function renderVendor(){
+  vendorTabs();
+  var v=S.vendor,h="";
+  if(S.tab==="home")h=vHome(v);
+  else if(S.tab==="products")h=vProducts(v);
+  else if(S.tab==="money")h=vMoney(v);
+  else h=vBusiness(v);
+  app.innerHTML=h;
+  wireVendor();
+}
+function statusNote(v){
+  if(v.status==="pending")return'<div class="note warn">⏳ Marishka is checking your shop. You can add products now: they go live on the website once she approves your shop and each product (normally within 2 working days).</div>';
+  if(v.status==="paused")return'<div class="note warn">Your shop is paused, so your products are not showing on the website right now. WhatsApp Marishka if you have questions.</div>';
+  return'<div class="note ok">✅ Your shop is approved. Live products show on <a href="./#shop">The Girls Club Marketplace</a>.</div>';
+}
+function vHome(v){
+  var m=money_owed(S.sales,S.payouts),pl=PLANS[v.plan]||{};
+  var live=S.products.filter(function(p){return p.status==="live"}).length,pend=S.products.filter(function(p){return p.status==="pending"}).length;
+  var low=S.products.filter(function(p){return !p.digital&&p.status==="live"&&Number(p.stock)<=2});
+  var ch=S.products.filter(function(p){return p.status==="changes"});
+  var wk=S.sales.filter(function(s){return s.sale_date>=iso(weekStart())});
+  var h='<h1 class="page">Hi '+esc(String(v.owner_name||"").split(" ")[0])+' 💕</h1><p class="lead">'+esc(v.business)+' · '+esc(pl.name||"")+' plan</p>'+statusNote(v);
+  h+='<div class="stats"><div class="stat big"><span>Coming to you on '+esc(fmtDate(iso(nextSunday())))+'</span><b>'+money2(m.dueSunday)+'</b></div>'+
+     '<div class="stat"><b>'+wk.reduce(function(a,s){return a+(Number(s.qty)||0)},0)+'</b><span>sold this week</span></div>'+
+     '<div class="stat"><b>'+money2(m.earned)+'</b><span>earned in total</span></div>'+
+     '<div class="stat"><b>'+live+'</b><span>live products</span></div>'+
+     '<div class="stat"><b>'+pend+'</b><span>waiting for approval</span></div></div>';
+  if(ch.length)h+='<h2 class="sec">Marishka asked for changes</h2><div class="rows">'+ch.map(function(p){return'<div class="r"><div class="l"><b>'+esc(p.name)+'</b><span>'+esc(p.note||"Please check this product.")+'</span></div><div class="v"><button class="btn sm" data-edit="'+p.id+'">Fix</button></div></div>'}).join("")+'</div>';
+  if(low.length)h+='<h2 class="sec">Running low</h2><div class="rows">'+low.map(function(p){return'<div class="r"><div class="l"><b>'+esc(p.name)+'</b><span>'+(Number(p.stock)<=0?"Sold out":"Only "+p.stock+" left")+'</span></div><div class="v"><button class="btn sm ghost" data-edit="'+p.id+'">Update stock</button></div></div>'}).join("")+'</div>';
+  h+='<h2 class="sec">Latest sales</h2>'+salesRows(S.sales.slice(0,5));
+  h+='<div class="btnrow"><button class="btn" data-add>+ Add a product</button><button class="btn ghost" data-t2="products">See my products</button></div>';
+  if(pl.fee&&v.trial_ends)h+='<p class="small muted" style="margin-top:16px">Your free month runs until '+esc(fmtDate(v.trial_ends))+'. Marishka sends your secure PayPal link for the monthly fee.</p>';
+  return h;
+}
+function salesRows(list){
+  if(!list.length)return'<div class="empty">No sales yet. They show here as soon as someone buys your products.</div>';
+  return'<div class="rows">'+list.map(function(s){return'<div class="r"><div class="l"><b>'+esc(s.product_name)+(Number(s.qty)>1?" × "+s.qty:"")+'</b><span>'+esc(fmtDate(s.sale_date))+' · '+(s.source==="in-person"?"In person":"Website")+' · sold for '+money2(s.total)+'</span></div><div class="v">'+money2(s.vendor_share)+'<span>yours</span></div></div>'}).join("")+'</div>';
+}
+function chip(st){var t={pending:"Waiting for approval",live:"Live on website",changes:"Changes needed",hidden:"Hidden",approved:"Approved",paused:"Paused"}[st]||st;return'<span class="chip '+esc(st)+'">'+esc(t)+'</span>'}
+function prodCard(p,admin,vend){
+  var ph=(p.photos||[])[0];
+  var h='<div class="prod"><div class="ph" style="'+(ph?"background-image:url('"+esc(photoUrl(ph))+"')":"")+'">'+(ph?"":(p.digital?"💻":"🛍️"))+'</div><div>';
+  if(admin&&vend)h+='<div class="small muted" style="font-weight:700">'+esc(vend.business)+'</div>';
+  h+='<h3>'+esc(p.name)+'</h3><div class="meta">'+money2(p.price)+' · '+(p.digital?"Digital":(Number(p.stock)||0)+" in stock")+(p.category?" · "+esc(p.category):"")+'</div>'+chip(p.status);
+  if(p.note&&(p.status==="changes"||admin))h+='<div class="fromher">'+(admin?"Your note: ":"From Marishka: ")+esc(p.note)+'</div>';
+  h+='</div><div class="acts">';
+  if(admin){
+    h+='<button class="btn sm green" data-approve="'+p.id+'">'+(p.status==="live"?"Live ✓":"Approve")+'</button><button class="btn sm ghost" data-changes="'+p.id+'">Ask for changes</button><button class="btn sm ghost" data-view="'+p.id+'">View</button>';
+    if(p.status!=="hidden")h+='<button class="btn sm red" data-hide="'+p.id+'">Hide</button>';
+  }else{
+    h+='<button class="btn sm" data-edit="'+p.id+'">Edit</button>';
+    h+=p.status==="hidden"?'<button class="btn sm ghost" data-unhide="'+p.id+'">Show again</button>':'<button class="btn sm ghost" data-hidev="'+p.id+'">Hide</button>';
+  }
+  return h+'</div></div>';
+}
+function vProducts(v){
+  var h='<h1 class="page">My products</h1><p class="lead">Add photos, prices and stock. Marishka approves each new product or change before it shows on the website.</p>';
+  h+='<div class="btnrow"><button class="btn full" data-add>+ Add a product</button></div>';
+  if(!S.products.length)h+='<div class="empty">No products yet. Tap "Add a product" to list your first one 💕</div>';
+  else h+='<div class="plist">'+S.products.map(function(p){return prodCard(p,false)}).join("")+'</div>';
+  h+='<p class="small muted" style="margin-top:16px">Changing only the stock keeps a live product live. Changing the name, price, photos or description sends it back to Marishka to approve.</p>';
+  return h;
+}
+function vMoney(v){
+  var m=money_owed(S.sales,S.payouts),pl=PLANS[v.plan]||{rate:5};
+  var h='<h1 class="page">Sales & payouts</h1><p class="lead">You\'re paid every Sunday for everything sold the week before (Sunday to Saturday), by '+esc(v.payout_method||"your payout method")+'.</p>';
+  h+='<div class="stats"><div class="stat big"><span>Due on '+esc(fmtDate(iso(nextSunday())))+'</span><b>'+money2(m.dueSunday)+'</b></div><div class="stat"><b>'+money2(m.thisWeek)+'</b><span>this week so far (paid next week)</span></div><div class="stat"><b>'+money2(m.paid)+'</b><span>paid to you so far</span></div></div>';
+  h+='<p class="small muted" style="margin-top:10px">Per-sale fee on your '+esc(pl.name||"")+' plan: '+pl.rate+'%. You keep '+(100-pl.rate)+'% of each sale.</p>';
+  h+='<h2 class="sec">Sales</h2>'+salesRows(S.sales);
+  h+='<h2 class="sec">Payouts</h2>'+(S.payouts.length?'<div class="rows">'+S.payouts.map(function(p){return'<div class="r"><div class="l"><b>'+esc(fmtDate(p.paid_on))+'</b><span>'+esc(p.method||"")+(p.ref?" · ref "+esc(p.ref):"")+'</span></div><div class="v">'+money2(p.amount)+'</div></div>'}).join("")+'</div>':'<div class="empty">No payouts yet.</div>');
+  return h;
+}
+function vBusiness(v){
+  var pl=PLANS[v.plan]||{};
+  var h='<h1 class="page">My business</h1>'+statusNote(v)+'<form class="card" id="bf" novalidate>'+
+  '<label class="f">Brand or business name<input name="business" maxlength="80" value="'+esc(v.business)+'"></label>'+
+  '<label class="f">Your full name<input name="owner_name" maxlength="80" value="'+esc(v.owner_name)+'"></label>'+
+  '<div class="two"><label class="f">WhatsApp number<input type="tel" name="phone" maxlength="30" value="'+esc(v.phone)+'"></label>'+
+  '<label class="f">Instagram<input name="instagram" maxlength="60" value="'+esc(v.instagram)+'"></label></div>'+
+  '<label class="f">About your brand<textarea name="bio" maxlength="600">'+esc(v.bio)+'</textarea></label>'+
+  '<label class="f">How you get paid<select name="payout_method">'+["Bank transfer","FirstPay","BPWCCUL"].map(function(m){return'<option'+(m===v.payout_method?" selected":"")+'>'+m+'</option>'}).join("")+'</select></label>'+
+  '<p class="err" id="berr" role="alert"></p><div class="btnrow"><button class="btn" type="submit" id="bbtn">Save changes</button></div></form>';
+  h+='<div class="card"><h2 style="font-size:19px">Your plan: '+esc(pl.name||v.plan)+'</h2><p class="muted" style="margin-top:6px">'+(pl.fee?"$"+pl.fee+" a month + "+pl.rate+"% per sale.":"Free, "+pl.rate+"% per sale.")+' To change your plan, WhatsApp Marishka.</p><div class="btnrow"><a class="btn sm ghost" href="https://wa.me/'+WA+'?text='+encodeURIComponent("Hi Marishka! I'd like to change my Marketplace plan for "+v.business+".")+'" target="_blank" rel="noopener">Change my plan</a></div></div>';
+  var c=v.contract||{};
+  h+='<div class="card"><h2 style="font-size:19px">Your agreement</h2><p class="muted" style="margin-top:6px">Signed by '+esc(c.name||"")+(c.signedAt?" on "+esc(fmtDate(c.signedAt)):"")+'.</p><details><summary>Read the agreement</summary><ol class="agree">'+A.clauses(c.plan||v.plan).map(function(x){return"<li><b>"+esc(x[0])+".</b> "+esc(x[1])+"</li>"}).join("")+'</ol></details></div>';
+  h+='<div class="btnrow"><button class="btn ghost" id="sout">Sign out</button></div>';
+  return h;
+}
+function wireVendor(){
+  qa("[data-add]").forEach(function(b){b.onclick=function(){productSheet(null)}});
+  qa("[data-edit]").forEach(function(b){b.onclick=function(){productSheet(S.products.find(function(p){return p.id===b.getAttribute("data-edit")}))}});
+  qa("[data-t2]").forEach(function(b){b.onclick=function(){S.tab=b.getAttribute("data-t2");renderVendor()}});
+  qa("[data-hidev]").forEach(function(b){b.onclick=function(){setStatusVendor(b.getAttribute("data-hidev"),"hidden")}});
+  qa("[data-unhide]").forEach(function(b){b.onclick=function(){setStatusVendor(b.getAttribute("data-unhide"),"pending")}});
+  var so=q("#sout");if(so)so.onclick=signOut;
+  var bf=q("#bf");if(bf)bf.onsubmit=function(e){e.preventDefault();
+    var upd={};["business","owner_name","phone","instagram","bio","payout_method"].forEach(function(k){upd[k]=bf.elements[k].value.trim()});
+    if(!upd.business||!upd.owner_name)return setErr(q("#berr"),"Please keep your brand name and your name filled in.");
+    var btn=q("#bbtn");busy(btn,true);
+    sb.from("vendors").update(upd).eq("id",S.vendor.id).select().single().then(function(r){busy(btn,false);if(r.error)return setErr(q("#berr"),friendly(r.error));S.vendor=r.data;toast("Saved 💕")});
+  };
+}
+function setStatusVendor(id,st){
+  if(S.viewAs)return toast("You're viewing as this vendor. Use the Overseer tabs to change things.");
+  sb.from("products").update({status:st}).eq("id",id).select().single().then(function(r){if(r.error)return toast(friendly(r.error));
+    var i=S.products.findIndex(function(p){return p.id===id});S.products[i]=r.data;renderVendor();toast(st==="hidden"?"Hidden from the website":"Sent to Marishka to show again")});
+}
+
+/* ---------- photos ---------- */
+function compress(file){return new Promise(function(res,rej){
+  var url=URL.createObjectURL(file),img=new Image();
+  img.onload=function(){var max=1000,w=img.naturalWidth,h=img.naturalHeight,s=Math.min(1,max/Math.max(w,h));
+    var c=document.createElement("canvas");c.width=Math.round(w*s);c.height=Math.round(h*s);
+    var x=c.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,c.width,c.height);x.drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);
+    c.toBlob(function(b){b?res(b):rej(new Error("Couldn't read that photo"))},"image/jpeg",0.84)};
+  img.onerror=function(){URL.revokeObjectURL(url);rej(new Error("That file isn't a photo we can read. Try a JPG or PNG."))};
+  img.src=url;})}
+
+/* ---------- add / edit product sheet ---------- */
+function productSheet(p){
+  if(S.viewAs)return toast("You're viewing as this vendor. Switch back to Overseer to make changes.");
+  var isNew=!p;p=p||{name:"",price:"",stock:1,digital:false,delivery_link:"",category:S.vendor.category||"",variants:[],description:"",photos:[]};
+  var photos=(p.photos||[]).slice(),newFiles=[];
+  var rate=rateOf(S.vendor);
+  var d=document.createElement("div");d.className="sheet";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-label",isNew?"Add a product":"Edit product");
+  d.innerHTML='<div class="panel"><div class="head"><h2>'+(isNew?"Add a product":"Edit product")+'</h2><button class="x" type="button" aria-label="Close">×</button></div>'+
+  (p.status==="changes"&&p.note?'<div class="fromher">From Marishka: '+esc(p.note)+'</div>':"")+
+  '<form id="pf" novalidate>'+
+  '<div class="f">Photos <span class="hint">Up to 5. The first one is the main picture. Bright, clear photos sell best.</span><div class="photos" id="phs"></div></div>'+
+  '<label class="f">Product name<input name="name" maxlength="90" required value="'+esc(p.name)+'" placeholder="e.g. Vanilla body butter 8oz"></label>'+
+  '<div class="two"><label class="f">Price (BBD)<input name="price" type="number" inputmode="decimal" min="0" step="0.01" required value="'+esc(p.price)+'"></label>'+
+  '<label class="f" id="stockF">How many you have<input name="stock" type="number" inputmode="numeric" min="0" step="1" value="'+esc(p.stock)+'"></label></div>'+
+  '<div class="keep" id="keep"></div>'+
+  '<label class="switch">This is a digital product (e-book, guide, template, class)<input type="checkbox" name="digital"'+(p.digital?" checked":"")+'></label>'+
+  '<label class="f" id="dlF">Download link <span class="hint">Only you and Marishka see this. We send it to the customer after they pay.</span><input name="delivery_link" type="url" inputmode="url" maxlength="500" value="'+esc(p.delivery_link)+'" placeholder="https://"></label>'+
+  '<label class="f">Category<select name="category">'+CATS.map(function(c){return'<option'+(c===p.category?" selected":"")+'>'+esc(c)+'</option>'}).join("")+'</select></label>'+
+  '<label class="f">Options <span class="hint">optional · sizes, colours or scents, separated by commas</span><input name="variants" maxlength="300" value="'+esc((p.variants||[]).join(", "))+'" placeholder="e.g. Vanilla, Coconut, Shea"></label>'+
+  '<label class="f">Description<textarea name="description" maxlength="1200" placeholder="What it is, size, how to use, ingredients">'+esc(p.description)+'</textarea></label>'+
+  '<p class="err" id="perr" role="alert"></p>'+
+  '<div class="btnrow"><button class="btn" type="submit" id="pbtn">'+(isNew?"Send for approval":"Save")+'</button>'+(isNew?"":'<button class="btn red" type="button" id="pdel">Delete</button>')+'</div></form></div>';
+  document.body.appendChild(d);document.body.style.overflow="hidden";
+  var f=q("#pf",d);
+  function close(){d.remove();document.body.style.overflow=""}
+  q(".x",d).onclick=close;d.addEventListener("click",function(e){if(e.target===d)close()});
+  function drawPhotos(){var all=photos.map(function(x,i){return{u:photoUrl(x),i:i,kind:"old"}}).concat(newFiles.map(function(x,i){return{u:x.url,i:i,kind:"new"}}));
+    var h=all.map(function(x,n){return'<div class="photo" style="background-image:url(\''+esc(x.u)+'\')">'+(n===0?'<span class="first">Main</span>':"")+'<button type="button" aria-label="Remove photo" data-rm="'+x.kind+':'+x.i+'">×</button></div>'}).join("");
+    if(all.length<5)h+='<label class="addphoto">📷<br>Add photo<input type="file" accept="image/*" multiple id="pfile"></label>';
+    q("#phs",d).innerHTML=h;
+    qa("[data-rm]",d).forEach(function(b){b.onclick=function(){var a=b.getAttribute("data-rm").split(":");if(a[0]==="old")photos.splice(+a[1],1);else{URL.revokeObjectURL(newFiles[+a[1]].url);newFiles.splice(+a[1],1)}drawPhotos()}});
+    var fi=q("#pfile",d);if(fi)fi.onchange=function(){var fs=Array.prototype.slice.call(fi.files||[]);
+      fs.slice(0,5-photos.length-newFiles.length).forEach(function(file){newFiles.push({file:file,url:URL.createObjectURL(file)})});drawPhotos()};
+  }
+  function drawKeep(){var pr=Number(f.price.value)||0,dig=f.digital.checked;
+    q("#keep",d).innerHTML=pr?("You keep <b>"+money2(pr*(1-rate))+"</b> of each sale ("+Math.round((1-rate)*100)+"%).")+(rate>=.15?"":""):"Type your price to see what you keep.";
+    q("#dlF",d).hidden=!dig;q("#stockF",d).style.opacity=dig?".45":"1";f.stock.disabled=dig;
+    if(dig&&f.category.value!=="Digital")f.category.value="Digital";}
+  f.addEventListener("input",drawKeep);f.addEventListener("change",drawKeep);drawPhotos();drawKeep();
+  if(!isNew)q("#pdel",d).onclick=function(){if(!confirmInline(q("#pdel",d)))return;
+    sb.from("products").delete().eq("id",p.id).then(function(r){if(r.error)return setErr(q("#perr",d),friendly(r.error));
+      (p.photos||[]).length&&sb.storage.from(BUCKET).remove(p.photos).catch(function(){});
+      S.products=S.products.filter(function(x){return x.id!==p.id});close();renderVendor();toast("Product deleted")})};
+  f.onsubmit=function(e){e.preventDefault();var err=q("#perr",d);setErr(err,"");
+    var name=f.name.value.trim(),price=Number(f.price.value),dig=f.digital.checked,stock=dig?0:Math.max(0,parseInt(f.stock.value,10)||0),link=f.delivery_link.value.trim();
+    if(!name)return setErr(err,"Please add the product name.");
+    if(!(price>0))return setErr(err,"Please add the price in BBD.");
+    if(!photos.length&&!newFiles.length)return setErr(err,"Please add at least one photo.");
+    if(dig&&!/^https?:\/\/\S+\.\S+/.test(link))return setErr(err,"Please add the download link (it starts with https://).");
+    var btn=q("#pbtn",d);busy(btn,true,newFiles.length?"Uploading photos…":"Saving…");
+    var uid=S.user.id,uploaded=[];
+    var chain=Promise.resolve();
+    newFiles.forEach(function(nf,i){chain=chain.then(function(){return compress(nf.file)}).then(function(blob){
+      var path=uid+"/"+Date.now()+"-"+Math.random().toString(36).slice(2,8)+".jpg";
+      return sb.storage.from(BUCKET).upload(path,blob,{contentType:"image/jpeg",upsert:false}).then(function(r){if(r.error)throw r.error;uploaded.push(path)})})});
+    chain.then(function(){
+      var removed=(p.photos||[]).filter(function(x){return photos.indexOf(x)<0});
+      var row={name:name,price:Math.round(price*100)/100,stock:stock,digital:dig,delivery_link:dig?link:null,category:f.category.value,
+        variants:f.variants.value.split(",").map(function(s){return s.trim()}).filter(Boolean).slice(0,20),description:f.description.value.trim(),photos:photos.concat(uploaded)};
+      var qy=isNew?sb.from("products").insert(row).select().single():sb.from("products").update(row).eq("id",p.id).select().single();
+      return qy.then(function(r){if(r.error)throw r.error;
+        if(removed.length)sb.storage.from(BUCKET).remove(removed).catch(function(){});
+        if(isNew)S.products.unshift(r.data);else{var i=S.products.findIndex(function(x){return x.id===p.id});S.products[i]=r.data}
+        close();S.tab="products";renderVendor();
+        toast(r.data.status==="live"?"Saved. Still live 💕":(isNew?"Sent to Marishka for approval 💕":"Saved and sent to Marishka to approve"));
+        gc(isNew?"vendor-portal-product-add":"vendor-portal-product-edit","Vendor product "+(isNew?"added":"edited"));
+      });
+    }).catch(function(x){busy(btn,false);if(uploaded.length)sb.storage.from(BUCKET).remove(uploaded).catch(function(){});setErr(err,friendly(x))});
+  };
+  setTimeout(function(){(isNew?f.name:q(".x",d)).focus()},50);
+}
+function confirmInline(btn){if(btn.dataset.sure)return true;btn.dataset.sure="1";btn.dataset.l=btn.textContent;btn.textContent="Tap again to confirm";setTimeout(function(){if(btn.isConnected){delete btn.dataset.sure;btn.textContent=btn.dataset.l}},4000);return false}
+
+/* ---------- overseer (Marishka) ---------- */
+function loadAdmin(){
+  return Promise.all([
+    sb.from("vendors").select("*").order("created_at",{ascending:false}),
+    sb.from("products").select("*").order("updated_at",{ascending:false}),
+    sb.from("sales").select("*").order("sale_date",{ascending:false}),
+    sb.from("payouts").select("*").order("paid_on",{ascending:false})
+  ]).then(function(r){S.all={vendors:must(r[0])||[],products:must(r[1])||[],sales:must(r[2])||[],payouts:must(r[3])||[]}});
+}
+function vById(id){return S.all.vendors.find(function(v){return v.id===id})}
+function adminTabs(){
+  var pend=S.all.products.filter(function(p){return p.status==="pending"}).length+S.all.vendors.filter(function(v){return v.status==="pending"}).length;
+  var t=[["approve","To approve"+(pend?'<span class="count">'+pend+'</span>':"")],["vendors","Vendors"],["products","All products"],["money","Sales & payouts"]];
+  tabsEl.innerHTML=t.map(function(x){return'<button type="button" role="tab" data-at="'+x[0]+'" aria-selected="'+(S.adminTab===x[0])+'">'+x[1]+'</button>'}).join("");tabsEl.hidden=false;
+  qa("[data-at]",tabsEl).forEach(function(b){b.onclick=function(){S.adminTab=b.getAttribute("data-at");renderAdmin();window.scrollTo(0,0)}});
+}
+function renderAdmin(){
+  adminTabs();whoEl.textContent="Overseer · "+(S.user.email||"");
+  var h="";
+  if(S.adminTab==="approve")h=aApprove();else if(S.adminTab==="vendors")h=aVendors();else if(S.adminTab==="products")h=aProducts();else h=aMoney();
+  app.innerHTML=h;wireAdmin();
+}
+function vendorCard(v){
+  var pl=PLANS[v.plan]||{},c=v.contract||{},n=S.all.products.filter(function(p){return p.vendor_id===v.id});
+  var m=money_owed(S.all.sales.filter(function(s){return s.vendor_id===v.id}),S.all.payouts.filter(function(p){return p.vendor_id===v.id}));
+  return'<div class="card"><div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start"><div><h3 style="font-size:19px">'+esc(v.business)+'</h3><div class="muted small">'+esc(v.owner_name)+' · '+esc(v.category||"")+'</div></div>'+chip(v.status)+'</div>'+
+  '<div class="rows"><div class="r"><div class="l"><b>Plan</b><span>'+esc(pl.name||v.plan)+(pl.fee?" · $"+pl.fee+"/mo, free until "+esc(fmtDate(v.trial_ends)):" · free")+' · '+(pl.rate||"")+'% per sale</span></div></div>'+
+  '<div class="r"><div class="l"><b>Agreement</b><span>'+(c.name?"Signed by "+esc(c.name)+" · "+esc(fmtDate(c.signedAt))+" · v"+esc(c.version||""):"Not signed")+'</span></div></div>'+
+  '<div class="r"><div class="l"><b>Contact</b><span>'+esc(v.phone||"")+' · '+esc(v.email||"")+(v.instagram?" · "+esc(v.instagram):"")+'</span></div></div>'+
+  '<div class="r"><div class="l"><b>Paid by</b><span>'+esc(v.payout_method||"")+'</span></div><div class="v">'+money2(m.dueSunday)+'<span>due Sunday</span></div></div>'+
+  '<div class="r"><div class="l"><b>Products</b><span>'+n.length+' total · '+n.filter(function(p){return p.status==="live"}).length+' live · '+n.filter(function(p){return p.status==="pending"}).length+' waiting</span></div></div></div>'+
+  (v.bio?'<p class="small muted" style="margin-top:10px">'+esc(v.bio)+'</p>':"")+
+  '<div class="btnrow">'+(v.status!=="approved"?'<button class="btn sm green" data-vst="'+v.id+':approved">Approve shop</button>':'<button class="btn sm ghost" data-vst="'+v.id+':paused">Pause shop</button>')+
+  '<a class="btn sm ghost" href="https://wa.me/'+esc(waNum(v.phone))+'" target="_blank" rel="noopener">WhatsApp</a><button class="btn sm ghost" data-viewas="'+v.id+'">See her view</button></div></div>';
+}
+function aApprove(){
+  var pv=S.all.vendors.filter(function(v){return v.status==="pending"}),pp=S.all.products.filter(function(p){return p.status==="pending"});
+  var h='<h1 class="page">To approve</h1><p class="lead">New shops and products wait here until you check them. Approved products show on the website Marketplace straight away.</p>';
+  h+='<h2 class="sec">New shops ('+pv.length+')</h2>'+(pv.length?pv.map(vendorCard).join(""):'<div class="empty">No new shops waiting.</div>');
+  h+='<h2 class="sec">Products ('+pp.length+')</h2>'+(pp.length?'<div class="plist">'+pp.map(function(p){return prodCard(p,true,vById(p.vendor_id))}).join("")+'</div>':'<div class="empty">No products waiting. 🎉</div>');
+  if(pp.some(function(p){var v=vById(p.vendor_id);return v&&v.status!=="approved"}))h+='<p class="small muted" style="margin-top:12px">Products from shops that aren\'t approved yet stay off the website until you approve the shop too.</p>';
+  return h;
+}
+function aVendors(){return'<h1 class="page">Vendors</h1><p class="lead">'+S.all.vendors.length+' brand'+(S.all.vendors.length===1?"":"s")+' signed up.</p>'+(S.all.vendors.length?S.all.vendors.map(vendorCard).join(""):'<div class="empty">No vendors yet. Share <b>thegirlsclub246.com/vendors</b> or the For Brands page.</div>')}
+function aProducts(){
+  var h='<h1 class="page">All products</h1><label class="f vpick">Show<select id="pfilt"><option value="">All</option><option value="live">Live</option><option value="pending">Waiting</option><option value="changes">Changes asked</option><option value="hidden">Hidden</option></select></label>';
+  var list=S.all.products.filter(function(p){return!S.pfilt||p.status===S.pfilt});
+  h+=list.length?'<div class="plist">'+list.map(function(p){return prodCard(p,true,vById(p.vendor_id))}).join("")+'</div>':'<div class="empty">Nothing here.</div>';
+  return h;
+}
+function aMoney(){
+  var h='<h1 class="page">Sales & payouts</h1><p class="lead">Website sales are added by the daily sync. Record in-person sales and Sunday payouts here.</p>';
+  var rows=S.all.vendors.map(function(v){var m=money_owed(S.all.sales.filter(function(s){return s.vendor_id===v.id}),S.all.payouts.filter(function(p){return p.vendor_id===v.id}));return{v:v,m:m}}).filter(function(x){return x.m.earned||x.m.paid});
+  var tot=rows.reduce(function(a,x){return a+x.m.dueSunday},0);
+  h+='<div class="stats"><div class="stat big"><span>To pay on '+esc(fmtDate(iso(nextSunday())))+'</span><b>'+money2(tot)+'</b></div></div>';
+  h+=rows.length?'<div class="rows">'+rows.map(function(x){return'<div class="r"><div class="l"><b>'+esc(x.v.business)+'</b><span>'+esc(x.v.payout_method||"")+' · this week so far '+money2(x.m.thisWeek)+'</span></div><div class="v">'+money2(x.m.dueSunday)+(x.m.dueSunday>0?'<button class="btn sm plum" style="margin-top:6px" data-pay="'+x.v.id+'">Record payout</button>':"")+'</div></div>'}).join("")+'</div>':'<div class="empty">No vendor sales yet.</div>';
+  h+='<div class="btnrow"><button class="btn" id="addSale">+ Record an in-person sale</button></div>';
+  h+='<h2 class="sec">Latest sales</h2>'+(S.all.sales.length?'<div class="rows">'+S.all.sales.slice(0,40).map(function(s){var v=vById(s.vendor_id)||{};return'<div class="r"><div class="l"><b>'+esc(s.product_name)+(s.qty>1?" × "+s.qty:"")+'</b><span>'+esc(v.business||"")+' · '+esc(fmtDate(s.sale_date))+' · '+esc(s.source)+(s.order_ref?" · "+esc(s.order_ref):"")+'</span></div><div class="v">'+money2(s.total)+'<span>you keep '+money2(s.commission)+'</span></div></div>'}).join("")+'</div>':'<div class="empty">No sales yet.</div>');
+  h+='<h2 class="sec">Payouts</h2>'+(S.all.payouts.length?'<div class="rows">'+S.all.payouts.slice(0,40).map(function(p){var v=vById(p.vendor_id)||{};return'<div class="r"><div class="l"><b>'+esc(v.business||"")+'</b><span>'+esc(fmtDate(p.paid_on))+' · '+esc(p.method||"")+(p.ref?" · "+esc(p.ref):"")+'</span></div><div class="v">'+money2(p.amount)+'</div></div>'}).join("")+'</div>':'<div class="empty">No payouts yet.</div>');
+  return h;
+}
+function updProduct(id,upd,msg){
+  return sb.from("products").update(upd).eq("id",id).select().single().then(function(r){if(r.error)return toast(friendly(r.error));
+    var i=S.all.products.findIndex(function(p){return p.id===id});S.all.products[i]=r.data;renderAdmin();toast(msg)});
+}
+function wireAdmin(){
+  qa("[data-approve]").forEach(function(b){b.onclick=function(){updProduct(b.getAttribute("data-approve"),{status:"live",note:null},"Approved: it's on the Marketplace 💕")}});
+  qa("[data-hide]").forEach(function(b){b.onclick=function(){updProduct(b.getAttribute("data-hide"),{status:"hidden"},"Hidden from the website")}});
+  qa("[data-changes]").forEach(function(b){b.onclick=function(){var id=b.getAttribute("data-changes"),p=S.all.products.find(function(x){return x.id===id});noteSheet(p)}});
+  qa("[data-view]").forEach(function(b){b.onclick=function(){viewSheet(S.all.products.find(function(x){return x.id===b.getAttribute("data-view")}))}});
+  qa("[data-vst]").forEach(function(b){b.onclick=function(){var a=b.getAttribute("data-vst").split(":");
+    sb.from("vendors").update({status:a[1]}).eq("id",a[0]).select().single().then(function(r){if(r.error)return toast(friendly(r.error));var i=S.all.vendors.findIndex(function(v){return v.id===a[0]});S.all.vendors[i]=r.data;renderAdmin();toast(a[1]==="approved"?"Shop approved 🎀":"Shop paused")})}});
+  qa("[data-viewas]").forEach(function(b){b.onclick=function(){var id=b.getAttribute("data-viewas");S.viewAs=id;S.vendor=vById(id);
+    S.products=S.all.products.filter(function(p){return p.vendor_id===id});S.sales=S.all.sales.filter(function(s){return s.vendor_id===id});S.payouts=S.all.payouts.filter(function(p){return p.vendor_id===id});S.tab="home";renderVendor();window.scrollTo(0,0)}});
+  qa("[data-pay]").forEach(function(b){b.onclick=function(){payoutSheet(vById(b.getAttribute("data-pay")))}});
+  var pf=q("#pfilt");if(pf){pf.value=S.pfilt||"";pf.onchange=function(){S.pfilt=pf.value;renderAdmin()}}
+  var as=q("#addSale");if(as)as.onclick=saleSheet;
+}
+function sheet(title,inner){var d=document.createElement("div");d.className="sheet";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-label",title);
+  d.innerHTML='<div class="panel"><div class="head"><h2>'+esc(title)+'</h2><button class="x" type="button" aria-label="Close">×</button></div>'+inner+'</div>';document.body.appendChild(d);document.body.style.overflow="hidden";
+  d.close=function(){d.remove();document.body.style.overflow=""};q(".x",d).onclick=d.close;d.addEventListener("click",function(e){if(e.target===d)d.close()});return d}
+function noteSheet(p){var d=sheet("Ask for changes",'<p class="muted">'+esc(p.name)+'</p><form id="nf"><label class="f">What should she change?<textarea name="note" maxlength="500" required placeholder="e.g. Please add a brighter photo on a plain background">'+esc(p.note||"")+'</textarea></label><div class="btnrow"><button class="btn" type="submit">Send to vendor</button></div></form>');
+  q("#nf",d).onsubmit=function(e){e.preventDefault();var n=e.target.note.value.trim();if(!n)return;d.close();
+    var v=vById(p.vendor_id);updProduct(p.id,{status:"changes",note:n},"Sent. She'll see it in her portal").then(function(){
+      if(!v||!v.phone)return;
+      var wa="https://wa.me/"+waNum(v.phone)+"?text="+encodeURIComponent("Hi "+String(v.owner_name||"").split(" ")[0]+"! I checked your product \""+p.name+"\" in the Vendor Portal: "+n+" 💕 You can update it here: https://thegirlsclub246.com/vendors");
+      var w=sheet("Tell her on WhatsApp?",'<p class="muted">She\'ll see your note when she signs in. A quick WhatsApp makes sure she knows.</p><div class="btnrow"><a class="btn" id="waGo" href="'+esc(wa)+'" target="_blank" rel="noopener">Open WhatsApp</a><button class="btn ghost" type="button" id="waNo">No thanks</button></div>');
+      q("#waGo",w).onclick=function(){w.close()};q("#waNo",w).onclick=w.close})}}
+function viewSheet(p){var v=vById(p.vendor_id)||{};
+  var d=sheet(p.name,'<div class="photos">'+(p.photos||[]).map(function(x){return'<a href="'+esc(photoUrl(x))+'" target="_blank" rel="noopener" class="photo" style="background-image:url(\''+esc(photoUrl(x))+'\')"></a>'}).join("")+'</div>'+
+  '<div class="rows"><div class="r"><div class="l"><b>'+esc(v.business||"")+'</b><span>'+esc(p.category||"")+(p.variants&&p.variants.length?" · options: "+esc(p.variants.join(", ")):"")+'</span></div><div class="v">'+money2(p.price)+'<span>'+(p.digital?"digital":(p.stock||0)+" in stock")+'</span></div></div></div>'+
+  (p.digital?'<p style="margin-top:10px"><b>Download link:</b> <a href="'+esc(p.delivery_link)+'" target="_blank" rel="noopener noreferrer" style="overflow-wrap:anywhere">'+esc(p.delivery_link||"none")+'</a></p>':"")+
+  '<p style="margin-top:10px;white-space:pre-line">'+esc(p.description||"")+'</p>'+chip(p.status)+
+  '<div class="btnrow"><button class="btn green" id="vApprove">Approve</button><button class="btn ghost" id="vChanges">Ask for changes</button></div>');
+  q("#vApprove",d).onclick=function(){d.close();updProduct(p.id,{status:"live",note:null},"Approved: it's on the Marketplace 💕")};
+  q("#vChanges",d).onclick=function(){d.close();noteSheet(p)};
+}
+function payoutSheet(v){var m=money_owed(S.all.sales.filter(function(s){return s.vendor_id===v.id}),S.all.payouts.filter(function(p){return p.vendor_id===v.id}));
+  var d=sheet("Record payout",'<p class="muted">'+esc(v.business)+' · '+esc(v.payout_method||"")+'</p><form id="yf"><div class="two"><label class="f">Amount (BBD)<input name="amount" type="number" step="0.01" min="0" inputmode="decimal" value="'+m.dueSunday.toFixed(2)+'"></label><label class="f">Date<input name="paid_on" type="date" value="'+today()+'"></label></div><label class="f">Reference <span class="hint">optional · transfer or receipt number</span><input name="ref" maxlength="80"></label><p class="err" id="yerr"></p><div class="btnrow"><button class="btn plum" type="submit">Save payout</button></div></form>');
+  q("#yf",d).onsubmit=function(e){e.preventDefault();var f=e.target,amt=Number(f.amount.value);if(!(amt>0))return setErr(q("#yerr",d),"Please add the amount.");
+    sb.from("payouts").insert({vendor_id:v.id,amount:Math.round(amt*100)/100,paid_on:f.paid_on.value||today(),method:v.payout_method,ref:f.ref.value.trim()||null}).select().single().then(function(r){if(r.error)return setErr(q("#yerr",d),friendly(r.error));S.all.payouts.unshift(r.data);d.close();renderAdmin();toast("Payout saved")})}}
+function saleSheet(){
+  var vs=S.all.vendors;if(!vs.length)return toast("No vendors yet");
+  var d=sheet("Record an in-person sale",'<form id="xf"><label class="f">Vendor<select name="vendor">'+vs.map(function(v){return'<option value="'+v.id+'">'+esc(v.business)+'</option>'}).join("")+'</select></label><label class="f">Product<select name="product"></select></label><div class="two"><label class="f">How many<input name="qty" type="number" min="1" step="1" value="1" inputmode="numeric"></label><label class="f">Price each (BBD)<input name="price" type="number" min="0" step="0.01" inputmode="decimal"></label></div><label class="f">Date<input name="date" type="date" value="'+today()+'"></label><div class="keep" id="xk"></div><p class="err" id="xerr"></p><div class="btnrow"><button class="btn" type="submit">Save sale</button></div></form>');
+  var f=q("#xf",d);
+  function fillP(){var ps=S.all.products.filter(function(p){return p.vendor_id===f.vendor.value});f.product.innerHTML=ps.map(function(p){return'<option value="'+p.id+'">'+esc(p.name)+' · '+money2(p.price)+'</option>'}).join("")||'<option value="">No products</option>';fillPrice()}
+  function fillPrice(){var p=S.all.products.find(function(x){return x.id===f.product.value});if(p)f.price.value=Number(p.price).toFixed(2);calc()}
+  function calc(){var v=vById(f.vendor.value),r=rateOf(v),t=(Number(f.qty.value)||0)*(Number(f.price.value)||0);q("#xk",d).innerHTML="Total "+money2(t)+" · vendor gets <b>"+money2(t*(1-r))+"</b> · you keep "+money2(t*r)+" ("+Math.round(r*100)+"%)"}
+  f.vendor.onchange=fillP;f.product.onchange=fillPrice;f.oninput=calc;fillP();
+  f.onsubmit=function(e){e.preventDefault();var p=S.all.products.find(function(x){return x.id===f.product.value});if(!p)return setErr(q("#xerr",d),"Pick a product.");
+    var v=vById(f.vendor.value),r=rateOf(v),qty=Math.max(1,parseInt(f.qty.value,10)||1),unit=Number(f.price.value)||0,tot=Math.round(qty*unit*100)/100,com=Math.round(tot*r*100)/100;
+    sb.from("sales").insert({vendor_id:v.id,product_id:p.id,product_name:p.name,qty:qty,unit_price:unit,total:tot,rate:r,commission:com,vendor_share:Math.round((tot-com)*100)/100,sale_date:f.date.value||today(),source:"in-person",order_ref:"IP-"+Date.now()}).select().single().then(function(x){
+      if(x.error)return setErr(q("#xerr",d),friendly(x.error));S.all.sales.unshift(x.data);
+      if(!p.digital){var ns=Math.max(0,(Number(p.stock)||0)-qty);sb.from("products").update({stock:ns}).eq("id",p.id).select().single().then(function(y){if(!y.error){var i=S.all.products.findIndex(function(z){return z.id===p.id});S.all.products[i]=y.data}renderAdmin()})}
+      d.close();renderAdmin();toast("Sale saved")})}
+}
+
+boot();
+})();
+</script>
+<script data-goatcounter="https://thegirlsclub246.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
