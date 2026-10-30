@@ -89,6 +89,15 @@ a{color:var(--deep)}
 .plan .price b{font-size:20px;color:var(--ink)}
 .plan.spot{background:var(--pink);color:#fff}.plan.spot h3{color:#fff}.plan.spot li::before{color:var(--lemon)}.plan.spot li.plus,.plan.spot .price{color:#FFE6F0}.plan.spot .price b{color:#fff}.plan.spot .price{border-color:rgba(255,255,255,.35)}
 .plan.sig{background:var(--lemon)}.plan.sig h3{color:var(--deep)}.plan.sig .price{border-color:rgba(74,20,61,.15)}
+.plan[data-card-plan]{cursor:pointer;transition:transform .15s}
+.plan[data-card-plan]:hover{transform:translateY(-3px)}
+.plan .choose{width:100%;min-height:52px;margin-top:4px;padding:12px 18px;font-size:17px;box-shadow:3px 3px 0 var(--ink)}
+.plan.spot .choose{background:#fff;color:var(--pink);border-color:#fff}
+.plan.sig .choose{background:var(--ink);color:#fff;border-color:var(--ink)}
+.plan.starter .choose{background:var(--pink);color:#fff}
+.plan.chosen{outline:4px solid var(--ink);outline-offset:3px}
+.plan.chosen .choose::before{content:"\2713  "}
+.choose-note{margin-top:16px;font-weight:600;color:var(--muted);text-align:center}
 .plan .tag{position:absolute;top:-12px;right:18px;background:var(--ink);color:#fff;font-size:12px;font-weight:700;letter-spacing:.1em;padding:5px 12px;border-radius:999px}
 .deal .after{margin-top:20px;display:flex;flex-wrap:wrap;gap:10px 22px;font-weight:700}
 .deal .after span::before{content:"\2665  ";color:var(--pink)}
@@ -215,20 +224,24 @@ footer a{color:var(--deep);font-weight:700;text-decoration:none}
     <h2>Grow your brand, your way.</h2>
     <div class="free"><b>Start FREE</b><span>on Starter, or get your first month free on any paid plan. Try it out, watch the sales come in, and see if it's the right fit.</span></div>
     <div class="plans">
-      <div class="plan starter"><span class="tag">FREE</span><h3>Starter</h3><p class="lead">Start selling with no monthly fee.</p>
-        <ul><li>Your own vendor profile and storefront</li><li>A &ldquo;Sold by&rdquo; label on every product</li><li>Secure checkout: card, bank and cash</li><li>We handle orders and customer questions</li><li>Weekly payouts, straight to you</li></ul>
-        <p class="price"><b>$0</b>/month + 15% per sale</p></div>
-      <div class="plan"><h3>Essentials</h3><p class="lead">Your brand, online and selling.</p>
-        <ul><li>Your own vendor profile and storefront</li><li>A &ldquo;Sold by&rdquo; label on every product</li><li>Secure checkout: card, bank and cash</li><li>We handle orders and customer questions</li><li>Weekly payouts, straight to you</li></ul>
-        <p class="price"><b>$40</b>/month + 5% per sale</p></div>
-      <div class="plan spot"><span class="tag">MORE CUSTOMERS</span><h3>Spotlight</h3><p class="lead">We put your brand in front of more girls.</p>
+      <div class="plan starter" data-card-plan="starter"><span class="tag">FREE</span><h3>Starter</h3><p class="lead">Start selling with no monthly fee.</p>
+        <ul><li>Your own vendor profile and storefront</li><li>A &ldquo;Sold by&rdquo; label on every product</li><li>Secure checkout: card, bank and cash</li><li>We handle orders and customer questions</li><li>Paid every Sunday, straight to you</li></ul>
+        <p class="price"><b>$0</b>/month + 15% per sale</p>
+        <a class="btn choose" href="#join" data-join data-plan="starter" aria-label="Choose the Starter plan and sign up">Choose Starter</a></div>
+      <div class="plan" data-card-plan="essentials"><h3>Essentials</h3><p class="lead">Your brand, online and selling.</p>
+        <ul><li>Your own vendor profile and storefront</li><li>A &ldquo;Sold by&rdquo; label on every product</li><li>Secure checkout: card, bank and cash</li><li>We handle orders and customer questions</li><li>Paid every Sunday, straight to you</li></ul>
+        <p class="price"><b>$40</b>/month + 5% per sale</p>
+        <a class="btn choose" href="#join" data-join data-plan="essentials" aria-label="Choose the Essentials plan and sign up">Choose Essentials</a></div>
+      <div class="plan spot" data-card-plan="spotlight"><span class="tag">MORE CUSTOMERS</span><h3>Spotlight</h3><p class="lead">We put your brand in front of more girls.</p>
         <ul><li class="plus">Everything in Essentials, plus</li><li>Featured Brands spot on our homepage</li><li>Shown first in your category</li><li>Monthly Instagram and Facebook shout-outs</li><li>In our seasonal gift guides and promos</li></ul>
-        <p class="price"><b>$75</b>/month + 5% per sale</p></div>
-      <div class="plan sig"><span class="tag">BIGGEST PUSH</span><h3>Signature</h3><p class="lead">Our biggest push for your brand.</p>
+        <p class="price"><b>$75</b>/month + 5% per sale</p>
+        <a class="btn choose" href="#join" data-join data-plan="spotlight" aria-label="Choose the Spotlight plan and sign up">Choose Spotlight</a></div>
+      <div class="plan sig" data-card-plan="signature"><span class="tag">BIGGEST PUSH</span><h3>Signature</h3><p class="lead">Our biggest push for your brand.</p>
         <ul><li class="plus">Everything in Spotlight, plus</li><li>Top homepage banner placement</li><li>Your own posts and a Reel every month</li><li>First pick at Girls Club pop-ups and events</li><li>Monthly check-in on what's selling</li></ul>
-        <p class="price"><b>$125</b>/month + 5% per sale</p></div>
+        <p class="price"><b>$125</b>/month + 5% per sale</p>
+        <a class="btn choose" href="#join" data-join data-plan="signature" aria-label="Choose the Signature plan and sign up">Choose Signature</a></div>
     </div>
-    <p style="margin-top:22px"><a class="btn" href="#join" data-join style="background:var(--lemon);color:var(--ink);border-color:var(--lemon)">Pick a plan and sign up</a></p>
+    <p class="choose-note">Tap a plan to choose it. You can change it anytime.</p>
     <p class="after"><span>Paid every Sunday</span><span>No long contracts</span><span>Upgrade or switch plans anytime</span><span>Prices in BBD</span></p>
   </div>
 </section>
@@ -393,6 +406,12 @@ var $=function(n){return f.elements[n]};
 function gc(path,title){try{window.goatcounter&&goatcounter.count({path:path,title:title,event:true})}catch(e){}}
 document.querySelectorAll("[data-wa]").forEach(function(a){a.addEventListener("click",function(){gc("brands-whatsapp","Brands page WhatsApp click")})});
 document.querySelectorAll("[data-join]").forEach(function(a){a.addEventListener("click",function(){gc("brands-join-click","Brands page Sign up click")})});
+/* tap a plan card (or its Choose button) → that plan is picked in the sign-up form */
+function markChosen(v){document.querySelectorAll("[data-card-plan]").forEach(function(c){var on=c.getAttribute("data-card-plan")===v;c.classList.toggle("chosen",on);var b=c.querySelector(".choose");if(b)b.textContent=on?"Chosen: "+b.getAttribute("aria-label").replace(/^Choose the | plan and sign up$/g,""):"Choose "+b.getAttribute("aria-label").replace(/^Choose the | plan and sign up$/g,"")})}
+function choosePlan(v){var r=document.querySelector('input[name=plan][value="'+v+'"]');if(!r)return;r.checked=true;r.dispatchEvent(new Event("change",{bubbles:true}));markChosen(v);gc("brands-plan-"+v,"Brands page chose "+v);
+ var j=document.getElementById("join");if(j)setTimeout(function(){var t=document.getElementById("plans")||j;t.scrollIntoView({behavior:"smooth",block:"center"})},30)}
+document.querySelectorAll("[data-card-plan]").forEach(function(c){c.addEventListener("click",function(e){e.preventDefault();choosePlan(c.getAttribute("data-card-plan"))})});
+document.addEventListener("change",function(e){if(e.target&&e.target.name==="plan")markChosen(e.target.value)});
 function plan(){var r=f.querySelector("input[name=plan]:checked");return r?r.value:""}
 function clauses(p){var pl=PLANS[p],r=pl?pl.rate:5,why=p==="starter"?"covers card fees, checkout, order handling and customer care":"covers card and payment fees";return [
 ["Plan and monthly fee","The Vendor chooses a plan: Starter (free, no monthly fee, 15% per sale) or a paid plan with 5% per sale: Essentials ($40 a month), Spotlight ($75 a month) or Signature ($125 a month), in BBD."+(pl?" The Vendor has chosen "+pl.name+(pl.fee?" ($"+pl.fee+" a month).":" (free)."):"")+" The first month on any paid plan is free. For a paid plan, the Vendor sets up the monthly fee by debit or credit card through The Girls Club's secure PayPal sign-up link; it is charged automatically each month from the start of the second month. The Vendor may change or cancel the plan at any time; a change applies from the next monthly payment. If a monthly payment fails, The Girls Club may take it from the Vendor's next payout."],
