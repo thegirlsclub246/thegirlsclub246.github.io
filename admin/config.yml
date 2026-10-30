@@ -42,7 +42,12 @@ collections:
                   - {label: "Lashes (counts for the free-tray giveaway)", value: lashes}
                   - {label: "Kits (shown as the 'Don't forget your glue' add-on)", value: kits}
                   - {label: "Lips (shown as lip add-ons in the bag)", value: lips}
+                  - {label: "Bundles", value: bundles}
+                  - {label: "Gifts", value: gifts}
+                  - {label: "Gift vouchers (digital)", value: vouchers}
+                  - {label: "Guides & templates (digital)", value: guides}
                 default: lashes
+              - {name: digital, label: "Digital product (no delivery; shows under Digital products in the Marketplace)", widget: boolean, required: false}
               - {name: price, label: "Price (BBD)", widget: number, value_type: float, min: 0}
               - {name: was_price, label: "Old price (BBD), shown crossed out. Leave empty for no sale", widget: number, value_type: float, required: false}
               - {name: description, label: Description, widget: text}
