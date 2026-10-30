@@ -593,7 +593,7 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
     <button class="menu-btn" id="openMenu" aria-label="Open menu" aria-controls="sideMenu" aria-expanded="false"><span></span><span></span><span></span></button>
     <a class="logo" href="#top" aria-label="The Girls Club home"><span class="logo-text">The Girls Club</span><small>DIY beauty · Barbados</small></a>
     <nav aria-label="Main">
-      <a href="#lashes">Marketplace</a>
+      <a href="#shop">Marketplace</a>
       <a href="#book">Book</a>
       <a href="#academy">Academy</a>
       <a href="#about">About</a>
@@ -615,19 +615,10 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
         <h1>Lashes, lips <span>&amp; learning</span></h1>
         <p class="lead-hero" data-c="home.hero_text">Cluster lash trays, lip treats and online lash courses, made by a certified esthetician. Shop, book or enrol any time, day or night.</p>
         <div class="row">
-          <a class="btn" href="#lashes">Shop the Marketplace</a>
+          <a class="btn" href="#shop">Shop the Marketplace</a>
           <a class="btn white" href="#book">Book an appointment</a>
           <a class="btn academy" href="#academy">Enrol in the Academy</a>
         </div>
-      </div>
-      <div class="hero-art">
-        <a class="sticker" href="#lashes">DIY beauty<br>Barbados</a>
-        <div class="arch" style="left:0;top:18%;width:38%;height:62%;transform:rotate(-4deg)"><img src="img/client-7.jpg" alt="Client wearing a Girls Club lash set" width="600" height="750"></div>
-        <div class="arch" style="left:28%;top:2%;width:44%;height:82%;transform:rotate(2deg);z-index:2"><img src="img/client-2.jpg" alt="Fluffy cluster lashes applied by Marishka" width="600" height="750"></div>
-        <div class="arch" style="left:62%;top:30%;width:36%;height:58%;transform:rotate(5deg);z-index:1"><img id="heroImg" src="img/hero-trays.jpg" alt="Girls Club cluster lash trays" width="800" height="800"></div>
-        <svg class="bob h1s" style="position:absolute;left:4%;top:2%;z-index:4" width="46" height="46" viewBox="0 0 24 24" fill="#F06292" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <svg class="bob h2s" style="position:absolute;right:8%;bottom:0;z-index:4;animation-delay:-2s" width="36" height="36" viewBox="0 0 24 24" fill="#ff4d94" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <svg class="bob st" style="position:absolute;left:46%;bottom:-4%;z-index:4;animation-delay:-3.5s" width="34" height="34" viewBox="0 0 24 24" fill="#FFF4B0" stroke="#4A143D" stroke-width="1.5" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
       </div>
     </div>
     <svg class="wave" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true"><path fill="#FFF6FA" d="M0 60 L0 30 Q60 0 120 30 T240 30 T360 30 T480 30 T600 30 T720 30 T840 30 T960 30 T1080 30 T1200 30 T1320 30 T1440 30 L1440 60 Z"/></svg>
@@ -640,23 +631,44 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
   </div>
   <div id="highlights" hidden></div>
 
-  <section id="lashes" class="market">
+  <section id="market" class="market mk-preview">
     <div class="wrap">
       <div class="sec-head">
         <span class="eyebrow" data-c="home.shop_eyebrow">The shop</span>
-        <h2 data-c="home.shop_title">Cluster lashes</h2>
-        <p class="lead" data-c="home.shop_intro">Pick your look and add it to your bag.</p>
+        <h2 data-c="home.shop_title">The Marketplace</h2>
+        <p class="lead" data-c="home.shop_intro">Lashes, lip treats, courses and gift vouchers, plus local Barbados beauty brands. All in one place.</p>
         <p class="promo" id="promoPill" hidden></p>
       </div>
-      <div class="filters" role="group" aria-label="Filter products">
-        <button class="chip" data-f="all" aria-pressed="true">All</button>
-        <button class="chip" data-f="lashes" aria-pressed="false">Lashes</button>
-        <button class="chip" data-f="kits" aria-pressed="false">Kits</button>
-        <button class="chip" data-f="lips" aria-pressed="false">Lips</button>
-        <button class="chip" data-f="bundles" aria-pressed="false">Bundles</button>
-        <button class="chip" data-f="gifts" aria-pressed="false">🎄 Gifts</button>
+      <div class="mk-doors">
+        <a class="mk-door" href="#shop/products"><span class="ico" aria-hidden="true">🛍️</span><b>Products</b><small id="doorPhys">Lashes, lips, kits &amp; gifts</small></a>
+        <a class="mk-door dig" href="#shop/digital"><span class="ico" aria-hidden="true">📲</span><b>Digital products</b><small id="doorDig">Courses &amp; gift vouchers</small></a>
       </div>
-      <div class="grid" id="grid"></div>
+      <div class="strip" id="mkPreview" aria-label="Popular in the Marketplace"></div>
+      <a class="btn mk-go" href="#shop">Shop the Marketplace →</a>
+    </div>
+  </section>
+
+  <section id="shop" class="market shop-page" hidden aria-labelledby="shopTitle">
+    <div class="wrap">
+      <div class="shop-nav"><a class="shop-home" href="#top">‹ Home</a><a class="shop-sell" href="brands.html">Sell with us</a></div>
+      <div class="shop-top">
+        <span class="eyebrow">Local beauty · Barbados</span>
+        <h1 class="shop-title" id="shopTitle">The Girls Club Marketplace</h1>
+        <p class="promo" id="promoPill2" hidden></p>
+      </div>
+      <div class="shop-show" id="shopShow" hidden></div>
+      <form class="mk-search" role="search" action="#shop" onsubmit="return false">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="mkQ" type="search" placeholder="Search the Marketplace" aria-label="Search the Marketplace" autocomplete="off" enterkeyhint="search">
+        <button type="button" class="x" id="mkQx" aria-label="Clear search" hidden>×</button>
+      </form>
+      <div class="mk-tabs" role="tablist" aria-label="Marketplace sections">
+        <button type="button" role="tab" data-tab="all" aria-selected="true">Shop all</button>
+        <button type="button" role="tab" data-tab="products" aria-selected="false">🛍️ Products</button>
+        <button type="button" role="tab" data-tab="digital" aria-selected="false">📲 Digital</button>
+      </div>
+      <div class="mk-catrow" id="mkCats" role="group" aria-label="Categories"></div>
+      <div id="mkOut"></div>
       <div class="mk-box" id="mkJoin" hidden></div>
     </div>
   </section>
@@ -669,6 +681,178 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
 .market .mk-cats{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
 .market .mk-cats span{background:var(--yellow-soft,#FFF9D9);border:2px solid var(--yellow,#FFF4B0);border-radius:999px;padding:4px 12px;font-weight:700;font-size:.9rem;color:var(--ink)}
 .market .add[disabled]{opacity:.55;cursor:default}
+/* ==MARKETPLACE PAGE== (own page at #shop, mobile first) */
+@media (max-width:360px){.tools{gap:.35rem}.tools .ig{display:none}.cart-btn{padding:0 .6rem}}
+html.shop-mode main>*:not(#shop){display:none!important}
+.hero-art{display:none!important}
+.hero .wrap{grid-template-columns:1fr;text-align:center}
+.hero p{margin-inline:auto}
+.hero .row{justify-content:center}
+.hero{padding:3rem 0 4rem}
+/* homepage preview */
+.mk-preview{padding-bottom:3.5rem}
+.mk-preview .sec-head{margin-bottom:1.4rem}
+.mk-doors{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 18px}
+.mk-door{display:flex;flex-direction:column;gap:2px;padding:14px 14px 16px;border-radius:20px;background:#fff;border:2px solid var(--pink);box-shadow:4px 4px 0 var(--pink);color:var(--plum);text-decoration:none;min-height:96px}
+.mk-door.dig{border-color:var(--plum);box-shadow:4px 4px 0 var(--plum)}
+.mk-door .ico{font-size:1.6rem;line-height:1.2}
+.mk-door b{font-size:1.05rem;line-height:1.25}
+.mk-door small{color:var(--muted);font-size:.82rem;line-height:1.35}
+.mk-door:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--pink)}
+.mk-go{display:flex;justify-content:center;align-items:center;min-height:52px;margin:6px auto 0;max-width:420px;font-size:1.05rem}
+/* mini cards (strips) */
+.strip{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 14px;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+.mini{flex:none;width:140px;scroll-snap-align:start;background:#fff;border:2px solid var(--pink-soft);border-radius:16px;overflow:hidden;color:inherit;text-decoration:none;display:flex;flex-direction:column;position:relative}
+.mini .thumb{margin:0;aspect-ratio:1;border-radius:0;position:relative}
+.mini .thumb img{border-radius:0}
+.mini b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:.86rem;line-height:1.25;color:var(--plum);margin:8px 8px 2px}
+.mini .price{display:block;margin:auto 8px 10px;font-size:.95rem;color:var(--pink)}
+.mini .was{font-size:.75rem}
+@media (min-width:600px){.mini{width:168px}}
+/* page top */
+.shop-page{padding:12px 0 56px}
+.shop-nav{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.shop-home{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;border:2px solid var(--pink);color:var(--pink);background:#fff;font-weight:700;text-decoration:none;font-size:.92rem}
+.shop-sell{margin-left:auto;display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:999px;color:var(--plum);font-weight:700;font-size:.85rem;text-decoration:underline;text-underline-offset:3px}
+.shop-top{text-align:center;margin:4px 0 14px}
+.shop-top .eyebrow{margin-bottom:.2rem}
+.shop-title{color:var(--pink);font-size:clamp(1.8rem,7.5vw,3rem);line-height:1.25}
+.shop-top .promo{margin-top:.6rem}
+/* slideshow */
+.shop-show{position:relative;height:230px;border:3px solid var(--plum);border-radius:22px;overflow:hidden;background:var(--plum);box-shadow:5px 5px 0 var(--pink);touch-action:pan-y;margin:0 0 16px}
+.hs-slide{position:absolute;inset:0;opacity:0;transition:opacity .8s ease}
+.hs-slide.on{opacity:1}
+.hs-slide img{width:100%;height:100%;object-fit:cover;display:block}
+@media (prefers-reduced-motion:no-preference){.hs-slide.on img{animation:hsZoom 6s ease-out both}}
+@keyframes hsZoom{from{transform:scale(1.08)}to{transform:scale(1)}}
+.shop-show:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(74,22,54,.6),rgba(74,22,54,0) 55%);pointer-events:none}
+.hs-cap{position:absolute;z-index:3;left:10px;right:10px;bottom:12px;display:flex;align-items:center;gap:10px;background:#fff;color:var(--plum);border:2px solid var(--plum);border-radius:999px;padding:5px 5px 5px 14px;text-decoration:none;font-weight:700;box-shadow:3px 3px 0 var(--pink)}
+.hs-txt{display:flex;flex-direction:column;min-width:0;flex:1;line-height:1.2}
+.hs-txt small{font-size:.7rem;letter-spacing:.06em;color:var(--pink);text-transform:uppercase}
+.hs-txt b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.95rem}
+.hs-txt .was{font-size:.78rem}
+.hs-cap .go{flex:none;background:var(--pink);color:#fff;border-radius:999px;padding:0 14px;min-height:44px;display:flex;align-items:center}
+.hs-dots{position:absolute;z-index:3;top:8px;right:8px;display:flex;gap:0}
+.hs-dots button{width:26px;height:26px;border:0;background:none;padding:0;display:grid;place-items:center;cursor:pointer}
+.hs-dots button:before{content:"";width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.7);border:2px solid var(--plum)}
+.hs-dots button[aria-current="true"]:before{background:var(--yellow);width:20px;border-radius:999px}
+.hs-arrow{position:absolute;z-index:3;top:42%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;border:3px solid var(--plum);background:#fff;color:var(--plum);font-size:1.4rem;font-weight:700;cursor:pointer;display:none}
+.hs-prev{left:12px}.hs-next{right:12px}
+@media (min-width:600px){.shop-show{height:300px}.hs-cap{left:auto;right:18px;bottom:18px;max-width:440px}}
+@media (min-width:900px){.shop-show{height:340px}.hs-arrow{display:block}}
+/* search + tabs + categories */
+.mk-search{display:flex;align-items:center;gap:6px;background:#fff;border:2px solid var(--pink);border-radius:999px;padding:0 4px 0 14px;min-height:52px;margin:0 0 12px}
+.mk-search svg{flex:none;color:var(--pink)}
+.mk-search input{flex:1;min-width:0;border:0;background:none;font:inherit;font-size:16px;font-weight:600;color:var(--ink);padding:12px 4px;outline:none}
+.mk-search input::-webkit-search-cancel-button{display:none}
+.mk-search:focus-within{box-shadow:0 0 0 3px var(--pink-soft)}
+.mk-search .x{flex:none;width:44px;height:44px;border-radius:50%;border:0;background:var(--pink-soft);color:var(--plum);font-size:1.3rem;font-weight:700;cursor:pointer}
+.mk-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;background:#fff;border:2px solid var(--plum);border-radius:999px;padding:4px}
+.mk-tabs button{min-height:44px;border:0;border-radius:999px;background:none;color:var(--plum);font:inherit;font-weight:700;font-size:.9rem;cursor:pointer;padding:0 4px;white-space:nowrap}
+.mk-tabs button[aria-selected="true"]{background:var(--plum);color:#fff}
+.shop-page .wrap{padding:0 16px}
+.mk-catrow{display:flex;gap:8px;overflow-x:auto;margin:12px -16px 14px;padding:2px 16px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.mk-catrow::-webkit-scrollbar{display:none}
+.mk-catrow .chip{flex:none;min-height:40px;font-size:.78rem;letter-spacing:.05em;padding:0 14px;cursor:pointer}
+@media (min-width:820px){.mk-tabs{max-width:560px;margin:0 auto}.mk-search{max-width:560px;margin:0 auto 12px}.mk-catrow{flex-wrap:wrap;justify-content:center;margin:14px 0 18px;padding:0;overflow:visible}}
+.mk-count{margin:0 0 10px;font-size:.9rem;font-weight:700;color:var(--muted)}
+.mk-shelf{margin:4px 0 26px}
+.mk-shelf-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 10px}
+.mk-shelf-head h2{font-size:1.45rem;margin:0;color:var(--pink)}
+.mk-shelf-head h2 small{font-family:"Quicksand",system-ui,sans-serif;font-size:.8rem;font-weight:700;color:var(--muted);margin-left:4px}
+.mk-shelf-head a{flex:none;display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:999px;border:2px solid var(--plum);color:var(--plum);background:#fff;font-weight:700;font-size:.85rem;text-decoration:none}
+.mk-shelf.dig .mk-shelf-head h2{color:var(--plum)}
+.mk-empty{text-align:center;background:#fff;border:2px dashed var(--pink);border-radius:20px;padding:22px 16px;display:grid;gap:12px;justify-items:center}
+.mk-empty p{margin:0}
+/* product grid: 3 across phones, 4 tablets, 5 computers */
+.pgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+@media (min-width:600px){.pgrid{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}}
+@media (min-width:1000px){.pgrid{grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}}
+.pcard{background:#fff;border:2px solid var(--pink-soft);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:3px 3px 0 var(--pink-soft);min-width:0}
+.pcard.dig{border-color:#e7cfe0;box-shadow:3px 3px 0 #e7cfe0}
+.card-link{display:flex;flex-direction:column;flex:1;color:inherit;text-decoration:none}
+.card-link:focus-visible{outline:3px solid var(--plum);outline-offset:-3px}
+.pcard .thumb,.pd-img .thumb{margin:0 0 6px;border-radius:0;aspect-ratio:1;position:relative}
+.pcard:nth-child(even) .thumb{background:linear-gradient(160deg,var(--yellow-soft),#fff6b0)}
+.pcard .thumb img,.pd-img .thumb img{border-radius:0}
+.thumb svg.cv{width:100%;height:100%}
+.pcard .tag,.mini .tag,.pd-img .tag{position:absolute;top:6px;left:6px;font-size:.6rem;letter-spacing:.06em;padding:.1rem .45rem;max-width:calc(100% - 12px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.off{position:absolute;right:6px;bottom:6px;background:var(--pink);color:#fff;font-weight:700;font-size:.68rem;border-radius:999px;padding:.05rem .45rem;line-height:1.5}
+.pcard .mk-sold,.pcard .ptype{display:none}
+.pcard h3{font-family:"Quicksand",system-ui,sans-serif;font-weight:700;font-size:.8rem;line-height:1.25;color:var(--plum);margin:0 7px 4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pcard .row{display:flex;flex-direction:column;gap:6px;padding:0 7px 8px;margin-top:auto}
+.pcard .price{font-size:.92rem;color:var(--pink);line-height:1.15}
+.pcard .price small{display:none}
+.pcard .was{display:block;font-size:.7rem;line-height:1.1}
+.pcard .add{min-height:38px;width:100%;font-size:.8rem;padding:.3rem;border:0;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 2px 0 var(--shade);cursor:pointer}
+.pcard a.add.choose{background:#fff;color:var(--pink);border:2px solid var(--pink);box-shadow:none}
+.pcard.dig a.add.choose{color:var(--plum);border-color:var(--plum)}
+.pcard .add[disabled]{opacity:.55;cursor:default}
+.pcard .xl{display:none}
+@media (min-width:600px){
+ .pcard{border-radius:18px;box-shadow:4px 4px 0 var(--pink-soft)}
+ .pcard .tag,.mini .tag{font-size:.66rem;top:8px;left:8px}
+ .off{font-size:.75rem;right:8px;bottom:8px}
+ .pcard .mk-sold{display:inline-block;margin:0 10px 2px;font-size:.68rem;padding:1px 8px}
+ .pcard .ptype{display:block;margin:0 10px 6px;font-size:.62rem;letter-spacing:.08em}
+ .pcard h3{font-size:.95rem;margin:0 10px 2px}
+ .pcard .row{padding:0 10px 12px;gap:8px}
+ .pcard .price{font-size:1.08rem}
+ .pcard .was{display:inline;font-size:.8rem}
+ .pcard .add{min-height:42px;font-size:.88rem}
+ .pcard .xl{display:inline}
+}
+.sr-flash{animation:none}
+/* product page */
+.pd{position:fixed;inset:0;z-index:35;background:var(--bg);overflow-y:auto;overscroll-behavior:contain;color:var(--ink)}
+.pd-bar{position:sticky;top:0;z-index:4;display:flex;align-items:center;gap:8px;padding:calc(env(safe-area-inset-top,0px) + 8px) 12px 8px;background:var(--yellow);border-bottom:3px solid var(--pink)}
+.pd-bar button{min-height:44px;border-radius:999px;font:inherit;font-weight:700;font-size:.9rem;padding:0 14px;border:2px solid var(--plum);background:#fff;color:var(--plum);cursor:pointer;white-space:nowrap}
+.pd-bar .pd-back{margin-right:auto;border-color:var(--pink);color:var(--pink)}
+.pd-bar .pd-bag{background:var(--pink);border-color:var(--pink);color:#fff}
+.pd-in{max-width:1080px;margin:0 auto;padding:16px 16px 48px;box-sizing:border-box}
+.pd-main{display:grid;gap:18px}
+.pd-img{position:relative;border:3px solid var(--pink);border-radius:22px;overflow:hidden;background:var(--pink-soft)}
+.pd-img .thumb{margin:0}
+.pd-img .tag{top:12px;left:12px;font-size:.72rem}
+.pd-img .off{right:12px;bottom:12px;font-size:.9rem;padding:.15rem .7rem}
+.pd-info{display:flex;flex-direction:column;gap:12px;min-width:0}
+.pd-info .mk-sold{margin:0;align-self:flex-start;font-size:.78rem;font-weight:700;color:var(--shade);background:#ffe6f0;border-radius:999px;padding:3px 10px}
+.pd-info h2{margin:0;font-family:"Quicksand",system-ui,sans-serif;font-weight:700;font-size:1.6rem;line-height:1.2;color:var(--plum)}
+.pd-type{margin:-6px 0 0;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.pd-price{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.pd-price .price{font-size:1.9rem;color:var(--pink)}
+.pd-save{background:var(--yellow);color:var(--plum);font-weight:700;font-size:.85rem;border-radius:999px;padding:.15rem .7rem;border:2px solid var(--plum)}
+.pd-desc{margin:0;font-size:1.02rem;line-height:1.55}
+.pd-points{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+.pd-points li{display:flex;gap:8px;line-height:1.45}
+.pd-points li:before{content:"♥";color:var(--pink)}
+.pd-lbl{font-weight:700;font-size:.9rem;margin:2px 0 -4px}
+.pd-opts{display:flex;flex-wrap:wrap;gap:8px}
+.pd-opts button{min-height:44px;padding:0 16px;border-radius:999px;border:2px solid var(--pink-soft);background:#fff;color:var(--plum);font:inherit;font-weight:700;cursor:pointer}
+.pd-opts button[aria-checked="true"]{background:var(--pink);border-color:var(--pink);color:#fff}
+.pd-buy{display:flex;gap:10px;align-items:stretch}
+.qty{display:flex;align-items:center;border:2px solid var(--pink-soft);border-radius:999px;background:#fff;flex:none}
+.qty button{width:44px;height:48px;border:0;background:none;font-size:1.4rem;font-weight:700;color:var(--pink);cursor:pointer}
+.qty output{min-width:22px;text-align:center;font-weight:700}
+.pd-buy .add{flex:1;min-height:52px;font-size:1.02rem;border:0;cursor:pointer}
+.pd-buy .add[disabled]{opacity:.55}
+.pd-card{display:flex;align-items:center;justify-content:center;min-height:50px;border-radius:999px;background:var(--plum);color:#fff;font-weight:700;text-decoration:none}
+.pd-note{margin:-6px 0 0;text-align:center;font-size:.82rem;color:var(--muted)}
+.pd-wa{display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:999px;border:2px solid #1f9d55;color:#157a41;background:#fff;font-weight:700;text-decoration:none}
+.pd-facts{list-style:none;margin:4px 0 0;padding:12px 14px;display:grid;gap:8px;background:#fff;border:2px dashed var(--pink-soft);border-radius:16px;font-size:.92rem}
+.pd-sec{margin-top:28px}
+.pd-sec h3{margin:0 0 10px;font-size:1.3rem;color:var(--pink)}
+.pd-sec .strip{margin:0 -16px;padding-left:16px;padding-right:16px}
+.pd-tags{display:flex;flex-wrap:wrap;gap:8px}
+.pd-tags button{min-height:42px;padding:0 14px;border-radius:999px;border:2px solid var(--plum);background:#fff;color:var(--plum);font:inherit;font-weight:700;font-size:.9rem;cursor:pointer}
+.pd-toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);transform:translateX(-50%);background:var(--plum);color:#fff;font-weight:700;padding:10px 18px;border-radius:999px;z-index:5}
+@media (min-width:820px){
+ .pd-main{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:start}
+ .pd-img{position:sticky;top:84px}
+ .pd-info h2{font-size:2rem}
+ .pd-in{padding-top:28px}
+ .pd-sec .strip{margin:0;padding-left:0}
+}
 </style>
 <section id="book" class="book">
     <div class="wrap">
@@ -748,7 +932,7 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
         <div class="creds" id="aboutBadges"></div>
         <div id="aboutText"></div>
         <p class="sign" data-c="about.sign_off">With love, Marishka</p>
-        <div class="row-btns"><a class="btn" href="#lashes">Shop the lashes</a><a class="btn alt wa-link" href="#" target="_blank" rel="noopener">Say hi on WhatsApp</a></div>
+        <div class="row-btns"><a class="btn" href="#shop">Shop the Marketplace</a><a class="btn alt wa-link" href="#" target="_blank" rel="noopener">Say hi on WhatsApp</a></div>
       </div>
     </div>
   </section>
@@ -770,12 +954,13 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
     </div>
   </section>
 </main>
+<div class="pd" id="pd" hidden role="dialog" aria-modal="true" aria-labelledby="pdName"></div>
 
 <footer>
   <div class="wrap">
     <div class="cols">
       <div class="brand"><p class="foot-logo">The Girls Club</p><p>Lashes, lips &amp; learning. DIY beauty, made for Barbados girls.</p></div>
-      <div><h4>Explore</h4><ul><li><a href="#lashes">Marketplace</a></li><li><a href="#book">Book an appointment</a></li><li><a href="#academy">Academy</a></li><li><a href="#about">About Us</a></li><li><a href="#soon">Coming soon</a></li><li><a href="policies.html">Delivery, returns &amp; privacy</a></li><li><a href="https://www.instagram.com/thegirlsclub246/" target="_blank" rel="noopener">@thegirlsclub246</a></li></ul></div>
+      <div><h4>Explore</h4><ul><li><a href="#shop">Marketplace</a></li><li><a href="#book">Book an appointment</a></li><li><a href="#academy">Academy</a></li><li><a href="#about">About Us</a></li><li><a href="#soon">Coming soon</a></li><li><a href="policies.html">Delivery, returns &amp; privacy</a></li><li><a href="https://www.instagram.com/thegirlsclub246/" target="_blank" rel="noopener">@thegirlsclub246</a></li></ul></div>
       <div><h4>Contact us</h4><ul><li><a class="wa-link" href="#" target="_blank" rel="noopener">WhatsApp us</a></li><li><a href="https://ig.me/m/thegirlsclub246" target="_blank" rel="noopener">DM on Instagram</a></li><li><span class="wa-num"></span></li><li>Collection: <span class="collect-area">St. Thomas</span>, Barbados</li></ul></div>
       <div><h4>We accept</h4><ul id="accepts"><li>Debit &amp; credit cards</li><li>FirstPay</li><li>BPWCCUL transfer</li></ul></div>
     </div>
@@ -841,7 +1026,7 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
   <nav class="side-links" aria-label="Menu links">
     <a href="#search" data-open-search>🔍 Search</a>
     <a href="#top">Home</a>
-    <a href="#lashes">Marketplace</a>
+    <a href="#shop">Marketplace</a>
     <a href="#book">Book an appointment</a>
     <a href="#academy">Academy</a>
     <a href="#results">The glow up</a>
@@ -871,7 +1056,7 @@ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const load=n=>fetch("content/"+n+".json",{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error(n);return r.json()});
 let S,H,PR,B,A,G,AB,SO;
 try{[S,H,PR,B,A,G,AB,SO]=await Promise.all(["settings","home","products","booking","academy","gallery","about","coming-soon"].map(load));}
-catch(e){console.error(e);document.getElementById("grid").innerHTML=`<p class="loading-note">Sorry, the shop didn't load. Please refresh the page.</p>`;return}
+catch(e){console.error(e);document.getElementById("mkPreview").innerHTML=document.getElementById("mkOut").innerHTML=`<p class="loading-note">Sorry, the shop didn't load. Please refresh the page.</p>`;return}
 const num=v=>{const n=parseFloat(v);return isFinite(n)?n:0};
 const mins=t=>{const m=/^(\d{1,2}):(\d{2})/.exec(String(t||""));return m?(+m[1])*60+(+m[2]):null};
 const t12=t=>{const m=mins(t);if(m==null)return "";const h=Math.floor(m/60),mm=m%60;return `${((h+11)%12)+1}:${String(mm).padStart(2,"0")}${h<12?"am":"pm"}`};
@@ -902,7 +1087,7 @@ const products=list(PR.products).filter(p=>p.show!==false&&p.name).map(p=>{
 let MK={};try{MK=await load("marketplace")}catch(e){MK={}}
 const mkBrands=list(MK.brands).filter(b=>b&&b.slug&&b.name);
 const brandName=s=>(mkBrands.find(b=>b.slug===s)||{}).name||"";
-list(MK.products).filter(p=>p&&p.id&&p.name&&brandName(p.brand)).forEach(p=>products.push({id:"mp-"+String(p.id),pid:String(p.id),vendor:String(p.brand),brand:brandName(p.brand),img:String(p.image||""),alt:String(p.name)+" by "+brandName(p.brand),name:String(p.name),type:String(p.category||""),cat:"v:"+String(p.category||"Other"),price:num(p.price),was:0,desc:String(p.description||""),tag:"",opts:list(p.options).map(String),digital:false,course:"",stock:(p.stock===null||p.stock===undefined||p.stock==="")?null:num(p.stock)}));
+list(MK.products).filter(p=>p&&p.id&&p.name&&brandName(p.brand)).forEach(p=>products.push({id:"mp-"+String(p.id),pid:String(p.id),vendor:String(p.brand),brand:brandName(p.brand),img:String(p.image||""),alt:String(p.name)+" by "+brandName(p.brand),name:String(p.name),type:String(p.category||""),cat:"v:"+String(p.category||"Other"),price:num(p.price),was:0,desc:String(p.description||""),tag:"",opts:list(p.options).map(String),digital:!!p.digital||/digital/i.test(String(p.category||"")),course:"",stock:(p.stock===null||p.stock===undefined||p.stock==="")?null:num(p.stock)}));
 
 /* ---- fill in the page from the content files ---- */
 {
@@ -913,7 +1098,7 @@ list(MK.products).filter(p=>p&&p.id&&p.name&&brandName(p.brand)).forEach(p=>prod
   /* banner */
   const bn=document.getElementById("banner"),bi=list(H.banner).map(String);
   if(H.banner_on&&bi.length){const g=`<div class="mq-group">${Array(Math.max(1,Math.ceil(6/bi.length))).fill(bi).flat().map(t=>`<span>${esc(t)}</span>`).join("")}</div>`;bn.innerHTML=`<div class="mq-track" aria-hidden="true">${g}${g}</div>`;bn.setAttribute("aria-label",bi.join(": "));bn.hidden=false}
-  if(H.hero_image)document.getElementById("heroImg").src=H.hero_image;
+  {const hi=document.getElementById("heroImg");if(H.hero_image&&hi)hi.src=H.hero_image;}
   document.getElementById("highlights").innerHTML=list(H.highlights).map(t=>`<span>${esc(t)}</span>`).join("");
   /* booking */
   if(B.show===false)hide("book");
@@ -979,6 +1164,7 @@ function lashSvg(n,cx=150,cy=100,r=120,color="currentColor"){
   let s="";for(let i=0;i<n;i++){const t=n===1?.5:i/(n-1);const a=Math.PI*(0.18+0.64*t);const x=cx-Math.cos(a)*r*.9,y=cy-30+Math.sin(a)*48;const len=22+Math.sin(Math.PI*t)*20;const tilt=(t-.5)*0.9;
   for(let k=-1;k<=1;k++){const ang=tilt+k*.22;s+=`<path d="M${x.toFixed(1)} ${y.toFixed(1)} q ${(Math.sin(ang)*len*.4).toFixed(1)} ${(len*.5).toFixed(1)} ${(Math.sin(ang)*len).toFixed(1)} ${len.toFixed(1)}" stroke="${color}" stroke-width="2.5" fill="none" stroke-linecap="round"/>`}}return s}
 function thumb(p){
+  if(p.isCourse&&!p.img)return `<svg class="cv" viewBox="0 0 300 300" aria-hidden="true"><rect width="300" height="300" fill="#4a1636"/><text x="150" y="92" text-anchor="middle" fill="#ffc9df" font-family="Quicksand,sans-serif" font-size="20" font-weight="700" letter-spacing="4">THE GIRLS CLUB</text><text x="150" y="158" text-anchor="middle" fill="#fff" font-family="Pacifico,cursive" font-size="52">Academy</text><svg x="0" y="168" width="300" height="110" viewBox="0 0 300 110"><path d="M30 40 Q150 120 270 40" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><g transform="translate(0,-48)">${lashSvg(9,150,100,120,"#fff")}</g></svg></svg>`;
   if(!p.img&&p.cat==="kits")return `<svg viewBox="0 0 300 220" aria-hidden="true">
     <rect x="18" y="18" width="264" height="184" rx="26" fill="#fff" opacity=".75"/>
     <circle cx="70" cy="70" r="24" fill="none" stroke="#ff4d94" stroke-width="10"/><ellipse cx="70" cy="70" rx="11" ry="11" fill="#ffd1e4"/>
@@ -1002,29 +1188,176 @@ function thumb(p){
   p.n=p.n||7;return `<svg viewBox="0 0 300 150"><path d="M30 60 Q150 140 270 60" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" transform="translate(0,-10)"/><g transform="translate(0,-28)">${lashSvg(p.n,150,100,140)}</g></svg>`;
 }
 
-const grid=document.getElementById("grid");
-function renderGrid(f="all"){
-  grid.innerHTML=products.filter(p=>f==="all"||p.cat===f).map(p=>`
-   <article class="card" data-card="${p.id}">
-     <div class="thumb">${thumb(p)}</div>
-     ${p.tag?`<span class="tag">${esc(p.tag)}</span>`:""}
-     <span class="mk-sold">By ${esc(p.brand||"The Girls Club")}</span><span class="ptype">${esc(p.type)}</span><h3>${esc(p.name)}</h3><p class="desc">${esc(p.desc)}</p>${p.opts.length?`<select class="opt" data-opt="${p.id}" aria-label="Choose your ${esc(p.name)}">${p.opts.map(o=>`<option>${esc(o)}</option>`).join("")}</select>`:""}
-     <div class="row"><span class="price"><small>BBD</small> ${p.was?`<s class="was" aria-label="Was ${money(p.was)}">${money(p.was)}</s> `:""}${money(p.price)}</span>${p.stock!==null&&p.stock!==undefined&&p.stock<=0?`<button class="add" type="button" disabled>Sold out</button>`:`<button class="add" data-add="${p.id}">Add to bag</button>`}</div>
-   </article>`).join("");
-}
-renderGrid();
-{const fl=document.querySelector("#lashes .filters");if(fl)[...new Set(products.filter(p=>p.vendor).map(p=>p.cat))].forEach(c=>{const b=document.createElement("button");b.className="chip";b.dataset.f=c;b.setAttribute("aria-pressed","false");b.textContent=c.slice(2);fl.appendChild(b)});
- const j=document.getElementById("mkJoin");if(j&&MK.show!==false){j.innerHTML=`<p><b>Own a beauty brand in Barbados?</b> Join The Girls Club Marketplace as a founding brand.</p><a class="btn ghost" href="brands.html">Sell with us</a>`;j.hidden=false}}
-document.querySelectorAll("#lashes .chip").forEach(c=>{if(c.dataset.f!=="all"&&!products.some(p=>p.cat===c.dataset.f))c.hidden=true});
-document.querySelectorAll("#lashes .chip").forEach(c=>c.addEventListener("click",()=>{
-  document.querySelectorAll("#lashes .chip").forEach(x=>x.setAttribute("aria-pressed",x===c));renderGrid(c.dataset.f)}));
+/* ==MARKETPLACE PAGE== its own page at #shop: Shop all · Products · Digital, each with its own categories, a search box,
+   a sale slideshow and a page per product (#p-<id>). Homepage keeps a small preview row + "Shop the Marketplace" button. */
+const isOut=p=>p.stock!==null&&p.stock!==undefined&&p.stock<=0;
+const offPct=p=>p.was>p.price?Math.round((1-p.price/p.was)*100):0;
+const pHref=p=>"#p-"+encodeURIComponent(p.id);
+const priceHTML=p=>`${p.was?`<s class="was" aria-label="Was ${money(p.was)}">${money(p.was)}</s> `:""}${money(p.price)}`;
+const courseItems=A.show===false?[]:list(A.courses).filter(c=>c&&c.show!==false&&c.title).map(c=>{const pr=num(c.price),w=num(c.was_price);
+  return{id:"course-"+slug(c.title),isCourse:true,digital:true,course:String(c.title),img:String(c.image||""),alt:"",name:String(c.title),type:"Online course",cat:"courses",price:pr,was:w>pr?w:0,desc:String(c.description||c.subtitle||""),tag:String(c.badge||""),opts:[],points:list(c.points).map(String),payhip:String(c.payhip_id||""),usdNote:String(c.usd_note||""),stock:null}});
+const shopItems=products.concat(courseItems);
+const isDig=p=>!!(p.digital||p.isCourse||p.cat==="vouchers"||p.cat==="guides");
+const dCat=p=>p.isCourse?"courses":isDig(p)&&(p.cat==="gifts"||p.cat==="vouchers")?"vouchers":p.cat;
+const CAT_NAME={lashes:"Lashes",kits:"Kits & tools",tools:"Tools",lips:"Lips",bundles:"Bundles",gifts:"🎄 Gifts",courses:"🎓 Courses",vouchers:"🎁 Gift vouchers",guides:"📘 Guides & templates"};
+const catName=c=>CAT_NAME[c]||String(c).replace(/^v:/,"");
+const CAT_ORDER=["lashes","kits","tools","lips","bundles","gifts","courses","vouchers","guides"];
+const inSec=(p,sec)=>sec==="all"||(sec==="digital")===isDig(p);
+function catsOf(sec){const s=[];shopItems.filter(p=>inSec(p,sec)).forEach(p=>{const c=dCat(p);if(!s.includes(c))s.push(c)});
+  return s.sort((a,b)=>{const i=CAT_ORDER.indexOf(a),j=CAT_ORDER.indexOf(b);return(i<0?99:i)-(j<0?99:j)})}
+function bagItem(p,o){if(p.isCourse)return{id:p.id,course:p.course,name:"The Girls Club Academy · "+p.name,price:p.price,single:true,note:"Digital · sent after payment"};
+  return{id:p.id+(o?"-"+o:""),name:p.name+" · "+(o||p.type)+(p.brand?" · "+p.brand:""),price:p.price,...(p.vendor?{vendor:p.vendor,pid:p.pid,opt:o||""}:{}),...(isDig(p)?{noShip:true,note:"Digital · sent on WhatsApp"}:{}),...(p.course?{course:p.course}:{})}}
+const findItem=id=>shopItems.find(x=>x.id===id);
+function pcard(p){const o=offPct(p);
+  const act=isOut(p)?`<button class="add" type="button" disabled>Sold out</button>`:(p.opts.length||p.isCourse)?`<a class="add choose" href="${pHref(p)}">${p.isCourse?"Enrol":"Choose"}</a>`:`<button class="add" type="button" data-add="${esc(p.id)}" aria-label="Add ${esc(p.name)} to bag">Add<span class="xl">&nbsp;to bag</span></button>`;
+  return `<article class="pcard${isDig(p)?" dig":""}" data-card="${esc(p.id)}"><a class="card-link" href="${pHref(p)}"><div class="thumb">${thumb(p)}${p.tag?`<span class="tag">${esc(p.tag)}</span>`:""}${o?`<span class="off">-${o}%</span>`:""}</div><span class="mk-sold">By ${esc(p.brand||"The Girls Club")}</span><h3>${esc(p.name)}</h3><span class="ptype">${esc(p.type)}</span></a><div class="row"><span class="price"><small>BBD</small> ${priceHTML(p)}</span>${act}</div></article>`}
+function miniCard(p){const o=offPct(p);return `<a class="mini" href="${pHref(p)}"><div class="thumb">${thumb(p)}${p.tag?`<span class="tag">${esc(p.tag)}</span>`:""}${o?`<span class="off">-${o}%</span>`:""}</div><b>${esc(p.name)}</b><span class="price">${priceHTML(p)}</span></a>`}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-add]");if(!b||!b.closest("#shop,#market"))return;const p=findItem(b.dataset.add);if(p)addItem(bagItem(p,""))});
+
+/* homepage preview: sale items first, then items with photos */
+{const pv=document.getElementById("mkPreview");
+ const pick=shopItems.filter(p=>!isOut(p)).map((p,i)=>[offPct(p)*10+(p.img?50:0)+(p.isCourse?40:0)-i*.01,p]).sort((a,b)=>b[0]-a[0]).slice(0,10).map(r=>r[1]);
+ if(pv)pv.innerHTML=pick.map(miniCard).join("");
+ const nm=sec=>catsOf(sec).map(c=>catName(c).replace(/^[^A-Za-z]+/,"")).slice(0,4).join(", ");
+ const dp=document.getElementById("doorPhys"),dd=document.getElementById("doorDig");if(dp&&nm("products"))dp.textContent=nm("products");if(dd&&nm("digital"))dd.textContent=nm("digital");}
+
+{const j=document.getElementById("mkJoin");if(j&&MK.show!==false){j.innerHTML=`<p><b>Own a beauty brand in Barbados?</b> Sell your products or digital products on The Girls Club Marketplace.</p><a class="btn ghost" href="brands.html">Sell with us</a>`;j.hidden=false}}
+const shopSec=document.getElementById("shop"),mkOut=document.getElementById("mkOut"),mkCats=document.getElementById("mkCats"),mkQ=document.getElementById("mkQ"),mkQx=document.getElementById("mkQx");
+const view={tab:"all",cat:"",q:""};
+const mkNorm=t=>String(t||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/&/g," and ").replace(/[^a-z0-9]+/g," ").trim();
+const mkStem=w=>w.length>3&&/s$/.test(w)&&!/ss$/.test(w)?w.slice(0,-1):w;
+const SYN={lashe:"lash",class:"course",classe:"course",training:"course",voucher:"voucher gift",present:"gift",xmas:"christmas",download:"digital",ebook:"guide",template:"guide"};
+function mkHay(p){if(!p._hay)p._hay=" "+mkNorm([p.name,p.type,p.brand||"The Girls Club",p.desc,catName(dCat(p)),dCat(p),isDig(p)?"digital online download":"product",(p.opts||[]).join(" "),(p.points||[]).join(" "),p.tag,p.cat==="lashes"?"lash cluster tray":""].join(" ")).split(" ").map(mkStem).join(" ")+" ";return p._hay}
+function mkMatch(p,q){const toks=mkNorm(q).split(" ").filter(t=>t&&!["the","a","an","and","for","of","to","my","i","me"].includes(t)).map(mkStem);if(!toks.length)return true;const h=mkHay(p);
+  return toks.every(t=>{const alts=(SYN[t]||t).split(" ");return alts.some(a=>a.length>=3?h.includes(a):h.includes(" "+a))})}
+function mkHash(){return "#shop"+(view.tab!=="all"?"/"+view.tab:"")+(view.cat?"/"+encodeURIComponent(view.cat):"")}
+function renderShop(){
+  shopSec.querySelectorAll("[data-tab]").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===view.tab));
+  const cats=catsOf(view.tab);if(view.cat&&!cats.includes(view.cat))view.cat="";
+  const allLbl={all:"Everything",products:"All products",digital:"All digital"}[view.tab];
+  mkCats.innerHTML=`<button type="button" class="chip" data-cat="" aria-pressed="${!view.cat}">${allLbl}</button>`+cats.map(c=>`<button type="button" class="chip" data-cat="${esc(c)}" aria-pressed="${view.cat===c}">${esc(catName(c))}</button>`).join("");
+  const q=view.q.trim();mkQx.hidden=!q;
+  let items=shopItems.filter(p=>inSec(p,view.tab)&&(!view.cat||dCat(p)===view.cat)&&mkMatch(p,q));
+  if(q){const nq=mkNorm(q),sc=p=>{const n=" "+mkNorm(p.name+" "+p.type)+" ";return(n.includes(nq)?10:0)+(p.isCourse?1:0)+nq.split(" ").filter(t=>t&&n.includes(mkStem(t))).length*3};items=items.map((p,i)=>[sc(p)-i*.001,p]).sort((a,b)=>b[0]-a[0]).map(r=>r[1])}
+  const empty=`<div class="mk-empty"><p><b>${q?`No match for “${esc(q)}” yet.`:"Nothing here yet."}</b><br>Tell us what you're looking for and we'll help you find it 💕</p><a class="btn" target="_blank" rel="noopener" href="${esc(waLink("Hi The Girls Club! I'm looking for "+(q||"something")+" in the Marketplace. Do you have it?"))}">💬 Ask us on WhatsApp</a>${q?`<button type="button" class="btn white" data-mk-clear>Clear search</button>`:""}</div>`;
+  if(!items.length){mkOut.innerHTML=empty;return}
+  if(view.tab==="all"&&!view.cat){
+    const shelf=(sec,title,more)=>{const its=items.filter(p=>inSec(p,sec));if(!its.length)return "";
+      return `<div class="mk-shelf${sec==="digital"?" dig":""}"><div class="mk-shelf-head"><h2>${title}<small>${its.length}</small></h2><a href="#shop/${sec}" data-tab-go="${sec}">${more} →</a></div><div class="pgrid">${its.map(pcard).join("")}</div></div>`};
+    mkOut.innerHTML=(q?`<p class="mk-count">${items.length} result${items.length>1?"s":""} for “${esc(q)}”</p>`:"")+shelf("products","Products","See all")+shelf("digital","Digital products","See all");return}
+  mkOut.innerHTML=`<p class="mk-count">${items.length} ${view.tab==="digital"?"digital ":""}item${items.length>1?"s":""}${view.cat?" in "+esc(catName(view.cat).replace(/^[^A-Za-z]+/,"")):""}${q?` for “${esc(q)}”`:""}</p><div class="pgrid">${items.map(pcard).join("")}</div>`}
+/* hash helpers that also work where the browser blocks hash links/history (e.g. previews inside an app) */
+let curHash=location.hash,pushOK=false;
+function setH(h){curHash=h;try{history.replaceState(null,"",location.pathname+location.search+h)}catch(x){}}
+function nav(h){const was=curHash;curHash=h;let ok=false;try{history.pushState(null,"",location.pathname+location.search+h);ok=true}catch(x){}pushOK=ok;navFrom=was;route(true)}
+let navFrom="";
+function setView(v){Object.assign(view,v);setH(mkHash());renderShop()}
+shopSec.addEventListener("click",e=>{const t=e.target;
+  const tb=t.closest("[data-tab]");if(tb){setView({tab:tb.dataset.tab,cat:""});return}
+  const tg=t.closest("[data-tab-go]");if(tg){e.preventDefault();setView({tab:tg.dataset.tabGo,cat:""});shopSec.querySelector(".mk-tabs").scrollIntoView({behavior:"smooth",block:"start"});return}
+  const ch=t.closest("[data-cat]");if(ch){const c=ch.dataset.cat;let tab=view.tab;if(c&&tab==="all"){const p=shopItems.find(x=>dCat(x)===c);tab=p&&isDig(p)?"digital":"products"}setView({tab,cat:c});return}
+  if(t.closest("[data-mk-clear]")){mkQ.value="";setView({q:""});mkQ.focus()}});
+let mkT,mkTracked=new Set();
+function mkTrack(){const q=mkNorm(view.q);if(q.length<2||mkTracked.has(q))return;mkTracked.add(q);try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/shop-search/"+slug(q),title:"Shop search: "+q,event:true})}catch(x){}}
+mkQ.addEventListener("input",()=>{clearTimeout(mkT);mkT=setTimeout(()=>{view.q=mkQ.value;renderShop()},120)});
+mkQ.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();view.q=mkQ.value;renderShop();mkTrack();mkQ.blur()}});
+mkQ.addEventListener("blur",mkTrack);
+mkQx.onclick=()=>{mkQ.value="";view.q="";renderShop();mkQ.focus()};
+
+/* sale slideshow at the top of the Marketplace: anything with a sale price + photo, biggest saving first (else featured items with photos) */
+{let hot=shopItems.filter(p=>p.was>p.price&&!isOut(p)&&p.img).sort((a,b)=>offPct(b)-offPct(a)).slice(0,8),lbl=p=>`🔥 Hot · ${offPct(p)}% off`;
+ if(!hot.length){hot=shopItems.filter(p=>p.img&&!isOut(p)).slice(0,6);lbl=()=>"✨ Featured"}
+ const box=document.getElementById("shopShow");
+ if(box&&hot.length){box.hidden=false;box.setAttribute("role","region");box.setAttribute("aria-roledescription","slideshow");box.setAttribute("aria-label","On special");
+  box.innerHTML=hot.map((p,i)=>`<div class="hs-slide${i?"":" on"}" aria-hidden="${i?"true":"false"}"><img src="${esc(p.img)}" alt="${esc(p.alt||p.name)}" ${i?'loading="lazy"':""}></div>`).join("")
+   +`<a class="hs-cap" href="#"></a>`+(hot.length>1?`<button type="button" class="hs-arrow hs-prev" aria-label="Previous">‹</button><button type="button" class="hs-arrow hs-next" aria-label="Next">›</button><div class="hs-dots">${hot.map((p,i)=>`<button type="button" aria-label="Show ${esc(p.name)}" data-hs="${i}"></button>`).join("")}</div>`:"");
+  const slides=[...box.querySelectorAll(".hs-slide")],cap=box.querySelector(".hs-cap"),dots=[...box.querySelectorAll("[data-hs]")];let at=0,tm=null,paused=false;
+  function go(i){at=(i+hot.length)%hot.length;const p=hot[at];slides.forEach((s,k)=>{s.classList.toggle("on",k===at);s.setAttribute("aria-hidden",k!==at)});dots.forEach((d,k)=>d.setAttribute("aria-current",k===at));
+   cap.href=pHref(p);cap.innerHTML=`<span class="hs-txt"><small>${lbl(p)}</small><b>${esc(p.name)}</b><span>${priceHTML(p)}</span></span><span class="go">Shop →</span>`}
+  const play=()=>{clearInterval(tm);if(hot.length>1&&!paused&&!shopSec.hidden)tm=setInterval(()=>go(at+1),5000)};
+  box.addEventListener("click",e=>{const d=e.target.closest("[data-hs]");if(d){go(+d.dataset.hs);play()}else if(e.target.closest(".hs-prev")){go(at-1);play()}else if(e.target.closest(".hs-next")){go(at+1);play()}});
+  let x0=null;box.addEventListener("touchstart",e=>{x0=e.touches[0].clientX},{passive:true});box.addEventListener("touchend",e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(dx)>40){go(at+(dx<0?1:-1));play()}});
+  box.addEventListener("mouseenter",()=>{paused=true;clearInterval(tm)});box.addEventListener("mouseleave",()=>{paused=false;play()});
+  document.addEventListener("visibilitychange",()=>{if(document.hidden)clearInterval(tm);else play()});
+  window.tgcShowPlay=play;go(0)}}
+
+/* product page */
+const pd=document.getElementById("pd");
+const RS={lashes:["Cluster lashes","Lash trays","Glue & Go kit","Lash courses"],kits:["Lash glue","Tweezers","Cluster lashes"],lips:["Lip gloss","Lip oil","Gift set"],bundles:["Starter bundle","Cluster course","Lash trays"],gifts:["Gift voucher","Christmas","Gift set"],courses:["Courses","Practice","Gift voucher","Starter bundle"],vouchers:["Gift voucher","Courses","Lash appointment"]};
+const payList=()=>{const a=[];if(PAYPAL_ME)a.push("card");a.push("FirstPay");if(String(S.bpwccul_number||"").trim())a.push("BPWCCUL");if(S.cash_on_collection)a.push("cash on collection");return a.length>1?a.slice(0,-1).join(", ")+" or "+a[a.length-1]:a[0]};
+let cur=null,qty=1,opt="",lastFocus=null,pdFromSite=false;
+function related(p){return shopItems.filter(x=>x.id!==p.id&&!isOut(x)).map(x=>[(dCat(x)===dCat(p)?4:0)+(isDig(x)===isDig(p)?2:0)+(p.vendor&&x.vendor===p.vendor?3:0)+(x.was>x.price?1:0),x]).sort((a,b)=>b[0]-a[0]).slice(0,8).map(r=>r[1])}
+function searches(p){const s=[];const add=t=>{t=String(t||"").trim();if(t&&!s.some(x=>x.toLowerCase()===t.toLowerCase()))s.push(t)};
+  if(!p.isCourse)add(p.type);(RS[dCat(p)]||[catName(dCat(p))]).forEach(add);if(p.brand)add(p.brand);if(p.was>p.price)add("On sale");return s.slice(0,6)}
+function pdHTML(p){const o=offPct(p),out=isOut(p),dig=isDig(p);
+  const facts=[p.isCourse?"🎓 Online course · learn from your phone at your own pace":dig?"📲 Digital · sent to you on WhatsApp after payment":`🚚 Island-wide delivery $${num(S.delivery_fee)||20} BBD, or free collection in ${esc(S.collection_area||"St. Thomas")}`,`💳 Pay by ${esc(payList())}`,p.vendor?`🛍️ Sold by ${esc(p.brand)}, a local brand on The Girls Club Marketplace`:"💕 By The Girls Club, Barbados"];
+  const rel=related(p),more=p.vendor?shopItems.filter(x=>x.vendor===p.vendor&&x.id!==p.id):[];
+  return `<div class="pd-bar"><button type="button" class="pd-back" data-pd-close>‹ Back</button><button type="button" data-pd-share aria-label="Share this">↗ Share</button><button type="button" class="pd-bag" data-pd-bag aria-label="Open bag">Bag ${cart.reduce((a,c)=>a+c.qty,0)}</button></div>
+  <div class="pd-in"><div class="pd-main">
+   <div class="pd-img"><div class="thumb">${thumb(p)}${p.tag?`<span class="tag">${esc(p.tag)}</span>`:""}${o?`<span class="off">-${o}%</span>`:""}</div></div>
+   <div class="pd-info">
+    <span class="mk-sold">${dig?"📲 Digital · ":""}By ${esc(p.brand||"The Girls Club")}</span>
+    <h2 id="pdName" tabindex="-1">${esc(p.name)}</h2>${p.type?`<p class="pd-type">${esc(p.type)}</p>`:""}
+    <div class="pd-price"><span class="price"><small>BBD</small> ${priceHTML(p)}</span>${o?`<span class="pd-save">You save ${money(p.was-p.price)}</span>`:""}</div>
+    ${p.desc?`<p class="pd-desc">${esc(p.desc)}</p>`:""}
+    ${(p.points||[]).length?`<ul class="pd-points">${p.points.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}
+    ${p.opts.length?`<p class="pd-lbl" id="pdOptL">Choose one</p><div class="pd-opts" role="radiogroup" aria-labelledby="pdOptL">${p.opts.map((x,i)=>`<button type="button" role="radio" aria-checked="${i===0}" data-pd-opt="${esc(x)}">${esc(x)}</button>`).join("")}</div>`:""}
+    <div class="pd-buy">${out?`<button class="add" type="button" disabled>Sold out</button>`:p.isCourse?`<button class="add" type="button" data-pd-add>📱 Enrol · FirstPay or BPWCCUL · ${money(p.price)}</button>`:`<div class="qty"><button type="button" data-pd-q="-1" aria-label="One less">−</button><output aria-live="polite" id="pdQty">1</output><button type="button" data-pd-q="1" aria-label="One more">+</button></div><button class="add" type="button" data-pd-add>Add to bag · ${money(p.price)}</button>`}</div>
+    ${p.isCourse&&p.payhip?`<a class="pd-card" href="https://payhip.com/b/${encodeURIComponent(p.payhip)}" target="_blank" rel="noopener">💳 Pay by card · instant access</a>${p.usdNote?`<p class="pd-note">${esc(p.usdNote)}</p>`:""}`:""}
+    <a class="pd-wa" data-pd-wa href="${esc(waLink(`Hi The Girls Club! I have a question about ${p.name}${p.type?" ("+p.type+")":""}, BBD ${money(p.price)}.`))}" target="_blank" rel="noopener">💬 Ask about this on WhatsApp</a>
+    <ul class="pd-facts">${facts.map(f=>`<li>${f}</li>`).join("")}</ul>
+   </div></div>
+   <div class="pd-sec"><h3>Related searches</h3><div class="pd-tags">${searches(p).map(t=>`<button type="button" data-pd-search="${esc(t)}">🔎 ${esc(t)}</button>`).join("")}</div></div>
+   ${more.length?`<div class="pd-sec"><h3>More from ${esc(p.brand)}</h3><div class="strip">${more.map(miniCard).join("")}</div></div>`:""}
+   ${rel.length?`<div class="pd-sec"><h3>You may also like</h3><div class="strip">${rel.map(miniCard).join("")}</div></div>`:""}
+  </div>`}
+const baseTitle=document.title;
+function pdShow(p){if(pd.hidden)lastFocus=document.activeElement;cur=p;qty=1;opt=p.opts[0]||"";pd.innerHTML=pdHTML(p);pd.hidden=false;pd.scrollTop=0;document.documentElement.style.overflow="hidden";
+  document.title=p.name+" · The Girls Club";const h=pd.querySelector("#pdName");h&&h.focus({preventScroll:true});
+  try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/product-view/"+slug(p.id),title:"View: "+p.name,event:true})}catch(x){}
+  window.tgcTrack&&tgcTrack("ViewContent",{content_name:p.name,value:p.price,currency:"BBD"})}
+function pdHide(){if(pd.hidden)return;pd.hidden=true;pd.innerHTML="";cur=null;document.documentElement.style.overflow="";document.title=mode==="shop"?"Marketplace · The Girls Club":baseTitle;
+  if(lastFocus&&document.contains(lastFocus))try{lastFocus.focus({preventScroll:true})}catch(x){}}
+function pdClose(){if(pdFromSite&&pushOK){pdFromSite=false;pushOK=false;history.back();return}pdFromSite=false;setH(mode==="shop"?mkHash():"#market");pdHide()}
+window.tgcOpenProduct=id=>{pdFromSite=true;const h="#p-"+encodeURIComponent(id);if(curHash===h)route();else nav(h)};
+pd.addEventListener("click",e=>{const t=e.target;if(!cur)return;
+  if(t.closest("[data-pd-close]"))return pdClose();
+  if(t.closest("[data-pd-bag]"))return openCart();
+  const s=t.closest("[data-pd-search]");if(s){mkQ.value=s.dataset.pdSearch;view.q=mkQ.value;view.tab="all";view.cat="";pdFromSite=false;setH("#shop");route();mkTrack();return}
+  const op=t.closest("[data-pd-opt]");if(op){opt=op.dataset.pdOpt;pd.querySelectorAll("[data-pd-opt]").forEach(b=>b.setAttribute("aria-checked",b===op));return}
+  const q=t.closest("[data-pd-q]");if(q){qty=Math.max(1,Math.min(20,qty+ +q.dataset.pdQ));pd.querySelector("#pdQty").textContent=qty;pd.querySelector("[data-pd-add]").textContent="Add to bag · "+money(cur.price*qty);return}
+  if(t.closest("[data-pd-add]")){const p=cur;if(p.isCourse)window.tgcPrefPay="";const item=bagItem(p,opt);addItem(item);const c=cart.find(x=>x.id===item.id);if(c&&qty>1&&!item.single){c.qty+=qty-1;update()}return}
+  if(t.closest("[data-pd-wa]")){try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/product-wa-ask/"+slug(cur.id),event:true})}catch(x){}return}
+  if(t.closest("[data-pd-share]")){const url=location.origin+location.pathname+"#p-"+encodeURIComponent(cur.id),title=cur.name+" · The Girls Club";
+   if(navigator.share){navigator.share({title,text:cur.name+" BBD "+money(cur.price),url}).catch(()=>{});return}
+   const done=()=>{const d=document.createElement("div");d.className="pd-toast";d.textContent="Link copied 💕";pd.appendChild(d);setTimeout(()=>d.remove(),1800)};
+   (navigator.clipboard?navigator.clipboard.writeText(url):Promise.reject()).then(done,()=>prompt("Copy this link:",url));return}
+});
+
+/* page switching: #shop… = Marketplace page, #p-… = product page, anything else = homepage */
+let mode="home",homeY=0,routed=false;
+function enterShop(){if(mode==="shop")return;homeY=window.scrollY;mode="shop";document.documentElement.classList.add("shop-mode");shopSec.hidden=false;window.scrollTo(0,0);document.title="Marketplace · The Girls Club";
+  try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"/shop",title:"Marketplace"})}catch(x){}window.tgcShowPlay&&tgcShowPlay()}
+function leaveShop(){if(mode!=="shop")return false;mode="home";document.documentElement.classList.remove("shop-mode");shopSec.hidden=true;document.title=baseTitle;return true}
+function route(fromClick){const h=curHash;
+  const m=h.match(/^#p-(.+)$/);if(m){let id="";try{id=decodeURIComponent(m[1])}catch(x){}const p=findItem(id);if(p){if(!pdFromSite&&!routed)enterShop();routed=true;return pdShow(p)}}
+  routed=true;pdFromSite=false;pdHide();
+  const s=h.match(/^#(shop|lashes|marketplace|products|digital)(?:\/([a-z]+))?(?:\/(.+))?$/);
+  if(s){let tab=s[2]||(s[1]==="products"||s[1]==="digital"?s[1]:"all");if(!["all","products","digital"].includes(tab))tab="all";let cat="";try{cat=s[3]?decodeURIComponent(s[3]):""}catch(x){}
+    view.tab=tab;view.cat=cat;if(s[1]!=="shop")setH(mkHash());enterShop();renderShop();return}
+  if(leaveShop()){const id=h.slice(1);requestAnimationFrame(()=>{if(id&&id!=="top"&&typeof goHash==="function"){const el=document.getElementById(id);if(el)el.scrollIntoView({block:"start"});else goHash()}else if(id==="top")window.scrollTo(0,0);else window.scrollTo(0,homeY)})}
+  else if(fromClick){const id=h.slice(1);if(id==="top"||!id)window.scrollTo({top:0,behavior:"smooth"});else{const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});else if(typeof goHash==="function")goHash()}}}
+window.addEventListener("hashchange",()=>{if(location.hash===curHash)return;curHash=location.hash;route()});
+window.addEventListener("popstate",()=>{if(location.hash===curHash)return;curHash=location.hash;route()});
+/* handle in-page links ourselves so they work everywhere */
+document.addEventListener("click",e=>{if(e.defaultPrevented||e.button||e.metaKey||e.ctrlKey||e.shiftKey)return;const a=e.target.closest('a[href^="#"]');if(!a||a.target)return;const h=a.getAttribute("href");if(h.length<2||h==="#search")return;e.preventDefault();if(/^#p-/.test(h))pdFromSite=true;nav(h)});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!pd.hidden&&drawer.hidden){const sp=document.getElementById("searchPanel");if(!sp||sp.hidden)pdClose()}});
 
 /* cart */
 let cart=[];
 const countEl=document.getElementById("count");
 function addItem(item){window.tgcTrack&&tgcTrack("AddToCart",{content_name:item.name,value:item.price,currency:"BBD"});const ex=cart.find(c=>c.id===item.id);if(ex&&!item.single)ex.qty++;else if(!ex)cart.push({...item,qty:1});update();openCart()}
-grid.addEventListener("click",e=>{const b=e.target.closest("[data-add]");if(!b)return;const p=products.find(x=>x.id===b.dataset.add);const sel=grid.querySelector(`[data-opt="${p.id}"]`),o=sel?sel.value:"";addItem({id:p.id+(o?"-"+o:""),name:p.name+" · "+(o||p.type)+(p.brand?" · "+p.brand:""),price:p.price,...(p.vendor?{vendor:p.vendor,pid:p.pid,opt:o}:{}),...(p.digital?{noShip:true,note:"Digital · sent on WhatsApp"}:{}),...(p.course?{course:p.course}:{})})});
-function update(){countEl.textContent=cart.reduce((a,c)=>a+c.qty,0);renderDrawer()}
+function update(){countEl.textContent=cart.reduce((a,c)=>a+c.qty,0);renderDrawer();const pb=document.querySelector("[data-pd-bag]");if(pb)pb.textContent="Bag "+countEl.textContent}
 
 const drawer=document.getElementById("drawer"),scrim=document.getElementById("scrim"),body=document.getElementById("drawerBody");
 let stage="bag";
@@ -1114,6 +1447,7 @@ function renderDrawer(){
 
 
 {const pp=document.getElementById("promoPill");if(FREE_TRAYS_LEFT>0&&products.some(p=>p.cat==="lashes")){pp.hidden=false;pp.innerHTML=`🎁 <b>Giveaway:</b> ${esc(H.giveaway_text||"")}`}else if(H.promo_text){pp.hidden=false;pp.innerHTML=`${H.promo_title?`<b>${esc(H.promo_title)}</b> `:""}${esc(H.promo_text)}`}}
+{const a=document.getElementById("promoPill"),b=document.getElementById("promoPill2");if(a&&b&&!a.hidden){b.innerHTML=a.innerHTML;b.hidden=false}}
 renderAcademy();
 
 /* booking */
@@ -1202,6 +1536,7 @@ document.querySelectorAll(".wa-num").forEach(el=>el.textContent=WHATSAPP?("+"+WH
   {title:"How to pay",sub:"Card, FirstPay, BPWCCUL or cash on collection",target:"accepts",icon:"💳",words:"pay payment",body:"pay payment card debit credit visa mastercard firstpay first pay bpwccul credit union cash transfer"},
   {title:"The glow up · client results",sub:"Real lash sets by Marishka",target:"results",icon:"✨",words:"results gallery",body:"photos pictures before after glow up results gallery reviews work"},
   {title:"About Marishka & The Girls Club",sub:"Certified esthetician in Barbados",target:"about",icon:"💕",words:"about marishka",body:"about owner esthetician who certified story barbados"},
+  {title:"The Marketplace",sub:"Shop all · Products · Digital products",href:"#shop",icon:"🛍️",words:"marketplace shop store",body:"marketplace shop store buy products digital all browse"},
   {title:"Sell your brand with us",sub:"Join The Girls Club Marketplace",href:"brands.html",icon:"🛍️",words:"sell vendor",body:"sell vendor vendors brand brands partner marketplace join business seller stock"},
   {title:"Coming soon",sub:"New things on the way",target:"soon",icon:"⏳",words:"coming soon new",body:"coming soon new launch next",show:SO.show!==false},
   {title:"Message us on WhatsApp",sub:"Questions, custom orders, help",href:waLink("Hi The Girls Club! I have a question."),ext:true,icon:"💬",words:"whatsapp contact",body:"contact message chat whatsapp phone call help question instagram dm talk"}
@@ -1243,12 +1578,11 @@ document.querySelectorAll(".wa-num").forEach(el=>el.textContent=WHATSAPP?("+"+WH
  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!panel.hidden){close();btn&&btn.focus();return}
   if(e.key==="/"&&panel.hidden&&!/^(INPUT|TEXTAREA|SELECT)$/.test((document.activeElement||{}).tagName||"")&&drawer.hidden){e.preventDefault();open()}});
  function goTo(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"})}
- function showProduct(p){document.querySelectorAll("#lashes .chip").forEach(x=>x.setAttribute("aria-pressed",x.dataset.f==="all"));renderGrid("all");
-  const c=grid.querySelector(`[data-card="${CSS.escape(p.id)}"]`);if(!c)return goTo("lashes");c.scrollIntoView({behavior:"smooth",block:"center"});c.classList.remove("sr-flash");void c.offsetWidth;c.classList.add("sr-flash");setTimeout(()=>c.classList.remove("sr-flash"),3400)}
+ function showProduct(p){if(p&&p.id&&window.tgcOpenProduct)return tgcOpenProduct(p.id);nav("#shop")}
  out.addEventListener("click",e=>{
   const ad=e.target.closest("[data-sr-add]");if(ad){e.stopPropagation();const p=shown[+ad.dataset.srAdd].p;close();addItem({id:p.id,name:p.name+" · "+p.type+(p.brand?" · "+p.brand:""),price:p.price,...(p.vendor?{vendor:p.vendor,pid:p.pid,opt:""}:{}),...(p.digital?{noShip:true,note:"Digital · sent on WhatsApp"}:{}),...(p.course?{course:p.course}:{})});return}
   if(e.target.closest("[data-sr-wa]")){track(inp.value);return}
-  if(e.target.closest("[data-sr-browse]")){e.preventDefault();close();showProduct({id:""});goTo("lashes");return}
+  if(e.target.closest("[data-sr-browse]")){e.preventDefault();close();nav("#shop");return}
   const go=e.target.closest("[data-sr-go]");if(!go)return;const it=shown[+go.dataset.srGo];if(!it)return;
   if(it.href){track(inp.value);if(it.ext)return;close();return}
   e.preventDefault();close();if(it.k==="product")showProduct(it.p);else goTo(it.target)});
@@ -1259,8 +1593,9 @@ document.querySelectorAll(".wa-num").forEach(el=>el.textContent=WHATSAPP?("+"+WH
 
 /* page is built after load, so jump to #academy etc. once the content is in */
 const ALIAS={eyelash:"course-eyelash-extension-course",cluster:"course-cluster-lash-course"};
-const goHash=()=>{let h=decodeURIComponent(location.hash.slice(1));if(ALIAS[h])h=ALIAS[h];if(h==="academy"){const u=(new URLSearchParams(location.search).get("utm_campaign")||"").toLowerCase();for(const k in ALIAS)if(u.includes(k)&&document.getElementById(ALIAS[k])){h=ALIAS[k];break}}const el=h&&document.getElementById(h);if(!el)return;const d=document.documentElement,sb=d.style.scrollBehavior;d.style.scrollBehavior="auto";el.scrollIntoView();d.style.scrollBehavior=sb};
-if(location.hash){if("scrollRestoration" in history)history.scrollRestoration="manual";goHash();window.addEventListener("load",goHash);setTimeout(goHash,600);}
+const goHash=()=>{let h=decodeURIComponent((curHash||location.hash).slice(1));if(ALIAS[h])h=ALIAS[h];if(h==="academy"){const u=(new URLSearchParams(location.search).get("utm_campaign")||"").toLowerCase();for(const k in ALIAS)if(u.includes(k)&&document.getElementById(ALIAS[k])){h=ALIAS[k];break}}const el=h&&document.getElementById(h);if(!el)return;const d=document.documentElement,sb=d.style.scrollBehavior;d.style.scrollBehavior="auto";el.scrollIntoView();d.style.scrollBehavior=sb};
+route();
+if(location.hash&&!/^#(shop|lashes|marketplace|products|digital|p-)/.test(location.hash)){if("scrollRestoration" in history)history.scrollRestoration="manual";goHash();window.addEventListener("load",goHash);setTimeout(goHash,600);}
 
 })();
 </script>
