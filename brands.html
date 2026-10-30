@@ -310,7 +310,7 @@ footer a{color:var(--deep);font-weight:700;text-decoration:none}
 
       <fieldset>
         <legend><i>3</i>Your products</legend>
-        <label class="f">What would you like to sell first? <span class="hint">optional · name, price in BBD and how many you have</span><textarea name="products" maxlength="1500" placeholder="Vanilla body butter 8oz, $35, 10 in stock&#10;Bonnet (pink satin), $25, 6 in stock"></textarea></label>
+        <label class="f">What would you like to sell first? <span class="hint">optional · name, price in BBD and how many you have. Digital products (e-books, guides, templates, classes) welcome too: no stock needed.</span><textarea name="products" maxlength="1500" placeholder="Vanilla body butter 8oz, $35, 10 in stock&#10;Bonnet (pink satin), $25, 6 in stock"></textarea></label>
         <p class="hint">You'll send your product photos on WhatsApp after you sign up.</p>
       </fieldset>
 
@@ -328,7 +328,7 @@ footer a{color:var(--deep);font-weight:700;text-decoration:none}
         <legend><i>5</i>Sign the agreement</legend>
         <div class="agreebox">
           <p id="agreeSum">Pick a plan above to see your terms.</p>
-          <details><summary>Read the full agreement (17 points)</summary><ol id="agreeList"></ol></details>
+          <details><summary>Read the full agreement (18 points)</summary><ol id="agreeList"></ol></details>
         </div>
         <label class="f">Sign: type your full name<input type="text" name="sign" required maxlength="80" autocomplete="name"></label>
         <label class="chk"><input type="checkbox" name="agree" required><span>I have read and agree to the consignment agreement for my brand.</span></label>
@@ -386,7 +386,7 @@ footer a{color:var(--deep);font-weight:700;text-decoration:none}
 <script>
 (function(){
 var FORM="https://docs.google.com/forms/d/e/1FAIpQLSfGTId0Oa7jR23yfKmouDejd1AVFxPNZA8QMfMkK3JWV0mCFA/formResponse", FIELD="entry.858011822";
-var VERSION="2026-10-22-web";
+var VERSION="2026-10-30-web";
 var PLANS={starter:{name:"Starter",fee:0,rate:15},essentials:{name:"Essentials",fee:40,rate:5},spotlight:{name:"Spotlight",fee:75,rate:5},signature:{name:"Signature",fee:125,rate:5}};
 var f=document.getElementById("jf"); if(!f) return;
 var $=function(n){return f.elements[n]};
@@ -405,6 +405,7 @@ function clauses(p){var pl=PLANS[p],r=pl?pl.rate:5,why=p==="starter"?"covers car
 ["Customer returns","The Girls Club handles customer questions and returns. If an item is returned for a fault, damage or wrong description that is the Vendor's responsibility, the refund is taken from the Vendor's next payout and the item goes back to the Vendor. Returns caused by The Girls Club are paid for by The Girls Club."],
 ["Unsold stock","Each batch stays on consignment for 60 days. After that the Vendor may renew it, swap it for new stock, or collect it within 14 days. Stock not collected within 30 days after a written reminder may be returned to the Vendor at the Vendor's cost."],
 ["Care, loss and damage","The Girls Club stores products clean, dry and out of direct sun. If a product is lost, stolen or damaged in The Girls Club's care through its fault, The Girls Club pays the Vendor its share of the listed price. The Girls Club is not responsible for events outside its control (such as hurricane, flood or fire) or for products that expire naturally."],
+["Digital products","For digital products (such as e-books, guides, templates or classes) no stock is delivered, and the Stock, Ownership, Unsold stock and Care, loss and damage points do not apply. The Vendor sends The Girls Club a working download link, keeps it working for at least 12 months after each sale, and confirms they own the content or have the right to sell it. After the customer's payment clears, The Girls Club sends the link to the customer. Digital products can't be returned: a refund is given only if the file doesn't work or isn't as described and the Vendor can't fix it within 3 days, and that refund is taken from the Vendor's next payout. The Girls Club will not share, copy or resell the Vendor's files."],
 ["Product quality and safety","The Vendor promises every product is legal to sell in Barbados, genuine, theirs to sell, and matches its description and photos. Cosmetics, skincare, food and candles must be labelled with ingredients, the Vendor's business name and a use-by or batch date where relevant. The Vendor is responsible for any claim caused by a faulty or unsafe product. The Girls Club may refuse or remove any product."],
 ["Photos and marketing","The Vendor allows The Girls Club to use their business name, logo, product photos and descriptions to promote the products during this agreement and for 30 days after, and confirms they own or may use these photos."],
 ["Records","The Vendor keeps product details, prices and stock up to date with The Girls Club. Sales figures and statements are for information and may be approximate; payouts follow the actual cleared sales."],
