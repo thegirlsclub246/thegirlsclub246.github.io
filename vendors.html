@@ -611,7 +611,7 @@ function vendorCard(v){
   '<div class="r"><div class="l"><b>Products</b><span>'+n.length+' total · '+n.filter(function(p){return p.status==="live"}).length+' live · '+n.filter(function(p){return p.status==="pending"}).length+' waiting</span></div></div></div>'+
   (v.bio?'<p class="small muted" style="margin-top:10px">'+esc(v.bio)+'</p>':"")+
   '<div class="btnrow">'+(v.status!=="approved"?'<button class="btn sm green" data-vst="'+v.id+':approved">Approve shop</button>':'<button class="btn sm ghost" data-vst="'+v.id+':paused">Pause shop</button>')+
-  '<a class="btn sm ghost" href="https://wa.me/'+esc(waNum(v.phone))+'" target="_blank" rel="noopener">WhatsApp</a><button class="btn sm ghost" data-viewas="'+v.id+'">See her view</button></div></div>';
+  '<a class="btn sm ghost" href="https://wa.me/'+esc(waNum(v.phone))+'" target="_blank" rel="noopener">WhatsApp</a><button class="btn sm ghost" data-viewas="'+v.id+'">See her view</button><button class="btn sm red" data-delv="'+v.id+'">Delete shop</button></div></div>';
 }
 function aApprove(){
   var pv=S.all.vendors.filter(function(v){return v.status==="pending"}),pp=S.all.products.filter(function(p){return p.status==="pending"});
@@ -653,6 +653,7 @@ function wireAdmin(){
   qa("[data-viewas]").forEach(function(b){b.onclick=function(){var id=b.getAttribute("data-viewas");S.viewAs=id;S.vendor=vById(id);
     S.products=S.all.products.filter(function(p){return p.vendor_id===id});S.sales=S.all.sales.filter(function(s){return s.vendor_id===id});S.payouts=S.all.payouts.filter(function(p){return p.vendor_id===id});S.tab="home";renderVendor();window.scrollTo(0,0)}});
   qa("[data-pay]").forEach(function(b){b.onclick=function(){payoutSheet(vById(b.getAttribute("data-pay")))}});
+  qa("[data-delv]").forEach(function(b){b.onclick=function(){deleteShopSheet(vById(b.getAttribute("data-delv")))}});
   var pf=q("#pfilt");if(pf){pf.value=S.pfilt||"";pf.onchange=function(){S.pfilt=pf.value;renderAdmin()}}
   var as=q("#addSale");if(as)as.onclick=saleSheet;
 }
@@ -679,6 +680,34 @@ function payoutSheet(v){var m=money_owed(S.all.sales.filter(function(s){return s
   var d=sheet("Record payout",'<p class="muted">'+esc(v.business)+' · '+esc(v.payout_method||"")+'</p><form id="yf"><div class="two"><label class="f">Amount (BBD)<input name="amount" type="number" step="0.01" min="0" inputmode="decimal" value="'+m.dueSunday.toFixed(2)+'"></label><label class="f">Date<input name="paid_on" type="date" value="'+today()+'"></label></div><label class="f">Reference <span class="hint">optional · transfer or receipt number</span><input name="ref" maxlength="80"></label><p class="err" id="yerr"></p><div class="btnrow"><button class="btn plum" type="submit">Save payout</button></div></form>');
   q("#yf",d).onsubmit=function(e){e.preventDefault();var f=e.target,amt=Number(f.amount.value);if(!(amt>0))return setErr(q("#yerr",d),"Please add the amount.");
     sb.from("payouts").insert({vendor_id:v.id,amount:Math.round(amt*100)/100,paid_on:f.paid_on.value||today(),method:v.payout_method,ref:f.ref.value.trim()||null}).select().single().then(function(r){if(r.error)return setErr(q("#yerr",d),friendly(r.error));S.all.payouts.unshift(r.data);d.close();renderAdmin();toast("Payout saved")})}}
+function deleteShopSheet(v){if(!v)return;
+  var ps=S.all.products.filter(function(p){return p.vendor_id===v.id}),ss=S.all.sales.filter(function(s){return s.vendor_id===v.id}),ys=S.all.payouts.filter(function(p){return p.vendor_id===v.id});
+  var m=money_owed(ss,ys),owed=m.dueSunday+m.thisWeek;
+  var d=sheet("Delete this shop?",'<p><b>'+esc(v.business)+'</b> · '+esc(v.owner_name||"")+'</p>'+
+  '<div class="rows"><div class="r"><div class="l"><b>This deletes for good</b><span>The shop, its '+ps.length+' product'+(ps.length===1?"":"s")+' and photos, '+ss.length+' sale'+(ss.length===1?"":"s")+' and '+ys.length+' payout record'+(ys.length===1?"":"s")+'. Her products leave the Marketplace straight away. This can\'t be undone.</span></div></div></div>'+
+  (owed>0.004?'<p class="err" style="margin-top:12px">She is still owed '+money2(owed)+'. Pay her and record the payout first, or note it down before deleting.</p>':"")+
+  (ss.length?'<p class="small muted" style="margin-top:10px">Tip: if you might want her sales history later, tap <b>Pause shop</b> instead. That hides her from the Marketplace and keeps the records.</p>':"")+
+  '<p class="small muted" style="margin-top:10px">Her login stays. If she signs in again she\'ll just see "set up your shop".</p>'+
+  '<form id="df"><label class="f">To confirm, type the shop name: <b>'+esc(v.business)+'</b><input name="nm" autocomplete="off" autocapitalize="off" spellcheck="false"></label><p class="err" id="derr"></p>'+
+  '<div class="btnrow"><button class="btn red" type="submit">Delete shop</button><button class="btn ghost" type="button" id="dNo">Keep it</button></div></form>');
+  q("#dNo",d).onclick=d.close;
+  q("#df",d).onsubmit=function(e){e.preventDefault();var btn=q("#df button[type=submit]",d);
+    if(e.target.nm.value.trim().toLowerCase()!==String(v.business).trim().toLowerCase())return setErr(q("#derr",d),"The name doesn't match. Nothing was deleted.");
+    var photos=[];ps.forEach(function(p){(p.photos||[]).forEach(function(x){if(x&&!/^https?:/.test(x))photos.push(x)})});
+    busy(btn,true,"Deleting…");
+    sb.from("vendors").delete().eq("id",v.id).select().then(function(r){
+      if(r.error){busy(btn,false);return setErr(q("#derr",d),friendly(r.error))}
+      if(!r.data||!r.data.length){busy(btn,false);return setErr(q("#derr",d),"It didn't delete. Please sign out and in again, then try once more.")}
+      if(photos.length)sb.storage.from(BUCKET).remove(photos).catch(function(){});
+      S.all.vendors=S.all.vendors.filter(function(x){return x.id!==v.id});
+      S.all.products=S.all.products.filter(function(x){return x.vendor_id!==v.id});
+      S.all.sales=S.all.sales.filter(function(x){return x.vendor_id!==v.id});
+      S.all.payouts=S.all.payouts.filter(function(x){return x.vendor_id!==v.id});
+      d.close();renderAdmin();toast(v.business+" was deleted");gc("vendor-portal-shop-delete","Vendor shop deleted");
+    }).catch(function(x){busy(btn,false);setErr(q("#derr",d),friendly(x))});
+  };
+  setTimeout(function(){q("#df input",d).focus()},50);
+}
 function saleSheet(){
   var vs=S.all.vendors;if(!vs.length)return toast("No vendors yet");
   var d=sheet("Record an in-person sale",'<form id="xf"><label class="f">Vendor<select name="vendor">'+vs.map(function(v){return'<option value="'+v.id+'">'+esc(v.business)+'</option>'}).join("")+'</select></label><label class="f">Product<select name="product"></select></label><div class="two"><label class="f">How many<input name="qty" type="number" min="1" step="1" value="1" inputmode="numeric"></label><label class="f">Price each (BBD)<input name="price" type="number" min="0" step="0.01" inputmode="decimal"></label></div><label class="f">Date<input name="date" type="date" value="'+today()+'"></label><div class="keep" id="xk"></div><p class="err" id="xerr"></p><div class="btnrow"><button class="btn" type="submit">Save sale</button></div></form>');
