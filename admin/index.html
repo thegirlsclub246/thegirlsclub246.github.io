@@ -380,6 +380,28 @@ details.grp{border:1px solid var(--line);border-radius:14px}
 .sr small{color:var(--gold)}
 mark{background:#F3E3C3}
 .cd b,.code2 .big,h2,.ct,.box2 b{font-variant-numeric:lining-nums}
+/* pictures & videos */
+.mgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:18px}
+.mi{margin:0;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.mi img,.mi video{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:var(--bg)}
+.mi video{aspect-ratio:9/16;background:#000}
+.mi figcaption{padding:8px 10px 10px;display:flex;flex-direction:column;gap:6px;flex:1}
+.mi figcaption b{font-size:13.5px;line-height:1.25;color:var(--plum)}
+.mi figcaption small{font-size:12px;color:var(--muted);line-height:1.3}
+.mi .mini{margin-top:auto;justify-content:center}
+#mediaLib h3{margin:18px 0 8px}
+.cpic.vid{position:relative}.cpic.vid img{aspect-ratio:9/16}
+.cpic .play{position:absolute;inset:auto auto 8px 8px;width:30px;height:30px;border-radius:50%;background:rgba(59,15,49,.8);color:#fff;display:grid;place-items:center;font-size:12px}
+.editsheet{z-index:45}
+.editsheet select{width:100%;min-height:46px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;font:600 16px Quicksand,sans-serif;color:var(--ink);background:#fff}
+.editsheet input[type=date]{width:100%;min-height:46px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;font:600 16px Quicksand,sans-serif;background:#fff}
+.editsheet textarea{min-height:220px;font-size:16px}
+.edwhere{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+.edwhere .toggle{font-size:14px;font-weight:600;min-height:40px;margin:0}
+.editsheet .btn{margin-top:10px}
+.ca{grid-template-columns:repeat(2,1fr)}
+@media (min-width:600px){.mgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:900px){.mgrid{grid-template-columns:repeat(4,minmax(0,1fr))}.editsheet{left:50%;right:auto;width:640px;transform:translate(-50%,105%)}.editsheet.on{transform:translate(-50%,0)}}
 </style>
 </head>
 <body>
@@ -410,7 +432,7 @@ mark{background:#F3E3C3}
     <h4>More</h4>
     <button data-tab="links"><span class="i"><svg class="ico"><use href="#i-link"/></svg></span>All links</button>
     <button data-tab="archive"><span class="i"><svg class="ico"><use href="#i-archive"/></svg></span>Archive</button>
-    <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#pictures" target="_blank" rel="noopener"><span class="i"><svg class="ico"><use href="#i-image"/></svg></span>Media library<span class="ext">↗</span></a>
+    <button data-tab="media"><span class="i"><svg class="ico"><use href="#i-image"/></svg></span>Pictures &amp; videos</button>
     <button data-tab="key" class="signedout"><span class="i"><svg class="ico"><use href="#i-key"/></svg></span>Sign in to edit</button>
     <button type="button" class="signedonly" id="signOut2"><span class="i"><svg class="ico"><use href="#i-out"/></svg></span>Sign out</button>
   </nav>
@@ -428,8 +450,8 @@ mark{background:#F3E3C3}
         <a href="/vendors" target="_blank" rel="noopener"><span class="i"><svg class="ico"><use href="#i-store"/></svg></span>Approve vendors</a>
         <a href="https://claude.ai/artifact/WMJEaNreenhaz9QdGxXEcC" target="_blank" rel="noopener"><span class="i"><svg class="ico"><use href="#i-ticket"/></svg></span>Enrol a student</a>
         <button type="button" data-go="shop"><span class="i"><svg class="ico"><use href="#i-tag"/></svg></span>Change a price</button>
-        <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#pictures" target="_blank" rel="noopener"><span class="i"><svg class="ico"><use href="#i-gift"/></svg></span>Send a voucher</a>
-        <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#reels" target="_blank" rel="noopener"><span class="i"><svg class="ico"><use href="#i-film"/></svg></span>Pictures &amp; reels</a>
+        <button type="button" data-go="media" data-anchor="mVouchers"><span class="i"><svg class="ico"><use href="#i-gift"/></svg></span>Send a voucher</button>
+        <button type="button" data-go="media"><span class="i"><svg class="ico"><use href="#i-film"/></svg></span>Pictures &amp; videos</button>
         <a class="xtra" href="https://thegirlsclub246.goatcounter.com" target="_blank" rel="noopener"><span class="i"><svg class="ico"><use href="#i-chart"/></svg></span>Website visits</a>
       </div>
       <h3 style="margin-top:6px">Today on your calendar</h3>
@@ -479,13 +501,12 @@ mark{background:#F3E3C3}
         <button type="button" data-calf="Marketplace">Marketplace</button>
         <button type="button" data-calf="all">All</button>
       </div>
+      <button class="btn ghost" type="button" id="calAdd" style="margin:0 0 14px">+ Add a post</button>
       <div class="calhead" aria-hidden="true"><span>Date</span><span>Post &amp; place</span><span>Content</span><span>Picture</span></div>
       <div id="cal"></div>
       <h3 id="moreList" style="margin-top:24px">More for your posts</h3>
       <details class="grp" id="capsList"><summary>Extra captions &amp; ad text</summary><div class="in"><div class="rows" id="caps"></div></div></details>
-      <details class="grp" id="mediaList"><summary>Reels &amp; videos</summary><div class="in">
-        <div class="how2">Video files stay in your <b>media library</b> on Claude (your phone saves them from there). <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#reels" target="_blank" rel="noopener">Open reels ↗</a> · <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#pictures" target="_blank" rel="noopener">Open all pictures ↗</a></div>
-        <div id="media"></div></div></details>
+      <a class="btn ghost" href="#media" data-tab="media" id="mediaList" style="margin-bottom:10px"><svg class="ico"><use href="#i-film"/></svg> Pictures &amp; videos (vouchers, reels, post pictures)</a>
       <details class="grp" id="metaList"><summary>Meta, Instagram &amp; ads</summary><div class="in"><div class="links" id="metaLinks"></div></div></details>
     </section>
 
@@ -494,8 +515,8 @@ mark{background:#F3E3C3}
       <h2>Money &amp; orders</h2>
       <p class="muted">These open your private pages (signed in as you). Customer details and money never go on the public website.</p>
       <div class="links">
-        <a href="https://claude.ai/artifact/YBNTrLoFu1vcYGsVJiUuDA" target="_blank" rel="noopener"><span class="e"><svg class="ico"><use href="#i-money"/></svg></span><span><b>Money Book</b><small>All income + expenses, updated daily</small></span></a>
-        <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#money" target="_blank" rel="noopener"><span class="e"><svg class="ico"><use href="#i-check"/></svg></span><span><b>Mark orders paid</b><small>Private, on Claude. Also pays your vendors</small></span></a>
+        <a href="https://claude.ai/artifact/YBNTrLoFu1vcYGsVJiUuDA" target="_blank" rel="noopener"><span class="e"><svg class="ico"><use href="#i-money"/></svg></span><span><b>Money Book</b><small>Private · opens on Claude · all income + expenses</small></span></a>
+        <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#money" target="_blank" rel="noopener"><span class="e"><svg class="ico"><use href="#i-check"/></svg></span><span><b>Mark orders paid</b><small>Private · opens on Claude · also pays your vendors</small></span></a>
         <a href="https://docs.google.com/spreadsheets/d/1JvWskTq8NsXLs-dvZjVsKWWrlPYeDl2goi6Nvel6TjA/edit" target="_blank" rel="noopener"><span class="e"><svg class="ico"><use href="#i-receipt"/></svg></span><span><b>Website orders sheet</b><small>Every order + contact details</small></span></a>
         <a href="https://payhip.com/customers" target="_blank" rel="noopener"><span class="e"><svg class="ico"><use href="#i-cap"/></svg></span><span><b>Payhip students</b><small>Card sales, enrolments, progress</small></span></a>
         <a href="https://payhip.com/dashboard" target="_blank" rel="noopener"><span class="e"><svg class="ico"><use href="#i-chart"/></svg></span><span><b>Payhip dashboard</b><small>Sales and payouts</small></span></a>
@@ -595,6 +616,14 @@ mark{background:#F3E3C3}
       </div>
     </section>
 
+    <!-- PICTURES & VIDEOS -->
+    <section class="tab" id="t-media">
+      <h2>Pictures &amp; videos</h2>
+      <p class="muted">Tap a picture to open it full size. Tap <b>Save</b> to put it on your phone. On iPhone, press and hold the picture, then <b>Save to Photos</b>.</p>
+      <div class="jump" id="mediaJump"></div>
+      <div id="mediaLib"><p class="empty">Loading…</p></div>
+    </section>
+
     <!-- LINKS -->
     <section class="tab" id="t-links">
       <h2>All links</h2>
@@ -650,7 +679,7 @@ mark{background:#F3E3C3}
     <button data-tab="today"><span class="i"><svg class="ico"><use href="#i-home"/></svg></span>Today</button>
     <button data-tab="replies"><span class="i"><svg class="ico"><use href="#i-chat"/></svg></span>WhatsApp replies</button>
     <button data-tab="posts"><span class="i"><svg class="ico"><use href="#i-cal"/></svg></span>Content calendar</button>
-    <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#pictures" target="_blank" rel="noopener"><span class="i"><svg class="ico"><use href="#i-image"/></svg></span>Media library ↗</a>
+    <button data-tab="media"><span class="i"><svg class="ico"><use href="#i-image"/></svg></span>Pictures &amp; videos</button>
   </div>
   <h3>Business</h3>
   <div class="tgrid">
@@ -673,6 +702,26 @@ mark{background:#F3E3C3}
     <button data-tab="key" class="signedout"><span class="i"><svg class="ico"><use href="#i-key"/></svg></span>Sign in to edit</button>
     <button id="signOut" class="signedonly" type="button"><span class="i"><svg class="ico"><use href="#i-out"/></svg></span>Sign out</button>
   </div>
+</div>
+<div class="sheet editsheet" id="editSheet" role="dialog" aria-label="Edit" aria-hidden="true">
+  <div class="grab"></div>
+  <h2 id="edTitle" style="margin-bottom:6px">Edit post</h2>
+  <form id="edForm">
+    <div id="edCal">
+      <div class="row2"><div><label for="edDate">Date</label><input id="edDate" type="date"></div><div><label for="edTime">Time</label><input id="edTime" type="text" placeholder="7:00pm"></div></div>
+      <label>Where it goes</label>
+      <div class="edwhere" id="edWhere"></div>
+      <div class="row2"><div><label for="edKind">Type</label><select id="edKind"><option>Photo post</option><option>Reel</option><option>Story</option><option>Carousel</option></select></div>
+      <div><label for="edStatus">Status</label><select id="edStatus"><option value="todo">Not scheduled yet</option><option value="scheduled">Scheduled in Meta</option><option value="you">You post this</option><option value="done">Posted</option></select></div></div>
+      <label for="edTopic">Topic</label><select id="edTopic"><option>Academy</option><option>Marketplace</option><option>Shop &amp; lashes</option><option>Both</option></select>
+    </div>
+    <label for="edT">Title</label><input id="edT" type="text" maxlength="120">
+    <label for="edText" id="edTextLab">Caption</label><textarea id="edText" rows="12"></textarea>
+    <p class="muted" id="edNote" style="margin-top:8px">Saves to your website. Everyone with the Hub sees the change in about a minute.</p>
+    <button class="btn" type="submit" id="edSave">Save</button>
+    <button class="btn ghost" type="button" id="edCancel">Cancel</button>
+    <button class="btn ghost" type="button" id="edDel" style="color:#A8235A">Delete this post</button>
+  </form>
 </div>
 <div class="search" id="search" role="dialog" aria-label="Search" aria-hidden="true">
   <div class="bar"><input id="q" type="search" placeholder="Search: voucher, /got, PayPal, cluster…" autocomplete="off" enterkeyhint="search"><button class="ibtn" id="qClose" type="button" aria-label="Close search">✕</button></div>
@@ -739,7 +788,7 @@ async function signIn(t,quiet){
     await Promise.all(Object.keys(FILES).map(loadFile));
     store(KEY,token);
     document.body.classList.add("signed");$("#tok").value="";
-    renderAll();loadStatus();pvStart();var back=PENDING;PENDING=null;if(back)go(back);else if(!quiet&&location.hash.slice(1)==="key")go("today");else go(location.hash.slice(1)||"today");if(!quiet)toast("Signed in ✓ You can edit your website now.");
+    renderAll();loadStatus();pvStart();hubLoad(true);var back=PENDING;PENDING=null;if(back)go(back);else if(!quiet&&location.hash.slice(1)==="key")go("today");else go(location.hash.slice(1)||"today");if(!quiet)toast("Signed in ✓ You can edit your website now.");
   }catch(e){
     token="";document.body.classList.remove("signed");
     $("#signMsg").textContent=e.message;if(quiet)store(KEY,null);
@@ -969,12 +1018,12 @@ function row(o){
   return '<div class="r'+(o.cls?" "+o.cls:"")+'" id="'+id+'"><div class="rh2"><button type="button" class="open" aria-expanded="false">'+
     (o.tag?'<span class="tag2'+(o.tagCls?" "+o.tagCls:"")+'">'+esc(o.tag)+'</span>':'')+
     '<span class="tx"><b>'+esc(o.t||"")+'</b>'+(o.sub?'<small>'+esc(o.sub)+'</small>':'')+'</span><span class="chev">▼</span></button>'+
-    (k>=0?'<button type="button" class="mini" data-cp="'+k+'">Copy</button>':'')+'</div>'+
+    (k>=0?'<button type="button" class="mini" data-cp="'+k+'">Copy</button>':'')+(o.edit?'<button type="button" class="mini g" data-edit="'+esc(o.edit)+'">Edit</button>':'')+'</div>'+
     '<div class="full">'+(o.pic?'<p class="pic">Picture: '+esc(o.pic)+'</p>':'')+(o.text!=null?'<pre>'+esc(o.text)+'</pre>':'')+'</div></div>';
 }
 function ico(n){return '<svg class="ico"><use href="#i-'+n+'"/></svg>'}
 function linkCards(list,emoji){return list.map(function(l){var ext=/^https?:/.test(l.href);return '<a href="'+esc(l.href)+'"'+(ext?' target="_blank" rel="noopener"':'')+'><span class="e">'+ico(emoji||"link")+'</span><span><b>'+esc(l.t)+'</b><small>'+esc(l.d||"")+'</small></span></a>'}).join("")}
-function boxes(list){return list.map(function(b){return '<div class="box2 '+esc(b.style||"")+'"><b>'+esc(b.t)+'</b><span>'+esc(b.d)+'</span>'+(b.href?'<br><a class="mini" href="'+esc(b.href)+'" target="_blank" rel="noopener">'+esc(b.btn||"Open")+'</a>':'')+'</div>'}).join("")}
+function boxes(list){return list.map(function(b){return '<div class="box2 '+esc(b.style||"")+'"><b>'+esc(b.t)+'</b><span>'+esc(b.d)+'</span>'+(b.href?(b.href.charAt(0)==="#"?'<br><button type="button" class="mini" data-go="'+esc(b.href.slice(1))+'">'+esc(b.btn||"Open")+'</button>':'<br><a class="mini" href="'+esc(b.href)+'" target="_blank" rel="noopener">'+esc(b.btn||"Open")+'</a>'):'')+'</div>'}).join("")}
 function codes(list){return list.map(function(c){return '<div class="code2"><div class="big">'+esc(c.big)+'</div><p>'+c.html+'</p></div>'}).join("")}
 function grp(title,count,inner,open,id){return '<details class="grp"'+(open?' open':'')+(id?' id="'+id+'"':'')+'><summary><span>'+esc(title)+(count!=null?'<span class="cnt">'+count+'</span>':'')+'</span></summary><div class="in">'+inner+'</div></details>'}
 function postRow(p,today,idp){
@@ -991,17 +1040,13 @@ function renderHub(){
   /* Replies */
   var wa=H.wa||[], short=["Orders","Follow-ups","Reviews"];
   $("#waJump").innerHTML='<button type="button" data-waf="-1">All</button>'+wa.map(function(g,i){return '<button type="button" data-waf="'+i+'">'+esc(short[i]||g.g)+'</button>'}).join("");
-  $("#waList").innerHTML=wa.map(function(g,i){return '<div class="wag" data-wag="'+i+'"><h3 style="margin-top:14px">'+esc(g.g)+'</h3>'+(g.note?'<p class="muted">'+esc(g.note)+'</p>':'')+'<div class="rows">'+g.items.map(function(r){return row({tag:r.code,t:r.t||r.when,sub:r.t?r.when:"",text:r.text})}).join("")+'</div></div>'}).join("");
+  $("#waList").innerHTML=wa.map(function(g,i){return '<div class="wag" data-wag="'+i+'"><h3 style="margin-top:14px">'+esc(g.g)+'</h3>'+(g.note?'<p class="muted">'+esc(g.note)+'</p>':'')+'<div class="rows">'+g.items.map(function(r){return row({tag:r.code,t:r.t||r.when,sub:r.t?r.when:"",text:r.text,edit:"wa:"+r.id})}).join("")+'</div></div>'}).join("");
   $("#waHow").textContent=H.wa_how||"";
   waFilter(WAF);
   /* Posts */
   $("#calNote").textContent=H.calendar_note||"";renderCal();
-  $("#caps").innerHTML=(H.caps||[]).map(function(c){return row({t:c.t,text:c.c})}).join("");
-  var rg={};(H.reels||[]).forEach(function(r){(rg[r.g]=rg[r.g]||[]).push(r)});
-  var pg={};(H.pics||[]).forEach(function(p){(pg[p.g]=pg[p.g]||[]).push(p)});
-  $("#media").innerHTML=Object.keys(rg).map(function(g){return grp(g,rg[g].length,'<div class="links">'+rg[g].map(function(r){return '<a href="'+esc(H.media)+'#reels" target="_blank" rel="noopener"><span class="e">'+ico("film")+'</span><span><b>'+esc(r.l)+'</b><small>'+esc(r.w||"")+'</small></span></a>'}).join("")+'</div>')}).join("")+
-    Object.keys(pg).map(function(g){return grp(g,pg[g].length,'<div class="links">'+pg[g].map(function(p){return '<a href="'+esc(H.media)+'#pictures" target="_blank" rel="noopener"><span class="e">'+ico("image")+'</span><span><b>'+esc(p.l)+'</b><small>'+esc(p.w||"")+'</small></span></a>'}).join("")+'</div>')}).join("")+
-    '<div class="links" style="margin-top:10px">'+linkCards(H.reels_links||[],"film")+'</div>';
+  $("#caps").innerHTML=(H.caps||[]).map(function(c){return row({t:c.t,text:c.c,edit:"cap:"+c.id})}).join("");
+  renderMedia();
   var social=(H.links||[]).filter(function(g){return /social/i.test(g.g)})[0];
   $("#metaLinks").innerHTML=linkCards(social?social.items:[],"mega");
   /* Vendors */
@@ -1041,20 +1086,21 @@ function waFilter(i){
 /* ---------- content calendar ---------- */
 var CALF="up";
 var WHERE={"Instagram feed":"ig","Instagram Reels":"ig","Instagram Story":"ig","Story":"ig","Facebook":"fb","WhatsApp Status":"wa","TikTok":"tt"};
-var STATUS={scheduled:["Scheduled in Meta","ok"],todo:["Not scheduled yet",""],you:["You post this","you"]};
+var STATUS={scheduled:["Scheduled in Meta","ok"],todo:["Not scheduled yet",""],you:["You post this","you"],done:["Posted","ok"]};
 function dparts(d){var x=new Date(d+"T12:00:00");return{wd:x.toLocaleDateString("en-GB",{weekday:"short"}),d:x.getDate(),m:x.toLocaleDateString("en-GB",{month:"short"})}}
 function calCard(e,today){
   var p=dparts(e.date),st=STATUS[e.status]||["",""],k=cp(e.text),cls="ce"+(e.date===today?" today":e.date<today?" past":"")+(e.idea?" idea":"");
   var where=(e.where||[]).map(function(w){return '<span class="wc '+(WHERE[w]||"")+'">'+esc(w)+'</span>'}).join("");
-  var pic=e.pic?'<a class="cpic" href="'+esc(e.pic)+'" target="_blank" rel="noopener" aria-label="Open picture"><img src="'+esc(e.pic)+'" alt="" loading="lazy"></a>':
+  if(e.video&&!e.pic){var pic0='<a class="cpic vid" href="'+esc(e.video)+'" target="_blank" rel="noopener" aria-label="Play video"><img src="'+esc(e.poster||"")+'" alt="" loading="lazy"><span class="play">▶</span></a>'}
+  var pic=pic0?pic0:e.pic?'<a class="cpic" href="'+esc(e.pic)+'" target="_blank" rel="noopener" aria-label="Open picture"><img src="'+esc(e.pic)+'" alt="" loading="lazy"></a>':
     '<div class="cpic none">'+ico(e.kind==="Reel"?"film":e.kind==="Story"?"phone":"image")+'<small>'+(e.res&&e.res.href?'<a href="'+esc(e.res.href)+'" target="_blank" rel="noopener">'+esc(e.res.label)+' ↗</a>':esc(e.res?e.res.label:""))+'</small></div>';
   return '<div class="'+cls+'"><div class="cd"><small>'+p.wd+'</small><b>'+p.d+'</b><small>'+p.m+'</small></div>'+
     '<div class="cm"><div class="ctop"><span>'+esc(e.time)+'</span><span class="cst '+st[1]+'">'+st[0]+'</span>'+(e.date===today?'<span class="cst now">Today</span>':'')+'</div>'+
     '<b class="ct">'+esc(e.t)+'</b><div class="cw">'+where+'</div><small class="ck">'+esc(e.kind)+' · '+esc(e.topic||"")+'</small></div>'+
     '<div class="cc"><pre>'+esc(e.text)+'</pre>'+(e.how?'<p class="chow">'+esc(e.how)+'</p>':'')+'</div>'+pic+
     '<div class="ca"><button type="button" class="mini" data-cp="'+k+'">'+(e.idea?"Copy idea":"Copy caption")+'</button>'+
-    (e.pic?'<a class="mini g" href="'+esc(e.pic)+'" download="TGC-'+esc(e.date)+'.jpg">Save picture</a>':'')+
-    '<button type="button" class="mini g cmore">Read all</button></div></div>';
+    (e.pic?'<a class="mini g" href="'+esc(e.pic)+'" download="TGC-'+esc(e.date)+'.jpg">Save picture</a>':e.video?'<a class="mini g" href="'+esc(e.video)+'" download>Save video</a>':'')+
+    '<button type="button" class="mini g cmore">Read all</button><button type="button" class="mini g" data-edit="cal:'+esc(e.id)+'">Edit</button></div></div>';
 }
 function monday(d){var x=new Date(d+"T12:00:00"),n=(x.getDay()+6)%7;x.setDate(x.getDate()-n);return x}
 function iso(x){return x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0")}
@@ -1079,9 +1125,76 @@ document.addEventListener("click",function(e){
 });
 
 document.addEventListener("error",function(ev){var t=ev.target;if(!t||t.tagName!=="IMG"||!t.closest||!t.closest(".cpic"))return;
-  var box=t.closest(".cpic"),ce=t.closest(".ce"),m=(HUB&&HUB.media||"")+"#pictures";
-  var d=document.createElement("div");d.className="cpic none";d.innerHTML=ico("image")+'<small><a href="'+esc(m)+'" target="_blank" rel="noopener">In your media library ↗</a></small>';box.replaceWith(d);
-  var s=ce&&ce.querySelector("a[download]");if(s){s.removeAttribute("download");s.href=m;s.target="_blank";s.textContent="Get picture"}},true);
+  var box=t.closest(".cpic"),ce=t.closest(".ce"),m="#media";
+  var d=document.createElement("div");d.className="cpic none";d.innerHTML=ico("image")+'<small><a href="#media" data-tab="media">Pictures &amp; videos</a></small>';box.replaceWith(d);
+  var s=ce&&ce.querySelector("a[download]");if(s){s.removeAttribute("download");s.href=m;s.setAttribute("data-tab","media");s.textContent="Get picture"}},true);
+
+/* ---------- pictures & videos ---------- */
+function renderMedia(){
+  var L=HUB.library||{videos:[],pictures:[]},j=[];
+  var vids='<h3 id="mVideos">Videos</h3><div class="mgrid">'+(L.videos||[]).map(function(v){return '<figure class="mi"><video controls playsinline preload="none" poster="'+esc(v.poster||"")+'" src="'+esc(v.src)+'"></video><figcaption><b>'+esc(v.t)+'</b><small>'+esc(v.d||"")+'</small><a class="mini g" href="'+esc(v.src)+'" download>Save video</a></figcaption></figure>'}).join("")+'</div>';
+  j.push('<button type="button" data-anchor="mVideos">Videos</button>');
+  var pics=(L.pictures||[]).map(function(g){j.push('<button type="button" data-anchor="'+esc(g.id)+'">'+esc(g.g)+'</button>');
+    return '<h3 id="'+esc(g.id)+'">'+esc(g.g)+'</h3>'+(g.note?'<p class="muted">'+esc(g.note)+'</p>':'')+'<div class="mgrid">'+g.items.map(function(p){return '<figure class="mi"><a href="'+esc(p.src)+'" target="_blank" rel="noopener"><img src="'+esc(p.src)+'" alt="'+esc(p.t)+'" loading="lazy"></a><figcaption><b>'+esc(p.t)+'</b><a class="mini g" href="'+esc(p.src)+'" download>Save</a></figcaption></figure>'}).join("")+'</div>'}).join("");
+  var vi=pics.indexOf('<h3 id="mPosts">');
+  $("#mediaLib").innerHTML=(L.pictures&&L.pictures[0]?'':'')+pics.replace(/(<h3 id="mPosts">)/,vids+'$1');
+  var vchip=j.shift();j.splice(1,0,vchip);$("#mediaJump").innerHTML=j.join("");
+}
+/* ---------- editing (signed in with the GitHub key) ---------- */
+var HUBSHA=null,EDITING=null;
+var PLACES=["Instagram feed","Instagram Reels","Instagram Story","Facebook","WhatsApp Status","TikTok"];
+function findItem(H,key){var p=key.split(":"),kind=p[0],id=p[1];
+  if(kind==="cal")return{list:H.calendar,i:H.calendar.findIndex(function(e){return e.id===id})};
+  if(kind==="cap")return{list:H.caps,i:H.caps.findIndex(function(e){return e.id===id})};
+  for(var g=0;g<H.wa.length;g++){var k=H.wa[g].items.findIndex(function(e){return e.id===id});if(k>=0)return{list:H.wa[g].items,i:k}}
+  return{list:null,i:-1}}
+function openEditor(key){
+  if(!token){toast("Sign in with your GitHub key to edit. Your captions save to your website.");PENDING=location.hash.slice(1)||"posts";go("key");return}
+  var kind=key.split(":")[0],isNew=key==="cal:new",it;
+  if(isNew){it={date:todayIso(),time:"7:00pm",where:["Instagram feed","Facebook"],kind:"Photo post",status:"todo",topic:"Academy",t:"",text:""}}
+  else{var f=findItem(HUB,key);if(f.i<0){toast("Couldn't find that one. Pull down to refresh.",true);return}it=f.list[f.i]}
+  EDITING={key:key,kind:kind,isNew:isNew};
+  $("#edCal").hidden=kind!=="cal";$("#edDel").hidden=kind!=="cal"||isNew;
+  $("#edTitle").textContent=isNew?"Add a post":kind==="cal"?"Edit post":kind==="wa"?"Edit reply":"Edit caption";
+  $("#edTextLab").textContent=kind==="wa"?"Message":"Caption";
+  $("#edT").value=kind==="wa"?(it.t||it.when||""):(it.t||"");
+  $("#edText").value=kind==="cap"?(it.c||""):(it.text||"");
+  if(kind==="cal"){$("#edDate").value=it.date||"";$("#edTime").value=it.time||"";$("#edKind").value=it.kind||"Photo post";$("#edStatus").value=it.status||"todo";$("#edTopic").value=it.topic||"Academy";
+    $("#edWhere").innerHTML=PLACES.concat((it.where||[]).filter(function(w){return PLACES.indexOf(w)<0})).map(function(w,i){return '<label class="toggle"><input type="checkbox" value="'+esc(w)+'"'+((it.where||[]).indexOf(w)>=0?" checked":"")+'> '+esc(w)+'</label>'}).join("")}
+  $("#editSheet").classList.add("on");$("#veil").classList.add("on");$("#editSheet").setAttribute("aria-hidden","false");setTimeout(function(){$("#edText").focus()},50);
+}
+function closeEditor(){$("#editSheet").classList.remove("on");$("#veil").classList.remove("on");$("#editSheet").setAttribute("aria-hidden","true");EDITING=null}
+function collect(){var o={t:$("#edT").value.trim(),text:$("#edText").value};
+  if(EDITING.kind==="cal"){o.date=$("#edDate").value;o.time=$("#edTime").value.trim();o.kind=$("#edKind").value;o.status=$("#edStatus").value;o.topic=$("#edTopic").value;
+    o.where=$$("#edWhere input:checked").map(function(x){return x.value});var d=new Date(o.date+"T12:00:00");o.day=d.toLocaleDateString("en-GB",{weekday:"short"})+" "+d.getDate()+" "+d.toLocaleDateString("en-GB",{month:"short"})}
+  return o}
+async function saveHub(mutate,msg){
+  for(var attempt=0;attempt<2;attempt++){
+    var g=await gh("/contents/admin/hub.json?ref=main");if(!g.ok)throw new Error("GitHub said "+g.status);var gj=await g.json();
+    var latest=JSON.parse(b64dec(gj.content));mutate(latest);
+    var r=await gh("/contents/admin/hub.json",{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:msg,content:b64enc(JSON.stringify(latest,null,1)),sha:gj.sha,branch:"main"})});
+    if(r.ok){var rj=await r.json();HUBSHA=rj.content.sha;HUB=latest;return}
+    if(r.status!==409&&r.status!==422)throw new Error("GitHub said "+r.status);
+  }
+  throw new Error("Someone else saved at the same time. Try again.");
+}
+$("#edForm").addEventListener("submit",async function(ev){ev.preventDefault();if(!EDITING)return;var E=EDITING,o=collect(),b=$("#edSave");
+  if(E.kind==="cal"&&!o.date){toast("Pick a date.",true);return}
+  b.disabled=true;b.textContent="Saving…";
+  try{await saveHub(function(H){
+      if(E.isNew){var n=1;H.calendar.forEach(function(e){var m=+String(e.id||"").slice(1);if(m>=n)n=m+1});
+        var ne={id:"c"+String(n).padStart(3,"0"),pic:null,res:null};Object.assign(ne,o);H.calendar.push(ne);H.calendar.sort(function(a,c){return a.date<c.date?-1:a.date>c.date?1:0});return}
+      var f=findItem(H,E.key);if(f.i<0)throw new Error("That item was removed somewhere else.");var it=f.list[f.i];
+      if(E.kind==="cap"){it.t=o.t;it.c=o.text}else if(E.kind==="wa"){if(it.t)it.t=o.t;else it.when=o.t;it.text=o.text}else Object.assign(it,o)},
+    (E.isNew?"Hub: add post ":"Hub: edit ")+(o.t||"").slice(0,50));
+    renderHub();closeEditor();toast("Saved ✓ It's on your Hub now.")}
+  catch(e){toast(e.message||"Couldn't save. Try again.",true)}
+  finally{b.disabled=false;b.textContent="Save"}});
+$("#edCancel").onclick=closeEditor;
+$("#edDel").onclick=async function(){if(!EDITING||!window.confirm("Delete this post from your calendar?"))return;var E=EDITING;
+  try{await saveHub(function(H){var f=findItem(H,E.key);if(f.i>=0)f.list.splice(f.i,1)},"Hub: delete post");renderHub();closeEditor();toast("Deleted.")}catch(e){toast(e.message,true)}};
+$("#calAdd").onclick=function(){openEditor("cal:new")};
+document.addEventListener("click",function(e){var b=e.target.closest("[data-edit]");if(b){e.preventDefault();openEditor(b.dataset.edit)}});
 /* ---------- search ---------- */
 function buildIndex(){
   var H=HUB;IDX=[];
@@ -1096,6 +1209,7 @@ function buildIndex(){
   (H.prices||[]).forEach(function(p){add("Price","shop",p[0],p[1])});
   (H.codes||[]).forEach(function(c){add("Code","shop",c.big,c.html.replace(/<[^>]+>/g," "))});
   (H.now||[]).forEach(function(b){add("Right now","today",b.t,b.d)});
+  var LB=H.library||{};(LB.videos||[]).forEach(function(v){add("Video","media",v.t,v.d,{href:v.src})});(LB.pictures||[]).forEach(function(g){g.items.forEach(function(p){add("Picture · "+g.g,"media",p.t,"",{href:p.src})})});
   (H.posts_old||[]).concat([]).forEach(function(p){add("Archive · post","archive",p.t,p.text,{copy:p.text})});
   (H.days||[]).forEach(function(d){add("Archive · "+d.date,"archive",d.title,d.cap,{copy:d.cap})});
   (H.caps_old||[]).forEach(function(c){add("Archive · old caption","archive",c.t,c.c,{copy:c.c})});
@@ -1135,7 +1249,7 @@ document.addEventListener("keydown",function(e){
 function closeMore(){$("#more").classList.remove("on");$("#veil").classList.remove("on");$("#more").setAttribute("aria-hidden","true")}
 $("#signOut2").onclick=function(){$("#signOut").click()};
 $("#moreBtn").onclick=function(){$("#more").classList.add("on");$("#veil").classList.add("on");$("#more").setAttribute("aria-hidden","false")};
-$("#veil").onclick=closeMore;
+$("#veil").onclick=function(){closeMore();if(EDITING)closeEditor()};
 /* ---------- clicks: tabs, shortcuts, rows, copy ---------- */
 document.addEventListener("click",function(e){
   var t=e.target.closest("[data-tab]");if(t){go(t.dataset.tab);return}
@@ -1147,8 +1261,9 @@ document.addEventListener("click",function(e){
   var o=e.target.closest(".r .open");if(o){var r=o.closest(".r"),on=!r.classList.contains("on");r.classList.toggle("on",on);o.setAttribute("aria-expanded",String(on))}
 });
 function scrollToId(id){var el=document.getElementById(id);if(!el)return;var d=el.closest("details");if(d)d.open=true;if(el.classList.contains("r"))el.classList.add("on");setTimeout(function(){el.scrollIntoView({block:"start",behavior:"smooth"})},40)}
-async function hubLoad(){
-  try{var r=await fetch("/admin/hub.json?v="+Date.now(),{cache:"no-store"});if(!r.ok)throw 0;HUB=await r.json();renderHub();
+async function hubLoad(fromApi){
+  try{if(fromApi&&token){var g=await gh("/contents/admin/hub.json?ref=main");if(!g.ok)throw 0;var gj=await g.json();HUB=JSON.parse(b64dec(gj.content));HUBSHA=gj.sha}
+    else{var r=await fetch("/admin/hub.json?v="+Date.now(),{cache:"no-store"});if(!r.ok)throw 0;HUB=await r.json()}renderHub();
     var a=PENDING_ANCHOR;PENDING_ANCHOR=null;if(a)scrollToId(a)}
   catch(e){$("#todayPost").innerHTML='<p class="empty">Couldn\'t load the Hub. Check your internet and pull down to refresh.</p>'}
 }
