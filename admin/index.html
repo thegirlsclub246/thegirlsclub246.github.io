@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<meta name="theme-color" content="#4A143D">
+<meta name="theme-color" content="#3B0F31">
 <title>TGC Hub</title>
 <link rel="manifest" href="/admin/manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -14,7 +14,7 @@
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--pink:#ff4d94;--pink-d:#c4256b;--plum:#4A143D;--lemon:#FFF4B0;--rose:#F06292;--bg:#FFF6FA;--card:#fff;--line:#f7c6dc;--ink:#2b1026;--muted:#7a5470;--ok:#1f7a4d;--bad:#b3261e}
 *{box-sizing:border-box}
@@ -261,14 +261,134 @@ body.dirty .pvbtn{bottom:calc(146px + env(safe-area-inset-bottom))}
 @media (min-width:600px){.qa .xtra{display:flex}}
 .r .open{flex:1}
 .r .chev{margin-left:auto}
+
+/* content calendar */
+.cal{display:grid;gap:10px;margin-bottom:14px}
+.wkh{margin:16px 0 8px;display:flex;align-items:center}
+.calhead{display:none}
+.ce{background:#fff;border:2px solid var(--line);border-radius:18px;padding:12px;display:grid;grid-template-columns:58px minmax(0,1fr) 84px;grid-template-areas:"d m p" "c c c" "a a a";gap:10px 12px;scroll-margin-top:80px}
+.ce.today{border-color:var(--pink);box-shadow:0 0 0 3px #ffe3ef}
+.ce.past{opacity:.72}
+.ce.idea{background:#fffdf3;border-style:dashed}
+.cd{grid-area:d;background:var(--plum);color:#fff;border-radius:14px;text-align:center;padding:6px 0;align-self:start;line-height:1.1}
+.cd b{display:block;font-size:24px}
+.cd small{display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;opacity:.85}
+.cm{grid-area:m;min-width:0}
+.ctop{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px;font-weight:700;color:var(--muted)}
+.cst{border-radius:999px;padding:2px 8px;background:var(--lemon);color:var(--ink);font-size:12px}
+.cst.ok{background:#dcf3e6;color:var(--ok)} .cst.you{background:#ffe3ef;color:var(--pink-d)} .cst.now{background:var(--pink);color:#fff}
+.ct{display:block;color:var(--plum);font-size:16px;line-height:1.25;margin:4px 0 6px;overflow-wrap:anywhere}
+.cw{display:flex;flex-wrap:wrap;gap:4px}
+.wc{font-size:12.5px;font-weight:700;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:2px 8px;white-space:nowrap}
+.ck{display:block;color:var(--muted);font-size:12.5px;margin-top:6px}
+.cpic{grid-area:p;display:block;border-radius:12px;overflow:hidden;align-self:start;background:var(--bg);border:1px solid var(--line)}
+.cpic img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
+.cpic.none{aspect-ratio:4/5;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:26px;text-align:center;padding:4px}
+.cpic.none small{font-size:10.5px;line-height:1.2;color:var(--muted);margin-top:4px;overflow-wrap:anywhere}
+.cc{grid-area:c;min-width:0}
+.cc pre{white-space:pre-wrap;font:500 14.5px/1.45 Quicksand,sans-serif;margin:0;color:var(--ink);background:var(--bg);border-radius:12px;padding:10px 12px;max-height:4.4em;overflow:hidden;overflow-wrap:anywhere}
+.ce.open .cc pre{max-height:none}
+.chow{margin:6px 0 0;font-size:13.5px;color:var(--muted);display:none}
+.ce.open .chow{display:block}
+.ca{grid-area:a;display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.ca .mini{justify-content:center;padding:0 8px;font-size:13.5px}
+.ca .mini:only-of-type{grid-column:auto}
+@media (min-width:900px){
+  .calhead{display:grid;grid-template-columns:70px minmax(0,1fr) minmax(0,1.25fr) 110px;gap:14px;padding:0 14px 6px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--pink-d)}
+  .ce{grid-template-columns:70px minmax(0,1fr) minmax(0,1.25fr) 110px;grid-template-areas:"d m c p" "d a a p";gap:8px 14px;padding:12px 14px}
+  .cc pre{max-height:6.2em}
+  .ca{display:flex;gap:6px;justify-content:flex-start}
+}
+
+/* ===== Chic layer (4 Nov 2026): cream, plum, raspberry, gold hairlines, serif headings, line icons ===== */
+:root{--pink:#A8235A;--pink-d:#A8235A;--plum:#3B0F31;--bg:#FBF6F2;--line:#EBDCD5;--ink:#2B1026;--muted:#7A6170;--gold:#B8916A;--lemon:#F6EEDC;--blush:#F6E3E8}
+body{background:var(--bg);font-weight:500}
+h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-size:2rem;color:var(--plum);letter-spacing:-.01em}
+h3{font-family:Quicksand,sans-serif;font-size:.74rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+header.top{background:var(--plum);border-bottom:1px solid #5a2a4e}
+header.top h1.brand{font-family:"Great Vibes",cursive;font-size:2.1rem;font-weight:400;color:#fff;line-height:1;letter-spacing:.01em}
+header.top small{letter-spacing:.22em;text-transform:uppercase;font-size:.66rem;font-weight:700;color:var(--gold2,#D9BC98);opacity:1;margin-top:4px}
+.ico{width:20px;height:20px;display:block}
+.ibtn{border:1px solid #ffffff40;background:transparent;min-height:42px;font-weight:600;letter-spacing:.02em}
+.ibtn .ico{width:18px;height:18px}
+.card{border:1px solid var(--line);border-radius:14px;box-shadow:none}
+.card.lemon{background:var(--lemon);border-color:#E8D9B8}
+.btn{border-radius:999px;background:var(--plum);font-weight:700;letter-spacing:.02em}
+.btn.ghost{border:1px solid var(--line);color:var(--plum)}
+.mini{background:var(--plum);border:1px solid var(--plum);font-weight:700;letter-spacing:.02em}
+.mini.g{background:#fff;color:var(--plum);border-color:var(--line)}
+/* quick actions */
+.qa{gap:10px}
+.qa a,.qa button{border:1px solid var(--line);border-radius:14px;background:#fff;color:var(--plum);font-weight:700;font-size:13px;letter-spacing:.01em;min-height:88px}
+.qa .i{color:var(--pink-d)} .qa .ico{width:24px;height:24px}
+.qa .hot{background:var(--plum);border-color:var(--plum);color:#fff} .qa .hot .i{color:#E7C9A5}
+.qa .plum{background:#fff;border-color:var(--plum);color:var(--plum)}
+/* boxes */
+.box2{border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.box2 b{font-family:"Cormorant Garamond",Georgia,serif;font-size:1.3rem;font-weight:600;line-height:1.2}
+.box2.hot{background:var(--blush);border-color:#EBCFD8}
+.box2.hot b{color:var(--plum)} .box2.hot span{color:var(--muted)}
+.box2.plum{background:var(--plum)} .box2.plum .mini{background:#fff;color:var(--plum);border-color:#fff}
+.how2{background:var(--lemon);border-radius:12px}
+.code2{border:1px solid var(--gold);border-style:solid;border-radius:12px}
+.code2 .big{font-family:"Cormorant Garamond",Georgia,serif;font-size:1.6rem;font-weight:600;letter-spacing:.02em;color:var(--plum)}
+/* lists and rows */
+.links a{border:1px solid var(--line);border-radius:14px;min-height:58px}
+.links a .e{color:var(--pink-d);width:28px;display:flex;justify-content:center}
+.links a b{color:var(--plum);font-weight:700}
+.r{border:1px solid var(--line);border-radius:14px}
+.r.today{border-color:var(--pink-d);box-shadow:none}
+.r .tag2{background:var(--lemon);font-weight:700;font-size:12.5px;border-radius:6px}
+.r .tag2.d{background:var(--blush);color:var(--pink-d)}
+details.grp{border:1px solid var(--line);border-radius:14px}
+.cnt{background:var(--blush);color:var(--pink-d)}
+.jump button,.jump a{border:1px solid var(--line);font-weight:700;font-size:13.5px}
+.jump [aria-pressed="true"]{background:var(--plum);border-color:var(--plum);color:#fff}
+/* navigation */
+.side{border-right:1px solid var(--line);background:#fff}
+.side h4{color:var(--gold);letter-spacing:.18em}
+.side button,.side a{font-weight:600;color:var(--ink)}
+.side .i{color:var(--pink-d)}
+.side [aria-current="true"]{background:var(--plum);color:#fff} .side [aria-current="true"] .i{color:#E7C9A5}
+.bnav{border-top:1px solid var(--line)}
+.bnav button{font-weight:700;font-size:11.5px;letter-spacing:.02em;color:var(--muted)}
+.bnav button .i{font-size:0} .bnav .ico{width:22px;height:22px}
+.bnav button[aria-current="true"]{background:transparent;color:var(--plum);box-shadow:inset 0 -2px 0 var(--pink-d);border-radius:0}
+.tgrid button,.tgrid a{border:1px solid var(--line);border-radius:14px;font-weight:700}
+.tgrid .i{color:var(--pink-d)} .tgrid .ico{width:22px;height:22px}
+.tgrid [aria-current="true"]{border-color:var(--plum);background:#fff;box-shadow:inset 0 0 0 1px var(--plum)}
+.sheet{background:var(--bg)}
+/* calendar */
+.ce{border:1px solid var(--line);border-radius:14px}
+.ce.today{border-color:var(--pink-d);box-shadow:none}
+.ce.idea{background:#FFFDF8;border-style:dashed}
+.cd{background:#fff;color:var(--plum);border:1px solid var(--gold);border-radius:10px}
+.cd b{font-family:"Cormorant Garamond",Georgia,serif;font-size:30px;font-weight:600}
+.cd small{color:var(--gold);opacity:1}
+.ct{font-family:"Cormorant Garamond",Georgia,serif;font-size:1.3rem;font-weight:600;line-height:1.15}
+.cst{background:var(--lemon);font-weight:700;letter-spacing:.02em}
+.cst.ok{background:#E3F0E7;color:#2F6B45} .cst.you{background:var(--blush);color:var(--pink-d)} .cst.now{background:var(--plum);color:#fff}
+.wc{background:transparent;border:1px solid var(--line);font-weight:600;color:var(--ink);padding:2px 9px 2px 8px;display:inline-flex;align-items:center;gap:6px}
+.wc::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.wc.ig::before{background:#C13584}.wc.fb::before{background:#1877F2}.wc.wa::before{background:#25D366}.wc.tt::before{background:#111}
+.cpic{border:1px solid var(--line);border-radius:8px}
+.cpic.none{color:var(--gold)} .cpic.none .ico{width:26px;height:26px}
+.cc pre{background:var(--bg)}
+.calhead{color:var(--gold)}
+.toast{background:var(--plum)}
+.sr{border:1px solid var(--line);border-radius:12px}
+.sr small{color:var(--gold)}
+mark{background:#F3E3C3}
+.cd b,.code2 .big,h2,.ct,.box2 b{font-variant-numeric:lining-nums}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></symbol><symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></symbol><symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></symbol><symbol id="i-store" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9l1.5-5h13L20 9M4 9v11h16V9M4 9h16M9 20v-6h6v6"/></symbol><symbol id="i-money" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.5-1-1.6-1.5-3-1.5-1.7 0-3 .8-3 2s1.3 1.7 3 2 3 .8 3 2-1.3 2-3 2c-1.4 0-2.5-.5-3-1.5M12 6.5v11"/></symbol><symbol id="i-cap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5zM6 11v5c2 2 10 2 12 0v-5"/></symbol><symbol id="i-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="7.5" r="1.2"/></symbol><symbol id="i-mega" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a1 1 0 0 0 1 1h3l5 4V6L7 10H4a1 1 0 0 0-1 1zM16 9a4 4 0 0 1 0 6"/></symbol><symbol id="i-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/></symbol><symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol><symbol id="i-archive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="5" rx="1"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9M10 13h4"/></symbol><symbol id="i-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></symbol><symbol id="i-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3"/></symbol><symbol id="i-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4M10 17l5-5-5-5M15 12H3"/></symbol><symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol><symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></symbol><symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9"/></symbol><symbol id="i-ticket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v3a2 2 0 0 0 0 4v3H3v-3a2 2 0 0 0 0-4zM14 7v10"/></symbol><symbol id="i-gift" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4"/><path d="M5 12v8h14v-8M12 8v12M12 8c-1.5-3-5-3-5-1s3 1 5 1c2 0 5 1 5-1s-3.5-2-5 1"/></symbol><symbol id="i-film" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M17 4v16M3 9h4M3 15h4M17 9h4M17 15h4"/></symbol><symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4M4 20h16M8 16v-4M12 16V8M16 16v-6"/></symbol><symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol><symbol id="i-receipt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6"/></symbol><symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/></symbol><symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></symbol><symbol id="i-spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></symbol><symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol></defs></svg>
 <header class="top"><div class="wrap">
-  <div><h1>The Girls Club</h1><small>Hub &amp; website admin</small></div>
+  <div><h1 class="brand">The Girls Club</h1><small>The Hub</small></div>
   <div class="hbtns">
-    <button class="ibtn" id="srchBtn" type="button" aria-label="Search the hub">🔍<span class="lbl">Search</span></button>
-    <a class="ibtn" href="/" target="_blank" rel="noopener" aria-label="View your website">🌐<span class="lbl">View site</span></a>
+    <button class="ibtn" id="srchBtn" type="button" aria-label="Search the hub"><svg class="ico"><use href="#i-search"/></svg><span class="lbl">Search</span></button>
+    <a class="ibtn" href="/" target="_blank" rel="noopener" aria-label="View your website"><svg class="ico"><use href="#i-globe"/></svg><span class="lbl">View site</span></a>
   </div>
 </div></header>
 
@@ -276,48 +396,48 @@ body.dirty .pvbtn{bottom:calc(146px + env(safe-area-inset-bottom))}
   <!-- COMPUTER SIDEBAR -->
   <nav class="side" aria-label="Hub sections">
     <h4>Every day</h4>
-    <button data-tab="today"><span class="i">🏠</span>Today</button>
-    <button data-tab="replies"><span class="i">💬</span>WhatsApp replies</button>
-    <button data-tab="posts"><span class="i">📅</span>Posts &amp; reels</button>
+    <button data-tab="today"><span class="i"><svg class="ico"><use href="#i-home"/></svg></span>Today</button>
+    <button data-tab="replies"><span class="i"><svg class="ico"><use href="#i-chat"/></svg></span>WhatsApp replies</button>
+    <button data-tab="posts"><span class="i"><svg class="ico"><use href="#i-cal"/></svg></span>Content calendar</button>
     <h4>Business</h4>
-    <button data-tab="money"><span class="i">💰</span>Money &amp; orders</button>
-    <button data-tab="vendors"><span class="i">🏪</span>Marketplace &amp; vendors</button>
-    <button data-tab="academy"><span class="i">🎓</span>Academy</button>
+    <button data-tab="money"><span class="i"><svg class="ico"><use href="#i-money"/></svg></span>Money &amp; orders</button>
+    <button data-tab="vendors"><span class="i"><svg class="ico"><use href="#i-store"/></svg></span>Marketplace &amp; vendors</button>
+    <button data-tab="academy"><span class="i"><svg class="ico"><use href="#i-cap"/></svg></span>Academy</button>
     <h4>Website</h4>
-    <button data-tab="shop"><span class="i">🛍️</span>Shop &amp; prices</button>
-    <button data-tab="home"><span class="i">📣</span>Homepage &amp; banners</button>
-    <a href="/admin/editor.html"><span class="i">✏️</span>Full editor<span class="ext">↗</span></a>
+    <button data-tab="shop"><span class="i"><svg class="ico"><use href="#i-tag"/></svg></span>Shop &amp; prices</button>
+    <button data-tab="home"><span class="i"><svg class="ico"><use href="#i-mega"/></svg></span>Homepage &amp; banners</button>
+    <a href="/admin/editor.html"><span class="i"><svg class="ico"><use href="#i-pen"/></svg></span>Full editor<span class="ext">↗</span></a>
     <h4>More</h4>
-    <button data-tab="links"><span class="i">🔗</span>All links</button>
-    <button data-tab="archive"><span class="i">🗄️</span>Archive</button>
-    <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#pictures" target="_blank" rel="noopener"><span class="i">🖼️</span>Media library<span class="ext">↗</span></a>
-    <button data-tab="key" class="signedout"><span class="i">🔑</span>Sign in to edit</button>
-    <button type="button" class="signedonly" id="signOut2"><span class="i">🚪</span>Sign out</button>
+    <button data-tab="links"><span class="i"><svg class="ico"><use href="#i-link"/></svg></span>All links</button>
+    <button data-tab="archive"><span class="i"><svg class="ico"><use href="#i-archive"/></svg></span>Archive</button>
+    <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#pictures" target="_blank" rel="noopener"><span class="i"><svg class="ico"><use href="#i-image"/></svg></span>Media library<span class="ext">↗</span></a>
+    <button data-tab="key" class="signedout"><span class="i"><svg class="ico"><use href="#i-key"/></svg></span>Sign in to edit</button>
+    <button type="button" class="signedonly" id="signOut2"><span class="i"><svg class="ico"><use href="#i-out"/></svg></span>Sign out</button>
   </nav>
 
   <main class="wrap">
     <!-- TODAY -->
     <section class="tab" id="t-today">
       <h2 id="hello">Hi Marishka</h2>
-      <p class="muted" id="who">Tap a shortcut, or 🔍 to find any message, caption or link.</p>
+      <p class="muted" id="who">Tap a shortcut, or search to find any message, caption or link.</p>
       <div class="qa" id="qa">
-        <a class="hot" href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#money" target="_blank" rel="noopener"><span class="i">✅</span>Mark order paid</a>
-        <a class="plum" href="https://claude.ai/artifact/YBNTrLoFu1vcYGsVJiUuDA" target="_blank" rel="noopener"><span class="i">💰</span>Money Book</a>
-        <button type="button" data-go="replies" data-filter="0"><span class="i">💬</span>Reply to an order</button>
-        <button type="button" data-go="posts" data-anchor="todaypost"><span class="i">📅</span>Today's post</button>
-        <a href="/vendors" target="_blank" rel="noopener"><span class="i">🏪</span>Approve vendors</a>
-        <a href="https://claude.ai/artifact/WMJEaNreenhaz9QdGxXEcC" target="_blank" rel="noopener"><span class="i">🎟️</span>Enrol a student</a>
-        <button type="button" data-go="shop"><span class="i">🏷️</span>Change a price</button>
-        <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#pictures" target="_blank" rel="noopener"><span class="i">🎁</span>Send a voucher</a>
-        <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#reels" target="_blank" rel="noopener"><span class="i">🎬</span>Pictures &amp; reels</a>
-        <a class="xtra" href="https://thegirlsclub246.goatcounter.com" target="_blank" rel="noopener"><span class="i">📈</span>Website visits</a>
+        <a class="hot" href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#money" target="_blank" rel="noopener"><span class="i"><svg class="ico"><use href="#i-check"/></svg></span>Mark order paid</a>
+        <a class="plum" href="https://claude.ai/artifact/YBNTrLoFu1vcYGsVJiUuDA" target="_blank" rel="noopener"><span class="i"><svg class="ico"><use href="#i-money"/></svg></span>Money Book</a>
+        <button type="button" data-go="replies" data-filter="0"><span class="i"><svg class="ico"><use href="#i-chat"/></svg></span>Reply to an order</button>
+        <button type="button" data-go="posts"><span class="i"><svg class="ico"><use href="#i-cal"/></svg></span>Content calendar</button>
+        <a href="/vendors" target="_blank" rel="noopener"><span class="i"><svg class="ico"><use href="#i-store"/></svg></span>Approve vendors</a>
+        <a href="https://claude.ai/artifact/WMJEaNreenhaz9QdGxXEcC" target="_blank" rel="noopener"><span class="i"><svg class="ico"><use href="#i-ticket"/></svg></span>Enrol a student</a>
+        <button type="button" data-go="shop"><span class="i"><svg class="ico"><use href="#i-tag"/></svg></span>Change a price</button>
+        <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#pictures" target="_blank" rel="noopener"><span class="i"><svg class="ico"><use href="#i-gift"/></svg></span>Send a voucher</a>
+        <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#reels" target="_blank" rel="noopener"><span class="i"><svg class="ico"><use href="#i-film"/></svg></span>Pictures &amp; reels</a>
+        <a class="xtra" href="https://thegirlsclub246.goatcounter.com" target="_blank" rel="noopener"><span class="i"><svg class="ico"><use href="#i-chart"/></svg></span>Website visits</a>
       </div>
-      <h3 style="margin-top:6px">Today's post</h3>
+      <h3 style="margin-top:6px">Today on your calendar</h3>
       <div class="rows" id="todayPost"><p class="empty">Loading…</p></div>
       <h3>Right now</h3>
       <div class="boxes" id="nowBoxes"></div>
       <div class="card" id="install" hidden>
-        <h3>📲 Put the Hub on your home screen</h3>
+        <h3>Put the Hub on your home screen</h3>
         <p id="installHow" style="margin-bottom:10px"></p>
         <button class="btn" id="installBtn" type="button" hidden>Add to home screen</button>
         <button class="btn ghost" id="installNo" type="button">Not now</button>
@@ -349,23 +469,24 @@ body.dirty .pvbtn{bottom:calc(146px + env(safe-area-inset-bottom))}
 
     <!-- POSTS & REELS -->
     <section class="tab" id="t-posts">
-      <h2>Posts &amp; reels</h2>
-      <div class="jump">
-        <button type="button" data-anchor="postsList">📅 This run</button>
-        <button type="button" data-anchor="capsList">✍️ Captions</button>
-        <button type="button" data-anchor="mediaList">🎬 Reels &amp; pictures</button>
-        <button type="button" data-anchor="metaList">📣 Meta</button>
+      <h2>Content calendar</h2>
+      <p class="muted" id="calNote"></p>
+      <div class="jump" id="calF" role="group" aria-label="Show">
+        <button type="button" data-calf="up">Coming up</button>
+        <button type="button" data-calf="week">This week</button>
+        <button type="button" data-calf="todo">Not scheduled</button>
+        <button type="button" data-calf="Academy">Academy</button>
+        <button type="button" data-calf="Marketplace">Marketplace</button>
+        <button type="button" data-calf="all">All</button>
       </div>
-      <h3 id="postsList">Posts this run</h3>
-      <p class="muted" id="postsNote">Photo posts are scheduled in Meta. Reels and Stories you post yourself.</p>
-      <div class="rows" id="postRows"></div>
-      <h3 id="capsList" style="margin-top:20px">Captions</h3>
-      <div class="rows" id="caps"></div>
-      <h3 id="mediaList" style="margin-top:20px">Reels &amp; pictures</h3>
-      <div class="how2">The video and picture files stay in your <b>media library</b> on Claude (your phone saves them from there). <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#reels" target="_blank" rel="noopener">Open reels ↗</a> · <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#pictures" target="_blank" rel="noopener">Open pictures ↗</a></div>
-      <div id="media"></div>
-      <h3 id="metaList" style="margin-top:20px">Meta &amp; social</h3>
-      <div class="links" id="metaLinks"></div>
+      <div class="calhead" aria-hidden="true"><span>Date</span><span>Post &amp; place</span><span>Content</span><span>Picture</span></div>
+      <div id="cal"></div>
+      <h3 id="moreList" style="margin-top:24px">More for your posts</h3>
+      <details class="grp" id="capsList"><summary>Extra captions &amp; ad text</summary><div class="in"><div class="rows" id="caps"></div></div></details>
+      <details class="grp" id="mediaList"><summary>Reels &amp; videos</summary><div class="in">
+        <div class="how2">Video files stay in your <b>media library</b> on Claude (your phone saves them from there). <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#reels" target="_blank" rel="noopener">Open reels ↗</a> · <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#pictures" target="_blank" rel="noopener">Open all pictures ↗</a></div>
+        <div id="media"></div></div></details>
+      <details class="grp" id="metaList"><summary>Meta, Instagram &amp; ads</summary><div class="in"><div class="links" id="metaLinks"></div></div></details>
     </section>
 
     <!-- MONEY -->
@@ -373,14 +494,14 @@ body.dirty .pvbtn{bottom:calc(146px + env(safe-area-inset-bottom))}
       <h2>Money &amp; orders</h2>
       <p class="muted">These open your private pages (signed in as you). Customer details and money never go on the public website.</p>
       <div class="links">
-        <a href="https://claude.ai/artifact/YBNTrLoFu1vcYGsVJiUuDA" target="_blank" rel="noopener"><span class="e">💰</span><span><b>Money Book</b><small>All income + expenses, updated daily</small></span></a>
-        <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#money" target="_blank" rel="noopener"><span class="e">✅</span><span><b>Mark orders paid</b><small>Private, on Claude. Also pays your vendors</small></span></a>
-        <a href="https://docs.google.com/spreadsheets/d/1JvWskTq8NsXLs-dvZjVsKWWrlPYeDl2goi6Nvel6TjA/edit" target="_blank" rel="noopener"><span class="e">🧾</span><span><b>Website orders sheet</b><small>Every order + contact details</small></span></a>
-        <a href="https://payhip.com/customers" target="_blank" rel="noopener"><span class="e">🎓</span><span><b>Payhip students</b><small>Card sales, enrolments, progress</small></span></a>
-        <a href="https://payhip.com/dashboard" target="_blank" rel="noopener"><span class="e">📊</span><span><b>Payhip dashboard</b><small>Sales and payouts</small></span></a>
-        <a href="https://www.paypal.com/billing/subscriptions" target="_blank" rel="noopener"><span class="e">💳</span><span><b>PayPal subscriptions</b><small>Vendor plan payments</small></span></a>
-        <a href="/vendors" target="_blank" rel="noopener"><span class="e">🏪</span><span><b>Vendor payouts</b><small>Vendor Portal: in-person sales + Sunday payouts</small></span></a>
-        <a href="https://thegirlsclub246.goatcounter.com" target="_blank" rel="noopener"><span class="e">📈</span><span><b>Website visits</b><small>GoatCounter</small></span></a>
+        <a href="https://claude.ai/artifact/YBNTrLoFu1vcYGsVJiUuDA" target="_blank" rel="noopener"><span class="e"><svg class="ico"><use href="#i-money"/></svg></span><span><b>Money Book</b><small>All income + expenses, updated daily</small></span></a>
+        <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#money" target="_blank" rel="noopener"><span class="e"><svg class="ico"><use href="#i-check"/></svg></span><span><b>Mark orders paid</b><small>Private, on Claude. Also pays your vendors</small></span></a>
+        <a href="https://docs.google.com/spreadsheets/d/1JvWskTq8NsXLs-dvZjVsKWWrlPYeDl2goi6Nvel6TjA/edit" target="_blank" rel="noopener"><span class="e"><svg class="ico"><use href="#i-receipt"/></svg></span><span><b>Website orders sheet</b><small>Every order + contact details</small></span></a>
+        <a href="https://payhip.com/customers" target="_blank" rel="noopener"><span class="e"><svg class="ico"><use href="#i-cap"/></svg></span><span><b>Payhip students</b><small>Card sales, enrolments, progress</small></span></a>
+        <a href="https://payhip.com/dashboard" target="_blank" rel="noopener"><span class="e"><svg class="ico"><use href="#i-chart"/></svg></span><span><b>Payhip dashboard</b><small>Sales and payouts</small></span></a>
+        <a href="https://www.paypal.com/billing/subscriptions" target="_blank" rel="noopener"><span class="e"><svg class="ico"><use href="#i-card"/></svg></span><span><b>PayPal subscriptions</b><small>Vendor plan payments</small></span></a>
+        <a href="/vendors" target="_blank" rel="noopener"><span class="e"><svg class="ico"><use href="#i-store"/></svg></span><span><b>Vendor payouts</b><small>Vendor Portal: in-person sales + Sunday payouts</small></span></a>
+        <a href="https://thegirlsclub246.goatcounter.com" target="_blank" rel="noopener"><span class="e"><svg class="ico"><use href="#i-chart"/></svg></span><span><b>Website visits</b><small>GoatCounter</small></span></a>
       </div>
       <h3 style="margin-top:18px">How customers pay you</h3>
       <div class="codes2" id="payCodes"></div>
@@ -390,10 +511,10 @@ body.dirty .pvbtn{bottom:calc(146px + env(safe-area-inset-bottom))}
     <section class="tab" id="t-vendors">
       <h2>Marketplace &amp; vendors</h2>
       <div class="jump">
-        <a href="/vendors" target="_blank" rel="noopener" style="background:var(--pink);border-color:var(--pink);color:#fff">🏪 Vendor Portal ↗</a>
-        <button type="button" data-anchor="vMsgs">💬 Messages</button>
-        <button type="button" data-anchor="vLinks">🔗 PayPal &amp; links</button>
-        <button type="button" data-anchor="vPlans">📋 Plans</button>
+        <a href="/vendors" target="_blank" rel="noopener" style="background:var(--pink);border-color:var(--pink);color:#fff">Vendor Portal ↗</a>
+        <button type="button" data-anchor="vMsgs">Messages</button>
+        <button type="button" data-anchor="vLinks">PayPal &amp; links</button>
+        <button type="button" data-anchor="vPlans">Plans</button>
       </div>
       <h3 id="vMsgs">Vendor messages</h3>
       <div class="how2" id="vPath"></div>
@@ -407,9 +528,9 @@ body.dirty .pvbtn{bottom:calc(146px + env(safe-area-inset-bottom))}
     <section class="tab" id="t-academy">
       <h2>Academy</h2>
       <div class="jump">
-        <button type="button" data-anchor="acLinks">🔗 Payhip &amp; desk</button>
-        <button type="button" data-anchor="acReviews">⭐ Review requests</button>
-        <button type="button" data-anchor="acEdit">🏷️ Course prices</button>
+        <button type="button" data-anchor="acLinks">Payhip &amp; desk</button>
+        <button type="button" data-anchor="acReviews">Review requests</button>
+        <button type="button" data-anchor="acEdit">Course prices</button>
       </div>
       <div class="links" id="acLinks"></div>
       <div class="codes2" id="acCodes" style="margin-top:12px"></div>
@@ -417,7 +538,7 @@ body.dirty .pvbtn{bottom:calc(146px + env(safe-area-inset-bottom))}
       <p class="muted" id="acReviewNote"></p>
       <div class="rows" id="acReviewList"></div>
       <h3 id="acEdit" style="margin-top:18px">Course prices on the website</h3>
-      <div class="cta"><p>Sign in with your GitHub key to change course prices and badges.</p><button class="btn" type="button" data-go="key">🔑 Sign in to edit</button></div>
+      <div class="cta"><p>Sign in with your GitHub key to change course prices and badges.</p><button class="btn" type="button" data-go="key">Sign in to edit</button></div>
       <div class="edit">
         <div class="card lemon"><p style="margin:0"><b>Card price lives in Payhip too.</b> When you change a price here, change it in <a href="https://payhip.com/products" target="_blank" rel="noopener">Payhip</a> as well (US$ = BBD ÷ 2).</p></div>
         <div class="card" id="acadCard">
@@ -436,7 +557,7 @@ body.dirty .pvbtn{bottom:calc(146px + env(safe-area-inset-bottom))}
         <table class="ptable" id="pTable"></table>
         <div class="codes2" id="shopCodes" style="margin-top:12px"></div>
       </div></details>
-      <div class="cta"><p>Sign in with your GitHub key to change prices, sale labels and what shows in the shop.</p><button class="btn" type="button" data-go="key">🔑 Sign in to edit</button></div>
+      <div class="cta"><p>Sign in with your GitHub key to change prices, sale labels and what shows in the shop.</p><button class="btn" type="button" data-go="key">Sign in to edit</button></div>
       <div class="edit">
         <p class="muted">Prices in BBD. "Old price" shows crossed out (leave empty for no sale). Photos, descriptions and new products: <a href="/admin/editor.html">Full editor</a>.</p>
         <div class="card" id="shopList"></div>
@@ -514,43 +635,43 @@ body.dirty .pvbtn{bottom:calc(146px + env(safe-area-inset-bottom))}
 
 <!-- PHONE BOTTOM BAR -->
 <nav class="bnav" aria-label="Main">
-  <button data-tab="today"><span class="i">🏠</span>Today</button>
-  <button data-tab="replies"><span class="i">💬</span>Replies</button>
-  <button data-tab="posts"><span class="i">📅</span>Posts</button>
-  <button data-tab="vendors"><span class="i">🏪</span>Vendors</button>
-  <button id="moreBtn" type="button"><span class="i">☰</span>More</button>
+  <button data-tab="today"><span class="i"><svg class="ico"><use href="#i-home"/></svg></span>Today</button>
+  <button data-tab="replies"><span class="i"><svg class="ico"><use href="#i-chat"/></svg></span>Replies</button>
+  <button data-tab="posts"><span class="i"><svg class="ico"><use href="#i-cal"/></svg></span>Calendar</button>
+  <button data-tab="vendors"><span class="i"><svg class="ico"><use href="#i-store"/></svg></span>Vendors</button>
+  <button id="moreBtn" type="button"><span class="i"><svg class="ico"><use href="#i-menu"/></svg></span>More</button>
 </nav>
 <div class="veil" id="veil"></div>
 <div class="sheet" id="more" role="dialog" aria-label="All sections" aria-hidden="true">
   <div class="grab"></div>
-  <button class="btn ghost" type="button" data-search="1">🔍 Search messages, captions, links…</button>
+  <button class="btn ghost" type="button" data-search="1">Search messages, captions, links…</button>
   <h3>Every day</h3>
   <div class="tgrid">
-    <button data-tab="today"><span class="i">🏠</span>Today</button>
-    <button data-tab="replies"><span class="i">💬</span>WhatsApp replies</button>
-    <button data-tab="posts"><span class="i">📅</span>Posts &amp; reels</button>
-    <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#pictures" target="_blank" rel="noopener"><span class="i">🖼️</span>Media library ↗</a>
+    <button data-tab="today"><span class="i"><svg class="ico"><use href="#i-home"/></svg></span>Today</button>
+    <button data-tab="replies"><span class="i"><svg class="ico"><use href="#i-chat"/></svg></span>WhatsApp replies</button>
+    <button data-tab="posts"><span class="i"><svg class="ico"><use href="#i-cal"/></svg></span>Content calendar</button>
+    <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#pictures" target="_blank" rel="noopener"><span class="i"><svg class="ico"><use href="#i-image"/></svg></span>Media library ↗</a>
   </div>
   <h3>Business</h3>
   <div class="tgrid">
-    <button data-tab="money"><span class="i">💰</span>Money &amp; orders</button>
-    <button data-tab="vendors"><span class="i">🏪</span>Vendors</button>
-    <button data-tab="academy"><span class="i">🎓</span>Academy</button>
-    <a href="/vendors" target="_blank" rel="noopener"><span class="i">🛂</span>Vendor Portal ↗</a>
+    <button data-tab="money"><span class="i"><svg class="ico"><use href="#i-money"/></svg></span>Money &amp; orders</button>
+    <button data-tab="vendors"><span class="i"><svg class="ico"><use href="#i-store"/></svg></span>Vendors</button>
+    <button data-tab="academy"><span class="i"><svg class="ico"><use href="#i-cap"/></svg></span>Academy</button>
+    <a href="/vendors" target="_blank" rel="noopener"><span class="i"><svg class="ico"><use href="#i-store"/></svg></span>Vendor Portal ↗</a>
   </div>
   <h3>Website</h3>
   <div class="tgrid">
-    <button data-tab="shop"><span class="i">🛍️</span>Shop &amp; prices</button>
-    <button data-tab="home"><span class="i">📣</span>Homepage</button>
-    <a href="/admin/editor.html"><span class="i">✏️</span>Full editor</a>
-    <a href="/" target="_blank" rel="noopener"><span class="i">🌐</span>View site ↗</a>
+    <button data-tab="shop"><span class="i"><svg class="ico"><use href="#i-tag"/></svg></span>Shop &amp; prices</button>
+    <button data-tab="home"><span class="i"><svg class="ico"><use href="#i-mega"/></svg></span>Homepage</button>
+    <a href="/admin/editor.html"><span class="i"><svg class="ico"><use href="#i-pen"/></svg></span>Full editor</a>
+    <a href="/" target="_blank" rel="noopener"><span class="i"><svg class="ico"><use href="#i-globe"/></svg></span>View site ↗</a>
   </div>
   <h3>More</h3>
   <div class="tgrid">
-    <button data-tab="links"><span class="i">🔗</span>All links</button>
-    <button data-tab="archive"><span class="i">🗄️</span>Archive</button>
-    <button data-tab="key" class="signedout"><span class="i">🔑</span>Sign in to edit</button>
-    <button id="signOut" class="signedonly" type="button"><span class="i">🚪</span>Sign out</button>
+    <button data-tab="links"><span class="i"><svg class="ico"><use href="#i-link"/></svg></span>All links</button>
+    <button data-tab="archive"><span class="i"><svg class="ico"><use href="#i-archive"/></svg></span>Archive</button>
+    <button data-tab="key" class="signedout"><span class="i"><svg class="ico"><use href="#i-key"/></svg></span>Sign in to edit</button>
+    <button id="signOut" class="signedonly" type="button"><span class="i"><svg class="ico"><use href="#i-out"/></svg></span>Sign out</button>
   </div>
 </div>
 <div class="search" id="search" role="dialog" aria-label="Search" aria-hidden="true">
@@ -849,9 +970,10 @@ function row(o){
     (o.tag?'<span class="tag2'+(o.tagCls?" "+o.tagCls:"")+'">'+esc(o.tag)+'</span>':'')+
     '<span class="tx"><b>'+esc(o.t||"")+'</b>'+(o.sub?'<small>'+esc(o.sub)+'</small>':'')+'</span><span class="chev">▼</span></button>'+
     (k>=0?'<button type="button" class="mini" data-cp="'+k+'">Copy</button>':'')+'</div>'+
-    '<div class="full">'+(o.pic?'<p class="pic">🖼️ '+esc(o.pic)+'</p>':'')+(o.text!=null?'<pre>'+esc(o.text)+'</pre>':'')+'</div></div>';
+    '<div class="full">'+(o.pic?'<p class="pic">Picture: '+esc(o.pic)+'</p>':'')+(o.text!=null?'<pre>'+esc(o.text)+'</pre>':'')+'</div></div>';
 }
-function linkCards(list,emoji){return list.map(function(l){var ext=/^https?:/.test(l.href);return '<a href="'+esc(l.href)+'"'+(ext?' target="_blank" rel="noopener"':'')+'><span class="e">'+(l.e||emoji||"🔗")+'</span><span><b>'+esc(l.t)+'</b><small>'+esc(l.d||"")+'</small></span></a>'}).join("")}
+function ico(n){return '<svg class="ico"><use href="#i-'+n+'"/></svg>'}
+function linkCards(list,emoji){return list.map(function(l){var ext=/^https?:/.test(l.href);return '<a href="'+esc(l.href)+'"'+(ext?' target="_blank" rel="noopener"':'')+'><span class="e">'+ico(emoji||"link")+'</span><span><b>'+esc(l.t)+'</b><small>'+esc(l.d||"")+'</small></span></a>'}).join("")}
 function boxes(list){return list.map(function(b){return '<div class="box2 '+esc(b.style||"")+'"><b>'+esc(b.t)+'</b><span>'+esc(b.d)+'</span>'+(b.href?'<br><a class="mini" href="'+esc(b.href)+'" target="_blank" rel="noopener">'+esc(b.btn||"Open")+'</a>':'')+'</div>'}).join("")}
 function codes(list){return list.map(function(c){return '<div class="code2"><div class="big">'+esc(c.big)+'</div><p>'+c.html+'</p></div>'}).join("")}
 function grp(title,count,inner,open,id){return '<details class="grp"'+(open?' open':'')+(id?' id="'+id+'"':'')+'><summary><span>'+esc(title)+(count!=null?'<span class="cnt">'+count+'</span>':'')+'</span></summary><div class="in">'+inner+'</div></details>'}
@@ -863,36 +985,34 @@ function renderHub(){
   var H=HUB, today=todayIso(); COPY=[];
   /* Today */
   $("#nowBoxes").innerHTML=boxes(H.now);
-  var posts=H.posts||[], tp=posts.filter(function(p){return p.date===today}), nx=posts.filter(function(p){return p.date>today});
-  $("#todayPost").innerHTML=tp.length?tp.map(function(p){return postRow(p,today)}).join(""):
-    (nx.length?'<p class="empty">Nothing planned for today. Next up:</p>'+postRow(nx[0],today):'<div class="box2"><b>No posts planned after this run</b><span>Ask Claude for your next two weeks of posts.</span></div>');
+  var posts=H.posts||[], cal=H.calendar||[], tp=cal.filter(function(p){return p.date===today}), nx=cal.filter(function(p){return p.date>today});
+  $("#todayPost").innerHTML=tp.length?tp.map(function(e){return calCard(e,today)}).join(""):
+    (nx.length?'<p class="empty">Nothing planned for today. Next up:</p>'+calCard(nx[0],today):'<div class="box2"><b>Nothing planned yet</b><span>Ask Claude for your next posts.</span></div>');
   /* Replies */
-  var wa=H.wa||[], short=["📦 Orders","💕 Follow-ups","⭐ Reviews"];
+  var wa=H.wa||[], short=["Orders","Follow-ups","Reviews"];
   $("#waJump").innerHTML='<button type="button" data-waf="-1">All</button>'+wa.map(function(g,i){return '<button type="button" data-waf="'+i+'">'+esc(short[i]||g.g)+'</button>'}).join("");
   $("#waList").innerHTML=wa.map(function(g,i){return '<div class="wag" data-wag="'+i+'"><h3 style="margin-top:14px">'+esc(g.g)+'</h3>'+(g.note?'<p class="muted">'+esc(g.note)+'</p>':'')+'<div class="rows">'+g.items.map(function(r){return row({tag:r.code,t:r.t||r.when,sub:r.t?r.when:"",text:r.text})}).join("")+'</div></div>'}).join("");
   $("#waHow").textContent=H.wa_how||"";
   waFilter(WAF);
   /* Posts */
-  var past=posts.filter(function(p){return p.date<today}), up=posts.filter(function(p){return p.date>=today});
-  $("#postRows").innerHTML=(up.length?up.map(function(p){return postRow(p,today,p.date===today?"todaypost":null)}).join(""):'<div class="box2" id="todaypost"><b>This run of posts is finished</b><span>Ask Claude for your next posts.</span></div>')+
-    (past.length?grp("Already posted this run",past.length,'<div class="rows">'+past.map(function(p){return postRow(p,today)}).join("")+'</div>'):"");
+  $("#calNote").textContent=H.calendar_note||"";renderCal();
   $("#caps").innerHTML=(H.caps||[]).map(function(c){return row({t:c.t,text:c.c})}).join("");
   var rg={};(H.reels||[]).forEach(function(r){(rg[r.g]=rg[r.g]||[]).push(r)});
   var pg={};(H.pics||[]).forEach(function(p){(pg[p.g]=pg[p.g]||[]).push(p)});
-  $("#media").innerHTML=Object.keys(rg).map(function(g){return grp("🎬 "+g,rg[g].length,'<div class="links">'+rg[g].map(function(r){return '<a href="'+esc(H.media)+'#reels" target="_blank" rel="noopener"><span class="e">🎬</span><span><b>'+esc(r.l)+'</b><small>'+esc(r.w||"")+'</small></span></a>'}).join("")+'</div>')}).join("")+
-    Object.keys(pg).map(function(g){return grp("🖼️ "+g,pg[g].length,'<div class="links">'+pg[g].map(function(p){return '<a href="'+esc(H.media)+'#pictures" target="_blank" rel="noopener"><span class="e">🖼️</span><span><b>'+esc(p.l)+'</b><small>'+esc(p.w||"")+'</small></span></a>'}).join("")+'</div>')}).join("")+
-    '<div class="links" style="margin-top:10px">'+linkCards(H.reels_links||[],"🎞️")+'</div>';
+  $("#media").innerHTML=Object.keys(rg).map(function(g){return grp(g,rg[g].length,'<div class="links">'+rg[g].map(function(r){return '<a href="'+esc(H.media)+'#reels" target="_blank" rel="noopener"><span class="e">'+ico("film")+'</span><span><b>'+esc(r.l)+'</b><small>'+esc(r.w||"")+'</small></span></a>'}).join("")+'</div>')}).join("")+
+    Object.keys(pg).map(function(g){return grp(g,pg[g].length,'<div class="links">'+pg[g].map(function(p){return '<a href="'+esc(H.media)+'#pictures" target="_blank" rel="noopener"><span class="e">'+ico("image")+'</span><span><b>'+esc(p.l)+'</b><small>'+esc(p.w||"")+'</small></span></a>'}).join("")+'</div>')}).join("")+
+    '<div class="links" style="margin-top:10px">'+linkCards(H.reels_links||[],"film")+'</div>';
   var social=(H.links||[]).filter(function(g){return /social/i.test(g.g)})[0];
-  $("#metaLinks").innerHTML=linkCards(social?social.items:[],"📣");
+  $("#metaLinks").innerHTML=linkCards(social?social.items:[],"mega");
   /* Vendors */
   var M=H.market||{};
   $("#vBoxes").innerHTML=boxes(M.boxes||[]);
   $("#vPath").innerHTML=M.path||"";
   $("#vMsgList").innerHTML=(M.msgs||[]).map(function(r){return row({tag:r.code,t:r.t,sub:r.when,text:r.text})}).join("");
-  $("#vLinkList").innerHTML=linkCards(M.links||[],"🔗");
+  $("#vLinkList").innerHTML=linkCards(M.links||[],"link");
   /* Academy */
   var ac=(H.links||[]).filter(function(g){return /academy/i.test(g.g)})[0];
-  $("#acLinks").innerHTML=linkCards(ac?ac.items:[],"🎓");
+  $("#acLinks").innerHTML=linkCards(ac?ac.items:[],"cap");
   $("#acCodes").innerHTML=codes((H.codes||[]).filter(function(c){return /GRAD10/.test(c.big)}));
   var rv=wa.filter(function(g){return /review/i.test(g.g)})[0];
   $("#acReviewNote").textContent=rv&&rv.note||"";
@@ -902,8 +1022,8 @@ function renderHub(){
   $("#shopCodes").innerHTML=codes(H.codes||[]);
   $("#payCodes").innerHTML=codes((H.codes||[]).filter(function(c){return /paid/i.test(c.big)}));
   /* Links */
-  $("#allLinks").innerHTML=(H.links||[]).map(function(g){return '<div class="lgrp"><h3>'+esc(g.g)+'</h3><div class="links">'+linkCards(g.items)+'</div></div>'}).join("")+
-    '<div class="lgrp"><h3>Other Claude pages</h3><div class="links">'+linkCards(H.pages||[],"✨")+'</div></div>';
+  $("#allLinks").innerHTML=(H.links||[]).map(function(g){return '<div class="lgrp"><h3>'+esc(g.g)+'</h3><div class="links">'+linkCards(g.items,"link")+'</div></div>'}).join("")+
+    '<div class="lgrp"><h3>Other Claude pages</h3><div class="links">'+linkCards(H.pages||[],"spark")+'</div></div>';
   /* Archive */
   $("#archiveBox").innerHTML=
     grp("Oct 22–31 posts (Pinktober)",(H.posts_old||[]).length,'<div class="rows">'+(H.posts_old||[]).map(function(p){return row({tag:p.code,tagCls:"d",t:p.t,sub:p.when,pic:p.pic,text:p.text})}).join("")+'</div>')+
@@ -917,13 +1037,58 @@ function waFilter(i){
   WAF=i;$$("#waJump [data-waf]").forEach(function(b){b.setAttribute("aria-pressed",String(+b.dataset.waf===i))});
   $$("#waList .wag").forEach(function(g){g.hidden=i>=0&&+g.dataset.wag!==i});
 }
+
+/* ---------- content calendar ---------- */
+var CALF="up";
+var WHERE={"Instagram feed":"ig","Instagram Reels":"ig","Instagram Story":"ig","Story":"ig","Facebook":"fb","WhatsApp Status":"wa","TikTok":"tt"};
+var STATUS={scheduled:["Scheduled in Meta","ok"],todo:["Not scheduled yet",""],you:["You post this","you"]};
+function dparts(d){var x=new Date(d+"T12:00:00");return{wd:x.toLocaleDateString("en-GB",{weekday:"short"}),d:x.getDate(),m:x.toLocaleDateString("en-GB",{month:"short"})}}
+function calCard(e,today){
+  var p=dparts(e.date),st=STATUS[e.status]||["",""],k=cp(e.text),cls="ce"+(e.date===today?" today":e.date<today?" past":"")+(e.idea?" idea":"");
+  var where=(e.where||[]).map(function(w){return '<span class="wc '+(WHERE[w]||"")+'">'+esc(w)+'</span>'}).join("");
+  var pic=e.pic?'<a class="cpic" href="'+esc(e.pic)+'" target="_blank" rel="noopener" aria-label="Open picture"><img src="'+esc(e.pic)+'" alt="" loading="lazy"></a>':
+    '<div class="cpic none">'+ico(e.kind==="Reel"?"film":e.kind==="Story"?"phone":"image")+'<small>'+(e.res&&e.res.href?'<a href="'+esc(e.res.href)+'" target="_blank" rel="noopener">'+esc(e.res.label)+' ↗</a>':esc(e.res?e.res.label:""))+'</small></div>';
+  return '<div class="'+cls+'"><div class="cd"><small>'+p.wd+'</small><b>'+p.d+'</b><small>'+p.m+'</small></div>'+
+    '<div class="cm"><div class="ctop"><span>'+esc(e.time)+'</span><span class="cst '+st[1]+'">'+st[0]+'</span>'+(e.date===today?'<span class="cst now">Today</span>':'')+'</div>'+
+    '<b class="ct">'+esc(e.t)+'</b><div class="cw">'+where+'</div><small class="ck">'+esc(e.kind)+' · '+esc(e.topic||"")+'</small></div>'+
+    '<div class="cc"><pre>'+esc(e.text)+'</pre>'+(e.how?'<p class="chow">'+esc(e.how)+'</p>':'')+'</div>'+pic+
+    '<div class="ca"><button type="button" class="mini" data-cp="'+k+'">'+(e.idea?"Copy idea":"Copy caption")+'</button>'+
+    (e.pic?'<a class="mini g" href="'+esc(e.pic)+'" download="TGC-'+esc(e.date)+'.jpg">Save picture</a>':'')+
+    '<button type="button" class="mini g cmore">Read all</button></div></div>';
+}
+function monday(d){var x=new Date(d+"T12:00:00"),n=(x.getDay()+6)%7;x.setDate(x.getDate()-n);return x}
+function iso(x){return x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0")}
+function renderCal(){
+  var today=todayIso(),all=(HUB.calendar||[]),f=CALF,wk=iso(monday(today)),wkEnd=iso(new Date(monday(today).getTime()+6*864e5));
+  $$("#calF [data-calf]").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.calf===f))});
+  var list=all.filter(function(e){
+    if(f==="up")return e.date>=today;if(f==="week")return e.date>=wk&&e.date<=wkEnd;if(f==="todo")return e.status==="todo"&&e.date>=today;
+    if(f==="Academy"||f==="Marketplace")return e.topic===f||e.topic==="Both";return true});
+  var groups={},order=[];list.forEach(function(e){var m=iso(monday(e.date));if(!groups[m]){groups[m]=[];order.push(m)}groups[m].push(e)});
+  var html=order.map(function(m){var a=new Date(m+"T12:00:00"),b=new Date(a.getTime()+6*864e5),fmt=function(x){return x.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short"})};
+    var label=(m===wk?"This week · ":"Week of ")+fmt(a)+" – "+fmt(b);
+    var inner='<div class="cal">'+groups[m].map(function(e){return calCard(e,today)}).join("")+'</div>';
+    var past=iso(b)<today;
+    return past&&f!=="all"?grp(label,groups[m].length,inner):(past?grp(label,groups[m].length,inner):'<h3 class="wkh">'+esc(label)+'<span class="cnt">'+groups[m].length+'</span></h3>'+inner)}).join("");
+  if(f==="up"){var earlier=all.filter(function(e){return e.date<today});if(earlier.length)html+=grp("Earlier this month",earlier.length,'<div class="cal">'+earlier.map(function(e){return calCard(e,today)}).join("")+'</div>')}
+  $("#cal").innerHTML=html||'<div class="box2"><b>Nothing here yet</b><span>Ask Claude to plan your next posts.</span></div>';
+}
+document.addEventListener("click",function(e){
+  var f=e.target.closest("[data-calf]");if(f){CALF=f.dataset.calf;renderCal();return}
+  var m=e.target.closest(".ce .cmore");if(m){var c=m.closest(".ce"),on=!c.classList.contains("open");c.classList.toggle("open",on);m.textContent=on?"Show less":"Read all"}
+});
+
+document.addEventListener("error",function(ev){var t=ev.target;if(!t||t.tagName!=="IMG"||!t.closest||!t.closest(".cpic"))return;
+  var box=t.closest(".cpic"),ce=t.closest(".ce"),m=(HUB&&HUB.media||"")+"#pictures";
+  var d=document.createElement("div");d.className="cpic none";d.innerHTML=ico("image")+'<small><a href="'+esc(m)+'" target="_blank" rel="noopener">In your media library ↗</a></small>';box.replaceWith(d);
+  var s=ce&&ce.querySelector("a[download]");if(s){s.removeAttribute("download");s.href=m;s.target="_blank";s.textContent="Get picture"}},true);
 /* ---------- search ---------- */
 function buildIndex(){
   var H=HUB;IDX=[];
   function add(sec,tab,t,x,o){IDX.push(Object.assign({sec:sec,tab:tab,t:t||"",x:x||""},o||{}))}
   (H.wa||[]).forEach(function(g){g.items.forEach(function(r){add("WhatsApp · "+g.g,"replies",(r.code?r.code+" ":"")+(r.t||r.when||""),r.text,{copy:r.text})})});
   ((H.market||{}).msgs||[]).forEach(function(r){add("Vendor message","vendors",r.code+" · "+r.t,r.text,{copy:r.text})});
-  (H.posts||[]).forEach(function(p){add("Post · "+p.code,"posts",p.t,p.text,{copy:p.text})});
+  (H.calendar||[]).forEach(function(p){add("Calendar · "+p.day+" · "+(p.where||[]).join(", "),"posts",p.t,p.text,{copy:p.text})});
   (H.caps||[]).forEach(function(c){add("Caption","posts",c.t,c.c,{copy:c.c})});
   (H.links||[]).forEach(function(g){g.items.forEach(function(l){add("Link · "+g.g,"links",l.t,l.d,{href:l.href})})});
   ((H.market||{}).links||[]).forEach(function(l){add("Vendor link","vendors",l.t,l.d,{href:l.href})});
@@ -996,13 +1161,13 @@ function showInstall(){
   if(standalone||store("tgc-hub-install")==="no")return;
   if(window.matchMedia("(min-width:900px)").matches&&!deferredPrompt)return;
   var ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
-  $("#installHow").innerHTML=ios?'In Safari tap <b>Share</b> (the square with the arrow ⬆️), scroll down, tap <b>Add to Home Screen</b>, then <b>Add</b>. It opens like an app.':
+  $("#installHow").innerHTML=ios?'In Safari tap <b>Share</b> (the square with the arrow), scroll down, tap <b>Add to Home Screen</b>, then <b>Add</b>. It opens like an app.':
     (deferredPrompt?'Tap the button and your Hub gets its own pink icon, like an app.':'In Chrome tap the <b>⋮</b> menu → <b>Add to Home screen</b> (or <b>Install app</b>). Hold the icon later to jump straight to Replies, Posts or Vendors.');
   $("#install").hidden=false;
 }
 $("#installBtn").onclick=async function(){if(!deferredPrompt)return;deferredPrompt.prompt();try{await deferredPrompt.userChoice}catch(e){}deferredPrompt=null;$("#install").hidden=true};
 $("#installNo").onclick=function(){store("tgc-hub-install","no");$("#install").hidden=true};
-window.addEventListener("hashchange",function(){var h=location.hash.slice(1);if(h&&!$("#t-"+h+".on"))go(h)});
+window.addEventListener("hashchange",function(){var h=location.hash.slice(1);if(h==="calendar")h="posts";if(h&&!$("#t-"+h+".on"))go(h)});
 (function(){var h=new Date().getHours();$("#hello").textContent=(h<12?"Good morning":h<17?"Good afternoon":"Good evening")+", Marishka"})();
 
 /* ---------- start ---------- */
