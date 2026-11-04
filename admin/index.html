@@ -5,7 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#4A143D">
-<title>TGC Admin</title>
+<title>TGC Hub</title>
+<link rel="manifest" href="/admin/manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="TGC Hub">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -112,85 +117,335 @@ body.dirty .pvbtn{bottom:calc(84px + env(safe-area-inset-bottom));background:var
 }
 @media (min-width:600px){.links{grid-template-columns:1fr 1fr}h1{font-size:1.9rem}}
 @media (max-width:340px){.row2{grid-template-columns:1fr}}
+
+/* ===== Hub shell (Nov 2026): phone = bottom bar + More sheet; computer = left sidebar ===== */
+body{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+header.top{position:sticky;top:0;z-index:12}
+header.top .wrap{max-width:none}
+.hbtns{display:flex;gap:8px;align-items:center}
+.ibtn{min-width:44px;min-height:44px;border-radius:999px;border:2px solid #ffffff33;background:#ffffff1a;color:#fff;font:700 15px Quicksand,sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 12px;cursor:pointer;text-decoration:none}
+.ibtn .lbl{display:none}
+.chips{display:none}
+.shell{display:block}
+.side{display:none}
+.wrap{max-width:820px}
+/* bottom bar */
+.bnav{position:fixed;left:0;right:0;bottom:0;z-index:11;background:#fff;border-top:2px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding:4px 4px calc(4px + env(safe-area-inset-bottom))}
+.bnav button{border:0;background:none;min-height:56px;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font:700 12px Quicksand,sans-serif;color:var(--muted);cursor:pointer;padding:0}
+.bnav button .i{font-size:22px;line-height:1}
+.bnav button[aria-current="true"]{color:var(--pink-d);background:#ffe3ef}
+/* more sheet + search sheet */
+.veil{position:fixed;inset:0;z-index:40;background:rgba(43,16,38,.45);display:none}
+.veil.on{display:block}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;background:var(--bg);border-radius:24px 24px 0 0;max-height:88vh;overflow:auto;padding:10px 16px calc(18px + env(safe-area-inset-bottom));transform:translateY(105%);transition:transform .22s ease;box-shadow:0 -8px 30px rgba(74,20,61,.25)}
+.sheet.on{transform:none}
+.sheet .grab{width:44px;height:5px;border-radius:9px;background:var(--line);margin:4px auto 12px}
+.sheet h3{margin:14px 0 8px}
+.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tgrid button,.tgrid a{min-height:64px;border-radius:18px;border:2px solid var(--line);background:#fff;color:var(--plum);font:700 15px Quicksand,sans-serif;display:flex;align-items:center;gap:10px;padding:8px 12px;text-align:left;text-decoration:none;cursor:pointer}
+.tgrid .i{font-size:24px;flex:none}
+.tgrid [aria-current="true"]{border-color:var(--pink);background:#ffe3ef}
+.search{position:fixed;inset:0;z-index:42;background:var(--bg);display:none;flex-direction:column}
+.search.on{display:flex}
+.search .bar{display:flex;gap:8px;align-items:center;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;background:var(--plum)}
+.search input{flex:1;min-width:0;min-height:48px;border-radius:999px;border:0;padding:0 18px;font:600 17px Quicksand,sans-serif;color:var(--ink)}
+.search .res{flex:1;overflow:auto;padding:12px 16px 30px;max-width:820px;width:100%;margin:0 auto}
+.search .hint{color:var(--muted);font-size:.95rem}
+.sr{background:#fff;border:2px solid var(--line);border-radius:16px;padding:10px 12px;margin-bottom:8px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;align-items:center}
+.sr small{display:block;color:var(--pink-d);font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+.sr b{display:block;color:var(--plum);overflow-wrap:anywhere}
+.sr p{grid-column:1/-1;margin:0;color:var(--muted);font-size:.9rem;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.sr .acts{display:flex;gap:6px}
+.mini{min-height:40px;padding:0 14px;border-radius:999px;border:2px solid var(--pink);background:var(--pink);color:#fff;font:700 14px Quicksand,sans-serif;cursor:pointer;display:inline-flex;align-items:center;text-decoration:none;white-space:nowrap}
+.mini.g{background:#fff;color:var(--pink-d);border-color:var(--line)}
+mark{background:var(--lemon);color:inherit;border-radius:4px;padding:0 2px}
+/* quick actions */
+.qa{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0 16px}
+.qa a,.qa button{min-height:84px;border-radius:18px;border:2px solid var(--line);background:#fff;color:var(--plum);font:700 13.5px/1.2 Quicksand,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:8px 4px;text-align:center;text-decoration:none;cursor:pointer}
+.qa .i{font-size:26px;line-height:1}
+.qa .hot{background:var(--pink);border-color:var(--pink);color:#fff}
+.qa .plum{background:var(--plum);border-color:var(--plum);color:#fff}
+/* page title row */
+.ph{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin-bottom:6px}
+.jump{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:8px -16px 12px;padding:0 16px 4px}
+.jump::-webkit-scrollbar{display:none}
+.jump button,.jump a{flex:none;min-height:40px;padding:0 14px;border-radius:999px;border:2px solid var(--line);background:#fff;color:var(--plum);font:700 14px Quicksand,sans-serif;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+.jump [aria-pressed="true"]{background:var(--plum);border-color:var(--plum);color:#fff}
+/* compact rows (replies, posts, captions) */
+.rows{display:grid;gap:8px;margin-bottom:16px}
+.r{background:#fff;border:2px solid var(--line);border-radius:16px;scroll-margin-top:80px}
+.r.today{border-color:var(--pink);box-shadow:0 0 0 3px #ffe3ef}
+.r.past{opacity:.7}
+.r .rh2{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:8px 8px 8px 12px}
+.r .open{border:0;background:none;text-align:left;cursor:pointer;padding:4px 0;min-height:44px;font:inherit;color:inherit;display:flex;gap:10px;align-items:center;min-width:0}
+.r .open .tx{min-width:0}
+.r .open b{display:block;color:var(--plum);font-size:15.5px;line-height:1.25;overflow-wrap:anywhere}
+.r .open small{display:block;color:var(--muted);font-size:13px;line-height:1.3}
+.r .tag2{flex:none;background:var(--lemon);color:var(--ink);font-weight:700;font-size:13px;border-radius:8px;padding:3px 8px;white-space:nowrap}
+.r .tag2.d{background:#ffe3ef;color:var(--pink-d)}
+.r .chev{flex:none;color:var(--muted);font-size:12px;transition:transform .15s}
+.r.on .chev{transform:rotate(180deg)}
+.r .full{display:none;padding:0 12px 12px}
+.r.on .full{display:block}
+.r pre{white-space:pre-wrap;font:500 15px/1.45 Quicksand,sans-serif;margin:0;background:var(--bg);border-radius:12px;padding:10px 12px;overflow-wrap:anywhere}
+.r .pic{font-size:13px;color:var(--muted);margin:0 0 6px}
+details.grp{background:#fff;border:2px solid var(--line);border-radius:18px;margin-bottom:10px}
+details.grp>summary{list-style:none;cursor:pointer;min-height:54px;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 14px;font-weight:700;color:var(--plum)}
+details.grp>summary::-webkit-details-marker{display:none}
+details.grp>summary::after{content:"▾";color:var(--muted)}
+details.grp[open]>summary::after{content:"▴"}
+details.grp>.in{padding:0 12px 12px}
+details.grp .rows{margin:0}
+.cnt{background:#ffe3ef;color:var(--pink-d);border-radius:999px;padding:2px 9px;font-size:.8rem;margin-left:6px}
+.boxes{display:grid;gap:10px;margin-bottom:14px}
+.box2{background:#fff;border:2px solid var(--line);border-radius:18px;padding:12px 14px}
+.box2 b{display:block;color:var(--plum);line-height:1.3;margin-bottom:2px}
+.box2 span{color:var(--muted);font-size:.93rem}
+.box2.hot{background:var(--pink);border-color:var(--pink)}
+.box2.hot b,.box2.hot span{color:#fff}
+.box2.plum{background:var(--plum);border-color:var(--plum)}
+.box2.plum b,.box2.plum span{color:#fff}
+.box2 .mini{margin-top:8px}
+.how2{background:var(--lemon);border-radius:16px;padding:12px 14px;font-size:.95rem;margin-bottom:12px}
+.ptable{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.ptable td{padding:10px 4px;border-top:1px solid var(--line);vertical-align:top}
+.ptable tr:first-child td{border-top:0}
+.ptable td:last-child{text-align:right;font-weight:700;color:var(--plum)}
+.codes2{display:grid;gap:10px;margin-bottom:12px}
+.code2{background:#fff;border:2px dashed var(--pink);border-radius:16px;padding:10px 14px}
+.code2 .big{font-size:20px;font-weight:700;letter-spacing:.04em;color:var(--pink-d)}
+.code2 p{margin:2px 0 0;color:var(--muted);font-size:.93rem}
+.cta{background:#fff;border:2px dashed var(--pink);border-radius:18px;padding:14px;margin:0 0 14px}
+.cta p{margin:0 0 10px}
+body:not(.signed) .edit{display:none!important}
+body.signed .cta{display:none!important}
+body:not(.signed) .signedonly{display:none!important}
+body.signed .signedout{display:none!important}
+.lgrp h3{margin-top:16px}
+.empty{color:var(--muted);font-size:.95rem}
+.links a{min-width:0}
+.links a span:last-child{min-width:0}
+/* save bar, toast, preview button sit above the bottom bar on phones */
+.savebar{bottom:calc(64px + env(safe-area-inset-bottom));padding-bottom:10px}
+.toast{bottom:calc(150px + env(safe-area-inset-bottom))}
+.pvbtn{bottom:calc(80px + env(safe-area-inset-bottom))}
+body.dirty .pvbtn{bottom:calc(146px + env(safe-area-inset-bottom))}
+@media (min-width:600px){
+  .qa{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .boxes,.codes2{grid-template-columns:1fr 1fr}
+  .ibtn .lbl{display:inline}
+}
+/* computer: left sidebar, no bottom bar */
+@media (min-width:900px){
+  body{padding-bottom:40px}
+  .bnav{display:none}
+  .shell{display:grid;grid-template-columns:250px minmax(0,1fr)}
+  .side{display:block;position:sticky;top:72px;height:calc(100vh - 72px);overflow:auto;border-right:2px solid var(--line);background:#fff;padding:14px 10px 30px}
+  .side h4{margin:16px 10px 6px;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pink-d)}
+  .side h4:first-child{margin-top:4px}
+  .side button,.side a{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;border:0;border-radius:12px;background:none;color:var(--plum);font:700 15px Quicksand,sans-serif;padding:0 10px;cursor:pointer;text-decoration:none;text-align:left}
+  .side button:hover,.side a:hover{background:#fff0f6}
+  .side [aria-current="true"]{background:var(--pink);color:#fff}
+  .side .i{width:24px;text-align:center;flex:none}
+  .side .ext{margin-left:auto;font-size:.8rem;opacity:.6}
+  .savebar{bottom:0;left:250px;padding-bottom:calc(10px + env(safe-area-inset-bottom))}
+  .toast{bottom:90px}
+  .pvbtn{bottom:24px}
+  body.dirty .pvbtn{bottom:90px}
+  .qa{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .search .res{padding-top:20px}
+}
+@media (min-width:1100px){body.pvdock .savebar{left:250px;right:460px}}
+
+.qa .xtra{display:none}
+@media (min-width:600px){.qa .xtra{display:flex}}
+.r .open{flex:1}
+.r .chev{margin-left:auto}
 </style>
 </head>
 <body>
 <header class="top"><div class="wrap">
-  <div><h1>The Girls Club</h1><small>Website admin</small></div>
-  <a class="chip plum" style="border-color:#fff3;min-height:40px" href="/" target="_blank" rel="noopener">View site ↗</a>
+  <div><h1>The Girls Club</h1><small>Hub &amp; website admin</small></div>
+  <div class="hbtns">
+    <button class="ibtn" id="srchBtn" type="button" aria-label="Search the hub">🔍<span class="lbl">Search</span></button>
+    <a class="ibtn" href="/" target="_blank" rel="noopener" aria-label="View your website">🌐<span class="lbl">View site</span></a>
+  </div>
 </div></header>
 
-<!-- SIGN IN -->
-<main id="signin" class="wrap" style="padding-top:18px" hidden>
-  <div class="card">
-    <h2>Sign in</h2>
-    <p>This admin edits your website through GitHub. It needs your <b>GitHub key</b> (you make it once). The key is saved only on this phone or computer.</p>
-    <label for="tok">Your GitHub key</label>
-    <input id="tok" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="github_pat_…">
-    <p class="muted" id="signMsg"></p>
-    <button class="btn" id="signBtn">Sign in</button>
-  </div>
-  <div class="card lemon">
-    <h3>How to make your GitHub key (one time, about 2 minutes)</h3>
-    <ol class="steps">
-      <li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → new fine-grained key</a> (signed in as <b>thegirlsclub246</b>).</li>
-      <li>Name: <code>TGC admin</code>. Expiration: <b>1 year</b> (custom).</li>
-      <li>Repository access: <b>Only select repositories</b> → <code>thegirlsclub246.github.io</code>.</li>
-      <li>Permissions → Repository: <b>Contents: Read and write</b>. Optional: <b>Pages: Read</b> (shows if your change is live).</li>
-      <li>Tap <b>Generate token</b>, copy it, paste it above.</li>
-    </ol>
-    <p class="muted">Keep it private like a password. Lost phone? Delete the key on that same GitHub page and make a new one.</p>
-  </div>
-</main>
-
-<!-- APP -->
-<div id="app" hidden>
-  <nav class="chips" aria-label="Admin sections"><div class="wrap">
-    <button class="chip" data-tab="today">🏠 Today</button>
-    <button class="chip" data-tab="shop">🛍️ Shop & prices</button>
-    <button class="chip" data-tab="home">📣 Homepage</button>
-    <button class="chip" data-tab="courses">🎓 Courses</button>
-    <button class="chip" data-tab="biz">💰 Orders & money</button>
-    <a class="chip plum" href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK" target="_blank" rel="noopener">✨ Hub ↗</a>
-    <a class="chip" href="/admin/editor.html">✏️ Full editor</a>
-  </div></nav>
+<div class="shell" id="app">
+  <!-- COMPUTER SIDEBAR -->
+  <nav class="side" aria-label="Hub sections">
+    <h4>Every day</h4>
+    <button data-tab="today"><span class="i">🏠</span>Today</button>
+    <button data-tab="replies"><span class="i">💬</span>WhatsApp replies</button>
+    <button data-tab="posts"><span class="i">📅</span>Posts &amp; reels</button>
+    <h4>Business</h4>
+    <button data-tab="money"><span class="i">💰</span>Money &amp; orders</button>
+    <button data-tab="vendors"><span class="i">🏪</span>Marketplace &amp; vendors</button>
+    <button data-tab="academy"><span class="i">🎓</span>Academy</button>
+    <h4>Website</h4>
+    <button data-tab="shop"><span class="i">🛍️</span>Shop &amp; prices</button>
+    <button data-tab="home"><span class="i">📣</span>Homepage &amp; banners</button>
+    <a href="/admin/editor.html"><span class="i">✏️</span>Full editor<span class="ext">↗</span></a>
+    <h4>More</h4>
+    <button data-tab="links"><span class="i">🔗</span>All links</button>
+    <button data-tab="archive"><span class="i">🗄️</span>Archive</button>
+    <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#pictures" target="_blank" rel="noopener"><span class="i">🖼️</span>Media library<span class="ext">↗</span></a>
+    <button data-tab="key" class="signedout"><span class="i">🔑</span>Sign in to edit</button>
+    <button type="button" class="signedonly" id="signOut2"><span class="i">🚪</span>Sign out</button>
+  </nav>
 
   <main class="wrap">
     <!-- TODAY -->
     <section class="tab" id="t-today">
-      <h2>Hi Marishka</h2>
-      <p class="muted" id="who"></p>
-      <div class="card plum">
-        <h3>Your other pages</h3>
-        <p style="margin-bottom:12px">Reels, captions, posts and pictures live in your Hub. Money lives in your Money Book.</p>
-        <a class="btn" href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK" target="_blank" rel="noopener">✨ Open The Girls Club Hub</a>
-        <a class="btn ghost" href="https://claude.ai/artifact/YBNTrLoFu1vcYGsVJiUuDA" target="_blank" rel="noopener">💰 Open Money Book</a>
+      <h2 id="hello">Hi Marishka</h2>
+      <p class="muted" id="who">Tap a shortcut, or 🔍 to find any message, caption or link.</p>
+      <div class="qa" id="qa">
+        <a class="hot" href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#money" target="_blank" rel="noopener"><span class="i">✅</span>Mark order paid</a>
+        <a class="plum" href="https://claude.ai/artifact/YBNTrLoFu1vcYGsVJiUuDA" target="_blank" rel="noopener"><span class="i">💰</span>Money Book</a>
+        <button type="button" data-go="replies" data-filter="0"><span class="i">💬</span>Reply to an order</button>
+        <button type="button" data-go="posts" data-anchor="todaypost"><span class="i">📅</span>Today's post</button>
+        <a href="/vendors" target="_blank" rel="noopener"><span class="i">🏪</span>Approve vendors</a>
+        <a href="https://claude.ai/artifact/WMJEaNreenhaz9QdGxXEcC" target="_blank" rel="noopener"><span class="i">🎟️</span>Enrol a student</a>
+        <button type="button" data-go="shop"><span class="i">🏷️</span>Change a price</button>
+        <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#pictures" target="_blank" rel="noopener"><span class="i">🎁</span>Send a voucher</a>
+        <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#reels" target="_blank" rel="noopener"><span class="i">🎬</span>Pictures &amp; reels</a>
+        <a class="xtra" href="https://thegirlsclub246.goatcounter.com" target="_blank" rel="noopener"><span class="i">📈</span>Website visits</a>
       </div>
-      <div class="card">
-        <h3>Is the website up to date?</h3>
-        <p id="deploy" class="muted">Checking…</p>
+      <h3 style="margin-top:6px">Today's post</h3>
+      <div class="rows" id="todayPost"><p class="empty">Loading…</p></div>
+      <h3>Right now</h3>
+      <div class="boxes" id="nowBoxes"></div>
+      <div class="card" id="install" hidden>
+        <h3>📲 Put the Hub on your home screen</h3>
+        <p id="installHow" style="margin-bottom:10px"></p>
+        <button class="btn" id="installBtn" type="button" hidden>Add to home screen</button>
+        <button class="btn ghost" id="installNo" type="button">Not now</button>
       </div>
-      <div class="card">
-        <h3>Latest changes to the website</h3>
-        <ul class="list" id="commits"><li class="muted">Loading…</li></ul>
+      <div class="signedonly">
+        <div class="card">
+          <h3>Is the website up to date?</h3>
+          <p id="deploy" class="muted">Checking…</p>
+        </div>
+        <div class="card">
+          <h3>Latest changes to the website</h3>
+          <ul class="list" id="commits"><li class="muted">Loading…</li></ul>
+        </div>
+        <div class="card">
+          <h3>Right now on the site</h3>
+          <ul class="list" id="now"></ul>
+        </div>
       </div>
-      <div class="card">
-        <h3>Right now on the site</h3>
-        <ul class="list" id="now"></ul>
+    </section>
+
+    <!-- WHATSAPP REPLIES -->
+    <section class="tab" id="t-replies">
+      <h2>WhatsApp replies</h2>
+      <p class="muted">Tap a reply to read it, tap <b>Copy</b> to paste it in WhatsApp.</p>
+      <div class="jump" id="waJump" role="group" aria-label="Reply type"></div>
+      <div id="waList"></div>
+      <div class="how2" id="waHow"></div>
+    </section>
+
+    <!-- POSTS & REELS -->
+    <section class="tab" id="t-posts">
+      <h2>Posts &amp; reels</h2>
+      <div class="jump">
+        <button type="button" data-anchor="postsList">📅 This run</button>
+        <button type="button" data-anchor="capsList">✍️ Captions</button>
+        <button type="button" data-anchor="mediaList">🎬 Reels &amp; pictures</button>
+        <button type="button" data-anchor="metaList">📣 Meta</button>
       </div>
-      <button class="btn ghost" id="signOut">Sign out on this device</button>
+      <h3 id="postsList">Posts this run</h3>
+      <p class="muted" id="postsNote">Photo posts are scheduled in Meta. Reels and Stories you post yourself.</p>
+      <div class="rows" id="postRows"></div>
+      <h3 id="capsList" style="margin-top:20px">Captions</h3>
+      <div class="rows" id="caps"></div>
+      <h3 id="mediaList" style="margin-top:20px">Reels &amp; pictures</h3>
+      <div class="how2">The video and picture files stay in your <b>media library</b> on Claude (your phone saves them from there). <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#reels" target="_blank" rel="noopener">Open reels ↗</a> · <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#pictures" target="_blank" rel="noopener">Open pictures ↗</a></div>
+      <div id="media"></div>
+      <h3 id="metaList" style="margin-top:20px">Meta &amp; social</h3>
+      <div class="links" id="metaLinks"></div>
+    </section>
+
+    <!-- MONEY -->
+    <section class="tab" id="t-money">
+      <h2>Money &amp; orders</h2>
+      <p class="muted">These open your private pages (signed in as you). Customer details and money never go on the public website.</p>
+      <div class="links">
+        <a href="https://claude.ai/artifact/YBNTrLoFu1vcYGsVJiUuDA" target="_blank" rel="noopener"><span class="e">💰</span><span><b>Money Book</b><small>All income + expenses, updated daily</small></span></a>
+        <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#money" target="_blank" rel="noopener"><span class="e">✅</span><span><b>Mark orders paid</b><small>Private, on Claude. Also pays your vendors</small></span></a>
+        <a href="https://docs.google.com/spreadsheets/d/1JvWskTq8NsXLs-dvZjVsKWWrlPYeDl2goi6Nvel6TjA/edit" target="_blank" rel="noopener"><span class="e">🧾</span><span><b>Website orders sheet</b><small>Every order + contact details</small></span></a>
+        <a href="https://payhip.com/customers" target="_blank" rel="noopener"><span class="e">🎓</span><span><b>Payhip students</b><small>Card sales, enrolments, progress</small></span></a>
+        <a href="https://payhip.com/dashboard" target="_blank" rel="noopener"><span class="e">📊</span><span><b>Payhip dashboard</b><small>Sales and payouts</small></span></a>
+        <a href="https://www.paypal.com/billing/subscriptions" target="_blank" rel="noopener"><span class="e">💳</span><span><b>PayPal subscriptions</b><small>Vendor plan payments</small></span></a>
+        <a href="/vendors" target="_blank" rel="noopener"><span class="e">🏪</span><span><b>Vendor payouts</b><small>Vendor Portal: in-person sales + Sunday payouts</small></span></a>
+        <a href="https://thegirlsclub246.goatcounter.com" target="_blank" rel="noopener"><span class="e">📈</span><span><b>Website visits</b><small>GoatCounter</small></span></a>
+      </div>
+      <h3 style="margin-top:18px">How customers pay you</h3>
+      <div class="codes2" id="payCodes"></div>
+    </section>
+
+    <!-- VENDORS -->
+    <section class="tab" id="t-vendors">
+      <h2>Marketplace &amp; vendors</h2>
+      <div class="jump">
+        <a href="/vendors" target="_blank" rel="noopener" style="background:var(--pink);border-color:var(--pink);color:#fff">🏪 Vendor Portal ↗</a>
+        <button type="button" data-anchor="vMsgs">💬 Messages</button>
+        <button type="button" data-anchor="vLinks">🔗 PayPal &amp; links</button>
+        <button type="button" data-anchor="vPlans">📋 Plans</button>
+      </div>
+      <h3 id="vMsgs">Vendor messages</h3>
+      <div class="how2" id="vPath"></div>
+      <div class="rows" id="vMsgList"></div>
+      <h3 id="vLinks" style="margin-top:18px">PayPal links &amp; pages</h3>
+      <div class="links" id="vLinkList"></div>
+      <details class="grp" id="vPlans" style="margin-top:16px"><summary>Plans &amp; how the Marketplace works</summary><div class="in"><div class="boxes" id="vBoxes"></div></div></details>
+    </section>
+
+    <!-- ACADEMY -->
+    <section class="tab" id="t-academy">
+      <h2>Academy</h2>
+      <div class="jump">
+        <button type="button" data-anchor="acLinks">🔗 Payhip &amp; desk</button>
+        <button type="button" data-anchor="acReviews">⭐ Review requests</button>
+        <button type="button" data-anchor="acEdit">🏷️ Course prices</button>
+      </div>
+      <div class="links" id="acLinks"></div>
+      <div class="codes2" id="acCodes" style="margin-top:12px"></div>
+      <h3 id="acReviews" style="margin-top:18px">Course review requests</h3>
+      <p class="muted" id="acReviewNote"></p>
+      <div class="rows" id="acReviewList"></div>
+      <h3 id="acEdit" style="margin-top:18px">Course prices on the website</h3>
+      <div class="cta"><p>Sign in with your GitHub key to change course prices and badges.</p><button class="btn" type="button" data-go="key">🔑 Sign in to edit</button></div>
+      <div class="edit">
+        <div class="card lemon"><p style="margin:0"><b>Card price lives in Payhip too.</b> When you change a price here, change it in <a href="https://payhip.com/products" target="_blank" rel="noopener">Payhip</a> as well (US$ = BBD ÷ 2).</p></div>
+        <div class="card" id="acadCard">
+          <label class="toggle"><input type="checkbox" data-f="academy.show"> Show the Academy on the website</label>
+          <label for="a-intro">Academy intro</label>
+          <textarea id="a-intro" data-f="academy.intro"></textarea>
+        </div>
+        <div id="courseList"></div>
+      </div>
     </section>
 
     <!-- SHOP -->
     <section class="tab" id="t-shop">
-      <h2>Shop & prices</h2>
-      <p class="muted">Prices in BBD. "Old price" shows crossed out (leave empty for no sale). Photos, descriptions and new products: <a href="/admin/editor.html">Full editor</a>.</p>
-      <div class="card" id="shopList"></div>
+      <h2>Shop &amp; prices</h2>
+      <details class="grp" id="priceList"><summary>Price list &amp; codes</summary><div class="in">
+        <table class="ptable" id="pTable"></table>
+        <div class="codes2" id="shopCodes" style="margin-top:12px"></div>
+      </div></details>
+      <div class="cta"><p>Sign in with your GitHub key to change prices, sale labels and what shows in the shop.</p><button class="btn" type="button" data-go="key">🔑 Sign in to edit</button></div>
+      <div class="edit">
+        <p class="muted">Prices in BBD. "Old price" shows crossed out (leave empty for no sale). Photos, descriptions and new products: <a href="/admin/editor.html">Full editor</a>.</p>
+        <div class="card" id="shopList"></div>
+      </div>
     </section>
 
     <!-- HOMEPAGE -->
     <section class="tab" id="t-home">
-      <h2>Homepage & banners</h2>
+      <h2>Homepage &amp; banners</h2>
       <div class="card">
         <label class="toggle"><input type="checkbox" data-f="home.banner_on"> Show the scrolling banner</label>
         <label for="h-banner">Banner messages (one per line)</label>
@@ -219,36 +474,88 @@ body.dirty .pvbtn{bottom:calc(84px + env(safe-area-inset-bottom));background:var
       </div>
     </section>
 
-    <!-- COURSES -->
-    <section class="tab" id="t-courses">
-      <h2>Courses</h2>
-      <div class="card lemon"><p style="margin:0"><b>Card price lives in Payhip too.</b> When you change a price here, change it in <a href="https://payhip.com/products" target="_blank" rel="noopener">Payhip</a> as well (US$ = BBD ÷ 2).</p></div>
-      <div class="card" id="acadCard">
-        <label class="toggle"><input type="checkbox" data-f="academy.show"> Show the Academy on the website</label>
-        <label for="a-intro">Academy intro</label>
-        <textarea id="a-intro" data-f="academy.intro"></textarea>
-      </div>
-      <div id="courseList"></div>
+    <!-- LINKS -->
+    <section class="tab" id="t-links">
+      <h2>All links</h2>
+      <div id="allLinks"></div>
     </section>
 
-    <!-- BUSINESS -->
-    <section class="tab" id="t-biz">
-      <h2>Orders, money & vendors</h2>
-      <p class="muted">These open your private pages (signed in as you). Customer details and money never go on the public website.</p>
-      <div class="links">
-        <a href="https://claude.ai/artifact/YBNTrLoFu1vcYGsVJiUuDA" target="_blank" rel="noopener"><span class="e">💰</span><span><b>Money Book</b><small>All income + expenses, updated daily</small></span></a>
-        <a href="https://docs.google.com/spreadsheets/d/1JvWskTq8NsXLs-dvZjVsKWWrlPYeDl2goi6Nvel6TjA/edit" target="_blank" rel="noopener"><span class="e">🧾</span><span><b>Website orders</b><small>Every order + contact details</small></span></a>
-        <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#money" target="_blank" rel="noopener"><span class="e">✅</span><span><b>Mark orders paid</b><small>In your Hub</small></span></a>
-        <a href="https://payhip.com/customers" target="_blank" rel="noopener"><span class="e">🎓</span><span><b>Payhip students</b><small>Card sales, enrolments, progress</small></span></a>
-        <a href="https://claude.ai/artifact/WMJEaNreenhaz9QdGxXEcC" target="_blank" rel="noopener"><span class="e">🎟️</span><span><b>Enrolment Desk</b><small>Free codes for FirstPay/BPWCCUL students</small></span></a>
-        <a href="https://docs.google.com/spreadsheets/d/1LB7EZ7vrhCRJ_OMLr3dJ0pOKETtEY8Nn7bSy8hnf2R0/edit" target="_blank" rel="noopener"><span class="e">🛍️</span><span><b>Vendor sign-ups</b><small>Brands who joined on /brands</small></span></a>
-        <a href="https://claude.ai/artifact/Mou7LDyFJCbgUCDETaebKD" target="_blank" rel="noopener"><span class="e">🏪</span><span><b>Vendor Portal</b><small>Vendor products + payouts</small></span></a>
-        <a href="https://thegirlsclub246.goatcounter.com" target="_blank" rel="noopener"><span class="e">📈</span><span><b>Website visits</b><small>GoatCounter</small></span></a>
-        <a href="https://adsmanager.facebook.com/adsmanager/manage/campaigns?act=3484154528408165" target="_blank" rel="noopener"><span class="e">📣</span><span><b>Meta ads</b><small>Ads Manager</small></span></a>
-        <a href="/brands" target="_blank" rel="noopener"><span class="e">💼</span><span><b>For Brands page</b><small>What vendors see</small></span></a>
+    <!-- ARCHIVE -->
+    <section class="tab" id="t-archive">
+      <h2>Archive</h2>
+      <p class="muted">Finished posts and old captions, kept in case you want to reuse them.</p>
+      <div id="archiveBox"></div>
+    </section>
+
+    <!-- SIGN IN -->
+    <section class="tab" id="t-key">
+      <div class="card">
+        <h2>Sign in to edit</h2>
+        <p>Everything in the Hub works without signing in. To change your <b>website</b> (prices, banners, courses) you need your <b>GitHub key</b>. It's saved only on this phone or computer.</p>
+        <label for="tok">Your GitHub key</label>
+        <input id="tok" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="github_pat_…">
+        <p class="muted" id="signMsg"></p>
+        <button class="btn" id="signBtn">Sign in</button>
+      </div>
+      <div class="card lemon">
+        <h3>How to make your GitHub key (one time, about 2 minutes)</h3>
+        <ol class="steps">
+          <li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → new fine-grained key</a> (signed in as <b>thegirlsclub246</b>).</li>
+          <li>Name: <code>TGC admin</code>. Expiration: <b>1 year</b> (custom).</li>
+          <li>Repository access: <b>Only select repositories</b> → <code>thegirlsclub246.github.io</code>.</li>
+          <li>Permissions → Repository: <b>Contents: Read and write</b>. Optional: <b>Pages: Read</b> (shows if your change is live).</li>
+          <li>Tap <b>Generate token</b>, copy it, paste it above.</li>
+        </ol>
+        <p class="muted">Keep it private like a password. Lost phone? Delete the key on that same GitHub page and make a new one.</p>
       </div>
     </section>
   </main>
+</div>
+
+<!-- PHONE BOTTOM BAR -->
+<nav class="bnav" aria-label="Main">
+  <button data-tab="today"><span class="i">🏠</span>Today</button>
+  <button data-tab="replies"><span class="i">💬</span>Replies</button>
+  <button data-tab="posts"><span class="i">📅</span>Posts</button>
+  <button data-tab="vendors"><span class="i">🏪</span>Vendors</button>
+  <button id="moreBtn" type="button"><span class="i">☰</span>More</button>
+</nav>
+<div class="veil" id="veil"></div>
+<div class="sheet" id="more" role="dialog" aria-label="All sections" aria-hidden="true">
+  <div class="grab"></div>
+  <button class="btn ghost" type="button" data-search="1">🔍 Search messages, captions, links…</button>
+  <h3>Every day</h3>
+  <div class="tgrid">
+    <button data-tab="today"><span class="i">🏠</span>Today</button>
+    <button data-tab="replies"><span class="i">💬</span>WhatsApp replies</button>
+    <button data-tab="posts"><span class="i">📅</span>Posts &amp; reels</button>
+    <a href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#pictures" target="_blank" rel="noopener"><span class="i">🖼️</span>Media library ↗</a>
+  </div>
+  <h3>Business</h3>
+  <div class="tgrid">
+    <button data-tab="money"><span class="i">💰</span>Money &amp; orders</button>
+    <button data-tab="vendors"><span class="i">🏪</span>Vendors</button>
+    <button data-tab="academy"><span class="i">🎓</span>Academy</button>
+    <a href="/vendors" target="_blank" rel="noopener"><span class="i">🛂</span>Vendor Portal ↗</a>
+  </div>
+  <h3>Website</h3>
+  <div class="tgrid">
+    <button data-tab="shop"><span class="i">🛍️</span>Shop &amp; prices</button>
+    <button data-tab="home"><span class="i">📣</span>Homepage</button>
+    <a href="/admin/editor.html"><span class="i">✏️</span>Full editor</a>
+    <a href="/" target="_blank" rel="noopener"><span class="i">🌐</span>View site ↗</a>
+  </div>
+  <h3>More</h3>
+  <div class="tgrid">
+    <button data-tab="links"><span class="i">🔗</span>All links</button>
+    <button data-tab="archive"><span class="i">🗄️</span>Archive</button>
+    <button data-tab="key" class="signedout"><span class="i">🔑</span>Sign in to edit</button>
+    <button id="signOut" class="signedonly" type="button"><span class="i">🚪</span>Sign out</button>
+  </div>
+</div>
+<div class="search" id="search" role="dialog" aria-label="Search" aria-hidden="true">
+  <div class="bar"><input id="q" type="search" placeholder="Search: voucher, /got, PayPal, cluster…" autocomplete="off" enterkeyhint="search"><button class="ibtn" id="qClose" type="button" aria-label="Close search">✕</button></div>
+  <div class="res" id="qRes"></div>
 </div>
 
 <div class="savebar" id="savebar"><div class="wrap">
@@ -277,8 +584,7 @@ body.dirty .pvbtn{bottom:calc(84px + env(safe-area-inset-bottom));background:var
   <p class="pvnote">Preview only. Buttons and checkout don't work here. Tap <b>Save to website</b> to make it real.</p>
 </aside>
 
-<script>
-(function(){
+<script>(function(){
 "use strict";
 var REPO="thegirlsclub246/thegirlsclub246.github.io", API="https://api.github.com/repos/"+REPO, KEY="tgc-admin-key";
 var FILES={home:"content/home.json",products:"content/products.json",academy:"content/academy.json"};
@@ -311,26 +617,38 @@ async function signIn(t,quiet){
     if(!repo.permissions||!repo.permissions.push)throw new Error("This key can only read. Give it Contents: Read and write for thegirlsclub246.github.io.");
     await Promise.all(Object.keys(FILES).map(loadFile));
     store(KEY,token);
-    $("#signin").hidden=true;$("#app").hidden=false;
-    $("#who").textContent="Signed in. Saves go straight to thegirlsclub246.com.";renderAll();go(location.hash.slice(1)||"today");loadStatus();pvStart();
+    document.body.classList.add("signed");$("#tok").value="";
+    renderAll();loadStatus();pvStart();var back=PENDING;PENDING=null;if(back)go(back);else if(!quiet&&location.hash.slice(1)==="key")go("today");else go(location.hash.slice(1)||"today");if(!quiet)toast("Signed in ✓ You can edit your website now.");
   }catch(e){
-    token="";$("#signin").hidden=false;$("#app").hidden=true;
+    token="";document.body.classList.remove("signed");
     $("#signMsg").textContent=e.message;if(quiet)store(KEY,null);
   }finally{$("#signBtn").disabled=false}
 }
 $("#signBtn").onclick=function(){signIn($("#tok").value)};
 $("#tok").addEventListener("keydown",function(e){if(e.key==="Enter")signIn(this.value)});
-$("#signOut").onclick=function(){if(Object.keys(dirty).length&&!confirmLeave())return;store(KEY,null);location.hash="";location.reload()};
+$("#signOut").onclick=function(){if(Object.keys(dirty).length&&!confirmLeave())return;store(KEY,null);location.hash="today";location.reload()};
 
 /* ---------- tabs ---------- */
-function go(tab){
+var EDIT={shop:1,home:1,academy:1}, BNAV={today:1,replies:1,posts:1,vendors:1}, PENDING=null;
+function go(tab,anchor){
+  tab=String(tab||"");if(tab==="courses")tab="academy";if(tab==="biz")tab="money";
   if(!$("#t-"+tab))tab="today";
+  if(tab==="home"&&!token){PENDING="home";tab="key"}
+  if(tab==="key"&&token)tab="today";
   $$("section.tab").forEach(function(s){s.classList.toggle("on",s.id==="t-"+tab)});
-  $$(".chip[data-tab]").forEach(function(c){c.setAttribute("aria-current",c.dataset.tab===tab?"true":"false")});
+  $$("[data-tab]").forEach(function(c){c.setAttribute("aria-current",c.dataset.tab===tab?"true":"false")});
+  $("#moreBtn").setAttribute("aria-current",BNAV[tab]?"false":"true");
   if(location.hash.slice(1)!==tab)history.replaceState(null,"","#"+tab);
-  window.scrollTo(0,0);pvJump(tab);
+  closeMore();
+  if(anchor){if(HUB)scrollToId(anchor);else PENDING_ANCHOR=anchor}else window.scrollTo(0,0);
+  if(token){
+    var ed=!!EDIT[tab];$("#pvBtn").hidden=!ed||(PV.open&&wide());
+    if(!ed&&PV.open)pvOpen(false,true);
+    else if(ed&&!PV.open&&wide()&&store("tgc-admin-pv")!=="0")pvOpen(true,true);
+  }
+  pvJump(tab);
 }
-$$(".chip[data-tab]").forEach(function(c){c.onclick=function(){go(c.dataset.tab)}});
+
 
 /* ---------- binding ---------- */
 function getPath(path){var p=path.split("."),o=F[p[0]].data;for(var i=1;i<p.length;i++){if(o==null)return undefined;o=o[p[i]]}return o}
@@ -455,7 +773,7 @@ function pvInject(){
   document.addEventListener("submit",function(e){e.preventDefault()},true);
 }
 var PV={open:false,html:null,mode:"phone",t:null,busy:false,again:false,cur:"pvA",jump:null};
-var JUMP={shop:"lashes",courses:"academy",home:"",today:"",biz:""};
+var JUMP={shop:"lashes",academy:"academy",home:""};
 function wide(){return window.matchMedia("(min-width:1100px)").matches}
 async function pvHtml(){
   if(PV.html)return PV.html;
@@ -496,18 +814,14 @@ function pvJump(tab){
   if(!PV.open||PV.busy||!$("#pvLoad").hidden){PV.jump=id;return}
   try{var f=document.getElementById(PV.cur),w=f.contentWindow,el=id&&f.contentDocument.getElementById(id);w.scrollTo({top:el?el.getBoundingClientRect().top+w.scrollY:0,behavior:"smooth"})}catch(e){PV.jump=id}
 }
-function pvOpen(on){
+function pvOpen(on,keep){
   PV.open=on;var pv=$("#pv");pv.classList.toggle("on",on);pv.setAttribute("aria-hidden",on?"false":"true");
   document.body.classList.toggle("pvdock",on&&wide());
   $("#pvBtn").hidden=on&&wide();$("#pvClose").textContent=wide()?"Hide":"✕";
   if(on){if(PV.jump===null){var t=(location.hash.slice(1)||"today");PV.jump=JUMP[t]===undefined?"":JUMP[t]}pvFit();pvRender()}
-  store("tgc-admin-pv",on?"1":"0");
+  if(!keep)store("tgc-admin-pv",on?"1":"0");
 }
-function pvStart(){
-  $("#pvBtn").hidden=false;
-  var pref=store("tgc-admin-pv");
-  if(wide()&&pref!=="0")pvOpen(true);
-}
+function pvStart(){}
 $("#pvBtn").onclick=function(){pvOpen(true)};
 $("#pvSave").onclick=function(){if(!wide())pvOpen(false);saveAll()};
 $("#pvClose").onclick=function(){pvOpen(false)};
@@ -517,9 +831,184 @@ $("#pvDesk").onclick=function(){pvMode("desk")};
 window.addEventListener("resize",function(){if(PV.open){document.body.classList.toggle("pvdock",wide());$("#pvBtn").hidden=wide();pvFit()}});
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&PV.open&&!wide())pvOpen(false)});
 
+
+/* ---------- HUB (content from /admin/hub.json; no key needed) ---------- */
+var HUB=null, COPY=[], IDX=[], WAF=0;
+function cp(text){COPY.push(text);return COPY.length-1}
+function copyText(text){
+  function done(){toast("Copied ✓ Paste it where you need it.")}
+  function fb(){var t=document.createElement("textarea");t.value=text;t.setAttribute("readonly","");t.style.position="fixed";t.style.opacity="0";document.body.appendChild(t);t.select();try{document.execCommand("copy");done()}catch(e){toast("Couldn't copy. Press and hold the text instead.",true)}t.remove()}
+  try{navigator.clipboard.writeText(text).then(done,fb)}catch(e){fb()}
+}
+function todayIso(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+var uid=0;
+/* one compact row: tag + title + small line, Copy button, tap to open full text */
+function row(o){
+  var id=o.id||("r"+(++uid)), k=o.text!=null?cp(o.text):-1;
+  return '<div class="r'+(o.cls?" "+o.cls:"")+'" id="'+id+'"><div class="rh2"><button type="button" class="open" aria-expanded="false">'+
+    (o.tag?'<span class="tag2'+(o.tagCls?" "+o.tagCls:"")+'">'+esc(o.tag)+'</span>':'')+
+    '<span class="tx"><b>'+esc(o.t||"")+'</b>'+(o.sub?'<small>'+esc(o.sub)+'</small>':'')+'</span><span class="chev">▼</span></button>'+
+    (k>=0?'<button type="button" class="mini" data-cp="'+k+'">Copy</button>':'')+'</div>'+
+    '<div class="full">'+(o.pic?'<p class="pic">🖼️ '+esc(o.pic)+'</p>':'')+(o.text!=null?'<pre>'+esc(o.text)+'</pre>':'')+'</div></div>';
+}
+function linkCards(list,emoji){return list.map(function(l){var ext=/^https?:/.test(l.href);return '<a href="'+esc(l.href)+'"'+(ext?' target="_blank" rel="noopener"':'')+'><span class="e">'+(l.e||emoji||"🔗")+'</span><span><b>'+esc(l.t)+'</b><small>'+esc(l.d||"")+'</small></span></a>'}).join("")}
+function boxes(list){return list.map(function(b){return '<div class="box2 '+esc(b.style||"")+'"><b>'+esc(b.t)+'</b><span>'+esc(b.d)+'</span>'+(b.href?'<br><a class="mini" href="'+esc(b.href)+'" target="_blank" rel="noopener">'+esc(b.btn||"Open")+'</a>':'')+'</div>'}).join("")}
+function codes(list){return list.map(function(c){return '<div class="code2"><div class="big">'+esc(c.big)+'</div><p>'+c.html+'</p></div>'}).join("")}
+function grp(title,count,inner,open,id){return '<details class="grp"'+(open?' open':'')+(id?' id="'+id+'"':'')+'><summary><span>'+esc(title)+(count!=null?'<span class="cnt">'+count+'</span>':'')+'</span></summary><div class="in">'+inner+'</div></details>'}
+function postRow(p,today,idp){
+  var cls=p.date===today?"today":(p.date<today?"past":"");
+  return row({id:idp,cls:cls,tag:p.code,tagCls:"d",t:p.t,sub:(p.date===today?"TODAY · ":"")+(p.when||""),pic:p.pic,text:p.text});
+}
+function renderHub(){
+  var H=HUB, today=todayIso(); COPY=[];
+  /* Today */
+  $("#nowBoxes").innerHTML=boxes(H.now);
+  var posts=H.posts||[], tp=posts.filter(function(p){return p.date===today}), nx=posts.filter(function(p){return p.date>today});
+  $("#todayPost").innerHTML=tp.length?tp.map(function(p){return postRow(p,today)}).join(""):
+    (nx.length?'<p class="empty">Nothing planned for today. Next up:</p>'+postRow(nx[0],today):'<div class="box2"><b>No posts planned after this run</b><span>Ask Claude for your next two weeks of posts.</span></div>');
+  /* Replies */
+  var wa=H.wa||[], short=["📦 Orders","💕 Follow-ups","⭐ Reviews"];
+  $("#waJump").innerHTML='<button type="button" data-waf="-1">All</button>'+wa.map(function(g,i){return '<button type="button" data-waf="'+i+'">'+esc(short[i]||g.g)+'</button>'}).join("");
+  $("#waList").innerHTML=wa.map(function(g,i){return '<div class="wag" data-wag="'+i+'"><h3 style="margin-top:14px">'+esc(g.g)+'</h3>'+(g.note?'<p class="muted">'+esc(g.note)+'</p>':'')+'<div class="rows">'+g.items.map(function(r){return row({tag:r.code,t:r.t||r.when,sub:r.t?r.when:"",text:r.text})}).join("")+'</div></div>'}).join("");
+  $("#waHow").textContent=H.wa_how||"";
+  waFilter(WAF);
+  /* Posts */
+  var past=posts.filter(function(p){return p.date<today}), up=posts.filter(function(p){return p.date>=today});
+  $("#postRows").innerHTML=(up.length?up.map(function(p){return postRow(p,today,p.date===today?"todaypost":null)}).join(""):'<div class="box2" id="todaypost"><b>This run of posts is finished</b><span>Ask Claude for your next posts.</span></div>')+
+    (past.length?grp("Already posted this run",past.length,'<div class="rows">'+past.map(function(p){return postRow(p,today)}).join("")+'</div>'):"");
+  $("#caps").innerHTML=(H.caps||[]).map(function(c){return row({t:c.t,text:c.c})}).join("");
+  var rg={};(H.reels||[]).forEach(function(r){(rg[r.g]=rg[r.g]||[]).push(r)});
+  var pg={};(H.pics||[]).forEach(function(p){(pg[p.g]=pg[p.g]||[]).push(p)});
+  $("#media").innerHTML=Object.keys(rg).map(function(g){return grp("🎬 "+g,rg[g].length,'<div class="links">'+rg[g].map(function(r){return '<a href="'+esc(H.media)+'#reels" target="_blank" rel="noopener"><span class="e">🎬</span><span><b>'+esc(r.l)+'</b><small>'+esc(r.w||"")+'</small></span></a>'}).join("")+'</div>')}).join("")+
+    Object.keys(pg).map(function(g){return grp("🖼️ "+g,pg[g].length,'<div class="links">'+pg[g].map(function(p){return '<a href="'+esc(H.media)+'#pictures" target="_blank" rel="noopener"><span class="e">🖼️</span><span><b>'+esc(p.l)+'</b><small>'+esc(p.w||"")+'</small></span></a>'}).join("")+'</div>')}).join("")+
+    '<div class="links" style="margin-top:10px">'+linkCards(H.reels_links||[],"🎞️")+'</div>';
+  var social=(H.links||[]).filter(function(g){return /social/i.test(g.g)})[0];
+  $("#metaLinks").innerHTML=linkCards(social?social.items:[],"📣");
+  /* Vendors */
+  var M=H.market||{};
+  $("#vBoxes").innerHTML=boxes(M.boxes||[]);
+  $("#vPath").innerHTML=M.path||"";
+  $("#vMsgList").innerHTML=(M.msgs||[]).map(function(r){return row({tag:r.code,t:r.t,sub:r.when,text:r.text})}).join("");
+  $("#vLinkList").innerHTML=linkCards(M.links||[],"🔗");
+  /* Academy */
+  var ac=(H.links||[]).filter(function(g){return /academy/i.test(g.g)})[0];
+  $("#acLinks").innerHTML=linkCards(ac?ac.items:[],"🎓");
+  $("#acCodes").innerHTML=codes((H.codes||[]).filter(function(c){return /GRAD10/.test(c.big)}));
+  var rv=wa.filter(function(g){return /review/i.test(g.g)})[0];
+  $("#acReviewNote").textContent=rv&&rv.note||"";
+  $("#acReviewList").innerHTML=rv?rv.items.map(function(r){return row({tag:r.code,t:r.t||r.when,sub:r.t?r.when:"",text:r.text})}).join(""):"";
+  /* Shop + money */
+  $("#pTable").innerHTML=(H.prices||[]).map(function(p){return '<tr><td>'+esc(p[0])+'</td><td>'+esc(p[1])+'</td></tr>'}).join("");
+  $("#shopCodes").innerHTML=codes(H.codes||[]);
+  $("#payCodes").innerHTML=codes((H.codes||[]).filter(function(c){return /paid/i.test(c.big)}));
+  /* Links */
+  $("#allLinks").innerHTML=(H.links||[]).map(function(g){return '<div class="lgrp"><h3>'+esc(g.g)+'</h3><div class="links">'+linkCards(g.items)+'</div></div>'}).join("")+
+    '<div class="lgrp"><h3>Other Claude pages</h3><div class="links">'+linkCards(H.pages||[],"✨")+'</div></div>';
+  /* Archive */
+  $("#archiveBox").innerHTML=
+    grp("Oct 22–31 posts (Pinktober)",(H.posts_old||[]).length,'<div class="rows">'+(H.posts_old||[]).map(function(p){return row({tag:p.code,tagCls:"d",t:p.t,sub:p.when,pic:p.pic,text:p.text})}).join("")+'</div>')+
+    grp("Oct 14–27 daily posts",(H.days||[]).length,'<div class="rows">'+(H.days||[]).map(function(d){return row({tag:d.date,tagCls:"d",t:d.title,sub:(d.reel?"Reel · ":"Post · ")+d.time,text:d.cap})}).join("")+'</div>')+
+    grp("Old captions (launch prices)",(H.caps_old||[]).length,'<p class="muted">These have October prices. Change the prices before reusing.</p><div class="rows">'+(H.caps_old||[]).map(function(c){return row({t:c.t,text:c.c})}).join("")+'</div>')+
+    grp("October schedule",(H.sched_old||[]).length,'<table class="ptable">'+(H.sched_old||[]).map(function(s){return '<tr><td><b>'+esc(s.d)+'</b> '+esc(s.t)+'<br><span class="muted">'+esc(s.w)+'</span></td><td>'+(s.k==="you"?"You":s.k==="task"?"Claude":"")+'</td></tr>'}).join("")+'</table>')+
+    grp("Old notes",(H.archive_now||[]).length,'<div class="boxes">'+boxes(H.archive_now||[])+'</div>');
+  buildIndex();
+}
+function waFilter(i){
+  WAF=i;$$("#waJump [data-waf]").forEach(function(b){b.setAttribute("aria-pressed",String(+b.dataset.waf===i))});
+  $$("#waList .wag").forEach(function(g){g.hidden=i>=0&&+g.dataset.wag!==i});
+}
+/* ---------- search ---------- */
+function buildIndex(){
+  var H=HUB;IDX=[];
+  function add(sec,tab,t,x,o){IDX.push(Object.assign({sec:sec,tab:tab,t:t||"",x:x||""},o||{}))}
+  (H.wa||[]).forEach(function(g){g.items.forEach(function(r){add("WhatsApp · "+g.g,"replies",(r.code?r.code+" ":"")+(r.t||r.when||""),r.text,{copy:r.text})})});
+  ((H.market||{}).msgs||[]).forEach(function(r){add("Vendor message","vendors",r.code+" · "+r.t,r.text,{copy:r.text})});
+  (H.posts||[]).forEach(function(p){add("Post · "+p.code,"posts",p.t,p.text,{copy:p.text})});
+  (H.caps||[]).forEach(function(c){add("Caption","posts",c.t,c.c,{copy:c.c})});
+  (H.links||[]).forEach(function(g){g.items.forEach(function(l){add("Link · "+g.g,"links",l.t,l.d,{href:l.href})})});
+  ((H.market||{}).links||[]).forEach(function(l){add("Vendor link","vendors",l.t,l.d,{href:l.href})});
+  (H.pages||[]).forEach(function(l){add("Claude page","links",l.t,l.d,{href:l.href})});
+  (H.prices||[]).forEach(function(p){add("Price","shop",p[0],p[1])});
+  (H.codes||[]).forEach(function(c){add("Code","shop",c.big,c.html.replace(/<[^>]+>/g," "))});
+  (H.now||[]).forEach(function(b){add("Right now","today",b.t,b.d)});
+  (H.posts_old||[]).concat([]).forEach(function(p){add("Archive · post","archive",p.t,p.text,{copy:p.text})});
+  (H.days||[]).forEach(function(d){add("Archive · "+d.date,"archive",d.title,d.cap,{copy:d.cap})});
+  (H.caps_old||[]).forEach(function(c){add("Archive · old caption","archive",c.t,c.c,{copy:c.c})});
+  [["Mark order paid","money"],["Money Book","money"],["Approve vendors / Vendor Portal","vendors"],["Change shop prices","shop"],["Change course prices","academy"],["Homepage banner","home"]].forEach(function(a){add("Section",a[1],a[0],"")});
+}
+function hl(s,words){s=esc(s);words.forEach(function(w){if(w.length<2)return;s=s.replace(new RegExp("("+w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","ig"),"<mark>$1</mark>")});return s}
+function runSearch(){
+  var q=$("#q").value.trim().toLowerCase(),out=$("#qRes");
+  if(!q){out.innerHTML='<p class="hint">Try <b>/got</b>, <b>voucher</b>, <b>PayPal</b>, <b>cluster</b>, <b>refill</b> or a date like <b>7 Nov</b>.</p>';return}
+  if(!IDX.length){out.innerHTML='<p class="hint">Still loading…</p>';return}
+  var words=q.split(/\s+/);
+  var res=IDX.map(function(it){var tl=it.t.toLowerCase(),xl=it.x.toLowerCase(),sl=it.sec.toLowerCase(),sc=0;
+      for(var i=0;i<words.length;i++){var w=words[i];if(tl.indexOf(w)>=0)sc+=3;else if(sl.indexOf(w)>=0)sc+=2;else if(xl.indexOf(w)>=0)sc+=1;else return null}
+      if(/^archive/i.test(it.sec))sc-=1.5;return{it:it,sc:sc}}).filter(Boolean).sort(function(a,b){return b.sc-a.sc}).slice(0,40);
+  COPYQ=[];
+  out.innerHTML=res.length?res.map(function(r,i){var it=r.it;COPYQ.push(it);
+    var snip=it.x?it.x.replace(/\s+/g," ").slice(0,160):"";
+    return '<div class="sr"><span><small>'+esc(it.sec)+'</small><b>'+hl(it.t,words)+'</b></span><span class="acts">'+
+      (it.copy!=null?'<button class="mini" type="button" data-qcp="'+i+'">Copy</button>':'')+
+      (it.href?'<a class="mini g" href="'+esc(it.href)+'"'+(/^https?:/.test(it.href)?' target="_blank" rel="noopener"':'')+'>Open</a>':'<button class="mini g" type="button" data-qgo="'+i+'">Show</button>')+
+      '</span>'+(snip?'<p>'+hl(snip,words)+'</p>':'')+'</div>'}).join(""):'<p class="hint">Nothing found for “'+esc(q)+'”.</p>';
+}
+var COPYQ=[];
+function openSearch(on){closeMore();var s=$("#search");s.classList.toggle("on",on);s.setAttribute("aria-hidden",on?"false":"true");if(on){runSearch();setTimeout(function(){$("#q").focus()},30)}}
+$("#srchBtn").onclick=function(){openSearch(true)};
+$("#qClose").onclick=function(){openSearch(false)};
+$("#q").addEventListener("input",runSearch);
+$("#qRes").addEventListener("click",function(e){var c=e.target.closest("[data-qcp]");if(c){copyText(COPYQ[+c.dataset.qcp].copy);return}
+  var g=e.target.closest("[data-qgo]");if(g){var it=COPYQ[+g.dataset.qgo];openSearch(false);go(it.tab);findOnPage(it.t)}});
+function findOnPage(t){var sec=$("#t-"+(location.hash.slice(1)||"today"));if(!sec)return;
+  var hit=$$(".r,.box2,.code2,.links a,tr",sec).filter(function(el){return el.textContent.indexOf(t.replace(/^\/\S+ /,""))>=0||el.textContent.indexOf(t)>=0})[0];
+  if(hit){var d=hit.closest("details");if(d)d.open=true;var wg=hit.closest(".wag");if(wg&&wg.hidden)waFilter(-1);if(hit.classList.contains("r"))hit.classList.add("on");setTimeout(function(){hit.scrollIntoView({block:"center",behavior:"smooth"})},60)}}
+document.addEventListener("keydown",function(e){
+  if(e.key==="Escape"){if($("#search").classList.contains("on"))openSearch(false);closeMore()}
+  if(e.key==="/"&&!/input|textarea/i.test((document.activeElement||{}).tagName||"")){e.preventDefault();openSearch(true)}});
+/* ---------- more sheet ---------- */
+function closeMore(){$("#more").classList.remove("on");$("#veil").classList.remove("on");$("#more").setAttribute("aria-hidden","true")}
+$("#signOut2").onclick=function(){$("#signOut").click()};
+$("#moreBtn").onclick=function(){$("#more").classList.add("on");$("#veil").classList.add("on");$("#more").setAttribute("aria-hidden","false")};
+$("#veil").onclick=closeMore;
+/* ---------- clicks: tabs, shortcuts, rows, copy ---------- */
+document.addEventListener("click",function(e){
+  var t=e.target.closest("[data-tab]");if(t){go(t.dataset.tab);return}
+  var g=e.target.closest("[data-go]");if(g){if(g.dataset.filter!=null)WAF=+g.dataset.filter;go(g.dataset.go,g.dataset.anchor);if(g.dataset.filter!=null)waFilter(WAF);return}
+  var a=e.target.closest("[data-anchor]");if(a){scrollToId(a.dataset.anchor);return}
+  var s=e.target.closest("[data-search]");if(s){openSearch(true);return}
+  var w=e.target.closest("[data-waf]");if(w){waFilter(+w.dataset.waf);return}
+  var c=e.target.closest("[data-cp]");if(c){copyText(COPY[+c.dataset.cp]);return}
+  var o=e.target.closest(".r .open");if(o){var r=o.closest(".r"),on=!r.classList.contains("on");r.classList.toggle("on",on);o.setAttribute("aria-expanded",String(on))}
+});
+function scrollToId(id){var el=document.getElementById(id);if(!el)return;var d=el.closest("details");if(d)d.open=true;if(el.classList.contains("r"))el.classList.add("on");setTimeout(function(){el.scrollIntoView({block:"start",behavior:"smooth"})},40)}
+async function hubLoad(){
+  try{var r=await fetch("/admin/hub.json?v="+Date.now(),{cache:"no-store"});if(!r.ok)throw 0;HUB=await r.json();renderHub();
+    var a=PENDING_ANCHOR;PENDING_ANCHOR=null;if(a)scrollToId(a)}
+  catch(e){$("#todayPost").innerHTML='<p class="empty">Couldn\'t load the Hub. Check your internet and pull down to refresh.</p>'}
+}
+var PENDING_ANCHOR=null;
+/* ---------- home-screen icon ---------- */
+var deferredPrompt=null;
+window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();deferredPrompt=e;$("#installBtn").hidden=false;showInstall()});
+function showInstall(){
+  var standalone=window.matchMedia("(display-mode: standalone)").matches||navigator.standalone;
+  if(standalone||store("tgc-hub-install")==="no")return;
+  if(window.matchMedia("(min-width:900px)").matches&&!deferredPrompt)return;
+  var ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  $("#installHow").innerHTML=ios?'In Safari tap <b>Share</b> (the square with the arrow ⬆️), scroll down, tap <b>Add to Home Screen</b>, then <b>Add</b>. It opens like an app.':
+    (deferredPrompt?'Tap the button and your Hub gets its own pink icon, like an app.':'In Chrome tap the <b>⋮</b> menu → <b>Add to Home screen</b> (or <b>Install app</b>). Hold the icon later to jump straight to Replies, Posts or Vendors.');
+  $("#install").hidden=false;
+}
+$("#installBtn").onclick=async function(){if(!deferredPrompt)return;deferredPrompt.prompt();try{await deferredPrompt.userChoice}catch(e){}deferredPrompt=null;$("#install").hidden=true};
+$("#installNo").onclick=function(){store("tgc-hub-install","no");$("#install").hidden=true};
+window.addEventListener("hashchange",function(){var h=location.hash.slice(1);if(h&&!$("#t-"+h+".on"))go(h)});
+(function(){var h=new Date().getHours();$("#hello").textContent=(h<12?"Good morning":h<17?"Good afternoon":"Good evening")+", Marishka"})();
+
 /* ---------- start ---------- */
+go(location.hash.slice(1)||"today");hubLoad();showInstall();
 var saved=store(KEY);
-if(saved){signIn(saved,true)}else{$("#signin").hidden=false}
+if(saved){signIn(saved,true)}
 })();
 </script>
 </body>
