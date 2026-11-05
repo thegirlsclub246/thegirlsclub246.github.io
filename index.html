@@ -18,6 +18,7 @@
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <style>:root{color-scheme:only light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}img{max-width:100%}[hidden]{display:none!important}.btn.ghost{background:var(--card,#fff);color:var(--pink);border-color:var(--pink);box-shadow:0 5px 0 var(--pink-soft)}
 .btn.paypal{display:block;text-align:center;margin:10px 0 4px;background:#ffc439;color:#003087;box-shadow:0 5px 0 #d99a00}
+.card-pay{margin:10px 0 4px;min-height:52px}.card-pay .muted{margin:0 0 8px}.paid-ok{background:#e9f9ee;border:2px solid #9fe0b4;border-radius:14px;padding:10px 12px;margin:10px 0 4px;color:#0f5a2c;line-height:1.45}
 .courses{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:1.6rem;align-items:start;margin-top:2rem}
 .courses .course-card{max-width:none}
 .course-card .perks{margin:.4rem .3rem 1rem;font-size:.95rem}
@@ -1068,10 +1069,26 @@ const PAY={
   firstpay:{label:"FirstPay",how:"Send the total with FirstPay to:",rows:[["FirstPay number",String(S.firstpay_number||"[add in admin]")],["Name",String(S.firstpay_name||"")]]},
   bpwccul:{label:"BPWCCUL",how:"Transfer the total to our BPWCCUL account:",rows:[["Account name",String(S.bpwccul_name||"")],["Account number",String(S.bpwccul_number||"[add in admin]")]]},
   cash:{label:"Cash on collection",how:`Pay in cash when you collect your order in ${esc(S.collection_area)}. Exact change is appreciated 💕`,rows:[]},
-  paypal:{label:"card",how:"Tap the button to pay securely with your debit or credit card. Card payments are charged in US dollars (BBD $2 = USD $1). Put your order number in the note.",rows:[]}
+  paypal:{label:"card",how:"Tap the button to pay securely with your debit or credit card. Card payments are charged in US dollars (BBD $2 = USD $1).",rows:[]}
 };
 const PAYPAL_ME=String(S.paypal_link||"").trim();
 const usd=v=>"USD $"+(v/2).toFixed(2);
+const PP_CLIENT="BAAZkLN-1YQuwpFsSdH3p0fEY99MCiUNLh5m1aoRJQGX5pHj3ZO1Ab1ENTLnLsQpp9sT-6m5dIF-yS810M";
+let ppLoad=null;
+const loadPP=()=>ppLoad||(ppLoad=new Promise((res,rej)=>{if(window.paypal&&window.paypal.Buttons)return res(window.paypal);const s=document.createElement("script");s.src="https://www.paypal.com/sdk/js?client-id="+PP_CLIENT+"&currency=USD&intent=capture&components=buttons&enable-funding=card&disable-funding=paylater,venmo,credit";s.async=true;s.onload=()=>window.paypal&&window.paypal.Buttons?res(window.paypal):rej(new Error("no sdk"));s.onerror=()=>rej(new Error("load failed"));document.head.appendChild(s);setTimeout(()=>rej(new Error("timeout")),15000)}).catch(e=>{ppLoad=null;throw e}));
+function mountCardPay(o){
+  const box=document.getElementById("cardPay");if(!box)return;
+  const amt=(o.total/2).toFixed(2);
+  const backup=msg=>{box.innerHTML=`<p class="muted">${msg}</p>${PAYPAL_ME?`<a class="btn paypal" href="${PAYPAL_ME.replace(/\/$/,"")}/${amt}USD" target="_blank" rel="noopener">Pay ${usd(o.total)} by card</a>`:""}`};
+  loadPP().then(pp=>{
+    const btn=pp.Buttons({fundingSource:pp.FUNDING.CARD,style:{layout:"vertical",shape:"pill",label:"pay",height:50},
+      createOrder:(d,a)=>a.order.create({intent:"CAPTURE",purchase_units:[{custom_id:o.id,description:"The Girls Club order "+o.id,amount:{currency_code:"USD",value:amt}}],application_context:{shipping_preference:"NO_SHIPPING",brand_name:"The Girls Club"}}),
+      onApprove:(d,a)=>a.order.capture().then(r=>{o.paid=true;o.paidRef=r.id||"";try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/card-paid",event:true})}catch(x){}renderDrawer()}),
+      onError:()=>backup("Something went wrong with the card payment. If you were charged, message us on WhatsApp with your order number and we'll sort it out.")});
+    if(!btn.isEligible()){backup("Card checkout isn't available on this device. Please use another way to pay.");return}
+    box.innerHTML="";btn.render("#cardPay")
+  }).catch(()=>backup("The card form didn't load. Check your connection and reopen your bag, or pay another way."))
+}
 const IG_DM="https://ig.me/m/"+(S.instagram||"thegirlsclub246");
 const WHATSAPP=String(S.whatsapp||"").replace(/\D/g,"");
 const FREE_TRAYS_LEFT=num(H.giveaway_trays_left);
@@ -1398,18 +1415,18 @@ function renderDrawer(){
       <h3>Almost done, gorgeous!</h3>
       <p class="muted">Your order number</p><div class="order-id">${o.id}</div>
       <div class="wa-sent">✅ <b>Order sent to us on WhatsApp.</b> Didn't press Send ➤ in WhatsApp? <a href="${waLink(summary)}" target="_blank" rel="noopener" style="color:#0f5a2c;font-weight:700">Send it again</a></div>
-      <div class="pay-step"><span class="step-n">1</span><div><b>${o.method==="cash"?"Pay BBD "+money(o.total)+" in cash when you collect":"Pay "+(o.method==="paypal"?usd(o.total)+" (BBD "+money(o.total)+")":"BBD "+money(o.total))+" by "+P.label}</b><p>${P.how}</p>${o.method==="paypal"?`<a class="btn paypal" href="${PAYPAL_ME.replace(/\/$/,"")}/${(o.total/2).toFixed(2)}USD" target="_blank" rel="noopener">Pay ${usd(o.total)} by card</a>`:""}
+      <div class="pay-step"><span class="step-n">1</span><div><b>${o.method==="cash"?"Pay BBD "+money(o.total)+" in cash when you collect":"Pay "+(o.method==="paypal"?usd(o.total)+" (BBD "+money(o.total)+")":"BBD "+money(o.total))+" by "+P.label}</b><p>${P.how}</p>${o.method==="paypal"?(o.paid?`<div class="paid-ok">✅ <b>Card payment received. Thank you!</b>${o.paidRef?`<br><small>Payment ref: ${esc(o.paidRef)}</small>`:""}</div>`:`<div id="cardPay" class="card-pay"><p class="muted">Loading secure card form…</p></div>`):""}
         ${P.rows.map(([k,v])=>`<div class="pay-row"><span>${k}</span><b class="${v.startsWith("[")?"todo":""}">${v}</b><button type="button" class="copy" data-copy="${v}">Copy</button></div>`).join("")}
         <div class="pay-row"><span>Reference</span><b>${o.id}</b><button type="button" class="copy" data-copy="${o.id}">Copy</button></div></div></div>
-      <div class="pay-step"><span class="step-n">2</span><div><b>${o.method==="cash"?"We'll set your collection time":"Send us your payment screenshot"}</b><p>${o.method==="cash"?"We'll reply on WhatsApp with your collection time.":"Once you've paid, send a screenshot of your payment in the same WhatsApp chat."}</p>
-        <div class="row-btns"><a class="btn wa" href="${waLink(o.method==="cash"?"Hi The Girls Club! Following up on order "+o.id:"Hi The Girls Club! Here's my payment screenshot for order "+o.id)}" target="_blank" rel="noopener">${o.method==="cash"?"💬 Open WhatsApp":"📸 Send screenshot on WhatsApp"}</a><button type="button" class="btn alt" id="copyOrder">Copy order details</button></div></div></div>
+      <div class="pay-step"><span class="step-n">2</span><div><b>${o.method==="cash"?"We'll set your collection time":(o.paid?"Tell us you've paid":"Send us your payment screenshot")}</b><p>${o.method==="cash"?"We'll reply on WhatsApp with your collection time.":(o.paid?"Tap below so we can match your card payment and confirm faster.":"Once you've paid, send a screenshot of your payment in the same WhatsApp chat.")}</p>
+        <div class="row-btns"><a class="btn wa" href="${waLink(o.method==="cash"?"Hi The Girls Club! Following up on order "+o.id:(o.paid?"Hi The Girls Club! I paid "+usd(o.total)+" by card for order "+o.id+(o.paidRef?" (ref "+o.paidRef+")":"")+".":"Hi The Girls Club! Here's my payment screenshot for order "+o.id))}" target="_blank" rel="noopener">${o.method==="cash"?"💬 Open WhatsApp":(o.paid?"💬 Tell us on WhatsApp":"📸 Send screenshot on WhatsApp")}</a><button type="button" class="btn alt" id="copyOrder">Copy order details</button></div></div></div>
       <div class="pay-step"><span class="step-n">3</span><div><b>We confirm</b><p>${o.method==="cash"?"We'll confirm your order":"Once your payment is in, we'll confirm your order"}${o.items.some(i=>i.includes("deposit"))?" and lock in your appointment":""}${o.delivery?" and arrange "+(o.delivery.startsWith("Collection")?"your collection in "+S.collection_area:"delivery"):""}${o.courses&&o.courses.length?" and enrol you in the "+o.courses.join(" and the ")+", with your login sent to "+(o.email||"you")+" and on WhatsApp":""}.${o.items.some(i=>i.includes("giveaway"))?" We'll also confirm your free surprise tray.":""}</p></div></div>
       <button class="linkish" id="keep">Keep shopping</button></div>`;
     const copy=(txt,btn)=>{const done=()=>{const o=btn.textContent;btn.textContent="Copied!";setTimeout(()=>btn.textContent=o,1500)};
       try{navigator.clipboard.writeText(txt).then(done,()=>{btn.textContent="Copy failed";})}catch(e){btn.textContent="Copy failed"}};
     body.querySelectorAll("[data-copy]").forEach(b=>b.onclick=()=>copy(b.dataset.copy,b));
     document.getElementById("copyOrder").onclick=e=>copy(summary,e.currentTarget);
-    document.getElementById("keep").onclick=()=>{closeCart()};return}
+    document.getElementById("keep").onclick=()=>{closeCart()};if(o.method==="paypal"&&!o.paid)mountCardPay(o);return}
   if(!cart.length){body.innerHTML=`<p class="empty">Your bag is empty. Time to fix that.</p>`;return}
   const lines=cart.map((c,i)=>`<div class="line"><b>${c.name}</b><span class="price" style="font-size:16px">${money(c.price*c.qty)}</span>
     <div class="qty">${c.single?`<span class="muted">${c.note}</span>`:`<button data-q="${i}" data-d="-1" aria-label="Fewer">−</button><span>${c.qty}</span><button data-q="${i}" data-d="1" aria-label="More">+</button>`}</div>
