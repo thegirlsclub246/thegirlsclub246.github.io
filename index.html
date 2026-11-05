@@ -1400,26 +1400,19 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!drawer.hidden)clos
 function totals(){const sub=cart.reduce((a,c)=>a+c.price*c.qty,0);const hasShip=cart.some(c=>!c.single&&!c.noShip);const del=document.getElementById("delivery");const ship=hasShip&&(!del||del.value!=="pickup")?S.delivery_fee:0;return{sub,ship,total:sub+ship,hasShip}}
 function renderDrawer(){
   if(stage==="done"&&lastOrder){const o=lastOrder,P=PAY[o.method];
-    const summary=`Hi The Girls Club! I placed an order.\nOrder: ${o.id}\n${o.items.join("\n")}\nTotal: BBD ${money(o.total)}\n${o.method==="cash"?"Payment":"Paid by"}: ${P.label}${o.method==="paypal"?" ("+usd(o.total)+")":""}${o.delivery?"\n"+o.delivery:""}\nName: ${o.name}\nPhone: ${o.phone}${o.email?"\nEmail: "+o.email:""}`;
-    if(!o.sent){body.innerHTML=`<div class="done">
-      <h3>One last tap!</h3>
-      <p class="muted">Your order number</p><div class="order-id">${o.id}</div>
-      <div class="wa-lock">⚠️ <b>Your order hasn't reached us yet.</b> Tap the green button to send it to us on WhatsApp, then press <b>Send ➤</b> in WhatsApp. Your payment details show right after.</div>
-      <a class="btn wa" id="waSend" href="${waLink(summary)}" target="_blank" rel="noopener">📲 Send order on WhatsApp</a>
-      <button type="button" class="linkish" id="copyOrder" style="margin-top:12px">No WhatsApp? Copy order details</button></div>`;
-      const go=()=>{o.sent=true;setTimeout(renderDrawer,300)};
-      document.getElementById("waSend").onclick=go;
-      document.getElementById("copyOrder").onclick=e=>{const b=e.currentTarget;try{navigator.clipboard.writeText(summary).then(()=>{b.textContent="Copied! Send it to us on Instagram or WhatsApp";go()},()=>{b.textContent="Copy failed"})}catch(x){b.textContent="Copy failed"}};
-      return}
+    const summary=`Hi The Girls Club! I placed an order.\nOrder: ${o.id}\n${o.items.join("\n")}\nTotal: BBD ${money(o.total)}\n${o.paid?"Paid by":(o.method==="cash"?"Payment":"Paying by")}: ${P.label}${o.method==="paypal"?" ("+usd(o.total)+")":""}${o.paid?" ✅ PAID"+(o.paidRef?" (ref "+o.paidRef+")":""):""}${o.delivery?"\n"+o.delivery:""}\nName: ${o.name}\nPhone: ${o.phone}${o.email?"\nEmail: "+o.email:""}`;
+    const s2=o.method==="cash"?{t:"We'll set your collection time",p:"Tap below to message us on WhatsApp so we can set your collection time.",b:"💬 Message us on WhatsApp",x:""}
+      :o.method==="paypal"?(o.paid?{t:"Tell us you've paid",p:"Tap below so we can match your card payment and confirm faster.",b:"💬 Tell us on WhatsApp",x:""}:{t:"After you pay",p:"You'll see a ✅ here once your card payment goes through. Questions? Message us on WhatsApp.",b:"💬 Message us on WhatsApp",x:""})
+      :{t:"Send us your payment screenshot",p:"Once you've paid, send us your order and a screenshot of your payment on WhatsApp so we can confirm faster.",b:"📸 Send order + screenshot",x:"\nHere's my payment screenshot:"};
     body.innerHTML=`<div class="done">
-      <h3>Almost done, gorgeous!</h3>
+      <h3>${o.paid?"Thank you, gorgeous!":"Order placed, gorgeous!"}</h3>
       <p class="muted">Your order number</p><div class="order-id">${o.id}</div>
-      <div class="wa-sent">✅ <b>Order sent to us on WhatsApp.</b> Didn't press Send ➤ in WhatsApp? <a href="${waLink(summary)}" target="_blank" rel="noopener" style="color:#0f5a2c;font-weight:700">Send it again</a></div>
+      <div class="wa-sent">${o.paid?"✅ <b>Paid and confirmed.</b> We've got your order.":(o.method==="cash"?"✅ <b>Order saved.</b> Pay in cash when you collect.":"✅ <b>Order saved.</b> Now complete your payment below.")}</div>
       <div class="pay-step"><span class="step-n">1</span><div><b>${o.method==="cash"?"Pay BBD "+money(o.total)+" in cash when you collect":"Pay "+(o.method==="paypal"?usd(o.total)+" (BBD "+money(o.total)+")":"BBD "+money(o.total))+" by "+P.label}</b><p>${P.how}</p>${o.method==="paypal"?(o.paid?`<div class="paid-ok">✅ <b>Card payment received. Thank you!</b>${o.paidRef?`<br><small>Payment ref: ${esc(o.paidRef)}</small>`:""}</div>`:`<div id="cardPay" class="card-pay"><p class="muted">Loading secure card form…</p></div>`):""}
         ${P.rows.map(([k,v])=>`<div class="pay-row"><span>${k}</span><b class="${v.startsWith("[")?"todo":""}">${v}</b><button type="button" class="copy" data-copy="${v}">Copy</button></div>`).join("")}
         <div class="pay-row"><span>Reference</span><b>${o.id}</b><button type="button" class="copy" data-copy="${o.id}">Copy</button></div></div></div>
-      <div class="pay-step"><span class="step-n">2</span><div><b>${o.method==="cash"?"We'll set your collection time":(o.paid?"Tell us you've paid":"Send us your payment screenshot")}</b><p>${o.method==="cash"?"We'll reply on WhatsApp with your collection time.":(o.paid?"Tap below so we can match your card payment and confirm faster.":"Once you've paid, send a screenshot of your payment in the same WhatsApp chat.")}</p>
-        <div class="row-btns"><a class="btn wa" href="${waLink(o.method==="cash"?"Hi The Girls Club! Following up on order "+o.id:(o.paid?"Hi The Girls Club! I paid "+usd(o.total)+" by card for order "+o.id+(o.paidRef?" (ref "+o.paidRef+")":"")+".":"Hi The Girls Club! Here's my payment screenshot for order "+o.id))}" target="_blank" rel="noopener">${o.method==="cash"?"💬 Open WhatsApp":(o.paid?"💬 Tell us on WhatsApp":"📸 Send screenshot on WhatsApp")}</a><button type="button" class="btn alt" id="copyOrder">Copy order details</button></div></div></div>
+      <div class="pay-step"><span class="step-n">2</span><div><b>${s2.t}</b><p>${s2.p}</p>
+        <div class="row-btns"><a class="btn wa" href="${waLink(summary+s2.x)}" target="_blank" rel="noopener">${s2.b}</a><button type="button" class="btn alt" id="copyOrder">Copy order details</button></div></div></div>
       <div class="pay-step"><span class="step-n">3</span><div><b>We confirm</b><p>${o.method==="cash"?"We'll confirm your order":"Once your payment is in, we'll confirm your order"}${o.items.some(i=>i.includes("deposit"))?" and lock in your appointment":""}${o.delivery?" and arrange "+(o.delivery.startsWith("Collection")?"your collection in "+S.collection_area:"delivery"):""}${o.courses&&o.courses.length?" and enrol you in the "+o.courses.join(" and the ")+", with your login sent to "+(o.email||"you")+" and on WhatsApp":""}.${o.items.some(i=>i.includes("giveaway"))?" We'll also confirm your free surprise tray.":""}</p></div></div>
       <button class="linkish" id="keep">Keep shopping</button></div>`;
     const copy=(txt,btn)=>{const done=()=>{const o=btn.textContent;btn.textContent="Copied!";setTimeout(()=>btn.textContent=o,1500)};
@@ -1451,13 +1444,16 @@ function renderDrawer(){
         <label class="method" id="cashOpt" hidden><input type="radio" name="pay" value="cash"><span><b>Cash on collection</b><small>Pay in cash when you collect in ${esc(S.collection_area)}</small></span></label>
       </fieldset>
       <div class="totals" id="tot"></div>
-      <button class="btn wa" type="submit">📲 Place order on WhatsApp</button>
-      <p class="secure">This opens WhatsApp with your order filled in. Press <b>Send ➤</b>, then come back here for our payment details.</p>
+      <button class="btn" id="placeBtn" type="submit" style="width:100%">Continue to payment</button>
+      <p class="secure">Your order is saved when you continue. Next, you'll go straight to payment.</p>
       <button type="button" class="muted" id="back" style="border:0;background:none;text-decoration:underline;display:block;margin:4px auto">Back to bag</button></form>`;
     const drawTot=()=>{const t=totals();document.getElementById("tot").innerHTML=`<div><span>Subtotal</span><span>BBD ${money(t.sub)}</span></div><div><span>Delivery</span><span>${money(t.ship)}</span></div>${giftOn()?`<div><span>🎁 Free surprise tray</span><span>$0.00</span></div>`:""}<div class="grand"><span>Total</span><span>BBD ${money(t.total)}</span></div>`};
     drawTot();if(window.tgcPrefPay){const pr=document.querySelector(`input[name="pay"][value="${window.tgcPrefPay}"]`);if(pr)pr.checked=true;window.tgcPrefPay=""}const d=document.getElementById("delivery");const CASH_ON_COLLECTION=!!S.cash_on_collection;const cashOk=()=>CASH_ON_COLLECTION&&!!d&&d.value==="pickup"&&!cart.some(c=>c.id==="deposit");const syncCash=()=>{const co=document.getElementById("cashOpt");co.hidden=!cashOk();if(co.hidden&&co.querySelector("input").checked)document.querySelector('input[name="pay"][value="firstpay"]').checked=true};syncCash();
     if(d)d.onchange=()=>{document.getElementById("parishField").hidden=d.value==="pickup";document.getElementById("pickupNote").hidden=d.value!=="pickup";syncCash();drawTot()};
     document.getElementById("back").onclick=()=>{stage="bag";renderDrawer()};
+    const placeLbl={paypal:"💳 Continue to card payment",firstpay:"📱 Continue to FirstPay payment",bpwccul:"🏦 Continue to BPWCCUL payment",cash:"✅ Place order · pay cash on collection"};
+    const syncPlace=()=>{const r=document.querySelector('input[name="pay"]:checked'),pb=document.getElementById("placeBtn");if(r&&pb)pb.textContent=placeLbl[r.value]||"Continue to payment"};
+    document.querySelectorAll('input[name="pay"]').forEach(r=>r.addEventListener("change",syncPlace));if(d)d.addEventListener("change",()=>setTimeout(syncPlace,0));syncPlace();
     document.getElementById("co").addEventListener("submit",e=>{e.preventDefault();
       const t=totals(),dEl=document.getElementById("delivery"),pEl=document.getElementById("parish");
       const id="TGC-"+Math.random().toString(36).slice(2,6).toUpperCase()+String(Date.now()).slice(-2);
@@ -1465,8 +1461,7 @@ function renderDrawer(){
         name:document.getElementById("cname").value.trim(),phone:document.getElementById("cphone").value.trim(),email:document.getElementById("cemail")?document.getElementById("cemail").value.trim():"",
         delivery:t.hasShip?(dEl.value==="pickup"?"Collection ("+S.collection_area+")":"Delivery · "+pEl.value):"",
         items:cart.map(c=>`${c.qty>1?c.qty+" × ":""}${c.name}${c.single?" ("+c.note+")":""} – ${money(c.price*c.qty)}`).concat(giftOn()?["🎁 FREE surprise lash tray (first-10 giveaway) – $0.00"]:[])};
-      {const o=lastOrder,P=PAY[o.method];const sm=`Hi The Girls Club! I placed an order.\nOrder: ${o.id}\n${o.items.join("\n")}\nTotal: BBD ${money(o.total)}\n${o.method==="cash"?"Payment":"Paid by"}: ${P.label}${o.method==="paypal"?" ("+usd(o.total)+")":""}${o.delivery?"\n"+o.delivery:""}\nName: ${o.name}\nPhone: ${o.phone}${o.email?"\nEmail: "+o.email:""}`;
-        let w=null;try{w=window.open(waLink(sm),"_blank");if(w)w.opener=null}catch(x){}o.sent=!!w;try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/wa-order-"+(o.sent?"opened":"blocked"),event:true})}catch(x){}}
+      try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/order-placed-"+lastOrder.method,event:true})}catch(x){}
       window.tgcTrack&&tgcTrack("Purchase",{value:lastOrder.total,currency:"BBD",order_id:lastOrder.id});try{const f=new FormData();f.append("entry.1906687622",JSON.stringify({id,date:new Date().toISOString(),items:lastOrder.items,sub:t.sub,ship:t.ship,total:t.total,method:lastOrder.method,delivery:lastOrder.delivery,name:lastOrder.name,phone:lastOrder.phone,email:lastOrder.email,lines:cart.map(c=>({id:c.id,name:c.name,qty:c.qty,price:c.price,vendor:c.vendor||"",pid:c.pid||"",opt:c.opt||""}))}));fetch("https://docs.google.com/forms/d/e/1FAIpQLSe2zjFlsue6VY21RyImvVa2xW-K2SlsKH4nhE1ABkPVO32a9g/formResponse",{method:"POST",mode:"no-cors",body:f})}catch(e){}cart=[];stage="done";update();
       if(pendingSlot){bookedSlots.add(pendingSlot);pendingSlot=null;renderDays();renderSlots()}});
     return;
