@@ -1,81 +1,88 @@
 {
   "products": [
     {
-      "id": "natural",
       "show": true,
-      "name": "Barely There",
-      "type": "Natural",
+      "name": "Natural",
+      "type": "Barely There",
       "category": "lashes",
+      "digital": false,
       "price": 38,
       "was_price": 0,
       "description": "Everyday lift. Looks like your lashes, only better.",
       "tag": "Bestseller",
       "image": "img/tray-kit.jpg",
       "image_alt": "Barely There natural cluster lash tray",
-      "options": []
+      "options": [],
+      "id": "natural"
     },
     {
-      "id": "hybrid",
       "show": true,
-      "name": "Flutter",
-      "type": "Hybrid",
+      "name": "Hybrid",
+      "type": "Flutter",
       "category": "lashes",
+      "digital": false,
       "price": 38,
       "was_price": 0,
       "description": "Soft, fluttery mix of lengths for a light, wispy look.",
       "tag": "Bestseller",
       "image": "img/tray-natural.jpg",
       "image_alt": "Flutter hybrid cluster lash tray",
-      "options": []
+      "options": [],
+      "id": "hybrid"
     },
     {
-      "id": "drama",
       "show": true,
-      "name": "Main Character",
-      "type": "Volume",
+      "name": "Volume",
+      "type": "Main Character",
       "category": "lashes",
+      "digital": false,
       "price": 38,
       "was_price": 0,
       "description": "Full volume for nights out and big events.",
       "tag": "Bestseller",
       "image": "img/tray-drama.jpg",
       "image_alt": "Main Character volume cluster lash tray",
-      "options": []
+      "options": [],
+      "id": "drama"
     },
     {
-      "id": "mega",
       "show": true,
-      "name": "Bajan Baddie",
-      "type": "Mega Volume",
+      "name": "Mega Volume",
+      "type": "Bajan Baddie",
       "category": "lashes",
+      "digital": false,
       "price": 38,
       "was_price": 0,
       "description": "Extra-full, fluffy clusters for maximum volume and drama.",
       "tag": "Bestseller",
       "image": "img/tray-wispy.jpg",
       "image_alt": "Bajan Baddie mega volume cluster lash tray",
-      "options": []
+      "options": [],
+      "id": "mega"
     },
     {
-      "id": "appkit",
       "show": true,
       "name": "Glue & Go",
       "type": "Application Kit",
       "category": "kits",
+      "digital": false,
       "price": 10,
+      "was_price": null,
       "description": "Glue ring, tweezers, glue, spoolie and lip brush. Everything you need to apply your clusters.",
       "tag": "Add-on",
       "image": "",
       "image_alt": "",
-      "options": []
+      "options": [],
+      "id": "appkit"
     },
     {
-      "id": "lipoil",
       "show": true,
       "name": "Lip Oil",
       "type": "Lip care",
       "category": "lips",
+      "digital": false,
       "price": 4,
+      "was_price": null,
       "description": "Hydrating, nourishing lip oil for soft, glossy lips. Pick Rose or Jasmine.",
       "tag": "$4 add-on",
       "image": "img/lip-oil-mockup.jpg",
@@ -83,15 +90,17 @@
       "options": [
         "Rose",
         "Jasmine"
-      ]
+      ],
+      "id": "lipoil"
     },
     {
-      "id": "plumpgloss",
       "show": true,
       "name": "Plumping Lip Gloss",
       "type": "Lip gloss",
       "category": "lips",
+      "digital": false,
       "price": 4,
+      "was_price": null,
       "description": "Glossy plumping lip gloss for a juicy shine. Pick Grape, Kiwi, Banana or Blueberry.",
       "tag": "$4 add-on",
       "image": "img/lip-gloss-mockup.jpg",
@@ -101,14 +110,15 @@
         "Kiwi",
         "Banana",
         "Blueberry"
-      ]
+      ],
+      "id": "plumpgloss"
     },
     {
-      "id": "starter",
       "show": true,
       "name": "Student Starter Bundle",
       "type": "Cluster Course + Kit",
       "category": "bundles",
+      "digital": false,
       "price": 115,
       "was_price": 136,
       "description": "The Cluster Lash Course (online) + 2 lash trays of your choice + our Glue & Go kit, so you can start practising the day you enrol. Tell us your 2 tray styles on WhatsApp.",
@@ -116,63 +126,68 @@
       "image": "",
       "image_alt": "",
       "options": [],
+      "id": "starter",
       "course": "Cluster Lash Course"
     },
     {
-      "id": "giftset",
       "show": true,
       "name": "Lash + Lips Gift Set",
       "type": "Christmas gift set",
       "category": "gifts",
+      "digital": false,
       "price": 50,
       "was_price": 56,
       "description": "1 lash tray of your choice + Glue & Go kit + 2 lip treats. The perfect Christmas gift for your girl. Tell us her tray style and lip flavours on WhatsApp.",
       "tag": "Christmas",
       "image": "",
       "image_alt": "",
-      "options": []
+      "options": [],
+      "id": "giftset"
     },
     {
-      "id": "apptvoucher",
       "show": true,
       "name": "Lash Appointment Gift Voucher",
       "type": "Gift voucher",
       "category": "gifts",
+      "digital": true,
       "price": 50,
+      "was_price": null,
       "description": "Gift a cluster lash appointment with Marishka. We send you a pretty voucher on WhatsApp to give, and she books when it suits her.",
       "tag": "Christmas",
       "image": "",
       "image_alt": "",
       "options": [],
-      "digital": true
+      "id": "apptvoucher"
     },
     {
-      "id": "clustervoucher",
       "show": true,
       "name": "Cluster Course Gift Voucher",
       "type": "Academy gift voucher",
       "category": "gifts",
+      "digital": true,
       "price": 50,
+      "was_price": null,
       "description": "Gift the Cluster Lash Course. We send you a voucher on WhatsApp with her enrolment code.",
       "tag": "Gift voucher",
       "image": "",
       "image_alt": "",
       "options": [],
-      "digital": true
+      "id": "clustervoucher"
     },
     {
-      "id": "lashvoucher",
       "show": true,
       "name": "Eyelash Course Gift Voucher",
       "type": "Academy gift voucher",
       "category": "gifts",
+      "digital": true,
       "price": 98,
+      "was_price": null,
       "description": "Gift the Eyelash Extension Course. We send you a voucher on WhatsApp with her enrolment code.",
       "tag": "Gift voucher",
       "image": "",
       "image_alt": "",
       "options": [],
-      "digital": true
+      "id": "lashvoucher"
     }
   ]
 }
