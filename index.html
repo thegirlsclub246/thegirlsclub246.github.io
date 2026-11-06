@@ -641,8 +641,8 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
         <p class="promo" id="promoPill" hidden></p>
       </div>
       <div class="mk-doors">
-        <a class="mk-door" href="#shop/products"><span class="ico" aria-hidden="true">🛍️</span><b>Products</b><small id="doorPhys">Lashes, lips, kits &amp; gifts</small></a>
-        <a class="mk-door dig" href="#shop/digital"><span class="ico" aria-hidden="true">📲</span><b>Digital products</b><small id="doorDig">Courses &amp; gift vouchers</small></a>
+        <a class="mk-door" href="#shop/products"><b>Products</b><small id="doorPhys">Lashes, lips, kits &amp; gifts</small></a>
+        <a class="mk-door dig" href="#shop/digital"><b>Digital products</b><small id="doorDig">Courses &amp; gift vouchers</small></a>
       </div>
       <div class="strip" id="mkPreview" aria-label="Popular in the Marketplace"></div>
       <a class="btn mk-go" href="#shop">Shop the Marketplace →</a>
@@ -665,8 +665,8 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
       </form>
       <div class="mk-tabs" role="tablist" aria-label="Marketplace sections">
         <button type="button" role="tab" data-tab="all" aria-selected="true">Shop all</button>
-        <button type="button" role="tab" data-tab="products" aria-selected="false">🛍️ Products</button>
-        <button type="button" role="tab" data-tab="digital" aria-selected="false">📲 Digital</button>
+        <button type="button" role="tab" data-tab="products" aria-selected="false">Products</button>
+        <button type="button" role="tab" data-tab="digital" aria-selected="false">Digital</button>
       </div>
       <div class="mk-catrow" id="mkCats" role="group" aria-label="Categories"></div>
       <div id="mkOut"></div>
@@ -720,13 +720,13 @@ html.shop-mode main>*:not(#shop){display:none!important}
 .shop-title{color:var(--pink);font-size:clamp(1.8rem,7.5vw,3rem);line-height:1.25}
 .shop-top .promo{margin-top:.6rem}
 /* slideshow */
-.shop-show{position:relative;height:230px;border:3px solid var(--plum);border-radius:22px;overflow:hidden;background:var(--plum);box-shadow:5px 5px 0 var(--pink);touch-action:pan-y;margin:0 0 16px}
+.shop-show{position:relative;height:300px;border:3px solid var(--plum);border-radius:22px;overflow:hidden;background:#fff4f8;box-shadow:5px 5px 0 var(--pink);touch-action:pan-y;margin:0 0 16px}
 .hs-slide{position:absolute;inset:0;opacity:0;transition:opacity .8s ease}
 .hs-slide.on{opacity:1}
-.hs-slide img{width:100%;height:100%;object-fit:cover;display:block}
-@media (prefers-reduced-motion:no-preference){.hs-slide.on img{animation:hsZoom 6s ease-out both}}
-@keyframes hsZoom{from{transform:scale(1.08)}to{transform:scale(1)}}
-.shop-show:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(74,22,54,.6),rgba(74,22,54,0) 55%);pointer-events:none}
+.hs-slide .hs-bg{position:absolute;inset:-30px;width:calc(100% + 60px);height:calc(100% + 60px);object-fit:cover;filter:blur(22px) saturate(1.15);opacity:.5;display:block}
+.hs-slide .hs-fg{position:absolute;left:0;right:0;top:14px;bottom:78px;margin:auto;max-width:calc(100% - 28px);max-height:calc(100% - 92px);width:auto;height:auto;object-fit:contain;border-radius:14px;box-shadow:0 6px 18px rgba(74,22,54,.18);display:block}
+@media (prefers-reduced-motion:no-preference){.hs-slide.on .hs-fg{animation:hsZoom 6s ease-out both}}
+@keyframes hsZoom{from{transform:scale(1.04)}to{transform:scale(1)}}
 .hs-cap{position:absolute;z-index:3;left:10px;right:10px;bottom:12px;display:flex;align-items:center;gap:10px;background:#fff;color:var(--plum);border:2px solid var(--plum);border-radius:999px;padding:5px 5px 5px 14px;text-decoration:none;font-weight:700;box-shadow:3px 3px 0 var(--pink)}
 .hs-txt{display:flex;flex-direction:column;min-width:0;flex:1;line-height:1.2}
 .hs-txt small{font-size:.7rem;letter-spacing:.06em;color:var(--pink);text-transform:uppercase}
@@ -739,8 +739,8 @@ html.shop-mode main>*:not(#shop){display:none!important}
 .hs-dots button[aria-current="true"]:before{background:var(--yellow);width:20px;border-radius:999px}
 .hs-arrow{position:absolute;z-index:3;top:42%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;border:3px solid var(--plum);background:#fff;color:var(--plum);font-size:1.4rem;font-weight:700;cursor:pointer;display:none}
 .hs-prev{left:12px}.hs-next{right:12px}
-@media (min-width:600px){.shop-show{height:300px}.hs-cap{left:auto;right:18px;bottom:18px;max-width:440px}}
-@media (min-width:900px){.shop-show{height:340px}.hs-arrow{display:block}}
+@media (min-width:600px){.shop-show{height:320px;background:radial-gradient(circle at 15% 20%,#ffe3ef 0,transparent 45%),radial-gradient(circle at 90% 85%,#fff6c9 0,transparent 40%),#fff4f8}.hs-slide .hs-bg{display:none}.hs-slide .hs-fg{left:24px;right:auto;top:18px;bottom:18px;max-height:calc(100% - 36px);max-width:45%}.hs-cap{left:336px;right:18px;top:50%;bottom:auto;transform:translateY(-50%);border-radius:28px;padding:18px 18px 18px 26px;gap:16px}.hs-txt{gap:4px}.hs-txt small{font-size:.85rem}.hs-txt b{font-size:1.5rem;white-space:normal}.hs-txt>span{font-size:1.1rem}.hs-cap .go{padding:0 22px;min-height:52px;font-size:1.05rem}}
+@media (min-width:900px){.shop-show{height:360px}.hs-arrow{display:block}.hs-slide .hs-fg{left:80px;max-width:40%}.hs-cap{left:440px;right:80px}}
 /* search + tabs + categories */
 .mk-search{display:flex;align-items:center;gap:6px;background:#fff;border:2px solid var(--pink);border-radius:999px;padding:0 4px 0 14px;min-height:52px;margin:0 0 12px}
 .mk-search svg{flex:none;color:var(--pink)}
@@ -907,7 +907,7 @@ html.shop-mode main>*:not(#shop){display:none!important}
         <div class="step"><span class="num">3</span><h3>Enter your email and pay</h3><p>Card gives instant access. FirstPay or BPWCCUL: we email your login once payment is in.</p></div>
         <div class="step"><span class="num">4</span><h3>Start learning</h3><p>Your course link lands in your email.</p></div>
       </div>
-      <p class="steps-note">💳 Card · 📱 FirstPay · 🏦 BPWCCUL. Card checkout shows US dollars (US$1 = BBD $2). FirstPay and BPWCCUL are paid in BBD.</p>
+      <p class="steps-note">Card · FirstPay · BPWCCUL. Card checkout shows US dollars (US$1 = BBD $2). FirstPay and BPWCCUL are paid in BBD.</p>
       <p class="muted academy-note" data-c="academy.note"></p>
     </div>
   </section>
@@ -992,7 +992,7 @@ html.shop-mode main>*:not(#shop){display:none!important}
 .sr-thumb{width:62px;height:62px;flex:none;border-radius:14px;overflow:hidden;background:var(--pink-soft);display:grid;place-content:center;color:var(--plum)}
 .sr-thumb img{width:62px;height:62px;object-fit:cover;display:block}
 .sr-thumb svg{width:58px;height:46px}
-.sr-ico{font-size:1.6rem}
+.sr-ico{font-size:1.4rem;color:var(--pink)}
 .sr-text{flex:1;min-width:0}
 .sr-text b{display:block;line-height:1.25}
 .sr-text small{display:block;color:var(--muted);font-size:.85rem;line-height:1.3;margin-top:2px}
@@ -1025,7 +1025,7 @@ html.shop-mode main>*:not(#shop){display:none!important}
   </div>
   <p class="side-tag">DIY beauty · Barbados</p>
   <nav class="side-links" aria-label="Menu links">
-    <a href="#search" data-open-search>🔍 Search</a>
+    <a href="#search" data-open-search>Search</a>
     <a href="#top">Home</a>
     <a href="#shop">Marketplace</a>
     <a href="#book">Book an appointment</a>
@@ -1068,7 +1068,7 @@ const list=a=>(Array.isArray(a)?a:[]).filter(x=>x!==null&&x!==undefined&&x!=="")
 const PAY={
   firstpay:{label:"FirstPay",how:"Send the total with FirstPay to:",rows:[["FirstPay number",String(S.firstpay_number||"[add in admin]")],["Name",String(S.firstpay_name||"")]]},
   bpwccul:{label:"BPWCCUL",how:"Transfer the total to our BPWCCUL account:",rows:[["Account name",String(S.bpwccul_name||"")],["Account number",String(S.bpwccul_number||"[add in admin]")]]},
-  cash:{label:"Cash on collection",how:`Pay in cash when you collect your order in ${esc(S.collection_area)}. Exact change is appreciated 💕`,rows:[]},
+  cash:{label:"Cash on collection",how:`Pay in cash when you collect your order in ${esc(S.collection_area)}. Exact change is appreciated.`,rows:[]},
   paypal:{label:"card",how:"Tap the button to pay securely with your debit or credit card. Card payments are charged in US dollars (BBD $2 = USD $1).",rows:[]}
 };
 const PAYPAL_ME=String(S.paypal_link||"").trim();
@@ -1172,9 +1172,9 @@ function renderAcademy(){
     ${c.description?`<p class="desc">${esc(c.description)}</p>`:""}
     ${list(c.points).length?`<ul class="perks">${list(c.points).map(p=>`<li>${esc(p)}</li>`).join("")}</ul>`:""}
     <p class="paywith">Choose how to pay</p>
-    ${c.payhip_id?`<a class="btn payhip-buy-button" href="https://payhip.com/b/${encodeURIComponent(c.payhip_id)}" data-theme="none" data-product="${esc(c.payhip_id)}" style="display:flex;width:100%;text-align:center">💳 Pay by card</a>${c.usd_note?`<p class="muted paynote">${esc(c.usd_note)}</p>`:""}`:""}
-    ${c.local_pay!==false?`<div class="localpay"><a class="btn" data-course="${i}" data-pay="firstpay" href="#">📱 Pay with FirstPay</a><a class="btn" data-course="${i}" data-pay="bpwccul" href="#">🏦 Pay with BPWCCUL</a></div><p class="muted paynote">Pay in BBD ${money(pr)} · we email your login once payment is in</p>`:""}
-    <a class="ask-wa" data-ask="${esc(c.title)}" href="${waLink("Hi The Girls Club! I'm interested in the "+c.title+" (BBD "+money(pr)+"). Can you help me enrol?")}" target="_blank" rel="noopener">💬 Questions? Enrol on WhatsApp</a>
+    ${c.payhip_id?`<a class="btn payhip-buy-button" href="https://payhip.com/b/${encodeURIComponent(c.payhip_id)}" data-theme="none" data-product="${esc(c.payhip_id)}" style="display:flex;width:100%;text-align:center">Pay by card</a>${c.usd_note?`<p class="muted paynote">${esc(c.usd_note)}</p>`:""}`:""}
+    ${c.local_pay!==false?`<div class="localpay"><a class="btn" data-course="${i}" data-pay="firstpay" href="#">Pay with FirstPay</a><a class="btn" data-course="${i}" data-pay="bpwccul" href="#">Pay with BPWCCUL</a></div><p class="muted paynote">Pay in BBD ${money(pr)} · we email your login once payment is in</p>`:""}
+    <a class="ask-wa" data-ask="${esc(c.title)}" href="${waLink("Hi The Girls Club! I'm interested in the "+c.title+" (BBD "+money(pr)+"). Can you help me enrol?")}" target="_blank" rel="noopener">Questions? Enrol on WhatsApp</a>
   </div>`}).join("");
   const pf=document.getElementById("academyProof");if(pf&&A.proof){pf.textContent=A.proof;pf.hidden=false}
   el.addEventListener("click",e=>{const a=e.target.closest("[data-ask]");if(a){try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/course-wa-ask/"+slug(a.dataset.ask),event:true})}catch(x){}}});
@@ -1183,10 +1183,10 @@ function renderAcademy(){
   if(cs.some(c=>c.payhip_id)){const s=document.createElement("script");s.src="https://payhip.com/payhip.js";s.async=true;document.head.appendChild(s)}
 }
 function giftLine(){if(FREE_TRAYS_LEFT<=0)return "";
-  return hasTray()?`<div class="gift"><b>🎁 FREE surprise lash tray</b><span>$0.00</span><small>Our giveaway while it lasts. We'll confirm yours on WhatsApp.</small></div>`
-   :`<div class="gift"><small>🎁 ${esc(H.giveaway_text||"")}</small></div>`}
+  return hasTray()?`<div class="gift"><b>FREE surprise lash tray</b><span>$0.00</span><small>Our giveaway while it lasts. We'll confirm yours on WhatsApp.</small></div>`
+   :`<div class="gift"><small>${esc(H.giveaway_text||"")}</small></div>`}
 function kitUp(){const K=products.find(p=>p.cat==="kits");if(!K||!hasTray()||cart.some(c=>c.id===K.id))return "";
-  return `<div class="addon kit-up"><b>💕 Don't forget your glue!</b><p style="margin:.3rem 0 .5rem;font-size:.9rem">Add our <b>${esc(K.name)} ${esc(K.type)}</b>: ${esc(K.desc)}</p><button type="button" class="btn" data-kit style="width:100%">+ Add the kit · $${K.price}</button></div>`}
+  return `<div class="addon kit-up"><b>Don't forget your glue!</b><p style="margin:.3rem 0 .5rem;font-size:.9rem">Add our <b>${esc(K.name)} ${esc(K.type)}</b>: ${esc(K.desc)}</p><button type="button" class="btn" data-kit style="width:100%">+ Add the kit · $${K.price}</button></div>`}
 function lipsUp(){const L=products.filter(p=>p.cat==="lips");if(!L.length||!cart.some(c=>!(c.course&&c.single)))return "";
   return `<div class="addon"><b>Treat your lips · add-ons</b>${L.map(p=>`<div class="addon-row"><img src="${p.img}" alt="" width="52" height="52"><div><span>${esc(p.name)}</span>${p.opts.length?`<select data-uopt="${p.id}" aria-label="Choose your ${esc(p.name)}">${p.opts.map(o=>`<option>${esc(o)}</option>`).join("")}</select>`:""}</div><button type="button" class="add" data-up="${p.id}">+ Add $${p.price}</button></div>`).join("")}</div>`}
 const money=v=>"$"+v.toFixed(2);
@@ -1229,7 +1229,7 @@ const courseItems=A.show===false?[]:list(A.courses).filter(c=>c&&c.show!==false&
 const shopItems=products.concat(courseItems);
 const isDig=p=>!!(p.digital||p.isCourse||p.cat==="vouchers"||p.cat==="guides");
 const dCat=p=>p.isCourse?"courses":isDig(p)&&(p.cat==="gifts"||p.cat==="vouchers")?"vouchers":p.cat;
-const CAT_NAME={lashes:"Lashes",kits:"Kits & tools",tools:"Tools",lips:"Lips",bundles:"Bundles",gifts:"🎄 Gifts",courses:"🎓 Courses",vouchers:"🎁 Gift vouchers",guides:"📘 Guides & templates"};
+const CAT_NAME={lashes:"Lashes",kits:"Kits & tools",tools:"Tools",lips:"Lips",bundles:"Bundles",gifts:"Gifts",courses:"Courses",vouchers:"Gift vouchers",guides:"Guides & templates"};
 const catName=c=>CAT_NAME[c]||String(c).replace(/^v:/,"");
 const CAT_ORDER=["lashes","kits","tools","lips","bundles","gifts","courses","vouchers","guides"];
 const inSec=(p,sec)=>sec==="all"||(sec==="digital")===isDig(p);
@@ -1269,7 +1269,7 @@ function renderShop(){
   const q=view.q.trim();mkQx.hidden=!q;
   let items=shopItems.filter(p=>inSec(p,view.tab)&&(!view.cat||dCat(p)===view.cat)&&mkMatch(p,q));
   if(q){const nq=mkNorm(q),sc=p=>{const n=" "+mkNorm(p.name+" "+p.type)+" ";return(n.includes(nq)?10:0)+(p.isCourse?1:0)+nq.split(" ").filter(t=>t&&n.includes(mkStem(t))).length*3};items=items.map((p,i)=>[sc(p)-i*.001,p]).sort((a,b)=>b[0]-a[0]).map(r=>r[1])}
-  const empty=`<div class="mk-empty"><p><b>${q?`No match for “${esc(q)}” yet.`:"Nothing here yet."}</b><br>Tell us what you're looking for and we'll help you find it 💕</p><a class="btn" target="_blank" rel="noopener" href="${esc(waLink("Hi The Girls Club! I'm looking for "+(q||"something")+" in the Marketplace. Do you have it?"))}">💬 Ask us on WhatsApp</a>${q?`<button type="button" class="btn white" data-mk-clear>Clear search</button>`:""}</div>`;
+  const empty=`<div class="mk-empty"><p><b>${q?`No match for “${esc(q)}” yet.`:"Nothing here yet."}</b><br>Tell us what you're looking for and we'll help you find it.</p><a class="btn" target="_blank" rel="noopener" href="${esc(waLink("Hi The Girls Club! I'm looking for "+(q||"something")+" in the Marketplace. Do you have it?"))}">Ask us on WhatsApp</a>${q?`<button type="button" class="btn white" data-mk-clear>Clear search</button>`:""}</div>`;
   if(!items.length){mkOut.innerHTML=empty;return}
   if(view.tab==="all"&&!view.cat){
     const shelf=(sec,title,more)=>{const its=items.filter(p=>inSec(p,sec));if(!its.length)return "";
@@ -1295,11 +1295,11 @@ mkQ.addEventListener("blur",mkTrack);
 mkQx.onclick=()=>{mkQ.value="";view.q="";renderShop();mkQ.focus()};
 
 /* sale slideshow at the top of the Marketplace: anything with a sale price + photo, biggest saving first (else featured items with photos) */
-{let hot=shopItems.filter(p=>p.was>p.price&&!isOut(p)&&p.img).sort((a,b)=>offPct(b)-offPct(a)).slice(0,8),lbl=p=>`🔥 Hot · ${offPct(p)}% off`;
- if(!hot.length){hot=shopItems.filter(p=>p.img&&!isOut(p)).slice(0,6);lbl=()=>"✨ Featured"}
+{let hot=shopItems.filter(p=>p.was>p.price&&!isOut(p)&&p.img).sort((a,b)=>offPct(b)-offPct(a)).slice(0,8),lbl=p=>`Hot · ${offPct(p)}% off`;
+ if(!hot.length){hot=shopItems.filter(p=>p.img&&!isOut(p)).slice(0,6);lbl=()=>"Featured"}
  const box=document.getElementById("shopShow");
  if(box&&hot.length){box.hidden=false;box.setAttribute("role","region");box.setAttribute("aria-roledescription","slideshow");box.setAttribute("aria-label","On special");
-  box.innerHTML=hot.map((p,i)=>`<div class="hs-slide${i?"":" on"}" aria-hidden="${i?"true":"false"}"><img src="${esc(p.img)}" alt="${esc(p.alt||p.name)}" ${i?'loading="lazy"':""}></div>`).join("")
+  box.innerHTML=hot.map((p,i)=>`<div class="hs-slide${i?"":" on"}" aria-hidden="${i?"true":"false"}"><img class="hs-bg" src="${esc(p.img)}" alt="" ${i?'loading="lazy"':""}><img class="hs-fg" src="${esc(p.img)}" alt="${esc(p.alt||p.name)}" ${i?'loading="lazy"':""}></div>`).join("")
    +`<a class="hs-cap" href="#"></a>`+(hot.length>1?`<button type="button" class="hs-arrow hs-prev" aria-label="Previous">‹</button><button type="button" class="hs-arrow hs-next" aria-label="Next">›</button><div class="hs-dots">${hot.map((p,i)=>`<button type="button" aria-label="Show ${esc(p.name)}" data-hs="${i}"></button>`).join("")}</div>`:"");
   const slides=[...box.querySelectorAll(".hs-slide")],cap=box.querySelector(".hs-cap"),dots=[...box.querySelectorAll("[data-hs]")];let at=0,tm=null,paused=false;
   function go(i){at=(i+hot.length)%hot.length;const p=hot[at];slides.forEach((s,k)=>{s.classList.toggle("on",k===at);s.setAttribute("aria-hidden",k!==at)});dots.forEach((d,k)=>d.setAttribute("aria-current",k===at));
@@ -1320,24 +1320,24 @@ function related(p){return shopItems.filter(x=>x.id!==p.id&&!isOut(x)).map(x=>[(
 function searches(p){const s=[];const add=t=>{t=String(t||"").trim();if(t&&!s.some(x=>x.toLowerCase()===t.toLowerCase()))s.push(t)};
   if(!p.isCourse)add(p.type);(RS[dCat(p)]||[catName(dCat(p))]).forEach(add);if(p.brand)add(p.brand);if(p.was>p.price)add("On sale");return s.slice(0,6)}
 function pdHTML(p){const o=offPct(p),out=isOut(p),dig=isDig(p);
-  const facts=[p.isCourse?"🎓 Online course · learn from your phone at your own pace":dig?"📲 Digital · sent to you on WhatsApp after payment":`🚚 Island-wide delivery $${num(S.delivery_fee)||20} BBD, or free collection in ${esc(S.collection_area||"St. Thomas")}`,`💳 Pay by ${esc(payList())}`,p.vendor?`🛍️ Sold by ${esc(p.brand)}, a local brand on The Girls Club Marketplace`:"💕 By The Girls Club, Barbados"];
+  const facts=[p.isCourse?"Online course · learn from your phone at your own pace":dig?"Digital · sent to you on WhatsApp after payment":`Island-wide delivery $${num(S.delivery_fee)||20} BBD, or free collection in ${esc(S.collection_area||"St. Thomas")}`,`Pay by ${esc(payList())}`,p.vendor?`Sold by ${esc(p.brand)}, a local brand on The Girls Club Marketplace`:"By The Girls Club, Barbados"];
   const rel=related(p),more=p.vendor?shopItems.filter(x=>x.vendor===p.vendor&&x.id!==p.id):[];
   return `<div class="pd-bar"><button type="button" class="pd-back" data-pd-close>‹ Back</button><button type="button" data-pd-share aria-label="Share this">↗ Share</button><button type="button" class="pd-bag" data-pd-bag aria-label="Open bag">Bag ${cart.reduce((a,c)=>a+c.qty,0)}</button></div>
   <div class="pd-in"><div class="pd-main">
    <div class="pd-img"><div class="thumb">${thumb(p)}${p.tag?`<span class="tag">${esc(p.tag)}</span>`:""}${o?`<span class="off">-${o}%</span>`:""}</div></div>
    <div class="pd-info">
-    <span class="mk-sold">${dig?"📲 Digital · ":""}By ${esc(p.brand||"The Girls Club")}</span>
+    <span class="mk-sold">${dig?"Digital · ":""}By ${esc(p.brand||"The Girls Club")}</span>
     <h2 id="pdName" tabindex="-1">${esc(p.name)}</h2>${p.type?`<p class="pd-type">${esc(p.type)}</p>`:""}
     <div class="pd-price"><span class="price"><small>BBD</small> ${priceHTML(p)}</span>${o?`<span class="pd-save">You save ${money(p.was-p.price)}</span>`:""}</div>
     ${p.desc?`<p class="pd-desc">${esc(p.desc)}</p>`:""}
     ${(p.points||[]).length?`<ul class="pd-points">${p.points.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}
     ${p.opts.length?`<p class="pd-lbl" id="pdOptL">Choose one</p><div class="pd-opts" role="radiogroup" aria-labelledby="pdOptL">${p.opts.map((x,i)=>`<button type="button" role="radio" aria-checked="${i===0}" data-pd-opt="${esc(x)}">${esc(x)}</button>`).join("")}</div>`:""}
-    <div class="pd-buy">${out?`<button class="add" type="button" disabled>Sold out</button>`:p.isCourse?`<button class="add" type="button" data-pd-add>📱 Enrol · FirstPay or BPWCCUL · ${money(p.price)}</button>`:`<div class="qty"><button type="button" data-pd-q="-1" aria-label="One less">−</button><output aria-live="polite" id="pdQty">1</output><button type="button" data-pd-q="1" aria-label="One more">+</button></div><button class="add" type="button" data-pd-add>Add to bag · ${money(p.price)}</button>`}</div>
-    ${p.isCourse&&p.payhip?`<a class="pd-card" href="https://payhip.com/b/${encodeURIComponent(p.payhip)}" target="_blank" rel="noopener">💳 Pay by card · instant access</a>${p.usdNote?`<p class="pd-note">${esc(p.usdNote)}</p>`:""}`:""}
-    <a class="pd-wa" data-pd-wa href="${esc(waLink(`Hi The Girls Club! I have a question about ${p.name}${p.type?" ("+p.type+")":""}, BBD ${money(p.price)}.`))}" target="_blank" rel="noopener">💬 Ask about this on WhatsApp</a>
+    <div class="pd-buy">${out?`<button class="add" type="button" disabled>Sold out</button>`:p.isCourse?`<button class="add" type="button" data-pd-add>Enrol · FirstPay or BPWCCUL · ${money(p.price)}</button>`:`<div class="qty"><button type="button" data-pd-q="-1" aria-label="One less">−</button><output aria-live="polite" id="pdQty">1</output><button type="button" data-pd-q="1" aria-label="One more">+</button></div><button class="add" type="button" data-pd-add>Add to bag · ${money(p.price)}</button>`}</div>
+    ${p.isCourse&&p.payhip?`<a class="pd-card" href="https://payhip.com/b/${encodeURIComponent(p.payhip)}" target="_blank" rel="noopener">Pay by card · instant access</a>${p.usdNote?`<p class="pd-note">${esc(p.usdNote)}</p>`:""}`:""}
+    <a class="pd-wa" data-pd-wa href="${esc(waLink(`Hi The Girls Club! I have a question about ${p.name}${p.type?" ("+p.type+")":""}, BBD ${money(p.price)}.`))}" target="_blank" rel="noopener">Ask about this on WhatsApp</a>
     <ul class="pd-facts">${facts.map(f=>`<li>${f}</li>`).join("")}</ul>
    </div></div>
-   <div class="pd-sec"><h3>Related searches</h3><div class="pd-tags">${searches(p).map(t=>`<button type="button" data-pd-search="${esc(t)}">🔎 ${esc(t)}</button>`).join("")}</div></div>
+   <div class="pd-sec"><h3>Related searches</h3><div class="pd-tags">${searches(p).map(t=>`<button type="button" data-pd-search="${esc(t)}">${esc(t)}</button>`).join("")}</div></div>
    ${more.length?`<div class="pd-sec"><h3>More from ${esc(p.brand)}</h3><div class="strip">${more.map(miniCard).join("")}</div></div>`:""}
    ${rel.length?`<div class="pd-sec"><h3>You may also like</h3><div class="strip">${rel.map(miniCard).join("")}</div></div>`:""}
   </div>`}
@@ -1360,7 +1360,7 @@ pd.addEventListener("click",e=>{const t=e.target;if(!cur)return;
   if(t.closest("[data-pd-wa]")){try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/product-wa-ask/"+slug(cur.id),event:true})}catch(x){}return}
   if(t.closest("[data-pd-share]")){const url=location.origin+location.pathname+"#p-"+encodeURIComponent(cur.id),title=cur.name+" · The Girls Club";
    if(navigator.share){navigator.share({title,text:cur.name+" BBD "+money(cur.price),url}).catch(()=>{});return}
-   const done=()=>{const d=document.createElement("div");d.className="pd-toast";d.textContent="Link copied 💕";pd.appendChild(d);setTimeout(()=>d.remove(),1800)};
+   const done=()=>{const d=document.createElement("div");d.className="pd-toast";d.textContent="Link copied";pd.appendChild(d);setTimeout(()=>d.remove(),1800)};
    (navigator.clipboard?navigator.clipboard.writeText(url):Promise.reject()).then(done,()=>prompt("Copy this link:",url));return}
 });
 
@@ -1401,14 +1401,14 @@ function totals(){const sub=cart.reduce((a,c)=>a+c.price*c.qty,0);const hasShip=
 function renderDrawer(){
   if(stage==="done"&&lastOrder){const o=lastOrder,P=PAY[o.method];
     const summary=`Hi The Girls Club! I placed an order.\nOrder: ${o.id}\n${o.items.join("\n")}\nTotal: BBD ${money(o.total)}\n${o.paid?"Paid by":(o.method==="cash"?"Payment":"Paying by")}: ${P.label}${o.method==="paypal"?" ("+usd(o.total)+")":""}${o.paid?" ✅ PAID"+(o.paidRef?" (ref "+o.paidRef+")":""):""}${o.delivery?"\n"+o.delivery:""}\nName: ${o.name}\nPhone: ${o.phone}${o.email?"\nEmail: "+o.email:""}`;
-    const s2=o.method==="cash"?{t:"We'll set your collection time",p:"Tap below to message us on WhatsApp so we can set your collection time.",b:"💬 Message us on WhatsApp",x:""}
-      :o.method==="paypal"?(o.paid?{t:"Tell us you've paid",p:"Tap below so we can match your card payment and confirm faster.",b:"💬 Tell us on WhatsApp",x:""}:{t:"After you pay",p:"You'll see a ✅ here once your card payment goes through. Questions? Message us on WhatsApp.",b:"💬 Message us on WhatsApp",x:""})
-      :{t:"Send us your payment screenshot",p:"Once you've paid, send us your order and a screenshot of your payment on WhatsApp so we can confirm faster.",b:"📸 Send order + screenshot",x:"\nHere's my payment screenshot:"};
+    const s2=o.method==="cash"?{t:"We'll set your collection time",p:"Tap below to message us on WhatsApp so we can set your collection time.",b:"Message us on WhatsApp",x:""}
+      :o.method==="paypal"?(o.paid?{t:"Tell us you've paid",p:"Tap below so we can match your card payment and confirm faster.",b:"Tell us on WhatsApp",x:""}:{t:"After you pay",p:"You'll see it confirmed here once your card payment goes through. Questions? Message us on WhatsApp.",b:"Message us on WhatsApp",x:""})
+      :{t:"Send us your payment screenshot",p:"Once you've paid, send us your order and a screenshot of your payment on WhatsApp so we can confirm faster.",b:"Send order + screenshot",x:"\nHere's my payment screenshot:"};
     body.innerHTML=`<div class="done">
       <h3>${o.paid?"Thank you, gorgeous!":"Order placed, gorgeous!"}</h3>
       <p class="muted">Your order number</p><div class="order-id">${o.id}</div>
-      <div class="wa-sent">${o.paid?"✅ <b>Paid and confirmed.</b> We've got your order.":(o.method==="cash"?"✅ <b>Order saved.</b> Pay in cash when you collect.":"✅ <b>Order saved.</b> Now complete your payment below.")}</div>
-      <div class="pay-step"><span class="step-n">1</span><div><b>${o.method==="cash"?"Pay BBD "+money(o.total)+" in cash when you collect":"Pay "+(o.method==="paypal"?usd(o.total)+" (BBD "+money(o.total)+")":"BBD "+money(o.total))+" by "+P.label}</b><p>${P.how}</p>${o.method==="paypal"?(o.paid?`<div class="paid-ok">✅ <b>Card payment received. Thank you!</b>${o.paidRef?`<br><small>Payment ref: ${esc(o.paidRef)}</small>`:""}</div>`:`<div id="cardPay" class="card-pay"><p class="muted">Loading secure card form…</p></div>`):""}
+      <div class="wa-sent">${o.paid?"<b>Paid and confirmed.</b> We've got your order.":(o.method==="cash"?"<b>Order saved.</b> Pay in cash when you collect.":"<b>Order saved.</b> Now complete your payment below.")}</div>
+      <div class="pay-step"><span class="step-n">1</span><div><b>${o.method==="cash"?"Pay BBD "+money(o.total)+" in cash when you collect":"Pay "+(o.method==="paypal"?usd(o.total)+" (BBD "+money(o.total)+")":"BBD "+money(o.total))+" by "+P.label}</b><p>${P.how}</p>${o.method==="paypal"?(o.paid?`<div class="paid-ok"><b>Card payment received. Thank you!</b>${o.paidRef?`<br><small>Payment ref: ${esc(o.paidRef)}</small>`:""}</div>`:`<div id="cardPay" class="card-pay"><p class="muted">Loading secure card form…</p></div>`):""}
         ${P.rows.map(([k,v])=>`<div class="pay-row"><span>${k}</span><b class="${v.startsWith("[")?"todo":""}">${v}</b><button type="button" class="copy" data-copy="${v}">Copy</button></div>`).join("")}
         <div class="pay-row"><span>Reference</span><b>${o.id}</b><button type="button" class="copy" data-copy="${o.id}">Copy</button></div></div></div>
       <div class="pay-step"><span class="step-n">2</span><div><b>${s2.t}</b><p>${s2.p}</p>
@@ -1432,7 +1432,7 @@ function renderDrawer(){
     body.querySelectorAll("[data-up]").forEach(b=>b.onclick=()=>{const p=products.find(x=>x.id===b.dataset.up),s=body.querySelector(`[data-uopt="${p.id}"]`),o=s?s.value:"";addItem({id:p.id+(o?"-"+o:""),name:p.name+" · "+(o||p.type),price:p.price})});
   } else {
     body.innerHTML=`<form id="co">${t.hasShip?`<div class="field"><label for="delivery">Delivery</label><select id="delivery"><option value="deliver">Island-wide delivery · $${S.delivery_fee}</option><option value="pickup">Collection in ${esc(S.collection_area)} · free</option></select></div>
-      <p id="pickupNote" hidden style="margin:-4px 0 14px;font-size:.9rem;line-height:1.45;background:#fff8c9;border:2px solid #ffc2dc;border-radius:14px;padding:10px 12px">📍 <b>Collection is in ${esc(S.collection_area)}, Barbados.</b> We'll WhatsApp you the exact pickup spot and a time once your payment is confirmed.</p>
+      <p id="pickupNote" hidden style="margin:-4px 0 14px;font-size:.9rem;line-height:1.45;background:#fff8c9;border:2px solid #ffc2dc;border-radius:14px;padding:10px 12px"><b>Collection is in ${esc(S.collection_area)}, Barbados.</b> We'll WhatsApp you the exact pickup spot and a time once your payment is confirmed.</p>
       <div class="field" id="parishField"><label for="parish">Parish for delivery</label><select id="parish">${["St. Michael","Christ Church","St. James","St. Philip","St. George","St. Thomas","St. John","St. Joseph","St. Andrew","St. Peter","St. Lucy"].map(p=>`<option>${p}</option>`).join("")}</select></div>`:""}
       <div class="field"><label for="cname">Name</label><input id="cname" required autocomplete="name" placeholder="Your name"></div>
       <div class="field"><label for="cphone">Phone (WhatsApp)</label><input id="cphone" required inputmode="tel" placeholder="246 ___ ____"></div>
@@ -1447,11 +1447,11 @@ function renderDrawer(){
       <button class="btn" id="placeBtn" type="submit" style="width:100%">Continue to payment</button>
       <p class="secure">Your order is saved when you continue. Next, you'll go straight to payment.</p>
       <button type="button" class="muted" id="back" style="border:0;background:none;text-decoration:underline;display:block;margin:4px auto">Back to bag</button></form>`;
-    const drawTot=()=>{const t=totals();document.getElementById("tot").innerHTML=`<div><span>Subtotal</span><span>BBD ${money(t.sub)}</span></div><div><span>Delivery</span><span>${money(t.ship)}</span></div>${giftOn()?`<div><span>🎁 Free surprise tray</span><span>$0.00</span></div>`:""}<div class="grand"><span>Total</span><span>BBD ${money(t.total)}</span></div>`};
+    const drawTot=()=>{const t=totals();document.getElementById("tot").innerHTML=`<div><span>Subtotal</span><span>BBD ${money(t.sub)}</span></div><div><span>Delivery</span><span>${money(t.ship)}</span></div>${giftOn()?`<div><span>Free surprise tray</span><span>$0.00</span></div>`:""}<div class="grand"><span>Total</span><span>BBD ${money(t.total)}</span></div>`};
     drawTot();if(window.tgcPrefPay){const pr=document.querySelector(`input[name="pay"][value="${window.tgcPrefPay}"]`);if(pr)pr.checked=true;window.tgcPrefPay=""}const d=document.getElementById("delivery");const CASH_ON_COLLECTION=!!S.cash_on_collection;const cashOk=()=>CASH_ON_COLLECTION&&!!d&&d.value==="pickup"&&!cart.some(c=>c.id==="deposit");const syncCash=()=>{const co=document.getElementById("cashOpt");co.hidden=!cashOk();if(co.hidden&&co.querySelector("input").checked)document.querySelector('input[name="pay"][value="firstpay"]').checked=true};syncCash();
     if(d)d.onchange=()=>{document.getElementById("parishField").hidden=d.value==="pickup";document.getElementById("pickupNote").hidden=d.value!=="pickup";syncCash();drawTot()};
     document.getElementById("back").onclick=()=>{stage="bag";renderDrawer()};
-    const placeLbl={paypal:"💳 Continue to card payment",firstpay:"📱 Continue to FirstPay payment",bpwccul:"🏦 Continue to BPWCCUL payment",cash:"✅ Place order · pay cash on collection"};
+    const placeLbl={paypal:"Continue to card payment",firstpay:"Continue to FirstPay payment",bpwccul:"Continue to BPWCCUL payment",cash:"Place order · pay cash on collection"};
     const syncPlace=()=>{const r=document.querySelector('input[name="pay"]:checked'),pb=document.getElementById("placeBtn");if(r&&pb)pb.textContent=placeLbl[r.value]||"Continue to payment"};
     document.querySelectorAll('input[name="pay"]').forEach(r=>r.addEventListener("change",syncPlace));if(d)d.addEventListener("change",()=>setTimeout(syncPlace,0));syncPlace();
     document.getElementById("co").addEventListener("submit",e=>{e.preventDefault();
@@ -1471,7 +1471,7 @@ function renderDrawer(){
 }
 
 
-{const pp=document.getElementById("promoPill");if(FREE_TRAYS_LEFT>0&&products.some(p=>p.cat==="lashes")){pp.hidden=false;pp.innerHTML=`🎁 <b>Giveaway:</b> ${esc(H.giveaway_text||"")}`}else if(H.promo_text){pp.hidden=false;pp.innerHTML=`${H.promo_title?`<b>${esc(H.promo_title)}</b> `:""}${esc(H.promo_text)}`}}
+{const pp=document.getElementById("promoPill");if(FREE_TRAYS_LEFT>0&&products.some(p=>p.cat==="lashes")){pp.hidden=false;pp.innerHTML=`<b>Giveaway:</b> ${esc(H.giveaway_text||"")}`}else if(H.promo_text){pp.hidden=false;pp.innerHTML=`${H.promo_title?`<b>${esc(H.promo_title)}</b> `:""}${esc(H.promo_text)}`}}
 {const a=document.getElementById("promoPill"),b=document.getElementById("promoPill2");if(a&&b&&!a.hidden){b.innerHTML=a.innerHTML;b.hidden=false}}
 renderAcademy();
 
@@ -1579,13 +1579,13 @@ document.querySelectorAll(".wa-num").forEach(el=>el.textContent=WHATSAPP?("+"+WH
   if(e.k==="product"){const p=e.p;const act=soldOut(p)?`<button class="sr-add" type="button" disabled>Sold out</button>`:p.opts.length?`<button class="sr-add view" type="button" data-sr-go="${i}">Choose</button>`:`<button class="sr-add" type="button" data-sr-add="${i}">Add</button>`;
    return `<div class="sr-item" role="button" tabindex="0" data-sr-go="${i}"><div class="sr-thumb">${thumb(p)}</div><div class="sr-text"><b>${esc(p.name)}</b><small>By ${esc(p.brand||"The Girls Club")}${p.type?" · "+esc(p.type):""}</small><span class="sr-price">BBD ${money(p.price)}</span></div>${act}</div>`}
   const link=e.href?`href="${esc(e.href)}"${e.ext?' target="_blank" rel="noopener"':""}`:`href="#${esc(e.target)}"`;
-  return `<a class="sr-item" ${link} data-sr-go="${i}"><div class="sr-thumb"><span class="sr-ico" aria-hidden="true">${e.icon||"🔎"}</span></div><div class="sr-text"><b>${esc(e.title)}</b>${e.sub?`<small>${esc(e.sub)}</small>`:""}</div></a>`}
+  return `<a class="sr-item" ${link} data-sr-go="${i}"><div class="sr-thumb"><span class="sr-ico" aria-hidden="true">♥</span></div><div class="sr-text"><b>${esc(e.title)}</b>${e.sub?`<small>${esc(e.sub)}</small>`:""}</div></a>`}
  let shown=[],lastQ="",tracked=new Set();
  function track(q){q=norm(q);if(q.length<2||tracked.has(q))return;tracked.add(q);try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/search/"+slug(q)+(shown.length?"":"/no-results"),title:"Search: "+q,event:true})}catch(x){}}
  function render(){const q=inp.value;clr.hidden=!q;sugg.hidden=!!q.trim();lastQ=q;
   if(!q.trim()){out.innerHTML="";shown=[];return}
   shown=find(q);
-  if(!shown.length){out.innerHTML=`<div class="sr-none"><p><b>No match for “${esc(q.trim())}” yet.</b><br>Tell us what you're looking for and we'll help you find it 💕</p><a class="btn" href="${esc(waLink("Hi The Girls Club! I searched your website for \""+q.trim()+"\". Do you have it?"))}" target="_blank" rel="noopener" data-sr-wa>💬 Ask us on WhatsApp</a><a class="btn ghost" href="#lashes" data-sr-browse>Browse the Marketplace</a></div>`;return}
+  if(!shown.length){out.innerHTML=`<div class="sr-none"><p><b>No match for “${esc(q.trim())}” yet.</b><br>Tell us what you're looking for and we'll help you find it.</p><a class="btn" href="${esc(waLink("Hi The Girls Club! I searched your website for \""+q.trim()+"\". Do you have it?"))}" target="_blank" rel="noopener" data-sr-wa>Ask us on WhatsApp</a><a class="btn ghost" href="#lashes" data-sr-browse>Browse the Marketplace</a></div>`;return}
   const g={product:[],course:[],page:[]},order=[];shown.forEach((e,i)=>{if(!order.includes(e.k))order.push(e.k);g[e.k].push(row(e,i))});
   const HEAD={product:"Shop · "+g.product.length,course:"Academy courses",page:"Book & help"};
   out.innerHTML=order.map(k=>`<div class="sr-group">${HEAD[k]}</div>`+g[k].join("")).join("")}
