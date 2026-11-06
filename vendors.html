@@ -36,6 +36,11 @@ button,input,select,textarea{font:inherit;color:inherit}
 .logo{font-family:var(--display);font-size:23px;color:var(--pink);line-height:1.15;text-decoration:none}
 .logo small{display:block;font-family:var(--body);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
 .who{font-size:13px;font-weight:700;text-align:right;color:var(--muted);max-width:50%;overflow:hidden;text-overflow:ellipsis}
+.hright{display:flex;flex-direction:column;align-items:flex-end;gap:4px;max-width:58%;min-width:0}
+.hright .who{max-width:100%}
+.hsout{font:inherit;font-size:13px;font-weight:700;color:var(--deep);background:#fff;border:2px solid var(--rose);border-radius:999px;padding:6px 14px;min-height:36px;cursor:pointer}
+.hsout:hover{background:var(--rose)}
+.who:empty+.hsout{display:none}
 
 /* tabs */
 .tabs{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:2px solid var(--line);display:flex;gap:6px;overflow-x:auto;padding:10px max(16px,env(safe-area-inset-left,0px));scrollbar-width:none}
@@ -165,7 +170,7 @@ footer{text-align:center;font-size:14px;color:var(--muted);padding:30px 16px}
 <body>
 <header class="top"><div class="row">
   <a class="logo" href="./">The Girls Club<small>Vendor Portal</small></a>
-  <span class="who" id="who"></span>
+  <div class="hright"><span class="who" id="who"></span><button class="hsout" id="hsout" type="button">Sign out</button></div>
 </div></header>
 <nav class="tabs" id="tabs" role="tablist" hidden></nav>
 <main class="wrap" id="app"><p class="loading">Loading your portal…</p></main>
@@ -302,6 +307,7 @@ function boot(){
   }).catch(function(e){app.innerHTML='<div class="card"><h2>We couldn\'t load your portal.</h2><p class="muted" style="margin-top:8px">'+esc(friendly(e))+'</p><div class="btnrow"><button class="btn" onclick="location.reload()">Try again</button></div></div>'});
 }
 function signOut(){sb.auth.signOut().then(function(){S.vendor=null;S.isAdmin=false;S.viewAs=null;authScreen("signin","You're signed out.")})}
+document.getElementById("hsout").onclick=function(){signOut()};
 
 /* ---------- vendor data ---------- */
 function must(r){if(r&&r.error)throw r.error;return r?r.data:null}
