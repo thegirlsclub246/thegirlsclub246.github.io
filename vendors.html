@@ -135,6 +135,16 @@ details summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;alig
 .addphoto{aspect-ratio:1;border-radius:14px;border:2px dashed var(--rose);background:#fff;display:grid;place-items:center;text-align:center;font-weight:700;font-size:14px;color:var(--deep);cursor:pointer;padding:6px}
 .addphoto input{position:absolute;width:1px;height:1px;opacity:0}
 .keep{background:var(--blush);border-radius:12px;padding:10px 14px;margin-top:8px;font-weight:600;font-size:15px}
+.pp{background:#fff;border:2px solid var(--line);border-radius:12px;margin-top:8px}
+.pp>summary{cursor:pointer;font-weight:700;color:var(--deep);padding:12px 14px;min-height:44px;list-style:none}
+.pp>summary::-webkit-details-marker{display:none}
+.pp>summary:before{content:"+ "}
+.pp[open]>summary:before{content:"− "}
+.pp-body{padding:0 14px 14px}
+.pp-body .f{margin-top:8px}
+.pp-out{background:var(--blush);border-radius:12px;padding:10px 14px;margin-top:12px;font-size:15px}
+.pp-out .btn{margin-top:10px}
+.pp-guide{font-size:14px;color:var(--muted);margin:10px 0 0}
 
 /* tables as cards */
 .rows{display:grid;gap:8px;margin-top:10px}
@@ -187,6 +197,7 @@ var SB_KEY="sb_publishable_hk2JKCG5HZZrWR5enw9MfQ_-S8R7W_1"; /* public key: safe
 var BUCKET="product-photos";
 var WA="12468504460";
 var FORM="https://docs.google.com/forms/d/e/1FAIpQLSfGTId0Oa7jR23yfKmouDejd1AVFxPNZA8QMfMkK3JWV0mCFA/formResponse", FIELD="entry.858011822";
+var PRICE_GUIDE={"Lashes & brows":"$12 to $25","Makeup & lips":"$10 to $20","Skincare & body":"$20 to $40","Hair & bonnets":"$15 to $30 (bundles and wigs $100 to $500)","Nails":"$25 to $45","Jewellery":"$15 to $60","Candles & self-care":"$20 to $45"};
 var CATS=["Hair & bonnets","Nails","Lashes & brows","Skincare & body","Perfume & scents","Makeup & lips","Jewellery","Bags & accessories","Candles & self-care","Digital","Other"];
 var A=window.TGC_AGREE||{PLANS:{},clauses:function(){return[]},VERSION:""};
 var PLANS=A.PLANS;
@@ -526,6 +537,11 @@ function productSheet(p){
   '<div class="two"><label class="f">Price (BBD)<input name="price" type="number" inputmode="decimal" min="0" step="0.01" required value="'+esc(p.price)+'"></label>'+
   '<label class="f" id="stockF">How many you have<input name="stock" type="number" inputmode="numeric" min="0" step="1" value="'+esc(p.stock)+'"></label></div>'+
   '<div class="keep" id="keep"></div>'+
+  '<details class="pp" id="pp"><summary>Help me pick a price</summary><div class="pp-body">'+
+  '<p class="hint" style="margin:0">Not sure what to charge? Fill these in and we\'ll suggest a price that covers your costs and the per-sale fee.</p>'+
+  '<div class="two"><label class="f">What one costs you (BBD) <span class="hint">materials, packaging</span><input id="ppCost" type="number" inputmode="decimal" min="0" step="0.01" placeholder="e.g. 12"></label>'+
+  '<label class="f">Profit you want on each (BBD)<input id="ppProfit" type="number" inputmode="decimal" min="0" step="0.01" placeholder="e.g. 15"></label></div>'+
+  '<div class="pp-out" id="ppOut"></div><p class="pp-guide" id="ppGuide"></p></div></details>'+
   '<label class="switch">This is a digital product (e-book, guide, template, class)<input type="checkbox" name="digital"'+(p.digital?" checked":"")+'></label>'+
   '<label class="f" id="dlF">Download link <span class="hint">Only you and Marishka see this. We send it to the customer after they pay.</span><input name="delivery_link" type="url" inputmode="url" maxlength="500" value="'+esc(p.delivery_link)+'" placeholder="https://"></label>'+
   '<label class="f">Category<select name="category">'+CATS.map(function(c){return'<option'+(c===p.category?" selected":"")+'>'+esc(c)+'</option>'}).join("")+'</select></label>'+
@@ -545,7 +561,14 @@ function productSheet(p){
     var fi=q("#pfile",d);if(fi)fi.onchange=function(){var fs=Array.prototype.slice.call(fi.files||[]);
       fs.slice(0,5-photos.length-newFiles.length).forEach(function(file){newFiles.push({file:file,url:URL.createObjectURL(file)})});drawPhotos()};
   }
-  function drawKeep(){var pr=Number(f.price.value)||0,dig=f.digital.checked;
+  function drawPick(){var cost=Number(q("#ppCost",d).value)||0,prof=Number(q("#ppProfit",d).value)||0,out=q("#ppOut",d),g=PRICE_GUIDE[f.category.value];
+    if(cost+prof>0){var sug=Math.ceil((cost+prof)/(1-rate));
+      out.innerHTML="Suggested price: <b>"+money2(sug)+"</b><br><span class=\"hint\">After the "+Math.round(rate*100)+"% per-sale fee you keep "+money2(sug*(1-rate))+": your "+money2(cost)+" back plus about "+money2(sug*(1-rate)-cost)+" profit.</span>"+
+        '<br><button class="btn ghost" type="button" id="ppUse">Use '+money2(sug)+'</button>';
+      q("#ppUse",d).onclick=function(){f.price.value=sug;drawKeep();f.price.focus();toast("Price set to "+money2(sug))};
+    }else out.textContent="Type what it costs you and the profit you want to see a suggested price.";
+    q("#ppGuide",d).textContent=g?("Typical prices in Barbados for "+f.category.value+": "+g+". A guide only: you choose your price."):"";}
+  function drawKeep(){var pr=Number(f.price.value)||0,dig=f.digital.checked;drawPick();
     q("#keep",d).innerHTML=pr?("You keep <b>"+money2(pr*(1-rate))+"</b> of each sale ("+Math.round((1-rate)*100)+"%).")+(rate>=.15?"":""):"Type your price to see what you keep.";
     q("#dlF",d).hidden=!dig;q("#stockF",d).style.opacity=dig?".45":"1";f.stock.disabled=dig;
     if(dig&&f.category.value!=="Digital")f.category.value="Digital";}
