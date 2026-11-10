@@ -637,7 +637,7 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
       <div class="sec-head">
         <span class="eyebrow" data-c="home.shop_eyebrow">The shop</span>
         <h2 data-c="home.shop_title">The Marketplace</h2>
-        <p class="lead" data-c="home.shop_intro">Lashes, lip treats, courses and gift vouchers, plus local Barbados beauty brands. All in one place.</p>
+        <p class="lead" data-c="home.shop_intro">Lashes, lip treats, courses and gift vouchers, plus local Barbados small businesses. All in one place.</p>
         <p class="promo" id="promoPill" hidden></p>
       </div>
       <div class="mk-doors">
@@ -653,7 +653,7 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
     <div class="wrap">
       <div class="shop-nav"><a class="shop-home" href="#top">‹ Home</a><a class="shop-sell" href="brands.html">Sell with us</a></div>
       <div class="shop-top">
-        <span class="eyebrow">Local beauty · Barbados</span>
+        <span class="eyebrow">Local small businesses · Barbados</span>
         <h1 class="shop-title" id="shopTitle">The Girls Club Marketplace</h1>
         <p class="promo" id="promoPill2" hidden></p>
       </div>
@@ -1251,7 +1251,7 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-add]");if(
  const nm=sec=>catsOf(sec).map(c=>catName(c).replace(/^[^A-Za-z]+/,"")).slice(0,4).join(", ");
  const dp=document.getElementById("doorPhys"),dd=document.getElementById("doorDig");if(dp&&nm("products"))dp.textContent=nm("products");if(dd&&nm("digital"))dd.textContent=nm("digital");}
 
-{const j=document.getElementById("mkJoin");if(j&&MK.show!==false){j.innerHTML=`<p><b>Own a beauty brand in Barbados?</b> Sell your products or digital products on The Girls Club Marketplace.</p><a class="btn ghost" href="brands.html">Sell with us</a>`;j.hidden=false}}
+{const j=document.getElementById("mkJoin");if(j&&MK.show!==false){j.innerHTML=`<p><b>Own a small business in Barbados?</b> Sell your products or digital products on The Girls Club Marketplace.</p><a class="btn ghost" href="brands.html">Sell with us</a>`;j.hidden=false}}
 const shopSec=document.getElementById("shop"),mkOut=document.getElementById("mkOut"),mkCats=document.getElementById("mkCats"),mkQ=document.getElementById("mkQ"),mkQx=document.getElementById("mkQx");
 const view={tab:"all",cat:"",q:""};
 const mkNorm=t=>String(t||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/&/g," and ").replace(/[^a-z0-9]+/g," ").trim();
