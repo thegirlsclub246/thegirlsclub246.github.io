@@ -188,7 +188,7 @@ footer{text-align:center;font-size:14px;color:var(--muted);padding:30px 16px}
 <div id="toast" class="toast" role="status" hidden></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.79.0/dist/umd/supabase.js"></script>
-<script src="vendor-agreement.js"></script>
+<script src="vendor-agreement.js?v=20261111"></script>
 <script>
 (function(){
 "use strict";
@@ -221,7 +221,11 @@ function iso(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"
 function nextSunday(){var d=weekStart();d.setDate(d.getDate()+7);return d}
 var toastT;function toast(m){var t=document.getElementById("toast");t.textContent=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(function(){t.hidden=true},3200)}
 function gc(path,title){try{window.goatcounter&&goatcounter.count({path:path,title:title,event:true})}catch(e){}}
-function rateOf(v){var p=PLANS[(v&&v.plan)||"starter"];return p?p.rate/100:0.05}
+function rateOf(v,d){return A.rateFor?A.rateFor(v,d)/100:0.15}
+function fmtLong(d){if(!d)return"";var x=new Date(String(d).length<=10?d+"T12:00:00":d);return x.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"})}
+/* e.g. "15% per sale until 12 November 2027, then 20%" (old-deal vendors: just their signed rate) */
+function feeText(v){var r=Math.round(rateOf(v)*100);if(!A.rateUntil||A.isLegacy((v&&v.contract)||{}))return r+"% per sale";
+  var u=A.rateUntil(v);return r<A.RATE.after&&u?r+"% per sale until "+fmtLong(u)+", then "+A.RATE.after+"%":r+"% per sale"}
 function q(sel,root){return (root||document).querySelector(sel)}
 function qa(sel,root){return Array.prototype.slice.call((root||document).querySelectorAll(sel))}
 function setErr(el,m){if(el){el.textContent=m||"";if(m)el.scrollIntoView({block:"center",behavior:"smooth"})}}
@@ -341,7 +345,7 @@ function money_owed(sales,payouts){
 /* ---------- set up my shop (first time) ---------- */
 function setupShop(){
   tabsEl.hidden=true;
-  var plan=PLANS[wantPlan]?wantPlan:"";
+  var plan=PLANS[wantPlan]&&!PLANS[wantPlan].hidden?wantPlan:"";
   var h='<h1 class="page">Set up your shop</h1><p class="lead">Tell shoppers about your brand, pick your plan and sign the agreement. Then you can add your products and photos.</p>';
   h+='<form id="sf" novalidate>'+
   '<fieldset><legend><i>1</i>Your brand</legend>'+
@@ -352,7 +356,7 @@ function setupShop(){
   '<label class="f">What you sell<select name="category" required><option value="">Choose one</option>'+CATS.filter(function(c){return c!=="Digital"}).map(function(c){return'<option>'+esc(c)+'</option>'}).join("")+'</select></label>'+
   '<label class="f">About your brand <span class="hint">optional · a few lines shoppers will see</span><textarea name="bio" maxlength="600"></textarea></label></fieldset>'+
   '<fieldset><legend><i>2</i>Your plan</legend><div class="pick">'+
-  Object.keys(PLANS).map(function(k){var p=PLANS[k];return'<label><input type="radio" name="plan" value="'+k+'"'+(k===plan?" checked":"")+'><div><b>'+p.name+' · '+(p.fee?"$"+p.fee+"/month":"FREE")+'</b><span>'+(p.fee?"+ "+p.rate+"% per sale. First month free.":"$0 a month + "+p.rate+"% per sale. No card needed.")+'</span></div></label>'}).join("")+
+  Object.keys(PLANS).filter(function(k){return!PLANS[k].hidden}).map(function(k){var p=PLANS[k];return'<label><input type="radio" name="plan" value="'+k+'"'+(k===plan?" checked":"")+'><div><b>'+p.name+' · '+(p.fee?"$"+p.fee+"/month":"FREE")+'</b><span>'+(p.fee?"+ "+A.RATE.first+"% per sale (20% from year two). First month free.":"$0 a month + "+A.RATE.first+"% per sale (20% from year two). No card needed.")+'</span></div></label>'}).join("")+
   '</div><p class="hint">Prices in BBD. You can change your plan anytime.</p></fieldset>'+
   '<fieldset><legend><i>3</i>How you get paid</legend><div class="pick">'+
   ["Bank transfer","FirstPay","BPWCCUL"].map(function(m){return'<label><input type="radio" name="payout" value="'+m+'"><div><b>'+m+'</b></div></label>'}).join("")+
@@ -367,7 +371,7 @@ function setupShop(){
   app.innerHTML=h;
   var f=q("#sf");q("#sout").onclick=signOut;
   function draw(){var r=f.querySelector("input[name=plan]:checked"),p=r?r.value:"",pl=PLANS[p];
-    q("#agSum").innerHTML=pl?("Consignment with The Girls Club on the <b>"+pl.name+"</b> plan: "+(pl.fee?"$"+pl.fee+" a month (first month free, then by card through PayPal)":"no monthly fee")+", plus <b>"+pl.rate+"%</b> per sale. You keep <b>"+(100-pl.rate)+"%</b>. Paid every Sunday. 14 days' notice to end."):"Pick a plan above to see your terms.";
+    q("#agSum").innerHTML=pl?("Consignment with The Girls Club on the <b>"+pl.name+"</b> plan: "+(pl.fee?"$"+pl.fee+" a month (first month free, then by card through PayPal)":"no monthly fee")+", plus <b>"+A.RATE.first+"%</b> per sale for your first year, then <b>"+A.RATE.after+"%</b>. You keep <b>"+(100-A.RATE.first)+"%</b> of each sale, then "+(100-A.RATE.after)+"%. Paid every Sunday. 14 days' notice to end."):"Pick a plan above to see your terms.";
     q("#agList").innerHTML=A.clauses(p).map(function(c){return"<li><b>"+esc(c[0])+".</b> "+esc(c[1])+"</li>"}).join("")}
   f.addEventListener("change",function(e){if(e.target.name==="plan")draw()});draw();
   f.onsubmit=function(e){e.preventDefault();var err=q("#serr");setErr(err,"");
@@ -381,7 +385,7 @@ function setupShop(){
     if(!f.agree.checked)return setErr(err,"Please tick the box to agree to the agreement.");
     var pl=PLANS[pr.value],now=new Date().toISOString();
     var row={business:v("business"),owner_name:v("owner_name"),phone:v("phone"),email:S.user.email,instagram:v("instagram").replace(/^@?/,v("instagram")?"@":""),category:v("category"),bio:v("bio"),plan:pr.value,payout_method:po.value,
-      contract:{name:v("sign"),signedAt:now,version:A.VERSION,plan:pr.value,rates:{now:pl.rate,free:pr.value==="starter"}}};
+      contract:{name:v("sign"),signedAt:now,version:A.VERSION,plan:pr.value,rates:{now:A.RATE.first,after:A.RATE.after,months:A.RATE.months,free:pr.value==="starter"}}};
     var btn=q("#sbtn");busy(btn,true,"Opening your shop…");
     sb.from("vendors").insert(row).select().single().then(function(r){
       if(r.error){busy(btn,false);return setErr(err,friendly(r.error))}
@@ -467,10 +471,10 @@ function vProducts(v){
   return h;
 }
 function vMoney(v){
-  var m=money_owed(S.sales,S.payouts),pl=PLANS[v.plan]||{rate:5};
+  var m=money_owed(S.sales,S.payouts),pl=PLANS[v.plan]||{},r=Math.round(rateOf(v)*100);
   var h='<h1 class="page">Sales & payouts</h1><p class="lead">You\'re paid every Sunday for everything sold the week before (Sunday to Saturday), by '+esc(v.payout_method||"your payout method")+'.</p>';
   h+='<div class="stats"><div class="stat big"><span>Due on '+esc(fmtDate(iso(nextSunday())))+'</span><b>'+money2(m.dueSunday)+'</b></div><div class="stat"><b>'+money2(m.thisWeek)+'</b><span>this week so far (paid next week)</span></div><div class="stat"><b>'+money2(m.paid)+'</b><span>paid to you so far</span></div></div>';
-  h+='<p class="small muted" style="margin-top:10px">Per-sale fee on your '+esc(pl.name||"")+' plan: '+pl.rate+'%. You keep '+(100-pl.rate)+'% of each sale.</p>';
+  h+='<p class="small muted" style="margin-top:10px">Per-sale fee: '+esc(feeText(v))+'. You keep '+(100-r)+'% of each sale right now.</p>';
   h+='<h2 class="sec">Sales</h2>'+salesRows(S.sales);
   h+='<h2 class="sec">Payouts</h2>'+(S.payouts.length?'<div class="rows">'+S.payouts.map(function(p){return'<div class="r"><div class="l"><b>'+esc(fmtDate(p.paid_on))+'</b><span>'+esc(p.method||"")+(p.ref?" · ref "+esc(p.ref):"")+'</span></div><div class="v">'+money2(p.amount)+'</div></div>'}).join("")+'</div>':'<div class="empty">No payouts yet.</div>');
   return h;
@@ -485,10 +489,10 @@ function vBusiness(v){
   '<label class="f">About your brand<textarea name="bio" maxlength="600">'+esc(v.bio)+'</textarea></label>'+
   '<label class="f">How you get paid<select name="payout_method">'+["Bank transfer","FirstPay","BPWCCUL"].map(function(m){return'<option'+(m===v.payout_method?" selected":"")+'>'+m+'</option>'}).join("")+'</select></label>'+
   '<p class="err" id="berr" role="alert"></p><div class="btnrow"><button class="btn" type="submit" id="bbtn">Save changes</button></div></form>';
-  h+='<div class="card"><h2 style="font-size:19px">Your plan: '+esc(pl.name||v.plan)+'</h2><p class="muted" style="margin-top:6px">'+(pl.fee?"$"+pl.fee+" a month + "+pl.rate+"% per sale.":"Free, "+pl.rate+"% per sale.")+' To change your plan, WhatsApp Marishka.</p><div class="btnrow"><a class="btn sm ghost" href="https://wa.me/'+WA+'?text='+encodeURIComponent("Hi Marishka! I'd like to change my Marketplace plan for "+v.business+".")+'" target="_blank" rel="noopener">Change my plan</a></div></div>';
+  h+='<div class="card"><h2 style="font-size:19px">Your plan: '+esc(pl.name||v.plan)+'</h2><p class="muted" style="margin-top:6px">'+(pl.fee?"$"+pl.fee+" a month + ":"Free, ")+esc(feeText(v))+'. To change your plan, WhatsApp Marishka.</p><div class="btnrow"><a class="btn sm ghost" href="https://wa.me/'+WA+'?text='+encodeURIComponent("Hi Marishka! I'd like to change my Marketplace plan for "+v.business+".")+'" target="_blank" rel="noopener">Change my plan</a></div></div>';
   h+=payBox(v,pl);
   var c=v.contract||{};
-  h+='<div class="card"><h2 style="font-size:19px">Your agreement</h2><p class="muted" style="margin-top:6px">Signed by '+esc(c.name||"")+(c.signedAt?" on "+esc(fmtDate(c.signedAt)):"")+'.</p><details><summary>Read the agreement</summary><ol class="agree">'+A.clauses(c.plan||v.plan).map(function(x){return"<li><b>"+esc(x[0])+".</b> "+esc(x[1])+"</li>"}).join("")+'</ol></details></div>';
+  h+='<div class="card"><h2 style="font-size:19px">Your agreement</h2><p class="muted" style="margin-top:6px">Signed by '+esc(c.name||"")+(c.signedAt?" on "+esc(fmtDate(c.signedAt)):"")+'.</p><details><summary>Read the agreement</summary><ol class="agree">'+A.clauses(c.plan||v.plan,c).map(function(x){return"<li><b>"+esc(x[0])+".</b> "+esc(x[1])+"</li>"}).join("")+'</ol></details></div>';
   h+='<div class="btnrow"><button class="btn ghost" id="sout">Sign out</button></div>';
   return h;
 }
@@ -633,7 +637,7 @@ function vendorCard(v){
   var pl=PLANS[v.plan]||{},c=v.contract||{},n=S.all.products.filter(function(p){return p.vendor_id===v.id});
   var m=money_owed(S.all.sales.filter(function(s){return s.vendor_id===v.id}),S.all.payouts.filter(function(p){return p.vendor_id===v.id}));
   return'<div class="card"><div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start"><div><h3 style="font-size:19px">'+esc(v.business)+'</h3><div class="muted small">'+esc(v.owner_name)+' · '+esc(v.category||"")+'</div></div>'+chip(v.status)+'</div>'+
-  '<div class="rows"><div class="r"><div class="l"><b>Plan</b><span>'+esc(pl.name||v.plan)+(pl.fee?" · $"+pl.fee+"/mo, free until "+esc(fmtDate(v.trial_ends)):" · free")+' · '+(pl.rate||"")+'% per sale</span></div></div>'+
+  '<div class="rows"><div class="r"><div class="l"><b>Plan</b><span>'+esc(pl.name||v.plan)+(pl.fee?" · $"+pl.fee+"/mo, free until "+esc(fmtDate(v.trial_ends)):" · free")+' · '+esc(feeText(v))+'</span></div></div>'+
   '<div class="r"><div class="l"><b>Agreement</b><span>'+(c.name?"Signed by "+esc(c.name)+" · "+esc(fmtDate(c.signedAt))+" · v"+esc(c.version||""):"Not signed")+'</span></div></div>'+
   '<div class="r"><div class="l"><b>Contact</b><span>'+esc(v.phone||"")+' · '+esc(v.email||"")+(v.instagram?" · "+esc(v.instagram):"")+'</span></div></div>'+
   '<div class="r"><div class="l"><b>Paid by</b><span>'+esc(v.payout_method||"")+'</span></div><div class="v">'+money2(m.dueSunday)+'<span>due Sunday</span></div></div>'+
@@ -743,10 +747,10 @@ function saleSheet(){
   var f=q("#xf",d);
   function fillP(){var ps=S.all.products.filter(function(p){return p.vendor_id===f.vendor.value});f.product.innerHTML=ps.map(function(p){return'<option value="'+p.id+'">'+esc(p.name)+' · '+money2(p.price)+'</option>'}).join("")||'<option value="">No products</option>';fillPrice()}
   function fillPrice(){var p=S.all.products.find(function(x){return x.id===f.product.value});if(p)f.price.value=Number(p.price).toFixed(2);calc()}
-  function calc(){var v=vById(f.vendor.value),r=rateOf(v),t=(Number(f.qty.value)||0)*(Number(f.price.value)||0);q("#xk",d).innerHTML="Total "+money2(t)+" · vendor gets <b>"+money2(t*(1-r))+"</b> · you keep "+money2(t*r)+" ("+Math.round(r*100)+"%)"}
+  function calc(){var v=vById(f.vendor.value),r=rateOf(v,f.date.value),t=(Number(f.qty.value)||0)*(Number(f.price.value)||0);q("#xk",d).innerHTML="Total "+money2(t)+" · vendor gets <b>"+money2(t*(1-r))+"</b> · you keep "+money2(t*r)+" ("+Math.round(r*100)+"%)"}
   f.vendor.onchange=fillP;f.product.onchange=fillPrice;f.oninput=calc;fillP();
   f.onsubmit=function(e){e.preventDefault();var p=S.all.products.find(function(x){return x.id===f.product.value});if(!p)return setErr(q("#xerr",d),"Pick a product.");
-    var v=vById(f.vendor.value),r=rateOf(v),qty=Math.max(1,parseInt(f.qty.value,10)||1),unit=Number(f.price.value)||0,tot=Math.round(qty*unit*100)/100,com=Math.round(tot*r*100)/100;
+    var v=vById(f.vendor.value),r=rateOf(v,f.date.value||today()),qty=Math.max(1,parseInt(f.qty.value,10)||1),unit=Number(f.price.value)||0,tot=Math.round(qty*unit*100)/100,com=Math.round(tot*r*100)/100;
     sb.from("sales").insert({vendor_id:v.id,product_id:p.id,product_name:p.name,qty:qty,unit_price:unit,total:tot,rate:r,commission:com,vendor_share:Math.round((tot-com)*100)/100,sale_date:f.date.value||today(),source:"in-person",order_ref:"IP-"+Date.now()}).select().single().then(function(x){
       if(x.error)return setErr(q("#xerr",d),friendly(x.error));S.all.sales.unshift(x.data);
       if(!p.digital){var ns=Math.max(0,(Number(p.stock)||0)-qty);sb.from("products").update({stock:ns}).eq("id",p.id).select().single().then(function(y){if(!y.error){var i=S.all.products.findIndex(function(z){return z.id===p.id});S.all.products[i]=y.data}renderAdmin()})}

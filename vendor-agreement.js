@@ -1,14 +1,37 @@
-/* The Girls Club Marketplace: vendor plans + agreement (shared by brands.html and vendors.html) */
+/* The Girls Club Marketplace: vendor plans + agreement (shared by brands.html and vendors.html)
+   Plans from 11 Nov 2026: Starter $0, Spotlight $75, Signature $125 a month (BBD),
+   all + 15% per sale for the vendor's first 12 months, then 20%.
+   Vendors who signed before then (version starting "2026-10") keep the deal they signed:
+   Starter 15%, paid plans (incl. the retired Essentials) 5%. */
 (function(){
-var PLANS={starter:{name:"Starter",fee:0,rate:15},essentials:{name:"Essentials",fee:40,rate:5},spotlight:{name:"Spotlight",fee:75,rate:5},signature:{name:"Signature",fee:125,rate:5}};
-var VERSION="2026-10-30-portal";
-function clauses(p){var pl=PLANS[p],r=pl?pl.rate:5,why=p==="starter"?"covers card fees, checkout, order handling and customer care":"covers card and payment fees";return [
-["Plan and monthly fee","The Vendor chooses a plan: Starter (free, no monthly fee, 15% per sale) or a paid plan with 5% per sale: Essentials ($40 a month), Spotlight ($75 a month) or Signature ($125 a month), in BBD."+(pl?" The Vendor has chosen "+pl.name+(pl.fee?" ($"+pl.fee+" a month).":" (free)."):"")+" The first month on any paid plan is free. For a paid plan, the Vendor sets up the monthly fee by debit or credit card through The Girls Club's secure PayPal sign-up link; it is charged automatically each month from the start of the second month. The Vendor may change or cancel the plan at any time; a change applies from the next monthly payment. If a monthly payment fails, The Girls Club may take it from the Vendor's next payout."],
+var RATE={first:15,after:20,months:12};
+var PLANS={starter:{name:"Starter",fee:0,rate:15},spotlight:{name:"Spotlight",fee:75,rate:15},signature:{name:"Signature",fee:125,rate:15},
+  essentials:{name:"Essentials",fee:40,rate:5,hidden:true}}; /* Essentials: retired 11 Nov 2026, kept only for vendors already on it */
+var OLD={starter:15,essentials:5,spotlight:5,signature:5};
+var VERSION="2026-11-11-plans";
+function isLegacy(c){return !!(c&&c.version&&/^2026-10/.test(c.version))}
+function addMonths(d,m){var x=new Date(d);x.setMonth(x.getMonth()+m);return x}
+/* first day of the 20% rate for a vendor (YYYY-MM-DD), from when their shop was set up */
+function rateUntil(v){var c=(v&&v.contract)||{};var start=(v&&v.created_at)||c.signedAt;if(!start)return"";var d=addMonths(start,RATE.months);
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+/* per-sale rate in % for vendor v on date (YYYY-MM-DD, default today) */
+function rateFor(v,date){var c=(v&&v.contract)||{};var plan=(v&&v.plan)||c.plan||"starter";
+  if(isLegacy(c))return OLD[plan]!=null?OLD[plan]:5;
+  var u=rateUntil(v);if(!u)return RATE.first;
+  var d=date||new Date().toISOString().slice(0,10);return String(d).slice(0,10)<u?RATE.first:RATE.after}
+function legacyPlanClause(p,pl){return "The Vendor chooses a plan: Starter (free, no monthly fee, 15% per sale) or a paid plan with 5% per sale: Essentials ($40 a month), Spotlight ($75 a month) or Signature ($125 a month), in BBD."+(pl?" The Vendor has chosen "+pl.name+(pl.fee?" ($"+pl.fee+" a month).":" (free)."):"")}
+function clauses(p,c){var pl=PLANS[p],legacy=isLegacy(c),feeTxt;
+  if(legacy){var r=OLD[p]!=null?OLD[p]:5,why=p==="starter"?"covers card fees, checkout, order handling and customer care":"covers card and payment fees";
+    feeTxt=r+"% of each sale to The Girls Club, which "+why+"; the Vendor keeps "+(100-r)+"%. Each sale uses the rate in force on the day it is sold. Apart from the plan's monthly fee (none on Starter) and this per-sale fee, there are no listing or hidden fees."}
+  else feeTxt="On every plan, The Girls Club takes "+RATE.first+"% of each sale during the Vendor's first "+RATE.months+" months (counted from the day the Vendor's shop is set up in the Vendor Portal) and "+RATE.after+"% after that. The fee covers card fees, checkout, order handling and customer care. The Vendor keeps "+(100-RATE.first)+"% of each sale in the first year and "+(100-RATE.after)+"% after that. Each sale uses the rate for the day it is sold, and The Girls Club will remind the Vendor at least 30 days before the rate changes. Apart from the plan's monthly fee (none on Starter) and this per-sale fee, there are no listing or hidden fees.";
+  var planTxt=legacy?legacyPlanClause(p,pl):("The Vendor chooses a plan: Starter (free, no monthly fee), Spotlight ($75 a month) or Signature ($125 a month), in BBD. Every plan also has the per-sale fee below. Spotlight and Signature add extra promotion for the Vendor's brand."+(pl?" The Vendor has chosen "+pl.name+(pl.fee?" ($"+pl.fee+" a month).":" (free)."):""));
+  return [
+["Plan and monthly fee",planTxt+" The first month on any paid plan is free. For a paid plan, the Vendor sets up the monthly fee by debit or credit card through The Girls Club's secure PayPal sign-up link; it is charged automatically each month from the start of the second month. The Vendor may change or cancel the plan at any time; a change applies from the next monthly payment. If a monthly payment fails, The Girls Club may take it from the Vendor's next payout."],
 ["Stock","The Vendor delivers products to The Girls Club in St. Thomas (or as agreed). Each delivery is logged on a Stock Received form signed by both."],
 ["Ownership","The Vendor owns all products until they are sold. Ownership passes straight from the Vendor to the customer at the time of sale."],
 ["Prices","The Vendor sets the retail price of each product, in BBD. Price changes go live once The Girls Club approves them in the Vendor Portal, normally within 2 working days. The Girls Club will not discount a Vendor's product without the Vendor's written OK. Shop-wide discount codes are paid for by The Girls Club, so the Vendor's share is worked out on the full listed price."],
 ["Selling and payments","The Girls Club lists, sells and delivers the products, and collects payment from customers. The Vendor does not take payment for Marketplace orders."],
-["Per-sale fee",r+"% of each sale to The Girls Club, which "+why+"; the Vendor keeps "+(100-r)+"%. Each sale uses the rate in force on the day it is sold. Apart from the plan's monthly fee (none on Starter) and this per-sale fee, there are no listing or hidden fees."],
+["Per-sale fee",feeTxt],
 ["Payouts","Every Sunday, The Girls Club pays the Vendor their share of all items sold in the week before (Sunday to Saturday), by the payout method the Vendor chose, with a statement. A sale is paid out only once the customer's payment has cleared. If a Sunday payout can't go through (for example a bank holiday), it is made the next working day."],
 ["Customer returns","The Girls Club handles customer questions and returns. If an item is returned for a fault, damage or wrong description that is the Vendor's responsibility, the refund is taken from the Vendor's next payout and the item goes back to the Vendor. Returns caused by The Girls Club are paid for by The Girls Club."],
 ["Unsold stock","Each batch stays on consignment for 60 days. After that the Vendor may renew it, swap it for new stock, or collect it within 14 days. Stock not collected within 30 days after a written reminder may be returned to the Vendor at the Vendor's cost."],
@@ -22,5 +45,5 @@ function clauses(p){var pl=PLANS[p],r=pl?pl.rate:5,why=p==="starter"?"covers car
 ["Ending the agreement","Either side may end this agreement with 14 days' written notice (WhatsApp or email), and the monthly plan payment is then cancelled. The Girls Club then pays all sales owed at the next Sunday payout, and the Vendor collects unsold stock within 14 days. The Girls Club may end it at once if the Vendor breaks the Product quality and safety point."],
 ["General","The Vendor and The Girls Club are independent businesses; this is not a partnership or employment. Changes must be agreed in writing by both. This agreement is governed by the laws of Barbados."]];}
 
-window.TGC_AGREE={PLANS:PLANS,clauses:clauses,VERSION:VERSION};
+window.TGC_AGREE={PLANS:PLANS,RATE:RATE,clauses:clauses,rateFor:rateFor,rateUntil:rateUntil,isLegacy:isLegacy,VERSION:VERSION};
 })();
