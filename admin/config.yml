@@ -116,6 +116,7 @@ collections:
           - {name: title, label: Title, widget: string}
           - {name: intro, label: Intro, widget: text}
           - {name: points, label: "Points", widget: list, field: {name: point, label: Point, widget: string}}
+          - {name: booking_url, label: "Booking page link (your Hustle Book link)", widget: string, required: false}
           - {name: fee, label: "Application fee (BBD)", widget: number, value_type: float, min: 0}
           - {name: deposit, label: "Deposit to book (BBD)", widget: number, value_type: float, min: 0}
           - {name: length_minutes, label: "Appointment length (minutes)", widget: number, value_type: int, min: 15}
