@@ -407,7 +407,7 @@
     },
     {
      "code": "/deliver",
-     "when": "Delivery order ($20 island-wide)",
+     "when": "Delivery order ($12 island-wide)",
      "text": "Your order is packed and ready 🚗 Delivery is island-wide. Please send me your full address and a good time for someone to be home, and I'll give you your delivery day 💕",
      "id": "w005"
     },
@@ -1171,7 +1171,7 @@
    "date": "Tue 27 Oct",
    "time": "19:00",
    "reel": false,
-   "cap": "Ordering is easy 💗\n\n1. Add your look to the bag at thegirlsclub246.com\n2. Pick delivery (BBD $20) or free collection in St. Thomas\n3. Pay by FirstPay, BPWCCUL, PayPal or cash on collection\n4. We confirm your order on WhatsApp\n\nShop 24/7 at the link in our bio.\n\n#TheGirlsClub246 #Barbados #BajanBeauty #ClusterLashes #LashesBarbados",
+   "cap": "Ordering is easy 💗\n\n1. Add your look to the bag at thegirlsclub246.com\n2. Pick delivery (BBD $12) or free collection in St. Thomas\n3. Pay by FirstPay, BPWCCUL, PayPal or cash on collection\n4. We confirm your order on WhatsApp\n\nShop 24/7 at the link in our bio.\n\n#TheGirlsClub246 #Barbados #BajanBeauty #ClusterLashes #LashesBarbados",
    "title": "Ordering is easy 💗"
   }
  ],
