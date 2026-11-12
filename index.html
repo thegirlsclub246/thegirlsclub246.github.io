@@ -869,22 +869,10 @@ html.shop-mode main>*:not(#shop){display:none!important}
         <p class="muted" data-c="booking.note"></p>
       </div>
       <div class="planner">
-        <h3>Choose your appointment</h3>
-        <p class="cal-step"><span>1</span> Pick a date</p>
-        <div class="cal-head">
-          <button type="button" class="cal-nav" id="calPrev" aria-label="Previous month">&#8249;</button>
-          <b id="calTitle" aria-live="polite"></b>
-          <button type="button" class="cal-nav" id="calNext" aria-label="Next month">&#8250;</button>
-        </div>
-        <div class="cal-wk" aria-hidden="true"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
-        <div class="days" id="days" role="grid"></div>
-        <p class="cal-key"><i class="k-open"></i>Open <i class="k-sel"></i>Picked <span>Faded = full or closed</span></p>
-        <p class="cal-step" id="timeStep"><span>2</span> <em id="timeTitle">Pick a time</em></p>
-        <div class="slots" id="slots"></div>
-        <div class="foot">
-          <span class="muted" id="pickMsg">Pick a date, then a time.</span>
-          <button class="btn" id="bookBtn" disabled style="padding:.6rem 1.2rem;font-size:.92rem">Add deposit to bag</button>
-        </div>
+        <h3>Book your appointment</h3>
+        <p style="margin:0 0 1rem">Pick your set, day and time on our booking page, and we'll confirm your spot with you.</p>
+        <a class="btn" id="bookLink" href="https://hustlekit-c60.pages.dev/hustle-book-online/book.html?b=the-girls-club" target="_blank" rel="noopener" style="display:block;width:100%;text-align:center">Book an appointment</a>
+        <p class="muted" style="text-align:center;margin:.75rem 0 0">Opens our booking page in a new tab</p>
       </div>
     </div>
   </section>
@@ -1475,63 +1463,9 @@ function renderDrawer(){
 {const a=document.getElementById("promoPill"),b=document.getElementById("promoPill2");if(a&&b&&!a.hidden){b.innerHTML=a.innerHTML;b.hidden=false}}
 renderAcademy();
 
-/* booking */
-/* real hours: Mon–Fri 4:30–7:30pm, Sat–Sun 9am–7:30pm, 45-minute appointments */
-const SLOT_MIN=Math.max(15,+B.length_minutes||45);
-const HOURS={weekday:[mins(B.weekday_open),mins(B.weekday_close)],weekend:[mins(B.weekend_open),mins(B.weekend_close)]};
-const CLOSED=new Set((B.closed_dates||[]).map(x=>String(x).slice(0,10)));
-const DN=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-const fmt=m=>{const h=Math.floor(m/60),mm=m%60,h12=((h+11)%12)+1;return `${h12}:${String(mm).padStart(2,"0")}${h<12?"am":"pm"}`};
-const AHEAD=Math.max(7,+B.book_ahead_days||90);
-const ymd=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
-const MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
-const today0=(()=>{const n=new Date();return new Date(n.getFullYear(),n.getMonth(),n.getDate())})();
-const lastDay=new Date(today0.getFullYear(),today0.getMonth(),today0.getDate()+AHEAD-1);
-function dayInfo(d){
-  const now=new Date(),isToday=+d===+today0;
-  const wk=d.getDay()===0||d.getDay()===6;const [st,en]=wk?HOURS.weekend:HOURS.weekday;
-  const iso=ymd(d),times=[];
-  if(d>=today0&&d<=lastDay&&!CLOSED.has(iso)&&st!=null&&en!=null)for(let m=st;m+SLOT_MIN<=en;m+=SLOT_MIN){
-    if(isToday&&m<=now.getHours()*60+now.getMinutes()+60)continue; // need an hour's notice today
-    times.push(fmt(m))}
-  return {key:d.toDateString(),d:DN[d.getDay()],n:d.getDate(),mon:MN[d.getMonth()],times,today:isToday,date:d};
-}
-const bookedSlots=new Set();
-let viewY=today0.getFullYear(),viewM=today0.getMonth(),selDay=null,selSlot=null,pendingSlot=null;
-const daysEl=document.getElementById("days"),slotsEl=document.getElementById("slots"),bookBtn=document.getElementById("bookBtn"),msg=document.getElementById("pickMsg");
-const calTitle=document.getElementById("calTitle"),calPrev=document.getElementById("calPrev"),calNext=document.getElementById("calNext"),timeTitle=document.getElementById("timeTitle");
-function openCount(day){return day.times.filter(t=>!bookedSlots.has(day.key+" "+t)).length}
-// start on the first month that still has an open day (e.g. late in the month)
-(function(){for(let i=0;i<AHEAD;i++){const d=new Date(today0.getFullYear(),today0.getMonth(),today0.getDate()+i);if(dayInfo(d).times.length){viewY=d.getFullYear();viewM=d.getMonth();return}}})();
-function renderDays(){
-  calTitle.textContent=MONTHS[viewM]+" "+viewY;
-  calPrev.disabled=viewY<today0.getFullYear()||(viewY===today0.getFullYear()&&viewM<=today0.getMonth());
-  calNext.disabled=new Date(viewY,viewM+1,1)>lastDay;
-  const first=new Date(viewY,viewM,1),n=new Date(viewY,viewM+1,0).getDate();let h="";
-  for(let i=0;i<first.getDay();i++)h+=`<span class="day blank" aria-hidden="true"></span>`;
-  for(let k=1;k<=n;k++){const s=dayInfo(new Date(viewY,viewM,k)),open=openCount(s);
-    const lab=`${s.d} ${k} ${MONTHS[viewM]}${s.today?" (today)":""}${open?`, ${open} times open`:", not available"}`;
-    h+=`<button type="button" class="day${s.today?" today":""}" data-k="${s.key}" ${open?"":"disabled"} aria-pressed="${selDay&&selDay.key===s.key}" aria-label="${lab}">${k}</button>`}
-  daysEl.innerHTML=h;
-}
-function renderSlots(){
-  if(!selDay){timeTitle.textContent="Pick a time";slotsEl.innerHTML=`<span class="muted">Tap a date above to see open times.</span>`;return}
-  const s=selDay;timeTitle.textContent=`Pick a time · ${s.d} ${s.n} ${s.mon}`;
-  slotsEl.innerHTML=s.times.length?s.times.map(t=>{const k=s.key+" "+t;return `<button type="button" class="slot" data-k="${k}" data-t="${t}" ${bookedSlots.has(k)?"disabled":""} aria-pressed="${selSlot===k}">${t}</button>`}).join(""):`<span class="muted">No times left on this day. Try another date.</span>`;
-}
-function goMonth(dir){viewM+=dir;if(viewM<0){viewM=11;viewY--}if(viewM>11){viewM=0;viewY++}renderDays()}
-calPrev.onclick=()=>{if(!calPrev.disabled)goMonth(-1)};calNext.onclick=()=>{if(!calNext.disabled)goMonth(1)};
-{let x0=null,y0=0;daysEl.addEventListener("touchstart",e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
- daysEl.addEventListener("touchend",e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;x0=null;
-  if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.5){const b=dx<0?calNext:calPrev;if(!b.disabled)goMonth(dx<0?1:-1)}},{passive:true})}
-daysEl.addEventListener("click",e=>{const b=e.target.closest(".day");if(!b||b.disabled||!b.dataset.k)return;selDay=dayInfo(new Date(b.dataset.k));selSlot=null;bookBtn.disabled=true;msg.textContent="Now pick a time.";renderDays();renderSlots();
-  const ts=document.getElementById("timeStep");if(ts&&window.innerWidth<821){const r=ts.getBoundingClientRect();if(r.bottom>window.innerHeight-80)ts.scrollIntoView({behavior:"smooth",block:"start"})}});
-let selTime="";
-slotsEl.addEventListener("click",e=>{const b=e.target.closest(".slot");if(!b||b.disabled)return;selSlot=b.dataset.k;selTime=b.dataset.t;bookBtn.disabled=false;const s=selDay;msg.textContent=`${s.d} ${s.n} ${s.mon} at ${selTime}`;renderSlots();
-  if(window.innerWidth<821){const f=bookBtn.getBoundingClientRect();if(f.bottom>window.innerHeight-10)bookBtn.scrollIntoView({behavior:"smooth",block:"center"})}});
-bookBtn.onclick=()=>{const s=selDay;cart=cart.filter(c=>c.id!=="deposit");pendingSlot=selSlot;
-  addItem({id:"deposit",name:"Appointment deposit",price:B.deposit,single:true,note:`${s.d} ${s.n} ${s.mon}, ${selTime}`})};
-renderDays();renderSlots();
+/* booking: appointments are taken on Hustle Book (link set in content/booking.json -> booking_url) */
+let pendingSlot=null;
+if(B.booking_url)document.getElementById("bookLink").href=B.booking_url;
 
 /* side menu */
 (function(){const m=document.getElementById("sideMenu"),sc=document.getElementById("menuScrim"),b=document.getElementById("openMenu");
@@ -1555,7 +1489,7 @@ document.querySelectorAll(".wa-num").forEach(el=>el.textContent=WHATSAPP?("+"+WH
  products.forEach(p=>idx.push({k:"product",p,title:p.name,words:[p.name,p.type,p.brand||"",p.vendor?"partner brand local":"girls club"].join(" "),body:[p.desc,(p.opts||[]).join(" "),CAT[p.cat]||String(p.cat).replace(/^v:/,"")+" "+(p.type||"")].join(" ")}));
  list(A.courses).filter(c=>c&&c.show!==false&&c.title&&A.show!==false).forEach(c=>idx.push({k:"course",title:c.title,sub:(c.subtitle||"Online course")+" · BBD "+money(num(c.price)),target:"course-"+slug(c.title),icon:"🎓",words:c.title+" "+(c.subtitle||""),body:[c.description,list(c.points).join(" "),"course courses class classes training train learn academy online certificate certified enrol enroll lesson tech technician"].join(" ")}));
  const PAGES=[
-  {title:"Book a lash appointment",sub:"Pick a day and time · deposit to hold your spot",target:"book",icon:"📅",words:"book booking appointment",body:list(B.points).join(" ")+" lash set install full set refill fill appointment deposit slot time date calendar schedule",show:B.show!==false},
+  {title:"Book a lash appointment",sub:"Pick your set, day and time on our booking page",target:"book",icon:"📅",words:"book booking appointment",body:list(B.points).join(" ")+" lash set install full set refill fill appointment deposit slot time date calendar schedule",show:B.show!==false},
   {title:"Delivery & collection",sub:"Island-wide delivery $"+num(S.delivery_fee)+" BBD · free collection in "+(S.collection_area||"St. Thomas"),href:"policies.html",icon:"🚚",words:"delivery collection",body:"deliver delivery shipping ship collect collection pickup pick up st thomas parish island wide how long"},
   {title:"Returns, exchanges & shop policies",sub:"Exchanges, faulty items, deposits and courses",href:"policies.html",icon:"📄",words:"policies returns",body:"return returns refund refunds exchange faulty broken policy policies terms cancel cancellation deposit"},
   {title:"How to pay",sub:"Card, FirstPay, BPWCCUL or cash on collection",target:"accepts",icon:"💳",words:"pay payment",body:"pay payment card debit credit visa mastercard firstpay first pay bpwccul credit union cash transfer"},
