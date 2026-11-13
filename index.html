@@ -2,6 +2,24 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script>
+/* ==TWO SITES== thegirlsclub246.com = the Marketplace only. academy.thegirlsclub246.com = the Academy (same file, loaded by the academy site).
+   Bookings live in Hustle Book. Old links (#academy, #eyelash, #cluster, #book…) are forwarded. */
+(function(){var W=window,h=location.hostname,q=location.search;
+var ac=W.TGC_SITE_FORCE==="academy"||/^academy\./i.test(h)||/[?&]site=academy(&|$)/.test(q);
+W.TGC_SITE=ac?"academy":"shop";W.TGC_HOME="https://thegirlsclub246.com/";W.TGC_ACAD="https://academy.thegirlsclub246.com/";
+W.TGC_BOOK="https://hustlekit-c60.pages.dev/#hustle-book";
+W.TGC_DATA=/^academy\.thegirlsclub246\.com$/i.test(h)?W.TGC_HOME:"";
+document.documentElement.setAttribute("data-site",W.TGC_SITE);
+var x="";try{x=decodeURIComponent(location.hash.slice(1))}catch(e){}
+if(W.TGC_SITE_FORCE)return;
+if(/^(book|booking|appointment|appointments)$/i.test(x)){location.replace(W.TGC_BOOK);return}
+if(!ac&&/^(academy|eyelash|cluster|results|courses|course-.+)$/.test(x)){location.replace(W.TGC_ACAD+q+"#"+x.replace(/^courses$/,"academy"));return}
+if(ac&&/^(shop|lashes|marketplace|products|digital)(\/|$)/.test(x)){location.replace(W.TGC_HOME+"#"+x);return}
+if(ac&&/^p-course-/.test(x)){try{history.replaceState(null,"",location.pathname+q+"#"+x.slice(2))}catch(e){}}
+if(ac)W.goatcounter={path:function(p){return "/academy"+p}};
+})();
+</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="only light">
 <meta name="description" content="The Girls Club: DIY cluster lashes and in-person lash appointments in Barbados. Shop online 24/7 and pay by card, FirstPay or BPWCCUL.">
@@ -42,6 +60,11 @@
 .loading-note{text-align:center;padding:2rem;color:#85506b}
 </style>
 <title>The Girls Club</title>
+<style>
+#book{display:none!important}
+html[data-site=shop] #academy,html[data-site=shop] #results,html[data-site=shop] #sideHours{display:none!important}
+html[data-site=academy] #market,html[data-site=academy] #shop,html[data-site=academy] #soon,html[data-site=academy] #highlights,html[data-site=academy] #sideHours{display:none!important}
+</style>
 <meta name="apple-mobile-web-app-title" content="The Girls Club">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1013,7 +1036,7 @@ html.shop-mode main>*:not(#shop){display:none!important}
     <label class="search-field"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></svg><input id="searchInput" type="search" placeholder="Search lashes, lip gloss, courses…" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-label="Search" aria-controls="searchResults"><button class="search-clear" id="searchClear" type="button" aria-label="Clear search" hidden>×</button></label>
     <button class="search-close" id="closeSearch" type="button">Close</button>
   </div>
-  <div class="search-sugg" id="searchSugg"><p>Popular searches</p><div class="chips"><button type="button">Cluster lashes</button><button type="button">Lip gloss</button><button type="button">Lash course</button><button type="button">Gift voucher</button><button type="button">Book appointment</button><button type="button">Delivery</button></div></div>
+  <div class="search-sugg" id="searchSugg"><p>Popular searches</p><div class="chips"><button type="button">Cluster lashes</button><button type="button">Lip gloss</button><button type="button">Gift voucher</button><button type="button">Bundles</button><button type="button">Delivery</button><button type="button">Sell with us</button></div></div>
   <div id="searchResults" aria-live="polite"></div>
 </div>
 
@@ -1054,7 +1077,10 @@ html.shop-mode main>*:not(#shop){display:none!important}
 (async()=>{
 /* ==TGC DATA== Everything you can change lives in the /content folder and is edited at /admin */
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const load=n=>fetch("content/"+n+".json",{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error(n);return r.json()});
+const SITE=window.TGC_SITE||"shop",ACAD=SITE==="academy",DATA=window.TGC_DATA||"";
+const U=p=>{p=String(p||"");return !p||!DATA||/^(https?:|data:|blob:|\/\/)/i.test(p)?p:DATA+p.replace(/^\//,"")};
+if(DATA)document.querySelectorAll("[src],[href]").forEach(el=>{const a=el.hasAttribute("src")?"src":"href",v=el.getAttribute(a)||"";if(v&&!/^(#|https?:|data:|mailto:|tel:|\/\/|javascript:)/i.test(v))el.setAttribute(a,U(v))});
+const load=n=>fetch(DATA+"content/"+n+".json",{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error(n);return r.json()});
 let S,H,PR,B,A,G,AB,SO;
 try{[S,H,PR,B,A,G,AB,SO]=await Promise.all(["settings","home","products","booking","academy","gallery","about","coming-soon"].map(load));}
 catch(e){console.error(e);document.getElementById("mkPreview").innerHTML=document.getElementById("mkOut").innerHTML=`<p class="loading-note">Sorry, the shop didn't load. Please refresh the page.</p>`;return}
@@ -1099,7 +1125,7 @@ let lastOrder=null;
 const seenIds=new Set();
 const products=list(PR.products).filter(p=>p.show!==false&&p.name).map(p=>{
   let id=p.id||slug(p.name);while(seenIds.has(id))id+="-2";seenIds.add(id);
-  return{id,img:p.image||"",alt:p.image_alt||"",name:String(p.name),type:String(p.type||""),cat:p.category||"lashes",price:num(p.price),was:num(p.was_price)>num(p.price)?num(p.was_price):0,desc:String(p.description||""),tag:String(p.tag||""),opts:list(p.options).map(String),digital:!!p.digital,course:String(p.course||"")}});
+  return{id,img:U(p.image),alt:p.image_alt||"",name:String(p.name),type:String(p.type||""),cat:p.category||"lashes",price:num(p.price),was:num(p.was_price)>num(p.price)?num(p.was_price):0,desc:String(p.description||""),tag:String(p.tag||""),opts:list(p.options).map(String),digital:!!p.digital,course:String(p.course||"")}});
 /* ==MARKETPLACE== partner brands (content/marketplace.json, synced from the vendor portal) sit in the same grid as our own products */
 let MK={};try{MK=await load("marketplace")}catch(e){MK={}}
 const mkBrands=list(MK.brands).filter(b=>b&&b.slug&&b.name);
@@ -1128,7 +1154,7 @@ list(MK.products).filter(p=>p&&p.id&&p.name&&brandName(p.brand)).forEach(p=>prod
   /* banner */
   const bn=document.getElementById("banner"),bi=list(H.banner).map(String);
   if(H.banner_on&&bi.length){const g=`<div class="mq-group">${Array(Math.max(1,Math.ceil(6/bi.length))).fill(bi).flat().map(t=>`<span>${esc(t)}</span>`).join("")}</div>`;bn.innerHTML=`<div class="mq-track" aria-hidden="true">${g}${g}</div>`;bn.setAttribute("aria-label",bi.join(": "));bn.hidden=false}
-  {const hi=document.getElementById("heroImg");if(H.hero_image&&hi)hi.src=H.hero_image;}
+  {const hi=document.getElementById("heroImg");if(H.hero_image&&hi)hi.src=U(H.hero_image);}
   document.getElementById("highlights").innerHTML=list(H.highlights).map(t=>`<span>${esc(t)}</span>`).join("");
   /* booking */
   if(B.show===false)hide("book");
@@ -1144,9 +1170,9 @@ list(MK.products).filter(p=>p&&p.id&&p.name&&brandName(p.brand)).forEach(p=>prod
   /* gallery */
   const ph=list(G.photos).filter(p=>p.image);
   if(G.show===false||!ph.length)hide("results");
-  document.getElementById("gallery").innerHTML=ph.map(p=>`<img src="${esc(p.image)}" alt="${esc(p.alt||"Girls Club lash set")}" loading="lazy" width="600" height="750">`).join("");
+  document.getElementById("gallery").innerHTML=ph.map(p=>`<img src="${esc(U(p.image))}" alt="${esc(p.alt||"Girls Club lash set")}" loading="lazy" width="600" height="750">`).join("");
   /* about */
-  if(AB.photo)document.getElementById("aboutPhoto").src=AB.photo;
+  if(AB.photo)document.getElementById("aboutPhoto").src=U(AB.photo);
   document.getElementById("aboutBadges").innerHTML=list(AB.badges).map(t=>`<span>${esc(t)}</span>`).join("");
   document.getElementById("aboutText").innerHTML=list(AB.paragraphs).map(t=>`<p>${esc(t)}</p>`).join("");
   /* coming soon */
@@ -1160,6 +1186,47 @@ list(MK.products).filter(p=>p&&p.id&&p.name&&brandName(p.brand)).forEach(p=>prod
   document.querySelectorAll(".collect-area").forEach(e=>e.textContent=S.collection_area||"");
   const acc=[];if(PAYPAL_ME)acc.push("Debit &amp; credit cards");acc.push("FirstPay");if(String(S.bpwccul_number||"").trim())acc.push("BPWCCUL transfer");if(S.cash_on_collection)acc.push("Cash on collection");
   document.getElementById("accepts").innerHTML=acc.map(a=>`<li>${a}</li>`).join("");
+}
+
+/* ==TWO SITES== header, menu, hero and footer for each site */
+{
+  const BOOK=String(S.booking_link||window.TGC_BOOK||"").trim(),HOME=window.TGC_HOME,AC=window.TGC_ACAD;
+  const $=id=>document.getElementById(id),setHTML=(sel,h)=>document.querySelectorAll(sel).forEach(e=>e.innerHTML=h);
+  const ext=(u,t,c)=>`<a${c?` class="${c}"`:""} href="${esc(u)}" target="_blank" rel="noopener">${t}</a>`;
+  const bn=$("banner");
+  const keep=t=>/course|enrol|academy|certif|book|appointment/i.test(t)===ACAD;
+  const bi=list(H.banner).map(String).filter(keep);
+  if(H.banner_on&&bi.length){const g=`<div class="mq-group">${Array(Math.max(1,Math.ceil(6/bi.length))).fill(bi).flat().map(t=>`<span>${esc(t)}</span>`).join("")}</div>`;bn.innerHTML=`<div class="mq-track" aria-hidden="true">${g}${g}</div>`;bn.setAttribute("aria-label",bi.join(": "));bn.hidden=false}else bn.hidden=true;
+  const hero=document.querySelector(".hero"),perks=document.querySelectorAll(".perks-row .perk");
+  const perk=(i,t,p)=>{const k=perks[i];if(k){k.querySelector("h3").textContent=t;k.querySelector("p").textContent=p}};
+  if(ACAD){
+    document.title="The Girls Club Academy · Online lash courses in Barbados";
+    setHTML("header nav",`<a href="#academy">Courses</a>${BOOK?ext(BOOK,"Book"):""}<a href="#results">Results</a><a href="#about">About</a><a href="${HOME}">Marketplace</a>`);
+    setHTML(".side-links",`<a href="#search" data-open-search>Search</a><a href="#top">Home</a><a href="#academy">Online courses</a>${BOOK?ext(BOOK,"Book an appointment"):""}<a href="#results">The glow up</a><a href="#about">About Us</a><a href="${HOME}">The Marketplace</a>`);
+    document.querySelectorAll(".logo small,.side-tag").forEach(e=>e.textContent="Academy · Barbados");
+    if(hero){hero.querySelector(".eyebrow").textContent=A.eyebrow||"Learn from home";
+      hero.querySelector("h1").innerHTML=`Learn lashes <span>from home</span>`;
+      hero.querySelector(".lead-hero").textContent=A.hero_text||"Online lash courses with Marishka Gittens, a certified esthetician and trained teacher in Barbados. Learn at your own pace on your phone and get certified when you finish.";
+      hero.querySelector(".row").innerHTML=`<a class="btn" href="#academy">See the courses</a>${BOOK?ext(BOOK,"Book an appointment","btn white"):""}`}
+    perk(0,"Learn from your phone","Watch the lessons any time, at your own pace.");
+    {const ic=perks[0]&&perks[0].querySelector(".ico");if(ic)ic.innerHTML=`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ff4d94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg>`}
+    perk(1,"Certificate","Get certified when you finish your course.");
+    perk(2,"Easy payment","Card, FirstPay or BPWCCUL.");
+    perk(3,"Certified esthetician","Taught by Marishka Gittens.");
+    const fb=document.querySelector("footer .brand p:not(.foot-logo)");if(fb)fb.textContent="Online lash courses and lash appointments with Marishka Gittens, certified esthetician in Barbados.";
+    setHTML("footer .cols>div:nth-child(2) ul",`<li><a href="#academy">Online courses</a></li>${BOOK?`<li>${ext(BOOK,"Book an appointment")}</li>`:""}<li><a href="#results">The glow up</a></li><li><a href="#about">About Us</a></li><li><a href="${HOME}">The Marketplace</a></li><li><a href="${HOME}policies.html">Policies &amp; privacy</a></li>`);
+    document.querySelectorAll('a[href="#book"]').forEach(a=>{if(BOOK){a.href=BOOK;a.target="_blank";a.rel="noopener"}else(a.closest("li")||a).hidden=true});
+    const lgl=document.querySelector("footer .legal");if(lgl)lgl.innerHTML=`&copy; 2026 The Girls Club Academy · Online courses, learn any time · Prices in BBD (Barbados dollars) · <a href="${HOME}policies.html" style="color:inherit">Policies</a>`;
+  }else{
+    setHTML("header nav",`<a href="#shop">Marketplace</a><a href="#shop/products">Products</a><a href="#shop/digital">Digital</a><a href="brands.html">Sell with us</a><a href="#about">About</a>`);
+    setHTML(".side-links",`<a href="#search" data-open-search>Search</a><a href="#top">Home</a><a href="#shop">The Marketplace</a><a href="#shop/products">Products</a><a href="#shop/digital">Digital products</a><a href="brands.html">Sell with us</a><a href="#about">About Us</a><a href="#soon">Coming soon</a><a class="join-link" href="${esc(S.join_link||"#")}" target="_blank" rel="noopener">Join the club</a>`);
+    if(hero){const h1=hero.querySelector("h1");if(h1)h1.innerHTML=`Lashes, lips <span>&amp; local finds</span>`;
+      const lh=hero.querySelector(".lead-hero");if(lh&&/course|enrol|book/i.test(lh.textContent))lh.textContent="Cluster lash trays, lip treats, gift vouchers and Bajan small businesses, all in one place. Shop any time, day or night, delivered island-wide.";
+      hero.querySelector(".row").innerHTML=`<a class="btn" href="#shop">Shop the Marketplace</a><a class="btn white" href="brands.html">Sell with us</a>`}
+    perk(1,"Shop open 24/7","Order any time, day or night.");
+    const fb=document.querySelector("footer .brand p:not(.foot-logo)");if(fb)fb.textContent="The Girls Club Marketplace. Lashes, lip treats, gifts and Bajan small businesses in one place.";
+    setHTML("footer .cols>div:nth-child(2) ul",`<li><a href="#shop">Marketplace</a></li><li><a href="#shop/products">Products</a></li><li><a href="#shop/digital">Digital products</a></li><li><a href="brands.html">Sell with us</a></li><li><a href="#about">About Us</a></li><li><a href="#soon">Coming soon</a></li><li><a href="policies.html">Delivery, returns &amp; privacy</a></li>`);
+  }
 }
 
 function renderAcademy(){
@@ -1225,7 +1292,7 @@ const offPct=p=>p.was>p.price?Math.round((1-p.price/p.was)*100):0;
 const pHref=p=>"#p-"+encodeURIComponent(p.id);
 const priceHTML=p=>`${p.was?`<s class="was" aria-label="Was ${money(p.was)}">${money(p.was)}</s> `:""}${money(p.price)}`;
 const courseItems=A.show===false?[]:list(A.courses).filter(c=>c&&c.show!==false&&c.title).map(c=>{const pr=num(c.price),w=num(c.was_price);
-  return{id:"course-"+slug(c.title),isCourse:true,digital:true,course:String(c.title),img:String(c.image||""),alt:"",name:String(c.title),type:"Online course",cat:"courses",price:pr,was:w>pr?w:0,desc:String(c.description||c.subtitle||""),tag:String(c.badge||""),opts:[],points:list(c.points).map(String),payhip:String(c.payhip_id||""),usdNote:String(c.usd_note||""),stock:null}});
+  return{id:"course-"+slug(c.title),isCourse:true,digital:true,course:String(c.title),img:U(c.image),alt:"",name:String(c.title),type:"Online course",cat:"courses",price:pr,was:w>pr?w:0,desc:String(c.description||c.subtitle||""),tag:String(c.badge||""),opts:[],points:list(c.points).map(String),payhip:String(c.payhip_id||""),usdNote:String(c.usd_note||""),stock:null}});
 const shopItems=products.concat(courseItems);
 const isDig=p=>!!(p.digital||p.isCourse||p.cat==="vouchers"||p.cat==="guides");
 const dCat=p=>p.isCourse?"courses":isDig(p)&&(p.cat==="gifts"||p.cat==="vouchers")?"vouchers":p.cat;
@@ -1333,6 +1400,7 @@ function pdHTML(p){const o=offPct(p),out=isOut(p),dig=isDig(p);
     ${(p.points||[]).length?`<ul class="pd-points">${p.points.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}
     ${p.opts.length?`<p class="pd-lbl" id="pdOptL">Choose one</p><div class="pd-opts" role="radiogroup" aria-labelledby="pdOptL">${p.opts.map((x,i)=>`<button type="button" role="radio" aria-checked="${i===0}" data-pd-opt="${esc(x)}">${esc(x)}</button>`).join("")}</div>`:""}
     <div class="pd-buy">${out?`<button class="add" type="button" disabled>Sold out</button>`:p.isCourse?`<button class="add" type="button" data-pd-add>Enrol · FirstPay or BPWCCUL · ${money(p.price)}</button>`:`<div class="qty"><button type="button" data-pd-q="-1" aria-label="One less">−</button><output aria-live="polite" id="pdQty">1</output><button type="button" data-pd-q="1" aria-label="One more">+</button></div><button class="add" type="button" data-pd-add>Add to bag · ${money(p.price)}</button>`}</div>
+    ${p.isCourse&&!ACAD?`<a class="pd-wa" href="${esc(window.TGC_ACAD+"#course-"+slug(p.course))}">See the full course on the Academy site</a>`:""}
     ${p.isCourse&&p.payhip?`<a class="pd-card" href="https://payhip.com/b/${encodeURIComponent(p.payhip)}" target="_blank" rel="noopener">Pay by card · instant access</a>${p.usdNote?`<p class="pd-note">${esc(p.usdNote)}</p>`:""}`:""}
     <a class="pd-wa" data-pd-wa href="${esc(waLink(`Hi The Girls Club! I have a question about ${p.name}${p.type?" ("+p.type+")":""}, BBD ${money(p.price)}.`))}" target="_blank" rel="noopener">Ask about this on WhatsApp</a>
     <ul class="pd-facts">${facts.map(f=>`<li>${f}</li>`).join("")}</ul>
@@ -1370,6 +1438,7 @@ function enterShop(){if(mode==="shop")return;homeY=window.scrollY;mode="shop";do
   try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"/shop",title:"Marketplace"})}catch(x){}window.tgcShowPlay&&tgcShowPlay()}
 function leaveShop(){if(mode!=="shop")return false;mode="home";document.documentElement.classList.remove("shop-mode");shopSec.hidden=true;document.title=baseTitle;return true}
 function route(fromClick){const h=curHash;
+  if(ACAD&&/^#(shop|lashes|marketplace|products|digital)(\/|$)/.test(h)){location.href=window.TGC_HOME+h;return}
   const m=h.match(/^#p-(.+)$/);if(m){let id="";try{id=decodeURIComponent(m[1])}catch(x){}const p=findItem(id);if(p){if(!pdFromSite&&!routed)enterShop();routed=true;return pdShow(p)}}
   routed=true;pdFromSite=false;pdHide();
   const s=h.match(/^#(shop|lashes|marketplace|products|digital)(?:\/([a-z]+))?(?:\/(.+))?$/);
@@ -1552,18 +1621,18 @@ document.querySelectorAll(".wa-num").forEach(el=>el.textContent=WHATSAPP?("+"+WH
  const near=(a,b)=>{if(Math.abs(a.length-b.length)>1)return false;let i=0,j=0,e=0;while(i<a.length&&j<b.length){if(a[i]===b[j]){i++;j++;continue}if(++e>1)return false;if(a.length>b.length)i++;else if(b.length>a.length)j++;else{i++;j++}}return e+(a.length-i)+(b.length-j)<=1};
  const CAT={lashes:"lash lashes cluster clusters eyelash eyelashes tray trays diy wispy fluffy volume natural strip",kits:"glue bond seal tweezers applicator kit tools remover",lips:"lip lips gloss oil balm plump",bundles:"bundle deal set starter student",gifts:"gift gifts christmas present voucher xmas"};
  const idx=[];
- products.forEach(p=>idx.push({k:"product",p,title:p.name,words:[p.name,p.type,p.brand||"",p.vendor?"partner brand local":"girls club"].join(" "),body:[p.desc,(p.opts||[]).join(" "),CAT[p.cat]||String(p.cat).replace(/^v:/,"")+" "+(p.type||"")].join(" ")}));
- list(A.courses).filter(c=>c&&c.show!==false&&c.title&&A.show!==false).forEach(c=>idx.push({k:"course",title:c.title,sub:(c.subtitle||"Online course")+" · BBD "+money(num(c.price)),target:"course-"+slug(c.title),icon:"🎓",words:c.title+" "+(c.subtitle||""),body:[c.description,list(c.points).join(" "),"course courses class classes training train learn academy online certificate certified enrol enroll lesson tech technician"].join(" ")}));
+ if(!ACAD)products.forEach(p=>idx.push({k:"product",p,title:p.name,words:[p.name,p.type,p.brand||"",p.vendor?"partner brand local":"girls club"].join(" "),body:[p.desc,(p.opts||[]).join(" "),CAT[p.cat]||String(p.cat).replace(/^v:/,"")+" "+(p.type||"")].join(" ")}));
+ list(A.courses).filter(c=>c&&c.show!==false&&c.title&&A.show!==false).forEach(c=>idx.push({k:"course",title:c.title,sub:(c.subtitle||"Online course")+" · BBD "+money(num(c.price)),...(ACAD?{target:"course-"+slug(c.title)}:{href:"#p-course-"+slug(c.title)}),icon:"🎓",words:c.title+" "+(c.subtitle||""),body:[c.description,list(c.points).join(" "),"course courses class classes training train learn academy online certificate certified enrol enroll lesson tech technician"].join(" ")}));
  const PAGES=[
-  {title:"Book a lash appointment",sub:"Pick a day and time · deposit to hold your spot",target:"book",icon:"📅",words:"book booking appointment",body:list(B.points).join(" ")+" lash set install full set refill fill appointment deposit slot time date calendar schedule",show:B.show!==false},
+  {title:"Book a lash appointment",sub:"Pick a day and time in Hustle Book",href:String(S.booking_link||window.TGC_BOOK||""),ext:true,icon:"📅",words:"book booking appointment",body:list(B.points).join(" ")+" lash set install full set refill fill appointment deposit slot time date calendar schedule",show:ACAD},
   {title:"Delivery & collection",sub:"Island-wide delivery $"+num(S.delivery_fee)+" BBD · free collection in "+(S.collection_area||"St. Thomas"),href:"policies.html",icon:"🚚",words:"delivery collection",body:"deliver delivery shipping ship collect collection pickup pick up st thomas parish island wide how long"},
   {title:"Returns, exchanges & shop policies",sub:"Exchanges, faulty items, deposits and courses",href:"policies.html",icon:"📄",words:"policies returns",body:"return returns refund refunds exchange faulty broken policy policies terms cancel cancellation deposit"},
   {title:"How to pay",sub:"Card, FirstPay, BPWCCUL or cash on collection",target:"accepts",icon:"💳",words:"pay payment",body:"pay payment card debit credit visa mastercard firstpay first pay bpwccul credit union cash transfer"},
-  {title:"The glow up · client results",sub:"Real lash sets by Marishka",target:"results",icon:"✨",words:"results gallery",body:"photos pictures before after glow up results gallery reviews work"},
+  {show:ACAD,title:"The glow up · client results",sub:"Real lash sets by Marishka",target:"results",icon:"✨",words:"results gallery",body:"photos pictures before after glow up results gallery reviews work"},
   {title:"About Marishka & The Girls Club",sub:"Certified esthetician in Barbados",target:"about",icon:"💕",words:"about marishka",body:"about owner esthetician who certified story barbados"},
-  {title:"The Marketplace",sub:"Shop all · Products · Digital products",href:"#shop",icon:"🛍️",words:"marketplace shop store",body:"marketplace shop store buy products digital all browse"},
-  {title:"Sell your brand with us",sub:"Join The Girls Club Marketplace",href:"brands.html",icon:"🛍️",words:"sell vendor",body:"sell vendor vendors brand brands partner marketplace join business seller stock"},
-  {title:"Coming soon",sub:"New things on the way",target:"soon",icon:"⏳",words:"coming soon new",body:"coming soon new launch next",show:SO.show!==false},
+  {title:"The Marketplace",sub:"Shop all · Products · Digital products",href:ACAD?window.TGC_HOME:"#shop",icon:"🛍️",words:"marketplace shop store",body:"marketplace shop store buy products digital all browse"},
+  {show:!ACAD,title:"Sell your brand with us",sub:"Join The Girls Club Marketplace",href:"brands.html",icon:"🛍️",words:"sell vendor",body:"sell vendor vendors brand brands partner marketplace join business seller stock"},
+  {title:"Coming soon",sub:"New things on the way",target:"soon",icon:"⏳",words:"coming soon new",body:"coming soon new launch next",show:SO.show!==false&&!ACAD},
   {title:"Message us on WhatsApp",sub:"Questions, custom orders, help",href:waLink("Hi The Girls Club! I have a question."),ext:true,icon:"💬",words:"whatsapp contact",body:"contact message chat whatsapp phone call help question instagram dm talk"}
  ];
  PAGES.filter(x=>x.show!==false&&(!x.target||document.getElementById(x.target))).forEach(x=>idx.push({k:"page",...x}));
@@ -1596,6 +1665,7 @@ document.querySelectorAll(".wa-num").forEach(el=>el.textContent=WHATSAPP?("+"+WH
  let wasOpen=false;
  function open(q){if(typeof q==="string"){inp.value=q}panel.hidden=false;scrimS.hidden=false;btn&&btn.setAttribute("aria-expanded","true");document.documentElement.style.overflow="hidden";render();wasOpen=true;setTimeout(()=>inp.focus(),30)}
  function close(){if(!wasOpen)return;track(lastQ);panel.hidden=true;scrimS.hidden=true;btn&&btn.setAttribute("aria-expanded","false");document.documentElement.style.overflow="";wasOpen=false}
+ if(ACAD){sugg.querySelector(".chips").innerHTML=["Lash course","Cluster course","Eyelash extensions","Certificate","Book appointment","Pay with FirstPay"].map(t=>`<button type="button">${t}</button>`).join("");inp.placeholder="Search courses, booking, payment…"}
  window.tgcSearch=open;
  btn&&(btn.onclick=()=>open());
  document.getElementById("closeSearch").onclick=close;scrimS.onclick=close;
@@ -1607,7 +1677,7 @@ document.querySelectorAll(".wa-num").forEach(el=>el.textContent=WHATSAPP?("+"+WH
  out.addEventListener("click",e=>{
   const ad=e.target.closest("[data-sr-add]");if(ad){e.stopPropagation();const p=shown[+ad.dataset.srAdd].p;close();addItem({id:p.id,name:p.name+" · "+p.type+(p.brand?" · "+p.brand:""),price:p.price,...(p.vendor?{vendor:p.vendor,pid:p.pid,opt:""}:{}),...(p.digital?{noShip:true,note:"Digital · sent on WhatsApp"}:{}),...(p.course?{course:p.course}:{})});return}
   if(e.target.closest("[data-sr-wa]")){track(inp.value);return}
-  if(e.target.closest("[data-sr-browse]")){e.preventDefault();close();nav("#shop");return}
+  if(e.target.closest("[data-sr-browse]")){e.preventDefault();close();if(ACAD)location.href=window.TGC_HOME+"#shop";else nav("#shop");return}
   const go=e.target.closest("[data-sr-go]");if(!go)return;const it=shown[+go.dataset.srGo];if(!it)return;
   if(it.href){track(inp.value);if(it.ext)return;close();return}
   e.preventDefault();close();if(it.k==="product")showProduct(it.p);else goTo(it.target)});
@@ -1624,6 +1694,6 @@ if(location.hash&&!/^#(shop|lashes|marketplace|products|digital|p-)/.test(locati
 
 })();
 </script>
-<script src="academy-theme.js"></script>
+<script>(function(){var s=document.createElement("script");s.src=(window.TGC_DATA||"")+"academy-theme.js";document.body.appendChild(s)})();</script>
 </body>
 </html>
