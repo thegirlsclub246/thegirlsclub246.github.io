@@ -41,6 +41,8 @@ if(ac)W.goatcounter={path:function(p){return "/academy"+p}};
 .courses .course-card{max-width:none}
 .course-card .perks{margin:.4rem .3rem 1rem;font-size:.95rem}
 .course-card .desc{margin:0 .3rem;color:var(--muted)}
+.course-card .free-lesson{display:flex;align-items:center;justify-content:center;gap:.4rem;min-height:48px;margin:1rem 0 .2rem;border-radius:999px;border:2px dashed var(--pink);color:var(--pink);background:#fff5fa;font-weight:800;text-decoration:none;font-size:1rem}
+.course-card .free-note{text-align:center;margin:0 0 .4rem;font-size:.85rem}
 .course-card .paywith{margin:1rem 0 .5rem;text-align:center;font-weight:700;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--pink)}
 .course-card .paynote{text-align:center;margin:.5rem 0 .9rem;font-size:.88rem}
 .course-card .localpay{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
@@ -1238,12 +1240,14 @@ function renderAcademy(){
     <div class="course-meta"><div><span class="ptype">Online course</span><h3>${esc(c.title)}</h3></div><span class="price"><small>BBD</small> ${was>pr?`<s class="was" aria-label="Was ${money(was)}">${money(was)}</s> `:""}${money(pr)}</span></div>
     ${c.description?`<p class="desc">${esc(c.description)}</p>`:""}
     ${list(c.points).length?`<ul class="perks">${list(c.points).map(p=>`<li>${esc(p)}</li>`).join("")}</ul>`:""}
+    ${c.payhip_id&&c.free_lesson!==false?`<a class="free-lesson" data-free="${esc(c.title)}" href="https://payhip.com/order?link=${encodeURIComponent(c.payhip_id)}&free_preview_mode=1" target="_blank" rel="noopener">🎁 Watch a free lesson first</a><p class="muted free-note">Free · just your email · no card needed</p>`:""}
     <p class="paywith">Choose how to pay</p>
     ${c.payhip_id?`<a class="btn payhip-buy-button" href="https://payhip.com/b/${encodeURIComponent(c.payhip_id)}" data-theme="none" data-product="${esc(c.payhip_id)}" style="display:flex;width:100%;text-align:center">Pay by card</a>${c.usd_note?`<p class="muted paynote">${esc(c.usd_note)}</p>`:""}`:""}
     ${c.local_pay!==false?`<div class="localpay"><a class="btn" data-course="${i}" data-pay="firstpay" href="#">Pay with FirstPay</a><a class="btn" data-course="${i}" data-pay="bpwccul" href="#">Pay with BPWCCUL</a></div><p class="muted paynote">Pay in BBD ${money(pr)} · we email your login once payment is in</p>`:""}
     <a class="ask-wa" data-ask="${esc(c.title)}" href="${waLink("Hi The Girls Club! I'm interested in the "+c.title+" (BBD "+money(pr)+"). Can you help me enrol?")}" target="_blank" rel="noopener">Questions? Enrol on WhatsApp</a>
   </div>`}).join("");
   const pf=document.getElementById("academyProof");if(pf&&A.proof){pf.textContent=A.proof;pf.hidden=false}
+  el.addEventListener("click",e=>{const f=e.target.closest("[data-free]");if(f){try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/course-free-lesson/"+slug(f.dataset.free),event:true});window.fbq&&fbq("track","Lead",{content_name:f.dataset.free})}catch(x){}}});
   el.addEventListener("click",e=>{const a=e.target.closest("[data-ask]");if(a){try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/course-wa-ask/"+slug(a.dataset.ask),event:true})}catch(x){}}});
   el.onclick=e=>{const b=e.target.closest("[data-course]");if(!b)return;e.preventDefault();const c=cs[+b.dataset.course];window.tgcPrefPay=b.dataset.pay||"";
     addItem({id:"course-"+slug(c.title),course:c.title,name:"The Girls Club Academy · "+c.title,price:num(c.price),single:true,note:"Digital · sent after payment"});if(window.tgcPrefPay){stage="checkout";renderDrawer()}};
