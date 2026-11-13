@@ -929,6 +929,7 @@ window.addEventListener("beforeunload",function(e){if(Object.keys(dirty).length)
 // instead of content/*.json, and switches off visit counting, the pixel, order sending and leaving the page.
 function pvInject(){
   var D=parent.__tgcDraft||{};
+  window.TGC_SITE_FORCE=parent.__tgcSite||"shop";
   try{Object.defineProperty(window,"TGC_PIXEL_ID",{get:function(){return ""},set:function(){}})}catch(e){}
   window.goatcounter={no_onload:true,count:function(){}};
   var of=window.fetch.bind(window);
@@ -981,6 +982,7 @@ async function pvRender(){
 }
 function pvJump(tab){
   var id=JUMP[tab];if(id===undefined)return;
+  var site=tab==="academy"?"academy":"shop";if((window.__tgcSite||"shop")!==site){window.__tgcSite=site;PV.jump=id;if(PV.open)pvRender();return}
   if(!PV.open||PV.busy||!$("#pvLoad").hidden){PV.jump=id;return}
   try{var f=document.getElementById(PV.cur),w=f.contentWindow,el=id&&f.contentDocument.getElementById(id);w.scrollTo({top:el?el.getBoundingClientRect().top+w.scrollY:0,behavior:"smooth"})}catch(e){PV.jump=id}
 }
