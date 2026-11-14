@@ -1223,7 +1223,7 @@ list(MK.products).filter(p=>p&&p.id&&p.name&&brandName(p.brand)).forEach(p=>prod
     setHTML("header nav",`<a href="#shop">Marketplace</a><a href="#shop/products">Products</a><a href="#shop/digital">Digital</a><a href="brands.html">Sell with us</a><a href="#about">About</a>`);
     setHTML(".side-links",`<a href="#search" data-open-search>Search</a><a href="#top">Home</a><a href="#shop">The Marketplace</a><a href="#shop/products">Products</a><a href="#shop/digital">Digital products</a><a href="brands.html">Sell with us</a><a href="#about">About Us</a><a href="#soon">Coming soon</a><a class="join-link" href="${esc(S.join_link||"#")}" target="_blank" rel="noopener">Join the club</a>`);
     if(hero){const h1=hero.querySelector("h1");if(h1)h1.innerHTML=`Barbados' small businesses, <span>all in one place</span>`;
-      const lh=hero.querySelector(".lead-hero");if(lh&&/course|enrol|book/i.test(lh.textContent))lh.textContent="Lashes, lip treats, gift vouchers, online courses and more from women-owned Bajan small businesses. One bag, one checkout, delivered island-wide.";
+      const lh=hero.querySelector(".lead-hero");if(lh&&/course|enrol|book/i.test(lh.textContent))lh.textContent="Lashes, lip treats, gift vouchers, online courses and more from Bajan small businesses, most of them women-owned. One bag, one checkout, delivered island-wide.";
       hero.querySelector(".row").innerHTML=`<a class="btn white" href="brands.html">Sell with us</a>`}
     perk(1,"Shop open 24/7","Order any time, day or night.");
     const fb=document.querySelector("footer .brand p:not(.foot-logo)");if(fb)fb.textContent="The Girls Club Marketplace. Bajan small businesses, all in one place.";
