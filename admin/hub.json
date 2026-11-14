@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-08",
+ "updated": "2026-11-14",
  "media": "https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK",
  "now": [
   {
@@ -384,49 +384,49 @@
     {
      "code": "/got",
      "when": "First reply to every website order",
-     "text": "Hi love, thank you for your order! 💕 I've got it. As soon as I see your payment come through I'll confirm everything with you. If you haven't sent your payment screenshot yet, please send it here 📸",
+     "text": "Hi love, thank you for your order! I've got it. To complete it, pay with your order number as the reference: debit or credit card on the website (instant), FirstPay to 246-850-4460, or BPWCCUL (Marishka Greenidge, account 127207, Share 04).\n\nThen send me your payment screenshot here with your order number so I can confirm it. Card payments are on the website: https://thegirlsclub246.com/#shop 💕",
      "id": "w001"
     },
     {
      "code": "/paid",
      "when": "Payment checked and it came through",
-     "text": "Payment received, thank you! ✅ Your order is confirmed 💕 I'll message you shortly to sort out the next step. Thank you for shopping with The Girls Club 🎀",
+     "text": "Hi love, payment received, thank you! Your order is confirmed and I'll message you shortly about the next step. Thank you for shopping with The Girls Club.\n\nShop again anytime: https://thegirlsclub246.com/#shop 💕",
      "id": "w002"
     },
     {
      "code": "/notyet",
      "when": "Order came in but the money hasn't",
-     "text": "Hi love! I got your order but I don't see the payment yet. 💕 Please send BBD [total] by FirstPay to 246-850-4460 (Marishka Gittens) or to BPWCCUL account 127207, with your order number as the reference, then send me the screenshot here. I'll hold your order for 24 hours 🎀",
+     "text": "Hi love, I got your order but I don't see the payment yet. Please pay BBD [total] with your order number as the reference: debit or credit card on the website (instant), FirstPay to 246-850-4460, or BPWCCUL (Marishka Greenidge, account 127207, Share 04).\n\nThen send me the screenshot here with your order number. I'll hold your order for 24 hours. Card payments are on the website: https://thegirlsclub246.com/#shop 💕",
      "id": "w003"
     },
     {
      "code": "/collect",
      "when": "Collection order (free, Rock Hall, St. Thomas)",
-     "text": "Your order is ready for collection in Rock Hall, St. Thomas 🏠 What day and time suits you? I'm available weekdays 4:30–7:30pm and weekends 9am–7:30pm 💕",
+     "text": "Hi love, collection is free in Rock Hall, St. Thomas. Choose Collection at checkout so your order gets its order number: https://thegirlsclub246.com/#shop\n\nOnce your payment is in, I'll message you to set your pickup time. I'm available Mon-Fri 4:30-7:30pm and Sat-Sun 9am-7:30pm. I can also meet in Welches, St. Thomas on weekdays 10am-3pm 💕",
      "id": "w004"
     },
     {
      "code": "/deliver",
      "when": "Delivery order ($12 island-wide)",
-     "text": "Your order is packed and ready 🚗 Delivery is island-wide. Please send me your full address and a good time for someone to be home, and I'll give you your delivery day 💕",
+     "text": "Hi love, delivery is BBD $12 island wide. Choose Delivery at checkout and add your full address on the website, so your order gets its order number: https://thegirlsclub246.com/#shop\n\nOnce your payment is in, I'll message you your delivery day 💕",
      "id": "w005"
     },
     {
      "code": "/booked",
      "when": "Appointment deposit received",
-     "text": "Your $30 deposit is in, so your lash appointment is booked! 💕 The remaining $20 is due on the day. Please come with clean lashes, no mascara, and let me know at least 24 hours before if you need to change your time 🎀",
+     "text": "Hi love, your $30 deposit is in, so your cluster lash appointment is booked! The remaining $20 is due on the day.\n\nPlease come with clean lashes, no mascara, and let me know at least 24 hours before if you need to change your time. Booking page: https://thegirlsclub246.com/#book 💕",
      "id": "w006"
     },
     {
      "code": "/enrolled",
      "when": "Course paid by FirstPay / BPWCCUL",
-     "text": "You're in! 🎓 Welcome to The Girls Club Academy 💕 Use the enrolment code I'm sending next at the course link to get your login for free. Any problems getting in, message me here and I'll sort it out.",
+     "text": "Hi love, you're in! Welcome to The Girls Club Academy. I'm sending your enrolment code next. Enter it at your course page to get your login for free: Cluster https://thegirlsclub246.com/#cluster or Eyelash https://thegirlsclub246.com/#eyelash\n\nAny problems getting in, message me here and I'll sort it out 💕",
      "id": "w007"
     },
     {
      "code": "/cash",
-     "when": "Cash on collection order",
-     "text": "Thank you love! 💕 Your order is confirmed. You'll pay BBD [total] in cash when you collect in Rock Hall, St. Thomas. What day and time suits you? I'm available weekdays 4:30–7:30pm and weekends 9am–7:30pm 🏠",
+     "when": "Asked about cash or PayPal (not offered)",
+     "text": "Hi love, we take three ways to pay: debit or credit card on the website (instant), FirstPay to 246-850-4460, or BPWCCUL (Marishka Greenidge, account 127207, Share 04).\n\nWe don't take cash or PayPal. Place your order and pay by card if that's easiest: https://thegirlsclub246.com/#shop 💕",
      "id": "w008"
     }
    ],
@@ -654,7 +654,7 @@
   },
   {
    "big": "Get paid",
-   "html": "FirstPay 246-850-4460 · Marishka Gittens<br/>BPWCCUL account 127207 · PayPal paypal.me/thegirlsclub246"
+   "html": "FirstPay 246-850-4460 · Marishka Gittens<br/>BPWCCUL account 127207 · Share 04 · Marishka Greenidge<br/>Card on the website (instant)"
   }
  ],
  "prices": [
