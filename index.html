@@ -1235,16 +1235,16 @@ function renderAcademy(){
   const el=document.getElementById("courses");
   const cs=list(A.courses).filter(c=>c.show!==false&&c.title);
   if(!cs.length){if(A.show!==false){document.getElementById("academy").hidden=true}return}
-  el.innerHTML=cs.map((c,i)=>{const pr=num(c.price),was=num(c.was_price);return `<div class="course-card" id="course-${slug(c.title)}">
+  el.innerHTML=cs.map((c,i)=>{const pr=num(c.price),was=num(c.was_price),usd=num(c.usd_price);return `<div class="course-card" id="course-${slug(c.title)}">
     <div class="course-cover">${c.badge?`<span class="seal">${esc(c.badge)}</span>`:""}<div><small>The Girls Club</small><strong>Academy</strong><svg viewBox="0 0 300 110" aria-hidden="true"><path d="M30 40 Q150 120 270 40" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><g transform="translate(0,-48)">${lashSvg(9,150,100,120,"#fff")}</g></svg><small>${esc(c.subtitle||"Online course")}</small></div></div>
-    <div class="course-meta"><div><span class="ptype">Online course</span><h3>${esc(c.title)}</h3></div><span class="price"><small>BBD</small> ${was>pr?`<s class="was" aria-label="Was ${money(was)}">${money(was)}</s> `:""}${money(pr)}</span></div>
+    <div class="course-meta"><div><span class="ptype">Online course</span><h3>${esc(c.title)}</h3></div><span class="price">${usd?`<small>US</small>$${usd}`:`<small>BBD</small> ${was>pr?`<s class="was" aria-label="Was ${money(was)}">${money(was)}</s> `:""}${money(pr)}`}</span></div>
     ${c.description?`<p class="desc">${esc(c.description)}</p>`:""}
     ${list(c.points).length?`<ul class="perks">${list(c.points).map(p=>`<li>${esc(p)}</li>`).join("")}</ul>`:""}
     ${c.payhip_id&&c.free_lesson!==false?`<a class="free-lesson" data-free="${esc(c.title)}" href="https://payhip.com/order?link=${encodeURIComponent(c.payhip_id)}&free_preview_mode=1" target="_blank" rel="noopener">🎁 Watch a free lesson first</a><p class="muted free-note">Free · just your email · no card needed</p>`:""}
     <p class="paywith">Choose how to pay</p>
     ${c.payhip_id?`<a class="btn payhip-buy-button" href="https://payhip.com/b/${encodeURIComponent(c.payhip_id)}" data-theme="none" data-product="${esc(c.payhip_id)}" style="display:flex;width:100%;text-align:center">Pay by card</a>${c.usd_note?`<p class="muted paynote">${esc(c.usd_note)}</p>`:""}`:""}
-    ${c.local_pay!==false?`<div class="localpay"><a class="btn" data-course="${i}" data-pay="firstpay" href="#">Pay with FirstPay</a><a class="btn" data-course="${i}" data-pay="bpwccul" href="#">Pay with BPWCCUL</a></div><p class="muted paynote">Pay in BBD ${money(pr)} · we email your login once payment is in</p>`:""}
-    <a class="ask-wa" data-ask="${esc(c.title)}" href="${waLink("Hi The Girls Club! I'm interested in the "+c.title+" (BBD "+money(pr)+"). Can you help me enrol?")}" target="_blank" rel="noopener">Questions? Enrol on WhatsApp</a>
+    ${c.local_pay!==false?`<div class="localpay"><a class="btn" data-course="${i}" data-pay="firstpay" href="#">Pay with FirstPay</a><a class="btn" data-course="${i}" data-pay="bpwccul" href="#">Pay with BPWCCUL</a></div><p class="muted paynote">Pay in BBD ${money(pr)}${usd?" (US$"+usd+")":""} · we email your login once payment is in</p>`:""}
+    <a class="ask-wa" data-ask="${esc(c.title)}" href="${waLink("Hi The Girls Club! I'm interested in the "+c.title+" ("+(usd?"US$"+usd:"BBD "+money(pr))+"). Can you help me enrol?")}" target="_blank" rel="noopener">Questions? Enrol on WhatsApp</a>
   </div>`}).join("");
   const pf=document.getElementById("academyProof");if(pf&&A.proof){pf.textContent=A.proof;pf.hidden=false}
   el.addEventListener("click",e=>{const f=e.target.closest("[data-free]");if(f){try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/course-free-lesson/"+slug(f.dataset.free),event:true});window.fbq&&fbq("track","Lead",{content_name:f.dataset.free})}catch(x){}}});
@@ -1294,9 +1294,9 @@ function thumb(p){
 const isOut=p=>p.stock!==null&&p.stock!==undefined&&p.stock<=0;
 const offPct=p=>p.was>p.price?Math.round((1-p.price/p.was)*100):0;
 const pHref=p=>"#p-"+encodeURIComponent(p.id);
-const priceHTML=p=>`${p.was?`<s class="was" aria-label="Was ${money(p.was)}">${money(p.was)}</s> `:""}${money(p.price)}`;
-const courseItems=A.show===false?[]:list(A.courses).filter(c=>c&&c.show!==false&&c.title).map(c=>{const pr=num(c.price),w=num(c.was_price);
-  return{id:"course-"+slug(c.title),isCourse:true,digital:true,course:String(c.title),img:U(c.image),alt:"",name:String(c.title),type:"Online course",cat:"courses",price:pr,was:w>pr?w:0,desc:String(c.description||c.subtitle||""),tag:String(c.badge||""),opts:[],points:list(c.points).map(String),payhip:String(c.payhip_id||""),usdNote:String(c.usd_note||""),stock:null}});
+const priceHTML=p=>p.usd?`US$${p.usd}`:`${p.was?`<s class="was" aria-label="Was ${money(p.was)}">${money(p.was)}</s> `:""}${money(p.price)}`;
+const courseItems=A.show===false?[]:list(A.courses).filter(c=>c&&c.show!==false&&c.title).map(c=>{const pr=num(c.price),w=num(c.was_price),usd=num(c.usd_price);
+  return{id:"course-"+slug(c.title),isCourse:true,digital:true,course:String(c.title),img:U(c.image),alt:"",name:String(c.title),type:"Online course",cat:"courses",price:pr,usd,was:w>pr?w:0,desc:String(c.description||c.subtitle||""),tag:String(c.badge||""),opts:[],points:list(c.points).map(String),payhip:String(c.payhip_id||""),usdNote:String(c.usd_note||""),stock:null}});
 const shopItems=products.concat(courseItems);
 const isDig=p=>!!(p.digital||p.isCourse||p.cat==="vouchers"||p.cat==="guides");
 const dCat=p=>p.isCourse?"courses":isDig(p)&&(p.cat==="gifts"||p.cat==="vouchers")?"vouchers":p.cat;
@@ -1399,11 +1399,11 @@ function pdHTML(p){const o=offPct(p),out=isOut(p),dig=isDig(p);
    <div class="pd-info">
     <span class="mk-sold">${dig?"Digital · ":""}By ${esc(p.brand||"The Girls Club")}</span>
     <h2 id="pdName" tabindex="-1">${esc(p.name)}</h2>${p.type?`<p class="pd-type">${esc(p.type)}</p>`:""}
-    <div class="pd-price"><span class="price"><small>BBD</small> ${priceHTML(p)}</span>${o?`<span class="pd-save">You save ${money(p.was-p.price)}</span>`:""}</div>
+    <div class="pd-price"><span class="price">${p.usd?"":"<small>BBD</small> "}${priceHTML(p)}</span>${o?`<span class="pd-save">You save ${money(p.was-p.price)}</span>`:""}</div>
     ${p.desc?`<p class="pd-desc">${esc(p.desc)}</p>`:""}
     ${(p.points||[]).length?`<ul class="pd-points">${p.points.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}
     ${p.opts.length?`<p class="pd-lbl" id="pdOptL">Choose one</p><div class="pd-opts" role="radiogroup" aria-labelledby="pdOptL">${p.opts.map((x,i)=>`<button type="button" role="radio" aria-checked="${i===0}" data-pd-opt="${esc(x)}">${esc(x)}</button>`).join("")}</div>`:""}
-    <div class="pd-buy">${out?`<button class="add" type="button" disabled>Sold out</button>`:p.isCourse?`<button class="add" type="button" data-pd-add>Enrol · FirstPay or BPWCCUL · ${money(p.price)}</button>`:`<div class="qty"><button type="button" data-pd-q="-1" aria-label="One less">−</button><output aria-live="polite" id="pdQty">1</output><button type="button" data-pd-q="1" aria-label="One more">+</button></div><button class="add" type="button" data-pd-add>Add to bag · ${money(p.price)}</button>`}</div>
+    <div class="pd-buy">${out?`<button class="add" type="button" disabled>Sold out</button>`:p.isCourse?`<button class="add" type="button" data-pd-add>Enrol · FirstPay or BPWCCUL · ${p.usd?"BBD ":""}${money(p.price)}</button>`:`<div class="qty"><button type="button" data-pd-q="-1" aria-label="One less">−</button><output aria-live="polite" id="pdQty">1</output><button type="button" data-pd-q="1" aria-label="One more">+</button></div><button class="add" type="button" data-pd-add>Add to bag · ${money(p.price)}</button>`}</div>
     ${p.isCourse&&!ACAD?`<a class="pd-wa" href="${esc(window.TGC_ACAD+"#course-"+slug(p.course))}">See the full course on the Academy site</a>`:""}
     ${p.isCourse&&p.payhip?`<a class="pd-card" href="https://payhip.com/b/${encodeURIComponent(p.payhip)}" target="_blank" rel="noopener">Pay by card · instant access</a>${p.usdNote?`<p class="pd-note">${esc(p.usdNote)}</p>`:""}`:""}
     <a class="pd-wa" data-pd-wa href="${esc(waLink(`Hi The Girls Club! I have a question about ${p.name}${p.type?" ("+p.type+")":""}, BBD ${money(p.price)}.`))}" target="_blank" rel="noopener">Ask about this on WhatsApp</a>
