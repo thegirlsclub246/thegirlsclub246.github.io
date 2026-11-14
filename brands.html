@@ -82,7 +82,7 @@ a{color:var(--deep)}
 .plan{position:relative;background:#fff;color:var(--ink);border-radius:24px;padding:22px;display:flex;flex-direction:column;gap:10px}
 .plan h3{font-family:var(--display);font-weight:400;font-size:32px;line-height:1.25;color:var(--pink)}
 .plan .lead{font-weight:700}
-.plan ul{list-style:none;margin:0;padding:0;display:grid;gap:7px;flex:1}
+.plan ul{list-style:none;margin:0;padding:0;display:grid;gap:10px;flex:1;align-content:start}
 .plan li{padding-left:24px;position:relative;font-size:16px}
 .plan li::before{content:"\2665";position:absolute;left:0;color:var(--pink)}
 .plan li.plus{padding-left:0;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
@@ -231,15 +231,15 @@ footer a{color:var(--deep);font-weight:700;text-decoration:none}
     <p class="fee"><b>One simple per-sale fee on every plan:</b> 15% of each sale for your whole first year, then 20%. The monthly fee on Spotlight and Signature pays for extra promotion.</p>
     <div class="plans">
       <div class="plan starter" data-card-plan="starter"><span class="tag">FREE</span><h3>Starter</h3><p class="lead">Start selling with no monthly fee.</p>
-        <ul><li>Your own vendor profile and storefront</li><li>A &ldquo;Sold by&rdquo; label on every product</li><li>Secure checkout: card, bank and cash</li><li>We handle orders and customer questions</li><li>Paid every Sunday, straight to you</li></ul>
+        <ul><li><b>Your own shop page</b> on our website, with your logo, your story and all your products in one place.</li><li><b>&ldquo;Sold by&rdquo; your brand</b> on every product, so shoppers know it's yours and can find you again.</li><li><b>We take the payment.</b> Customers pay on our website by card, bank transfer or cash, so you never chase anyone for money.</li><li><b>We do the selling work.</b> We store your stock in St. Thomas, pack each order, deliver it or arrange collection, and answer every customer question and return.</li><li><b>You get paid every Sunday</b> for everything sold the week before, with every sale shown in your Vendor Portal.</li></ul>
         <p class="price"><b>$0</b>/month + 15% per sale<small>20% from your second year</small></p>
         <a class="btn choose" href="#join" data-join data-plan="starter" aria-label="Choose the Starter plan and sign up">Choose Starter</a></div>
       <div class="plan spot" data-card-plan="spotlight"><span class="tag">MORE CUSTOMERS</span><h3>Spotlight</h3><p class="lead">We put your brand in front of more girls.</p>
-        <ul><li class="plus">Everything in Starter, plus</li><li>Featured Brands spot on our homepage</li><li>Shown first in your category</li><li>Monthly Instagram and Facebook shout-outs</li><li>In our seasonal gift guides and promos</li></ul>
+        <ul><li class="plus">Everything in Starter, plus</li><li>Your brand in the <b>Featured Brands</b> section of our homepage, the first thing visitors see.</li><li>Your products <b>shown first</b> when shoppers browse your category, such as Hair or Skincare.</li><li>A <b>post about your brand</b> on our Instagram and Facebook every month.</li><li>Your products in our <b>gift guides and promotions</b> for Christmas, Valentine's Day and Mother's Day.</li></ul>
         <p class="price"><b>$75</b>/month + 15% per sale<small>20% from your second year</small></p>
         <a class="btn choose" href="#join" data-join data-plan="spotlight" aria-label="Choose the Spotlight plan and sign up">Choose Spotlight</a></div>
       <div class="plan sig" data-card-plan="signature"><span class="tag">BIGGEST PUSH</span><h3>Signature</h3><p class="lead">Our biggest push for your brand.</p>
-        <ul><li class="plus">Everything in Spotlight, plus</li><li>Top homepage banner placement</li><li>Your own posts and a Reel every month</li><li>First pick at Girls Club pop-ups and events</li><li>Monthly check-in on what's selling</li></ul>
+        <ul><li class="plus">Everything in Spotlight, plus</li><li>Your brand in the <b>big banner</b> at the top of our homepage.</li><li>Your <b>own Instagram post and Reel</b>, made by us, every month.</li><li><b>First choice of a table</b> at Girls Club pop-ups and events.</li><li>A <b>monthly check-in</b> where we go through your sales with you and suggest what to restock, reprice or promote.</li></ul>
         <p class="price"><b>$125</b>/month + 15% per sale<small>20% from your second year</small></p>
         <a class="btn choose" href="#join" data-join data-plan="signature" aria-label="Choose the Signature plan and sign up">Choose Signature</a></div>
     </div>
@@ -260,7 +260,7 @@ footer a{color:var(--deep);font-weight:700;text-decoration:none}
     </ol>
     <div class="gets">
       <div class="get"><b>Your own Vendor Portal</b>Add products and photos, change prices and stock any time, and see every sale and your Sunday payouts.</div>
-      <div class="get"><b>We handle the hard parts</b>Card, FirstPay and BPWCCUL payments, island-wide delivery, collection and customer questions.</div>
+      <div class="get"><b>We handle the hard parts</b>We take payment by card, FirstPay and BPWCCUL, deliver island-wide or arrange collection, and answer every customer question and return. You just keep us stocked.</div>
       <div class="get"><b>Your brand, front and centre</b>Every product shows "Sold by" your brand, with your story, so shoppers find you again.</div>
       <div class="get"><b>Launch promo</b>Founding brands are featured on @thegirlsclub246 as the Marketplace launches for Christmas.</div>
     </div>
@@ -315,6 +315,7 @@ footer a{color:var(--deep);font-weight:700;text-decoration:none}
     <details><summary>Can I still sell on my own page and in my shop?</summary><p>Yes. Keep selling everywhere you do now. We only ask that you don't advertise the same product for less than its Marketplace price.</p></details>
     <details><summary>How and when do I get paid?</summary><p>Every Sunday, for everything sold the week before, by bank transfer, FirstPay or BPWCCUL, with a statement of each sale.</p></details>
     <details><summary>What if something doesn't sell?</summary><p>Each batch stays with us for 60 days. Then you can renew it, swap it for new stock, or collect it. Your products stay yours until they sell.</p></details>
+    <details><summary>What exactly does The Girls Club do for me?</summary><p>Think of us as your shop on the Bajan Amazon. You get your own shop page on our website with your logo, story and products. You drop off your stock with us in St. Thomas (or add a download link for digital products) and we keep it safe. When someone orders, we take the payment, pack the order, deliver it or arrange collection, and handle any questions or returns. Every Sunday we send you your share of the week before, and you can see every sale in your Vendor Portal. You set your own prices and keep selling everywhere you already do.</p></details>
     <details><summary>What about returns and damaged items?</summary><p>We handle customer questions and returns. If an item is faulty because of the product, it comes back to you and the refund comes out of your next payout. If we damage something, we pay you for it.</p></details>
     <details><summary>Is Starter really free?</summary><p>Yes. Starter has no monthly fee and needs no card. We take 15% of each sale in your first year (20% after that), which covers card fees, checkout, order handling and customer care. You keep 85% in your first year.</p></details>
     <details><summary>Which plan should I pick?</summary><p>Starter is perfect to try us out. Every plan has the same per-sale fee, so Spotlight and Signature are for when you want your brand seen by more shoppers: homepage spots, shout-outs, posts and Reels.</p></details>
