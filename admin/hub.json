@@ -382,6 +382,12 @@
    "g": "When someone sends their order from the website",
    "items": [
     {
+     "code": "/website",
+     "when": "Someone wants to order or book in WhatsApp",
+     "text": "I'd love to sort that for you! 💕 All orders and bookings go through the website so you get your order number straight away: thegirlsclub246.com 🛍️ Add it to your bag, pick delivery or collection, and check out. It takes about a minute. If you get stuck, message me and I'll walk you through it 💗",
+     "id": "w000"
+    },
+    {
      "code": "/got",
      "when": "First reply to every website order",
      "text": "Hi love, thank you for your order! 💕 I've got it. As soon as I see your payment come through I'll confirm everything with you. If you haven't sent your payment screenshot yet, please send it here 📸",
@@ -430,7 +436,7 @@
      "id": "w008"
     }
    ],
-   "note": "Website orders arrive on WhatsApp starting with \"Hi The Girls Club! I placed an order.\" and an order number like TGC-AB1234. Use /got straight away, then the one that fits. Replace [total] with their total."
+   "note": "We never take orders in WhatsApp. Help with questions, then send /website so she checks out on the website and gets her order number. Website orders arrive on WhatsApp starting with \"Hi The Girls Club! I placed an order.\" and an order number like TGC-AB1234. Use /got straight away, then the one that fits. Replace [total] with their total."
   },
   {
    "g": "Sales follow-ups",
