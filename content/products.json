@@ -145,7 +145,7 @@
       "id": "giftset"
     },
     {
-      "show": true,
+      "show": false,
       "name": "Lash Appointment Gift Voucher",
       "type": "Gift voucher",
       "category": "gifts",
