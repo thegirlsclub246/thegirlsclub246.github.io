@@ -1,13 +1,16 @@
 {
-  "photo": "img/about-marishka.jpg",
-  "eyebrow": "Meet the founder",
-  "title": "Hi, I'm Marishka",
-  "badges": ["Certified esthetician", "Bachelor's in Education"],
+  "photo": "img/logo-tgc.png",
+  "eyebrow": "Our story",
+  "title": "Hi, we're The Girls Club",
+  "badges": [
+    "Certified esthetician",
+    "Bachelor's in Education"
+  ],
   "paragraphs": [
-    "I started The Girls Club because every girl deserves to feel glam, without spending hours in a salon chair or a fortune on lashes.",
+    "We started The Girls Club because every girl deserves to feel glam, without spending hours in a salon chair or a fortune on lashes.",
     "Our cluster lashes are made to be easy. Apply them yourself at home in minutes and walk out feeling like the main character.",
-    "I'm a certified esthetician with a Bachelor's in Education, so whether I'm doing your lashes or teaching you in The Girls Club Academy, you're in trained hands.",
+    "Everything here is made and taught by a certified esthetician with a Bachelor's in Education, so whether it's your lashes or a lesson in The Girls Club Academy, you're in trained hands.",
     "This is just the beginning. More DIY beauty is on the way, made for Bajan girls who love a good glow up."
   ],
-  "sign_off": "With love, Marishka"
+  "sign_off": "With love, The Girls Club"
 }
