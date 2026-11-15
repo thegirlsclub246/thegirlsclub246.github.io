@@ -440,7 +440,7 @@ mark{background:#F3E3C3}
   <main class="wrap">
     <!-- TODAY -->
     <section class="tab" id="t-today">
-      <h2 id="hello">Hi Marishka</h2>
+      <h2 id="hello">Hi there</h2>
       <p class="muted" id="who">Tap a shortcut, or search to find any message, caption or link.</p>
       <div class="qa" id="qa">
         <a class="hot" href="https://claude.ai/artifact/Hm8QsUZWek99aiCPjonFnK#money" target="_blank" rel="noopener"><span class="i"><svg class="ico"><use href="#i-check"/></svg></span>Mark order paid</a>
@@ -1285,7 +1285,7 @@ function showInstall(){
 $("#installBtn").onclick=async function(){if(!deferredPrompt)return;deferredPrompt.prompt();try{await deferredPrompt.userChoice}catch(e){}deferredPrompt=null;$("#install").hidden=true};
 $("#installNo").onclick=function(){store("tgc-hub-install","no");$("#install").hidden=true};
 window.addEventListener("hashchange",function(){var h=location.hash.slice(1);if(h==="calendar")h="posts";if(h&&!$("#t-"+h+".on"))go(h)});
-(function(){var h=new Date().getHours();$("#hello").textContent=(h<12?"Good morning":h<17?"Good afternoon":"Good evening")+", Marishka"})();
+(function(){var h=new Date().getHours();$("#hello").textContent=(h<12?"Good morning":h<17?"Good afternoon":"Good evening")})();
 
 /* ---------- start ---------- */
 go(location.hash.slice(1)||"today");hubLoad();showInstall();

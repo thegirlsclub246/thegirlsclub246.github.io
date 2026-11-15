@@ -467,7 +467,7 @@
         {
           "code": "/coursereview",
           "when": "WhatsApp",
-          "text": "Hi [Name]! 💕 It's Marishka from The Girls Club. Congrats again on finishing the [Cluster Lash / Eyelash Extension] Course! 🎓\n\nCould you do me a small favour? Send me 2–3 lines about how the course was for you. For example: what you liked, what you learned, or how you feel about doing lashes now. A photo of your lash work would be amazing too 📸\n\nIs it OK if I share your review on my website and socials with your first name? Just reply \"yes\" or \"first name only.\" Thank you so much, it really helps other girls in Barbados find the Academy 🇧🇧💗",
+          "text": "Hi [Name]! 💕 This is an agent from The Girls Club. Congrats again on finishing the [Cluster Lash / Eyelash Extension] Course! 🎓\n\nCould you do me a small favour? Send me 2–3 lines about how the course was for you. For example: what you liked, what you learned, or how you feel about doing lashes now. A photo of your lash work would be amazing too 📸\n\nIs it OK if I share your review on my website and socials with your first name? Just reply \"yes\" or \"first name only.\" Thank you so much, it really helps other girls in Barbados find the Academy 🇧🇧💗",
           "id": "w013"
         },
         {
@@ -479,13 +479,13 @@
         {
           "code": "Facebook",
           "when": "Messenger · asks for a Page review",
-          "text": "Hi [Name]! It's Marishka from The Girls Club 246 💕 Congrats on completing the [Cluster Lash / Eyelash Extension] Course! 🎓\n\nIf you enjoyed it, could you leave a quick recommendation on our Facebook Page? It only takes a minute:\n👉 Go to [your Page link] → Reviews → \"Yes\" → write a line or two\n\nA photo of your lash work is a big bonus 📸 Thank you so much for supporting a small Bajan business! 🇧🇧💗",
+          "text": "Hi [Name]! This is an agent from The Girls Club 246 💕 Congrats on completing the [Cluster Lash / Eyelash Extension] Course! 🎓\n\nIf you enjoyed it, could you leave a quick recommendation on our Facebook Page? It only takes a minute:\n👉 Go to [your Page link] → Reviews → \"Yes\" → write a line or two\n\nA photo of your lash work is a big bonus 📸 Thank you so much for supporting a small Bajan business! 🇧🇧💗",
           "id": "w015"
         },
         {
           "code": "Email",
           "when": "Subject: How was your course, [Name]? 💕",
-          "text": "Hi [Name],\n\nCongratulations on finishing the [Cluster Lash / Eyelash Extension] Course with The Girls Club Academy! 🎓\n\nI'd love to hear how it went for you. Could you reply to this email with a few lines?\n• What did you enjoy most?\n• How confident do you feel doing lashes now?\n• Would you recommend the course to a friend?\n\nIf you have a photo of your lash work, please attach it too!\n\nWith your permission, I'd like to share your review (first name only) on my website and social media. Just let me know if that's OK.\n\nThank you so much for learning with me. It means the world 💗\n\nMarishka\nThe Girls Club Academy · Barbados 🇧🇧\nWhatsApp: +1 (246) 850-4460",
+          "text": "Hi [Name],\n\nCongratulations on finishing the [Cluster Lash / Eyelash Extension] Course with The Girls Club Academy! 🎓\n\nI'd love to hear how it went for you. Could you reply to this email with a few lines?\n• What did you enjoy most?\n• How confident do you feel doing lashes now?\n• Would you recommend the course to a friend?\n\nIf you have a photo of your lash work, please attach it too!\n\nWith your permission, I'd like to share your review (first name only) on my website and social media. Just let me know if that's OK.\n\nThank you so much for learning with me. It means the world 💗\n\nThe Girls Club Academy · Barbados 🇧🇧\nWhatsApp: +1 (246) 850-4460",
           "id": "w016"
         }
       ],
@@ -565,19 +565,19 @@
         "code": "First DM",
         "when": "Invite to be a founding brand",
         "t": "@showcasebds (scents)",
-        "text": "Hi love! I'm Marishka from The Girls Club 💕 Picture a girl getting ready for a fete: she opens ONE website and gets her lashes, her nails, her hair… and the scent she's going to leave behind her all night. That last part is where I immediately thought of you.\n\nI'm building The Girls Club Marketplace, one place online where Bajan girls can shop women-owned local brands, and I'd love Showcase to be one of my founding brands for Christmas. Your scents would make perfect gifts.\n\nIt's FREE to start, so you only pay when you sell. I handle the website, checkout, orders and promo, and you get paid every Sunday. Can I send you the full details?"
+        "text": "Hi love! I'm an agent with The Girls Club 💕 Picture a girl getting ready for a fete: she opens ONE website and gets her lashes, her nails, her hair… and the scent she's going to leave behind her all night. That last part is where I immediately thought of you.\n\nI'm building The Girls Club Marketplace, one place online where Bajan girls can shop women-owned local brands, and I'd love Showcase to be one of my founding brands for Christmas. Your scents would make perfect gifts.\n\nIt's FREE to start, so you only pay when you sell. I handle the website, checkout, orders and promo, and you get paid every Sunday. Can I send you the full details?"
       },
       {
         "code": "First DM",
         "when": "Invite to be a founding brand",
         "t": "@braidsnbeauty246 (braiding hair)",
-        "text": "Hi love! I'm Marishka from The Girls Club 💕 Imagine a girl planning her braids for Christmas or Crop Over: instead of running all over town, she opens ONE website and orders her braiding hair, lashes and nails together. I'd love your hair to be what she finds there.\n\nI'm building The Girls Club Marketplace, one place online for women-owned Bajan beauty brands, and I'm picking a few founding brands before Christmas. Braids n Beauty was top of my list for hair.\n\nIt's FREE to start, so you only pay when you sell. I handle the website, checkout, orders and promo, and you get paid every Sunday. Can I send you the full details?"
+        "text": "Hi love! I'm an agent with The Girls Club 💕 Imagine a girl planning her braids for Christmas or Crop Over: instead of running all over town, she opens ONE website and orders her braiding hair, lashes and nails together. I'd love your hair to be what she finds there.\n\nI'm building The Girls Club Marketplace, one place online for women-owned Bajan beauty brands, and I'm picking a few founding brands before Christmas. Braids n Beauty was top of my list for hair.\n\nIt's FREE to start, so you only pay when you sell. I handle the website, checkout, orders and promo, and you get paid every Sunday. Can I send you the full details?"
       },
       {
         "code": "First DM",
         "when": "Invite to be a founding brand",
         "t": "@madebybrittanyj (clusters, strips, press-ons)",
-        "text": "Hi love! I'm Marishka from The Girls Club 💕 Picture a girl getting ready for a fete: she opens ONE website and her whole look is right there. Your press-ons and lashes are exactly what she'd be reaching for.\n\nI'm building The Girls Club Marketplace, one place online where Bajan girls can shop women-owned local brands, and I'd love Made by Brittany J to be one of my founding brands for Christmas. Press-on sets make such good gifts.\n\nIt's FREE to start, so you only pay when you sell. I handle the website, checkout, orders and promo, and you get paid every Sunday. Can I send you the full details?"
+        "text": "Hi love! I'm an agent with The Girls Club 💕 Picture a girl getting ready for a fete: she opens ONE website and her whole look is right there. Your press-ons and lashes are exactly what she'd be reaching for.\n\nI'm building The Girls Club Marketplace, one place online where Bajan girls can shop women-owned local brands, and I'd love Made by Brittany J to be one of my founding brands for Christmas. Press-on sets make such good gifts.\n\nIt's FREE to start, so you only pay when you sell. I handle the website, checkout, orders and promo, and you get paid every Sunday. Can I send you the full details?"
       }
     ],
     "links": [
@@ -1378,7 +1378,7 @@
         "Facebook"
       ],
       "status": "scheduled",
-      "pic": "/img/about-marishka.jpg",
+      "pic": "/img/logo-tgc.png",
       "res": null,
       "id": "c010"
     },
@@ -2296,8 +2296,8 @@
             "src": "/img/lip-oil-mockup.jpg"
           },
           {
-            "t": "About Marishka",
-            "src": "/img/about-marishka.jpg"
+            "t": "Logo",
+            "src": "/img/logo-tgc.png"
           }
         ]
       }
