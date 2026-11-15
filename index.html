@@ -653,7 +653,7 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
     <div class="perk"><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ff4d94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><h3>Delivery $12 BBD</h3><p>Island-wide, or collect for free in St. Thomas.</p></div>
     <div class="perk"><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ff4d94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><h3>Shop open 24/7</h3><p>Order or enrol any time, day or night.</p></div>
     <div class="perk"><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ff4d94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><h3>Easy payment</h3><p>Card, FirstPay, BPWCCUL, or cash on collection.</p></div>
-    <div class="perk"><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ff4d94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M15.48 12.89 17 22l-5-3-5 3 1.52-9.11"/></svg></div><h3>Certified esthetician</h3><p>Made and taught by Marishka Gittens.</p></div>
+    <div class="perk"><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ff4d94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M15.48 12.89 17 22l-5-3-5 3 1.52-9.11"/></svg></div><h3>Certified esthetician</h3><p>Made and taught by a certified esthetician.</p></div>
   </div>
   <div id="highlights" hidden></div>
 
@@ -951,13 +951,13 @@ html.shop-mode main>*:not(#shop){display:none!important}
 
   <section id="about" class="about">
     <div class="wrap">
-      <div class="about-photo"><img id="aboutPhoto" src="img/about-marishka.jpg" alt="Marishka, founder of The Girls Club" loading="lazy" width="700" height="875"></div>
+      <div class="about-photo"><img id="aboutPhoto" src="img/logo-tgc.png" alt="The Girls Club" style="object-fit:contain;background:#fff" loading="lazy" width="700" height="875"></div>
       <div class="about-text">
-        <span class="eyebrow" data-c="about.eyebrow">Meet the founder</span>
-        <h2 data-c="about.title">Hi, I'm Marishka</h2>
+        <span class="eyebrow" data-c="about.eyebrow">Our story</span>
+        <h2 data-c="about.title">Hi, we're The Girls Club</h2>
         <div class="creds" id="aboutBadges"></div>
         <div id="aboutText"></div>
-        <p class="sign" data-c="about.sign_off">With love, Marishka</p>
+        <p class="sign" data-c="about.sign_off">With love, The Girls Club</p>
         <div class="row-btns"><a class="btn" href="#shop">Shop the Marketplace</a><a class="btn alt wa-link" href="#" target="_blank" rel="noopener">Say hi on WhatsApp</a></div>
       </div>
     </div>
@@ -1208,14 +1208,14 @@ list(MK.products).filter(p=>p&&p.id&&p.name&&brandName(p.brand)).forEach(p=>prod
     document.querySelectorAll(".logo small,.side-tag").forEach(e=>e.textContent="Academy · Barbados");
     if(hero){hero.querySelector(".eyebrow").textContent=A.eyebrow||"Learn from home";
       hero.querySelector("h1").innerHTML=`Learn lashes <span>from home</span>`;
-      hero.querySelector(".lead-hero").textContent=A.hero_text||"Online lash courses with Marishka Gittens, a certified esthetician and trained teacher in Barbados. Learn at your own pace on your phone and get certified when you finish.";
+      hero.querySelector(".lead-hero").textContent=A.hero_text||"Online lash courses with a certified esthetician and trained teacher in Barbados. Learn at your own pace on your phone and get certified when you finish.";
       hero.querySelector(".row").innerHTML=`<a class="btn" href="#academy">See the courses</a>${BOOK?ext(BOOK,"Book an appointment","btn white"):""}`}
     perk(0,"Learn from your phone","Watch the lessons any time, at your own pace.");
     {const ic=perks[0]&&perks[0].querySelector(".ico");if(ic)ic.innerHTML=`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ff4d94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg>`}
     perk(1,"Certificate","Get certified when you finish your course.");
     perk(2,"Easy payment","Card, FirstPay or BPWCCUL.");
-    perk(3,"Certified esthetician","Taught by Marishka Gittens.");
-    const fb=document.querySelector("footer .brand p:not(.foot-logo)");if(fb)fb.textContent="Online lash courses with Marishka Gittens, certified esthetician and trained teacher in Barbados.";
+    perk(3,"Certified esthetician","Taught by a certified esthetician.");
+    const fb=document.querySelector("footer .brand p:not(.foot-logo)");if(fb)fb.textContent="Online lash courses with a certified esthetician and trained teacher in Barbados.";
     setHTML("footer .cols>div:nth-child(2) ul",`<li><a href="#academy">Online courses</a></li>${BOOK?`<li>${ext(BOOK,"Book an appointment")}</li>`:""}<li><a href="#results">The glow up</a></li><li><a href="#about">About Us</a></li><li><a href="${HOME}">The Marketplace</a></li><li><a href="${HOME}policies.html">Policies &amp; privacy</a></li>`);
     document.querySelectorAll('a[href="#book"]').forEach(a=>{if(BOOK){a.href=BOOK;a.target="_blank";a.rel="noopener"}else(a.closest("li")||a).hidden=true});
     const lgl=document.querySelector("footer .legal");if(lgl)lgl.innerHTML=`&copy; 2026 The Girls Club Academy · Online courses, learn any time · Prices in BBD (Barbados dollars) · <a href="${HOME}policies.html" style="color:inherit">Policies</a>`;
@@ -1632,8 +1632,8 @@ document.querySelectorAll(".wa-num").forEach(el=>el.textContent=WHATSAPP?("+"+WH
   {title:"Delivery & collection",sub:"Island-wide delivery $"+num(S.delivery_fee)+" BBD · free collection in "+(S.collection_area||"St. Thomas"),href:"policies.html",icon:"🚚",words:"delivery collection",body:"deliver delivery shipping ship collect collection pickup pick up st thomas parish island wide how long"},
   {title:"Returns, exchanges & shop policies",sub:"Exchanges, faulty items, deposits and courses",href:"policies.html",icon:"📄",words:"policies returns",body:"return returns refund refunds exchange faulty broken policy policies terms cancel cancellation deposit"},
   {title:"How to pay",sub:"Card, FirstPay, BPWCCUL or cash on collection",target:"accepts",icon:"💳",words:"pay payment",body:"pay payment card debit credit visa mastercard firstpay first pay bpwccul credit union cash transfer"},
-  {show:ACAD,title:"The glow up · client results",sub:"Real lash sets by Marishka",target:"results",icon:"✨",words:"results gallery",body:"photos pictures before after glow up results gallery reviews work"},
-  {title:"About Marishka & The Girls Club",sub:"Certified esthetician in Barbados",target:"about",icon:"💕",words:"about marishka",body:"about owner esthetician who certified story barbados"},
+  {show:ACAD,title:"The glow up · client results",sub:"Real lash sets by The Girls Club",target:"results",icon:"✨",words:"results gallery",body:"photos pictures before after glow up results gallery reviews work"},
+  {title:"About The Girls Club",sub:"Certified esthetician in Barbados",target:"about",icon:"💕",words:"about story",body:"about owner esthetician who certified story barbados"},
   {title:"The Marketplace",sub:"Shop all · Products · Digital products",href:ACAD?window.TGC_HOME:"#shop",icon:"🛍️",words:"marketplace shop store",body:"marketplace shop store buy products digital all browse"},
   {show:!ACAD,title:"Sell your brand with us",sub:"Join The Girls Club Marketplace",href:"brands.html",icon:"🛍️",words:"sell vendor",body:"sell vendor vendors brand brands partner marketplace join business seller stock"},
   {title:"Coming soon",sub:"New things on the way",target:"soon",icon:"⏳",words:"coming soon new",body:"coming soon new launch next",show:SO.show!==false&&!ACAD},
