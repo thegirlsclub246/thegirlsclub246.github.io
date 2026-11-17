@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="p:domain_verify" content="0c068a02577f4603b6e9260c43d26320"/>
 <script>
 /* ==TWO SITES== thegirlsclub246.com = the Marketplace only. academy.thegirlsclub246.com = the Academy (same file, loaded by the academy site).
    Bookings live in Hustle Book. Old links (#academy, #eyelash, #cluster, #book…) are forwarded. */
@@ -1669,7 +1670,7 @@ document.querySelectorAll(".wa-num").forEach(el=>el.textContent=WHATSAPP?("+"+WH
  let wasOpen=false;
  function open(q){if(typeof q==="string"){inp.value=q}panel.hidden=false;scrimS.hidden=false;btn&&btn.setAttribute("aria-expanded","true");document.documentElement.style.overflow="hidden";render();wasOpen=true;setTimeout(()=>inp.focus(),30)}
  function close(){if(!wasOpen)return;track(lastQ);panel.hidden=true;scrimS.hidden=true;btn&&btn.setAttribute("aria-expanded","false");document.documentElement.style.overflow="";wasOpen=false}
- if(ACAD){sugg.querySelector(".chips").innerHTML=["Lash course","Cluster course","Eyelash extensions","Certificate","Book appointment","Pay with FirstPay"].map(t=>`<button type="button">${t}</button>`).join("");inp.placeholder="Search courses, booking, payment…"}
+ if(ACAD){sugg.querySelector(".chips").innerHTML=["Lash course","Cluster course","Eyelash extensions","Certificate","Pay with FirstPay"].map(t=>`<button type="button">${t}</button>`).join("");inp.placeholder="Search courses, booking, payment…"}
  window.tgcSearch=open;
  btn&&(btn.onclick=()=>open());
  document.getElementById("closeSearch").onclick=close;scrimS.onclick=close;
