@@ -190,4 +190,5 @@ collections:
           - {name: firstpay_name, label: "FirstPay name", widget: string}
           - {name: bpwccul_name, label: "BPWCCUL account name", widget: string, required: false}
           - {name: bpwccul_number, label: "BPWCCUL account number (empty hides BPWCCUL)", widget: string, required: false}
+          - {name: bpwccul_share, label: "BPWCCUL share number (shown to customers)", widget: string, required: false}
           - {name: paypal_link, label: "PayPal.Me link (empty hides PayPal)", widget: string, required: false}

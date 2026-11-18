@@ -1,4 +1,4 @@
-/* The Girls Club Marketplace: vendor plans + agreement (shared by brands.html and vendors.html)
+/* Shop Bajan by The Girls Club: vendor plans + agreement (shared by brands.html and vendors.html)
    Plans from 11 Nov 2026: Starter $0, Spotlight $75, Signature $125 a month (BBD),
    all + 15% per sale for the vendor's first 12 months, then 20%.
    Vendors who signed before then (version starting "2026-10") keep the deal they signed:
@@ -30,7 +30,7 @@ function clauses(p,c){var pl=PLANS[p],legacy=isLegacy(c),feeTxt;
 ["Stock","The Vendor delivers products to The Girls Club in St. Thomas (or as agreed). Each delivery is logged on a Stock Received form signed by both."],
 ["Ownership","The Vendor owns all products until they are sold. Ownership passes straight from the Vendor to the customer at the time of sale."],
 ["Prices","The Vendor sets the retail price of each product, in BBD. Price changes go live once The Girls Club approves them in the Vendor Portal, normally within 2 working days. The Girls Club will not discount a Vendor's product without the Vendor's written OK. Shop-wide discount codes are paid for by The Girls Club, so the Vendor's share is worked out on the full listed price."],
-["Selling and payments","The Girls Club lists, sells and delivers the products, and collects payment from customers. The Vendor does not take payment for Marketplace orders."],
+["Selling and payments","The Girls Club lists, sells and delivers the products, and collects payment from customers. The Vendor does not take payment for Shop Bajan orders."],
 ["Per-sale fee",feeTxt],
 ["Payouts","Every Sunday, The Girls Club pays the Vendor their share of all items sold in the week before (Sunday to Saturday), by the payout method the Vendor chose, with a statement. A sale is paid out only once the customer's payment has cleared. If a Sunday payout can't go through (for example a bank holiday), it is made the next working day."],
 ["Customer returns","The Girls Club handles customer questions and returns. If an item is returned for a fault, damage or wrong description that is the Vendor's responsibility, the refund is taken from the Vendor's next payout and the item goes back to the Vendor. Returns caused by The Girls Club are paid for by The Girls Club."],
@@ -40,8 +40,8 @@ function clauses(p,c){var pl=PLANS[p],legacy=isLegacy(c),feeTxt;
 ["Product quality and safety","The Vendor promises every product is legal to sell in Barbados, genuine, theirs to sell, and matches its description and photos. Cosmetics, skincare, food and candles must be labelled with ingredients, the Vendor's business name and a use-by or batch date where relevant. The Vendor is responsible for any claim caused by a faulty or unsafe product. The Girls Club may refuse or remove any product."],
 ["Photos and marketing","The Vendor allows The Girls Club to use their business name, logo, product photos and descriptions to promote the products during this agreement and for 30 days after, and confirms they own or may use these photos."],
 ["Records","The Vendor keeps product details, photos, prices and stock up to date in the Vendor Portal (thegirlsclub246.com/vendors). The Girls Club approves each product and change before it shows on the website. Sales figures and statements are for information and may be approximate; payouts follow the actual cleared sales."],
-["Customer information","The Girls Club shares only what the Vendor needs to fulfil an order. The Vendor uses it only for that order, keeps it private and does not contact customers to sell outside The Girls Club Marketplace, in line with the Data Protection Act, 2019."],
-["Selling elsewhere","The Vendor may keep selling in their own shop and online, but will not advertise the same product publicly for less than its price on The Girls Club Marketplace during this agreement."],
+["Customer information","The Girls Club shares only what the Vendor needs to fulfil an order. The Vendor uses it only for that order, keeps it private and does not contact customers to sell outside Shop Bajan, in line with the Data Protection Act, 2019."],
+["Selling elsewhere","The Vendor may keep selling in their own shop and online, but will not advertise the same product publicly for less than its price on Shop Bajan during this agreement."],
 ["Ending the agreement","Either side may end this agreement with 14 days' written notice (WhatsApp or email), and the monthly plan payment is then cancelled. The Girls Club then pays all sales owed at the next Sunday payout, and the Vendor collects unsold stock within 14 days. The Girls Club may end it at once if the Vendor breaks the Product quality and safety point."],
 ["General","The Vendor and The Girls Club are independent businesses; this is not a partnership or employment. Changes must be agreed in writing by both. This agreement is governed by the laws of Barbados."]];}
 

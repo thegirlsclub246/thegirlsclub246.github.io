@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Vendor Portal · The Girls Club Marketplace</title>
-<meta name="description" content="Sign in to manage your brand on The Girls Club Marketplace: add products and photos, see your sales and Sunday payouts.">
+<title>Vendor Portal · Shop Bajan by The Girls Club</title>
+<meta name="description" content="Sign in to manage your brand on Shop Bajan: add products and photos, see your sales and Sunday payouts.">
 <meta name="robots" content="noindex,follow">
 <link rel="canonical" href="https://thegirlsclub246.com/vendors">
 <meta name="theme-color" content="#FFF4B0">
@@ -184,7 +184,7 @@ footer{text-align:center;font-size:14px;color:var(--muted);padding:30px 16px}
 </div></header>
 <nav class="tabs" id="tabs" role="tablist" hidden></nav>
 <main class="wrap" id="app"><p class="loading">Loading your portal…</p></main>
-<footer>The Girls Club Marketplace · St. Thomas, Barbados · <a href="brands.html">For brands</a> · <a href="policies.html">Policies</a> · <a href="https://wa.me/12468504460" target="_blank" rel="noopener">WhatsApp help</a></footer>
+<footer>Shop Bajan by The Girls Club · St. Thomas, Barbados · <a href="brands.html">For brands</a> · <a href="policies.html">Policies</a> · <a href="https://wa.me/12468504460" target="_blank" rel="noopener">WhatsApp help</a></footer>
 <div id="toast" class="toast" role="status" hidden></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.79.0/dist/umd/supabase.js"></script>
@@ -253,7 +253,7 @@ function authScreen(mode,msg){
   mode=mode||"signin";
   var titles={signin:"Welcome back",signup:"Create your vendor account",forgot:"Reset your password",newpass:"Choose a new password",check:"Check your email"};
   var h='<div class="auth"><h1 class="page">'+titles[mode]+'</h1>';
-  if(mode==="signup")h+='<p class="lead">For brands joining The Girls Club Marketplace. Takes about 5 minutes: create your login, then set up your shop and sign the agreement.</p>';
+  if(mode==="signup")h+='<p class="lead">For brands joining Shop Bajan. Takes about 5 minutes: create your login, then set up your shop and sign the agreement.</p>';
   if(mode==="signin")h+='<p class="lead">Sign in to add your products and photos, and see your sales and Sunday payouts.</p>';
   if(msg)h+='<div class="note info">'+msg+'</div>';
   h+='<form class="card pinkbox" id="af" novalidate>';
@@ -360,7 +360,7 @@ function setupShop(){
   '</div><p class="hint">Prices in BBD. You can change your plan anytime.</p></fieldset>'+
   '<fieldset><legend><i>3</i>How you get paid</legend><div class="pick">'+
   ["Bank transfer","FirstPay","BPWCCUL"].map(function(m){return'<label><input type="radio" name="payout" value="'+m+'"><div><b>'+m+'</b></div></label>'}).join("")+
-  '</div><p class="hint">Paid every Sunday for the week before. Marishka asks for your account details privately on WhatsApp. Never type card or bank numbers here.</p></fieldset>'+
+  '</div><p class="hint">Paid every Sunday for the week before. We ask for your account details privately on WhatsApp. Never type card or bank numbers here.</p></fieldset>'+
   '<fieldset><legend><i>4</i>Sign the agreement</legend><div class="note info" id="agSum">Pick a plan above to see your terms.</div>'+
   '<details><summary>Read the full agreement (18 points)</summary><ol class="agree" id="agList"></ol></details>'+
   '<label class="f">Sign: type your full name<input name="sign" required maxlength="80" autocomplete="name"></label>'+
@@ -390,7 +390,7 @@ function setupShop(){
     sb.from("vendors").insert(row).select().single().then(function(r){
       if(r.error){busy(btn,false);return setErr(err,friendly(r.error))}
       S.vendor=r.data;gc("vendor-portal-shop","Vendor shop set up");
-      /* copy to Marishka's sign-ups sheet so she is notified like before */
+      /* copy to the sign-ups sheet so we are notified like before */
       try{var fd=new FormData();fd.append(FIELD,JSON.stringify({type:"vendor-signup",source:"vendor-portal",submittedAt:now,brand:row.business,owner:row.owner_name,phone:row.phone,email:row.email,instagram:row.instagram,category:row.category,bio:row.bio,plan:row.plan,planName:pl.name,monthlyFee:pl.fee,payoutMethod:row.payout_method,contract:row.contract,page:location.href}));fetch(FORM,{method:"POST",mode:"no-cors",body:fd}).catch(function(){})}catch(x){}
       S.tab="products";renderVendor();toast("Your shop is set up 🎀 Add your first product!");
     }).catch(function(x){busy(btn,false);setErr(err,friendly(x))});
@@ -417,9 +417,9 @@ function renderVendor(){
   wireVendor();
 }
 function statusNote(v){
-  if(v.status==="pending")return'<div class="note warn">⏳ Marishka is checking your shop. You can add products now: they go live on the website once she approves your shop and each product (normally within 2 working days).</div>';
-  if(v.status==="paused")return'<div class="note warn">Your shop is paused, so your products are not showing on the website right now. WhatsApp Marishka if you have questions.</div>';
-  return'<div class="note ok">✅ Your shop is approved. Live products show on <a href="./#shop">The Girls Club Marketplace</a>.</div>';
+  if(v.status==="pending")return'<div class="note warn">⏳ We are checking your shop. You can add products now: they go live on the website once we approve your shop and each product (normally within 2 working days).</div>';
+  if(v.status==="paused")return'<div class="note warn">Your shop is paused, so your products are not showing on the website right now. WhatsApp us if you have questions.</div>';
+  return'<div class="note ok">✅ Your shop is approved. Live products show on <a href="./#shop">Shop Bajan</a>.</div>';
 }
 function vHome(v){
   var m=money_owed(S.sales,S.payouts),pl=PLANS[v.plan]||{};
@@ -433,7 +433,7 @@ function vHome(v){
      '<div class="stat"><b>'+money2(m.earned)+'</b><span>earned in total</span></div>'+
      '<div class="stat"><b>'+live+'</b><span>live products</span></div>'+
      '<div class="stat"><b>'+pend+'</b><span>waiting for approval</span></div></div>';
-  if(ch.length)h+='<h2 class="sec">Marishka asked for changes</h2><div class="rows">'+ch.map(function(p){return'<div class="r"><div class="l"><b>'+esc(p.name)+'</b><span>'+esc(p.note||"Please check this product.")+'</span></div><div class="v"><button class="btn sm" data-edit="'+p.id+'">Fix</button></div></div>'}).join("")+'</div>';
+  if(ch.length)h+='<h2 class="sec">We asked for changes</h2><div class="rows">'+ch.map(function(p){return'<div class="r"><div class="l"><b>'+esc(p.name)+'</b><span>'+esc(p.note||"Please check this product.")+'</span></div><div class="v"><button class="btn sm" data-edit="'+p.id+'">Fix</button></div></div>'}).join("")+'</div>';
   if(low.length)h+='<h2 class="sec">Running low</h2><div class="rows">'+low.map(function(p){return'<div class="r"><div class="l"><b>'+esc(p.name)+'</b><span>'+(Number(p.stock)<=0?"Sold out":"Only "+p.stock+" left")+'</span></div><div class="v"><button class="btn sm ghost" data-edit="'+p.id+'">Update stock</button></div></div>'}).join("")+'</div>';
   h+='<h2 class="sec">Latest sales</h2>'+salesRows(S.sales.slice(0,5));
   h+='<div class="btnrow"><button class="btn" data-add>+ Add a product</button><button class="btn ghost" data-t2="products">See my products</button></div>';
@@ -451,7 +451,7 @@ function prodCard(p,admin,vend){
   var h='<div class="prod"><div class="ph" style="'+(ph?"background-image:url('"+esc(photoUrl(ph))+"')":"")+'">'+(ph?"":(p.digital?"💻":"🛍️"))+'</div><div>';
   if(admin&&vend)h+='<div class="small muted" style="font-weight:700">'+esc(vend.business)+'</div>';
   h+='<h3>'+esc(p.name)+'</h3><div class="meta">'+money2(p.price)+' · '+(p.digital?"Digital":(Number(p.stock)||0)+" in stock")+(p.category?" · "+esc(p.category):"")+'</div>'+chip(p.status);
-  if(p.note&&(p.status==="changes"||admin))h+='<div class="fromher">'+(admin?"Your note: ":"From Marishka: ")+esc(p.note)+'</div>';
+  if(p.note&&(p.status==="changes"||admin))h+='<div class="fromher">'+(admin?"Your note: ":"From The Girls Club: ")+esc(p.note)+'</div>';
   h+='</div><div class="acts">';
   if(admin){
     h+='<button class="btn sm green" data-approve="'+p.id+'">'+(p.status==="live"?"Live ✓":"Approve")+'</button><button class="btn sm ghost" data-changes="'+p.id+'">Ask for changes</button><button class="btn sm ghost" data-view="'+p.id+'">View</button>';
@@ -463,11 +463,11 @@ function prodCard(p,admin,vend){
   return h+'</div></div>';
 }
 function vProducts(v){
-  var h='<h1 class="page">My products</h1><p class="lead">Add photos, prices and stock. Marishka approves each new product or change before it shows on the website.</p>';
+  var h='<h1 class="page">My products</h1><p class="lead">Add photos, prices and stock. We approve each new product or change before it shows on the website.</p>';
   h+='<div class="btnrow"><button class="btn full" data-add>+ Add a product</button></div>';
   if(!S.products.length)h+='<div class="empty">No products yet. Tap "Add a product" to list your first one 💕</div>';
   else h+='<div class="plist">'+S.products.map(function(p){return prodCard(p,false)}).join("")+'</div>';
-  h+='<p class="small muted" style="margin-top:16px">Changing only the stock keeps a live product live. Changing the name, price, photos or description sends it back to Marishka to approve.</p>';
+  h+='<p class="small muted" style="margin-top:16px">Changing only the stock keeps a live product live. Changing the name, price, photos or description sends it back to us to approve.</p>';
   return h;
 }
 function vMoney(v){
@@ -489,7 +489,7 @@ function vBusiness(v){
   '<label class="f">About your brand<textarea name="bio" maxlength="600">'+esc(v.bio)+'</textarea></label>'+
   '<label class="f">How you get paid<select name="payout_method">'+["Bank transfer","FirstPay","BPWCCUL"].map(function(m){return'<option'+(m===v.payout_method?" selected":"")+'>'+m+'</option>'}).join("")+'</select></label>'+
   '<p class="err" id="berr" role="alert"></p><div class="btnrow"><button class="btn" type="submit" id="bbtn">Save changes</button></div></form>';
-  h+='<div class="card"><h2 style="font-size:19px">Your plan: '+esc(pl.name||v.plan)+'</h2><p class="muted" style="margin-top:6px">'+(pl.fee?"$"+pl.fee+" a month + ":"Free, ")+esc(feeText(v))+'. To change your plan, WhatsApp Marishka.</p><div class="btnrow"><a class="btn sm ghost" href="https://wa.me/'+WA+'?text='+encodeURIComponent("Hi Marishka! I'd like to change my Marketplace plan for "+v.business+".")+'" target="_blank" rel="noopener">Change my plan</a></div></div>';
+  h+='<div class="card"><h2 style="font-size:19px">Your plan: '+esc(pl.name||v.plan)+'</h2><p class="muted" style="margin-top:6px">'+(pl.fee?"$"+pl.fee+" a month + ":"Free, ")+esc(feeText(v))+'. To change your plan, WhatsApp us.</p><div class="btnrow"><a class="btn sm ghost" href="https://wa.me/'+WA+'?text='+encodeURIComponent("Hi The Girls Club! I'd like to change my Shop Bajan plan for "+v.business+".")+'" target="_blank" rel="noopener">Change my plan</a></div></div>';
   h+=payBox(v,pl);
   var c=v.contract||{};
   h+='<div class="card"><h2 style="font-size:19px">Your agreement</h2><p class="muted" style="margin-top:6px">Signed by '+esc(c.name||"")+(c.signedAt?" on "+esc(fmtDate(c.signedAt)):"")+'.</p><details><summary>Read the agreement</summary><ol class="agree">'+A.clauses(c.plan||v.plan,c).map(function(x){return"<li><b>"+esc(x[0])+".</b> "+esc(x[1])+"</li>"}).join("")+'</ol></details></div>';
@@ -513,7 +513,7 @@ function wireVendor(){
 function setStatusVendor(id,st){
   if(S.viewAs)return toast("You're viewing as this vendor. Use the Overseer tabs to change things.");
   sb.from("products").update({status:st}).eq("id",id).select().single().then(function(r){if(r.error)return toast(friendly(r.error));
-    var i=S.products.findIndex(function(p){return p.id===id});S.products[i]=r.data;renderVendor();toast(st==="hidden"?"Hidden from the website":"Sent to Marishka to show again")});
+    var i=S.products.findIndex(function(p){return p.id===id});S.products[i]=r.data;renderVendor();toast(st==="hidden"?"Hidden from the website":"Sent to The Girls Club to show again")});
 }
 
 /* ---------- photos ---------- */
@@ -534,7 +534,7 @@ function productSheet(p){
   var rate=rateOf(S.vendor);
   var d=document.createElement("div");d.className="sheet";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-label",isNew?"Add a product":"Edit product");
   d.innerHTML='<div class="panel"><div class="head"><h2>'+(isNew?"Add a product":"Edit product")+'</h2><button class="x" type="button" aria-label="Close">×</button></div>'+
-  (p.status==="changes"&&p.note?'<div class="fromher">From Marishka: '+esc(p.note)+'</div>':"")+
+  (p.status==="changes"&&p.note?'<div class="fromher">From The Girls Club: '+esc(p.note)+'</div>':"")+
   '<form id="pf" novalidate>'+
   '<div class="f">Photos <span class="hint">Up to 5. The first one is the main picture. Bright, clear photos sell best.</span><div class="photos" id="phs"></div></div>'+
   '<label class="f">Product name<input name="name" maxlength="90" required value="'+esc(p.name)+'" placeholder="e.g. Vanilla body butter 8oz"></label>'+
@@ -547,7 +547,7 @@ function productSheet(p){
   '<label class="f">Profit you want on each (BBD)<input id="ppProfit" type="number" inputmode="decimal" min="0" step="0.01" placeholder="e.g. 15"></label></div>'+
   '<div class="pp-out" id="ppOut"></div><p class="pp-guide" id="ppGuide"></p></div></details>'+
   '<label class="switch">This is a digital product (e-book, guide, template, class)<input type="checkbox" name="digital"'+(p.digital?" checked":"")+'></label>'+
-  '<label class="f" id="dlF">Download link <span class="hint">Only you and Marishka see this. We send it to the customer after they pay.</span><input name="delivery_link" type="url" inputmode="url" maxlength="500" value="'+esc(p.delivery_link)+'" placeholder="https://"></label>'+
+  '<label class="f" id="dlF">Download link <span class="hint">Only you and The Girls Club see this. We send it to the customer after they pay.</span><input name="delivery_link" type="url" inputmode="url" maxlength="500" value="'+esc(p.delivery_link)+'" placeholder="https://"></label>'+
   '<label class="f">Category<select name="category">'+CATS.map(function(c){return'<option'+(c===p.category?" selected":"")+'>'+esc(c)+'</option>'}).join("")+'</select></label>'+
   '<label class="f">Options <span class="hint">optional · sizes, colours or scents, separated by commas</span><input name="variants" maxlength="300" value="'+esc((p.variants||[]).join(", "))+'" placeholder="e.g. Vanilla, Coconut, Shea"></label>'+
   '<label class="f">Description<textarea name="description" maxlength="1200" placeholder="What it is, size, how to use, ingredients">'+esc(p.description)+'</textarea></label>'+
@@ -602,7 +602,7 @@ function productSheet(p){
         if(removed.length)sb.storage.from(BUCKET).remove(removed).catch(function(){});
         if(isNew)S.products.unshift(r.data);else{var i=S.products.findIndex(function(x){return x.id===p.id});S.products[i]=r.data}
         close();S.tab="products";renderVendor();
-        toast(r.data.status==="live"?"Saved. Still live 💕":(isNew?"Sent to Marishka for approval 💕":"Saved and sent to Marishka to approve"));
+        toast(r.data.status==="live"?"Saved. Still live 💕":(isNew?"Sent for approval 💕":"Saved and sent to us to approve"));
         gc(isNew?"vendor-portal-product-add":"vendor-portal-product-edit","Vendor product "+(isNew?"added":"edited"));
       });
     }).catch(function(x){busy(btn,false);if(uploaded.length)sb.storage.from(BUCKET).remove(uploaded).catch(function(){});setErr(err,friendly(x))});
@@ -611,7 +611,7 @@ function productSheet(p){
 }
 function confirmInline(btn){if(btn.dataset.sure)return true;btn.dataset.sure="1";btn.dataset.l=btn.textContent;btn.textContent="Tap again to confirm";setTimeout(function(){if(btn.isConnected){delete btn.dataset.sure;btn.textContent=btn.dataset.l}},4000);return false}
 
-/* ---------- overseer (Marishka) ---------- */
+/* ---------- overseer ---------- */
 function loadAdmin(){
   return Promise.all([
     sb.from("vendors").select("*").order("created_at",{ascending:false}),
@@ -648,7 +648,7 @@ function vendorCard(v){
 }
 function aApprove(){
   var pv=S.all.vendors.filter(function(v){return v.status==="pending"}),pp=S.all.products.filter(function(p){return p.status==="pending"});
-  var h='<h1 class="page">To approve</h1><p class="lead">New shops and products wait here until you check them. Approved products show on the website Marketplace straight away.</p>';
+  var h='<h1 class="page">To approve</h1><p class="lead">New shops and products wait here until you check them. Approved products show on Shop Bajan straight away.</p>';
   h+='<h2 class="sec">New shops ('+pv.length+')</h2>'+(pv.length?pv.map(vendorCard).join(""):'<div class="empty">No new shops waiting.</div>');
   h+='<h2 class="sec">Products ('+pp.length+')</h2>'+(pp.length?'<div class="plist">'+pp.map(function(p){return prodCard(p,true,vById(p.vendor_id))}).join("")+'</div>':'<div class="empty">No products waiting. 🎉</div>');
   if(pp.some(function(p){var v=vById(p.vendor_id);return v&&v.status!=="approved"}))h+='<p class="small muted" style="margin-top:12px">Products from shops that aren\'t approved yet stay off the website until you approve the shop too.</p>';
@@ -677,7 +677,7 @@ function updProduct(id,upd,msg){
     var i=S.all.products.findIndex(function(p){return p.id===id});S.all.products[i]=r.data;renderAdmin();toast(msg)});
 }
 function wireAdmin(){
-  qa("[data-approve]").forEach(function(b){b.onclick=function(){updProduct(b.getAttribute("data-approve"),{status:"live",note:null},"Approved: it's on the Marketplace 💕")}});
+  qa("[data-approve]").forEach(function(b){b.onclick=function(){updProduct(b.getAttribute("data-approve"),{status:"live",note:null},"Approved: it's on Shop Bajan 💕")}});
   qa("[data-hide]").forEach(function(b){b.onclick=function(){updProduct(b.getAttribute("data-hide"),{status:"hidden"},"Hidden from the website")}});
   qa("[data-changes]").forEach(function(b){b.onclick=function(){var id=b.getAttribute("data-changes"),p=S.all.products.find(function(x){return x.id===id});noteSheet(p)}});
   qa("[data-view]").forEach(function(b){b.onclick=function(){viewSheet(S.all.products.find(function(x){return x.id===b.getAttribute("data-view")}))}});
@@ -706,7 +706,7 @@ function viewSheet(p){var v=vById(p.vendor_id)||{};
   (p.digital?'<p style="margin-top:10px"><b>Download link:</b> <a href="'+esc(p.delivery_link)+'" target="_blank" rel="noopener noreferrer" style="overflow-wrap:anywhere">'+esc(p.delivery_link||"none")+'</a></p>':"")+
   '<p style="margin-top:10px;white-space:pre-line">'+esc(p.description||"")+'</p>'+chip(p.status)+
   '<div class="btnrow"><button class="btn green" id="vApprove">Approve</button><button class="btn ghost" id="vChanges">Ask for changes</button></div>');
-  q("#vApprove",d).onclick=function(){d.close();updProduct(p.id,{status:"live",note:null},"Approved: it's on the Marketplace 💕")};
+  q("#vApprove",d).onclick=function(){d.close();updProduct(p.id,{status:"live",note:null},"Approved: it's on Shop Bajan 💕")};
   q("#vChanges",d).onclick=function(){d.close();noteSheet(p)};
 }
 function payoutSheet(v){var m=money_owed(S.all.sales.filter(function(s){return s.vendor_id===v.id}),S.all.payouts.filter(function(p){return p.vendor_id===v.id}));
@@ -717,9 +717,9 @@ function deleteShopSheet(v){if(!v)return;
   var ps=S.all.products.filter(function(p){return p.vendor_id===v.id}),ss=S.all.sales.filter(function(s){return s.vendor_id===v.id}),ys=S.all.payouts.filter(function(p){return p.vendor_id===v.id});
   var m=money_owed(ss,ys),owed=m.dueSunday+m.thisWeek;
   var d=sheet("Delete this shop?",'<p><b>'+esc(v.business)+'</b> · '+esc(v.owner_name||"")+'</p>'+
-  '<div class="rows"><div class="r"><div class="l"><b>This deletes for good</b><span>The shop, its '+ps.length+' product'+(ps.length===1?"":"s")+' and photos, '+ss.length+' sale'+(ss.length===1?"":"s")+' and '+ys.length+' payout record'+(ys.length===1?"":"s")+'. Her products leave the Marketplace straight away. This can\'t be undone.</span></div></div></div>'+
+  '<div class="rows"><div class="r"><div class="l"><b>This deletes for good</b><span>The shop, its '+ps.length+' product'+(ps.length===1?"":"s")+' and photos, '+ss.length+' sale'+(ss.length===1?"":"s")+' and '+ys.length+' payout record'+(ys.length===1?"":"s")+'. Her products leave Shop Bajan straight away. This can\'t be undone.</span></div></div></div>'+
   (owed>0.004?'<p class="err" style="margin-top:12px">She is still owed '+money2(owed)+'. Pay her and record the payout first, or note it down before deleting.</p>':"")+
-  (ss.length?'<p class="small muted" style="margin-top:10px">Tip: if you might want her sales history later, tap <b>Pause shop</b> instead. That hides her from the Marketplace and keeps the records.</p>':"")+
+  (ss.length?'<p class="small muted" style="margin-top:10px">Tip: if you might want her sales history later, tap <b>Pause shop</b> instead. That hides her from Shop Bajan and keeps the records.</p>':"")+
   '<p class="small muted" style="margin-top:10px">Her login stays. If she signs in again she\'ll just see "set up your shop".</p>'+
   '<form id="df"><label class="f">To confirm, type the shop name: <b>'+esc(v.business)+'</b><input name="nm" autocomplete="off" autocapitalize="off" spellcheck="false"></label><p class="err" id="derr"></p>'+
   '<div class="btnrow"><button class="btn red" type="submit">Delete shop</button><button class="btn ghost" type="button" id="dNo">Keep it</button></div></form>');
