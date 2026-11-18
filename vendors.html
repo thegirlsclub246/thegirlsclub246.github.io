@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Vendor Portal · The Girls Club Marketplace</title>
-<meta name="description" content="Sign in to manage your brand on The Girls Club Marketplace: add products and photos, see your sales and Sunday payouts.">
+<title>Vendor Portal · Shop Bajan by The Girls Club</title>
+<meta name="description" content="Sign in to manage your brand on Shop Bajan: add products and photos, see your sales and Sunday payouts.">
 <meta name="robots" content="noindex,follow">
 <link rel="canonical" href="https://thegirlsclub246.com/vendors">
 <meta name="theme-color" content="#FFF4B0">
@@ -184,7 +184,7 @@ footer{text-align:center;font-size:14px;color:var(--muted);padding:30px 16px}
 </div></header>
 <nav class="tabs" id="tabs" role="tablist" hidden></nav>
 <main class="wrap" id="app"><p class="loading">Loading your portal…</p></main>
-<footer>The Girls Club Marketplace · St. Thomas, Barbados · <a href="brands.html">For brands</a> · <a href="policies.html">Policies</a> · <a href="https://wa.me/12468504460" target="_blank" rel="noopener">WhatsApp help</a></footer>
+<footer>Shop Bajan by The Girls Club · St. Thomas, Barbados · <a href="brands.html">For brands</a> · <a href="policies.html">Policies</a> · <a href="https://wa.me/12468504460" target="_blank" rel="noopener">WhatsApp help</a></footer>
 <div id="toast" class="toast" role="status" hidden></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.79.0/dist/umd/supabase.js"></script>
@@ -253,7 +253,7 @@ function authScreen(mode,msg){
   mode=mode||"signin";
   var titles={signin:"Welcome back",signup:"Create your vendor account",forgot:"Reset your password",newpass:"Choose a new password",check:"Check your email"};
   var h='<div class="auth"><h1 class="page">'+titles[mode]+'</h1>';
-  if(mode==="signup")h+='<p class="lead">For brands joining The Girls Club Marketplace. Takes about 5 minutes: create your login, then set up your shop and sign the agreement.</p>';
+  if(mode==="signup")h+='<p class="lead">For brands joining Shop Bajan. Takes about 5 minutes: create your login, then set up your shop and sign the agreement.</p>';
   if(mode==="signin")h+='<p class="lead">Sign in to add your products and photos, and see your sales and Sunday payouts.</p>';
   if(msg)h+='<div class="note info">'+msg+'</div>';
   h+='<form class="card pinkbox" id="af" novalidate>';
@@ -419,7 +419,7 @@ function renderVendor(){
 function statusNote(v){
   if(v.status==="pending")return'<div class="note warn">⏳ We are checking your shop. You can add products now: they go live on the website once we approve your shop and each product (normally within 2 working days).</div>';
   if(v.status==="paused")return'<div class="note warn">Your shop is paused, so your products are not showing on the website right now. WhatsApp us if you have questions.</div>';
-  return'<div class="note ok">✅ Your shop is approved. Live products show on <a href="./#shop">The Girls Club Marketplace</a>.</div>';
+  return'<div class="note ok">✅ Your shop is approved. Live products show on <a href="./#shop">Shop Bajan</a>.</div>';
 }
 function vHome(v){
   var m=money_owed(S.sales,S.payouts),pl=PLANS[v.plan]||{};
@@ -489,7 +489,7 @@ function vBusiness(v){
   '<label class="f">About your brand<textarea name="bio" maxlength="600">'+esc(v.bio)+'</textarea></label>'+
   '<label class="f">How you get paid<select name="payout_method">'+["Bank transfer","FirstPay","BPWCCUL"].map(function(m){return'<option'+(m===v.payout_method?" selected":"")+'>'+m+'</option>'}).join("")+'</select></label>'+
   '<p class="err" id="berr" role="alert"></p><div class="btnrow"><button class="btn" type="submit" id="bbtn">Save changes</button></div></form>';
-  h+='<div class="card"><h2 style="font-size:19px">Your plan: '+esc(pl.name||v.plan)+'</h2><p class="muted" style="margin-top:6px">'+(pl.fee?"$"+pl.fee+" a month + ":"Free, ")+esc(feeText(v))+'. To change your plan, WhatsApp us.</p><div class="btnrow"><a class="btn sm ghost" href="https://wa.me/'+WA+'?text='+encodeURIComponent("Hi The Girls Club! I'd like to change my Marketplace plan for "+v.business+".")+'" target="_blank" rel="noopener">Change my plan</a></div></div>';
+  h+='<div class="card"><h2 style="font-size:19px">Your plan: '+esc(pl.name||v.plan)+'</h2><p class="muted" style="margin-top:6px">'+(pl.fee?"$"+pl.fee+" a month + ":"Free, ")+esc(feeText(v))+'. To change your plan, WhatsApp us.</p><div class="btnrow"><a class="btn sm ghost" href="https://wa.me/'+WA+'?text='+encodeURIComponent("Hi The Girls Club! I'd like to change my Shop Bajan plan for "+v.business+".")+'" target="_blank" rel="noopener">Change my plan</a></div></div>';
   h+=payBox(v,pl);
   var c=v.contract||{};
   h+='<div class="card"><h2 style="font-size:19px">Your agreement</h2><p class="muted" style="margin-top:6px">Signed by '+esc(c.name||"")+(c.signedAt?" on "+esc(fmtDate(c.signedAt)):"")+'.</p><details><summary>Read the agreement</summary><ol class="agree">'+A.clauses(c.plan||v.plan,c).map(function(x){return"<li><b>"+esc(x[0])+".</b> "+esc(x[1])+"</li>"}).join("")+'</ol></details></div>';
@@ -648,7 +648,7 @@ function vendorCard(v){
 }
 function aApprove(){
   var pv=S.all.vendors.filter(function(v){return v.status==="pending"}),pp=S.all.products.filter(function(p){return p.status==="pending"});
-  var h='<h1 class="page">To approve</h1><p class="lead">New shops and products wait here until you check them. Approved products show on the website Marketplace straight away.</p>';
+  var h='<h1 class="page">To approve</h1><p class="lead">New shops and products wait here until you check them. Approved products show on Shop Bajan straight away.</p>';
   h+='<h2 class="sec">New shops ('+pv.length+')</h2>'+(pv.length?pv.map(vendorCard).join(""):'<div class="empty">No new shops waiting.</div>');
   h+='<h2 class="sec">Products ('+pp.length+')</h2>'+(pp.length?'<div class="plist">'+pp.map(function(p){return prodCard(p,true,vById(p.vendor_id))}).join("")+'</div>':'<div class="empty">No products waiting. 🎉</div>');
   if(pp.some(function(p){var v=vById(p.vendor_id);return v&&v.status!=="approved"}))h+='<p class="small muted" style="margin-top:12px">Products from shops that aren\'t approved yet stay off the website until you approve the shop too.</p>';
@@ -677,7 +677,7 @@ function updProduct(id,upd,msg){
     var i=S.all.products.findIndex(function(p){return p.id===id});S.all.products[i]=r.data;renderAdmin();toast(msg)});
 }
 function wireAdmin(){
-  qa("[data-approve]").forEach(function(b){b.onclick=function(){updProduct(b.getAttribute("data-approve"),{status:"live",note:null},"Approved: it's on the Marketplace 💕")}});
+  qa("[data-approve]").forEach(function(b){b.onclick=function(){updProduct(b.getAttribute("data-approve"),{status:"live",note:null},"Approved: it's on Shop Bajan 💕")}});
   qa("[data-hide]").forEach(function(b){b.onclick=function(){updProduct(b.getAttribute("data-hide"),{status:"hidden"},"Hidden from the website")}});
   qa("[data-changes]").forEach(function(b){b.onclick=function(){var id=b.getAttribute("data-changes"),p=S.all.products.find(function(x){return x.id===id});noteSheet(p)}});
   qa("[data-view]").forEach(function(b){b.onclick=function(){viewSheet(S.all.products.find(function(x){return x.id===b.getAttribute("data-view")}))}});
@@ -706,7 +706,7 @@ function viewSheet(p){var v=vById(p.vendor_id)||{};
   (p.digital?'<p style="margin-top:10px"><b>Download link:</b> <a href="'+esc(p.delivery_link)+'" target="_blank" rel="noopener noreferrer" style="overflow-wrap:anywhere">'+esc(p.delivery_link||"none")+'</a></p>':"")+
   '<p style="margin-top:10px;white-space:pre-line">'+esc(p.description||"")+'</p>'+chip(p.status)+
   '<div class="btnrow"><button class="btn green" id="vApprove">Approve</button><button class="btn ghost" id="vChanges">Ask for changes</button></div>');
-  q("#vApprove",d).onclick=function(){d.close();updProduct(p.id,{status:"live",note:null},"Approved: it's on the Marketplace 💕")};
+  q("#vApprove",d).onclick=function(){d.close();updProduct(p.id,{status:"live",note:null},"Approved: it's on Shop Bajan 💕")};
   q("#vChanges",d).onclick=function(){d.close();noteSheet(p)};
 }
 function payoutSheet(v){var m=money_owed(S.all.sales.filter(function(s){return s.vendor_id===v.id}),S.all.payouts.filter(function(p){return p.vendor_id===v.id}));
@@ -717,9 +717,9 @@ function deleteShopSheet(v){if(!v)return;
   var ps=S.all.products.filter(function(p){return p.vendor_id===v.id}),ss=S.all.sales.filter(function(s){return s.vendor_id===v.id}),ys=S.all.payouts.filter(function(p){return p.vendor_id===v.id});
   var m=money_owed(ss,ys),owed=m.dueSunday+m.thisWeek;
   var d=sheet("Delete this shop?",'<p><b>'+esc(v.business)+'</b> · '+esc(v.owner_name||"")+'</p>'+
-  '<div class="rows"><div class="r"><div class="l"><b>This deletes for good</b><span>The shop, its '+ps.length+' product'+(ps.length===1?"":"s")+' and photos, '+ss.length+' sale'+(ss.length===1?"":"s")+' and '+ys.length+' payout record'+(ys.length===1?"":"s")+'. Her products leave the Marketplace straight away. This can\'t be undone.</span></div></div></div>'+
+  '<div class="rows"><div class="r"><div class="l"><b>This deletes for good</b><span>The shop, its '+ps.length+' product'+(ps.length===1?"":"s")+' and photos, '+ss.length+' sale'+(ss.length===1?"":"s")+' and '+ys.length+' payout record'+(ys.length===1?"":"s")+'. Her products leave Shop Bajan straight away. This can\'t be undone.</span></div></div></div>'+
   (owed>0.004?'<p class="err" style="margin-top:12px">She is still owed '+money2(owed)+'. Pay her and record the payout first, or note it down before deleting.</p>':"")+
-  (ss.length?'<p class="small muted" style="margin-top:10px">Tip: if you might want her sales history later, tap <b>Pause shop</b> instead. That hides her from the Marketplace and keeps the records.</p>':"")+
+  (ss.length?'<p class="small muted" style="margin-top:10px">Tip: if you might want her sales history later, tap <b>Pause shop</b> instead. That hides her from Shop Bajan and keeps the records.</p>':"")+
   '<p class="small muted" style="margin-top:10px">Her login stays. If she signs in again she\'ll just see "set up your shop".</p>'+
   '<form id="df"><label class="f">To confirm, type the shop name: <b>'+esc(v.business)+'</b><input name="nm" autocomplete="off" autocapitalize="off" spellcheck="false"></label><p class="err" id="derr"></p>'+
   '<div class="btnrow"><button class="btn red" type="submit">Delete shop</button><button class="btn ghost" type="button" id="dNo">Keep it</button></div></form>');
