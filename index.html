@@ -655,6 +655,12 @@ html.soon body>*:not(#soonPage){display:none!important}
 .sb-link{font-weight:700;font-size:.92rem;text-decoration:none;color:var(--blue);padding:10px 4px}
 .sb-link:hover{text-decoration:underline}
 @media(max-width:519px){.sb-link{display:none}}
+.sb-sell-strip{display:flex;align-items:center;justify-content:center;gap:6px;min-height:46px;padding:8px 16px;background:var(--sky);color:var(--blue);font-size:.95rem;text-decoration:none;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.sb-sell-strip b{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:2px}
+.sb-sell-strip:active{background:var(--sun)}
+@media(min-width:520px){.sb-sell-strip{display:none}}
+@media(max-width:380px){.sb-head{padding:12px 14px;gap:8px}.sb-brand{gap:8px}.sb-brand svg{width:30px;height:30px}.sb-word b{font-size:1.2rem;white-space:nowrap}.sb-word small{font-size:.56rem;letter-spacing:.08em;white-space:nowrap}.sb-btn-sm{padding-left:14px;padding-right:14px;font-size:.88rem;white-space:nowrap}}
+
 
 /* hero */
 .sb-hero{padding:14px 0 6px}
@@ -669,7 +675,7 @@ html.soon body>*:not(#soonPage){display:none!important}
 .sb-cta .sb-btn{flex:1 1 220px}
 .sb-perkline{display:flex;gap:9px;align-items:flex-start;font-weight:700;font-size:.95rem;color:var(--blue);line-height:1.4}
 .sb-perkline i{font-style:normal;flex:none}
-.sb-art{width:100%;max-width:560px;margin:4px auto 0}
+.sb-art{width:100%;max-width:600px;margin:4px auto 0}
 .sb-art svg{display:block;width:100%;height:auto;overflow:visible}
 @media(min-width:900px){.sb-hero{padding:34px 0 18px}.sb-hero-grid{grid-template-columns:1.02fr 1fr;gap:40px}.sb-hero h1{font-size:clamp(3.2rem,4.4vw,4.2rem)}.sb-cta .sb-btn{flex:0 0 auto}}
 
@@ -691,7 +697,9 @@ html.soon body>*:not(#soonPage){display:none!important}
 /* scenes */
 .sb-scenes{display:grid;gap:16px;margin-top:28px}
 .sb-scene{background:#fff;border:2px solid var(--blue);border-radius:22px;padding:20px 20px 22px;box-shadow:5px 5px 0 var(--gold)}
-.sb-time{display:inline-block;background:var(--blue);color:#fff;font-weight:800;font-size:.78rem;letter-spacing:.07em;padding:5px 12px;border-radius:999px;margin-bottom:12px;text-transform:uppercase}
+.sb-time{display:inline-block;background:var(--blue);color:#fff;font-weight:800;font-size:.78rem;letter-spacing:.07em;padding:5px 12px;border-radius:999px;text-transform:uppercase}
+.sb-scene-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.sb-av{width:58px;height:58px;flex:none;display:block}
 #soonPage .sb-scene h3{font-size:1.42rem;margin-bottom:8px}
 .sb-scene p{color:var(--muted)}
 @media(min-width:640px){.sb-scenes{grid-template-columns:repeat(2,1fr);gap:22px}}
@@ -801,6 +809,7 @@ textarea.sb-in{min-height:88px;resize:vertical}
       <a class="sb-btn sb-btn-sm" href="#sbJoin" data-sb-join>Join the waitlist</a>
     </div>
   </div>
+  <a class="sb-sell-strip" href="brands.html">Own a small business? <b>Sell with us</b> <span aria-hidden="true">&rarr;</span></a>
 
   <main id="sbTop">
     <section class="sb-hero" aria-labelledby="sbH1">
@@ -829,7 +838,7 @@ textarea.sb-in{min-height:88px;resize:vertical}
           <p class="sb-eyebrow">For small businesses</p>
           <h2 class="sb-h2" id="sbBrandsH">Own a small business? Launch with us.</h2>
           <p class="sb-sub">Shop Bajan is where Barbados finds you, 24/7. Handmade or imported, physical or digital, every category is welcome. No website to build and no checkout to set up. DM us and we&rsquo;ll design your storefront for you.</p>
-          <div class="sb-spots">We&rsquo;re looking for 4 more founding brands to complete our launch. Founding brands get special benefits that stay with them.</div>
+          <div class="sb-spots">We&rsquo;re offering 10 small businesses the chance to be founding brands. You get a lower rate locked in for as long as you stay, 3 months of our Spotlight promotion free, a Founding Brand label and a launch-week feature.</div>
         </div>
         <div>
           <ul class="sb-list">
@@ -853,12 +862,12 @@ textarea.sb-in{min-height:88px;resize:vertical}
         <h2 class="sb-h2" id="sbPicH">Shopping local, finally as easy as it should be.</h2>
         <p class="sb-sub">Here&rsquo;s what your week looks like once Shop Bajan is open.</p>
         <div class="sb-scenes">
-          <article class="sb-scene"><span class="sb-time">11:48 pm</span><h3>The birthday you forgot is tomorrow.</h3><p>Shop Bajan never closes. Find something local and lovely, check out in minutes, and wake up like you planned it all week.</p></article>
-          <article class="sb-scene"><span class="sb-time">12:30 pm</span><h3>Lunch break. One thumb. Done.</h3><p>Order from your desk between bites. Have it delivered, or collect it on your way home.</p></article>
-          <article class="sb-scene"><span class="sb-time">Sunday, on the couch</span><h3>Five businesses. One bag.</h3><p>Nails from one brand, a candle from another, earrings from a third. One checkout instead of five DMs, five transfers and five waits.</p></article>
-          <article class="sb-scene"><span class="sb-time">Any day</span><h3>&ldquo;Is this still available?&rdquo; Never typed again.</h3><p>We check stock with every brand, so what you see on the shelf is what you can order.</p></article>
-          <article class="sb-scene"><span class="sb-time">Saturday errands</span><h3>Pick it up on your route.</h3><p>Choose collection or a meet-up that fits your day, instead of waiting around for a reply.</p></article>
-          <article class="sb-scene"><span class="sb-time">This Christmas</span><h3>Everyone on your list, from Bajan hands.</h3><p>Gifts with a story, in one bag, from small businesses right here at home. Every order backs a Bajan small business.</p></article>
+          <article class="sb-scene"><div class="sb-scene-top"><span class="sb-time">11:48 pm</span></div><h3>The birthday you forgot is tomorrow.</h3><p>Shop Bajan never closes. Find something local and lovely, check out in minutes, and wake up like you planned it all week.</p></article>
+          <article class="sb-scene"><div class="sb-scene-top"><span class="sb-time">12:30 pm</span></div><h3>Lunch break. One thumb. Done.</h3><p>Order from your desk between bites. Have it delivered, or collect it on your way home.</p></article>
+          <article class="sb-scene"><div class="sb-scene-top"><span class="sb-time">Sunday, on the couch</span></div><h3>Five businesses. One bag.</h3><p>Nails from one brand, a candle from another, earrings from a third. One checkout instead of five DMs, five transfers and five waits.</p></article>
+          <article class="sb-scene"><div class="sb-scene-top"><span class="sb-time">Any day</span></div><h3>&ldquo;Is this still available?&rdquo; Never typed again.</h3><p>We check stock with every brand, so what you see on the shelf is what you can order.</p></article>
+          <article class="sb-scene"><div class="sb-scene-top"><span class="sb-time">Saturday errands</span></div><h3>Pick it up on your route.</h3><p>Choose collection or a meet-up that fits your day, instead of waiting around for a reply.</p></article>
+          <article class="sb-scene"><div class="sb-scene-top"><span class="sb-time">This Christmas</span></div><h3>Everyone on your list, from Bajan hands.</h3><p>Gifts with a story, in one bag, from small businesses right here at home. Every order backs a Bajan small business.</p></article>
         </div>
         <div class="sb-center"><a class="sb-btn" href="#sbJoin" data-sb-join>I want in</a></div>
       </div>
