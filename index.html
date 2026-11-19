@@ -929,7 +929,7 @@ textarea.sb-in{min-height:88px;resize:vertical}
             <p class="sb-err" id="sbErr" role="alert"></p>
             <button class="sb-btn" type="submit" id="sbSubmit">Join the waitlist</button>
             <p class="sb-fine">We only use your details to tell you about Shop Bajan. See our <a href="policies.html">shop policies</a>.</p>
-            <noscript><p class="sb-err">Please turn on JavaScript to join, or <a href="https://wa.me/12468504460?text=Hi!%20Please%20add%20me%20to%20the%20Shop%20Bajan%20waitlist.">message us on WhatsApp</a>.</p></noscript>
+            <noscript><p class="sb-err">Please turn on JavaScript to join, or <a href="https://wa.me/12468504460?text=Hi%20Shop%20Bajan!%20Please%20add%20me%20to%20the%20waitlist.">message us on WhatsApp</a>.</p></noscript>
           </form>
           <div class="sb-done" id="sbDone" hidden tabindex="-1"></div>
         </div>
@@ -1009,7 +1009,7 @@ Array.prototype.forEach.call(document.querySelectorAll('#soonPage a[href^="#sb"]
   e.preventDefault();try{t.scrollIntoView({behavior:"smooth",block:"start"})}catch(x){t.scrollIntoView()}})});
 
 /* WhatsApp link for brands */
-var wb=$("#sbWaBrand");if(wb)wb.href="https://wa.me/"+WA+"?text="+encodeURIComponent("Hi! I'd love to join Shop Bajan as a founding brand.");
+var wb=$("#sbWaBrand");if(wb)wb.href="https://wa.me/"+WA+"?text="+encodeURIComponent("Hi Shop Bajan! I'd love to join as a founding brand.");
 
 /* form */
 var f=$("#sbForm"),nameEl=$("#sbName"),contactEl=$("#sbContact"),contactL=$("#sbContactL"),wishEl=$("#sbWish"),wishL=$("#sbWishL"),err=$("#sbErr"),btn=$("#sbSubmit"),done=$("#sbDone");
@@ -1032,7 +1032,7 @@ function parse(v,via){v=String(v||"").trim();
 
 function fail(msg,el,wa,name){
   err.textContent=msg;
-  if(wa){err.appendChild(document.createTextNode(" "));var a=document.createElement("a");a.href="https://wa.me/"+WA+"?text="+encodeURIComponent("Hi! Please add me to the Shop Bajan waitlist."+(name?" I'm "+name+".":""));a.target="_blank";a.rel="noopener";a.textContent="Join on WhatsApp instead";err.appendChild(a)}
+  if(wa){err.appendChild(document.createTextNode(" "));var a=document.createElement("a");a.href="https://wa.me/"+WA+"?text="+encodeURIComponent("Hi Shop Bajan! Please add me to the waitlist."+(name?" I'm "+name+".":""));a.target="_blank";a.rel="noopener";a.textContent="Join on WhatsApp instead";err.appendChild(a)}
   if(el){el.focus();try{el.scrollIntoView({block:"center",behavior:"smooth"})}catch(e){}}}
 
 function showDone(name,role,via){
@@ -1549,6 +1549,7 @@ if(window.TGC_SOON)return;
 /* ==TGC DATA== Everything you can change lives in the /content folder and is edited at /admin */
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const SITE=window.TGC_SITE||"shop",ACAD=SITE==="academy",DATA=window.TGC_DATA||"";
+const WHO=ACAD?"The Girls Club":"Shop Bajan"; /* name used in WhatsApp greetings: Shop Bajan on the marketplace, The Girls Club on the Academy */
 const U=p=>{p=String(p||"");return !p||!DATA||/^(https?:|data:|blob:|\/\/)/i.test(p)?p:DATA+p.replace(/^\//,"")};
 if(DATA)document.querySelectorAll("[src],[href]").forEach(el=>{const a=el.hasAttribute("src")?"src":"href",v=el.getAttribute(a)||"";if(v&&!/^(#|https?:|data:|mailto:|tel:|\/\/|javascript:)/i.test(v))el.setAttribute(a,U(v))});
 const load=n=>fetch(DATA+"content/"+n+".json",{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error(n);return r.json()});
@@ -1809,7 +1810,7 @@ function renderShop(){
   const q=view.q.trim();mkQx.hidden=!q;
   let items=shopItems.filter(p=>inSec(p,view.tab)&&(!view.cat||dCat(p)===view.cat)&&mkMatch(p,q));
   if(q){const nq=mkNorm(q),sc=p=>{const n=" "+mkNorm(p.name+" "+p.type)+" ";return(n.includes(nq)?10:0)+(p.isCourse?1:0)+nq.split(" ").filter(t=>t&&n.includes(mkStem(t))).length*3};items=items.map((p,i)=>[sc(p)-i*.001,p]).sort((a,b)=>b[0]-a[0]).map(r=>r[1])}
-  const empty=`<div class="mk-empty"><p><b>${q?`No match for “${esc(q)}” yet.`:"Nothing here yet."}</b><br>Tell us what you're looking for and we'll help you find it.</p><a class="btn" target="_blank" rel="noopener" href="${esc(waLink("Hi The Girls Club! I'm looking for "+(q||"something")+" on Shop Bajan. Do you have it?"))}">Ask us on WhatsApp</a>${q?`<button type="button" class="btn white" data-mk-clear>Clear search</button>`:""}</div>`;
+  const empty=`<div class="mk-empty"><p><b>${q?`No match for “${esc(q)}” yet.`:"Nothing here yet."}</b><br>Tell us what you're looking for and we'll help you find it.</p><a class="btn" target="_blank" rel="noopener" href="${esc(waLink("Hi "+WHO+"! I'm looking for "+(q||"something")+" on Shop Bajan. Do you have it?"))}">Ask us on WhatsApp</a>${q?`<button type="button" class="btn white" data-mk-clear>Clear search</button>`:""}</div>`;
   if(!items.length){mkOut.innerHTML=empty;return}
   if(view.tab==="all"&&!view.cat){
     const shelf=(sec,title,more)=>{const its=items.filter(p=>inSec(p,sec));if(!its.length)return "";
@@ -1875,7 +1876,7 @@ function pdHTML(p){const o=offPct(p),out=isOut(p),dig=isDig(p);
     <div class="pd-buy">${out?`<button class="add" type="button" disabled>Sold out</button>`:p.isCourse?`<button class="add" type="button" data-pd-add>Enrol · FirstPay or BPWCCUL · ${p.usd?"BBD ":""}${money(p.price)}</button>`:`<div class="qty"><button type="button" data-pd-q="-1" aria-label="One less">−</button><output aria-live="polite" id="pdQty">1</output><button type="button" data-pd-q="1" aria-label="One more">+</button></div><button class="add" type="button" data-pd-add>Add to bag · ${money(p.price)}</button>`}</div>
     ${p.isCourse&&!ACAD?`<a class="pd-wa" href="${esc(window.TGC_ACAD+"#course-"+slug(p.course))}">See the full course on the Academy site</a>`:""}
     ${p.isCourse&&p.payhip?`<a class="pd-card" href="https://payhip.com/b/${encodeURIComponent(p.payhip)}" target="_blank" rel="noopener">Pay by card · instant access</a>${p.usdNote?`<p class="pd-note">${esc(p.usdNote)}</p>`:""}`:""}
-    <a class="pd-wa" data-pd-wa href="${esc(waLink(`Hi The Girls Club! I have a question about ${p.name}${p.type?" ("+p.type+")":""}, BBD ${money(p.price)}.`))}" target="_blank" rel="noopener">Ask about this on WhatsApp</a>
+    <a class="pd-wa" data-pd-wa href="${esc(waLink(`Hi ${p.isCourse?"The Girls Club":WHO}! I have a question about ${p.name}${p.type?" ("+p.type+")":""}, BBD ${money(p.price)}.`))}" target="_blank" rel="noopener">Ask about this on WhatsApp</a>
     <ul class="pd-facts">${facts.map(f=>`<li>${f}</li>`).join("")}</ul>
    </div></div>
    <div class="pd-sec"><h3>Related searches</h3><div class="pd-tags">${searches(p).map(t=>`<button type="button" data-pd-search="${esc(t)}">${esc(t)}</button>`).join("")}</div></div>
@@ -1942,7 +1943,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!drawer.hidden)clos
 function totals(){const sub=cart.reduce((a,c)=>a+c.price*c.qty,0);const hasShip=cart.some(c=>!c.single&&!c.noShip);const del=document.getElementById("delivery");const ship=hasShip&&(!del||del.value!=="pickup")?S.delivery_fee:0;return{sub,ship,total:sub+ship,hasShip}}
 function renderDrawer(){
   if(stage==="done"&&lastOrder){const o=lastOrder,P=PAY[o.method];
-    const summary=`Hi The Girls Club! I placed an order.\nOrder: ${o.id}\n${o.items.join("\n")}\nTotal: BBD ${money(o.total)}\n${o.paid?"Paid by":(o.method==="cash"?"Payment":"Paying by")}: ${P.label}${o.method==="paypal"?" ("+usd(o.total)+")":""}${o.paid?" ✅ PAID"+(o.paidRef?" (ref "+o.paidRef+")":""):""}${o.delivery?"\n"+o.delivery:""}\nName: ${o.name}\nPhone: ${o.phone}${o.email?"\nEmail: "+o.email:""}`;
+    const summary=`Hi ${WHO}! I placed an order.\nOrder: ${o.id}\n${o.items.join("\n")}\nTotal: BBD ${money(o.total)}\n${o.paid?"Paid by":(o.method==="cash"?"Payment":"Paying by")}: ${P.label}${o.method==="paypal"?" ("+usd(o.total)+")":""}${o.paid?" ✅ PAID"+(o.paidRef?" (ref "+o.paidRef+")":""):""}${o.delivery?"\n"+o.delivery:""}\nName: ${o.name}\nPhone: ${o.phone}${o.email?"\nEmail: "+o.email:""}`;
     const s2=o.method==="cash"?{t:"We'll set your collection time",p:"Tap below to message us on WhatsApp so we can set your collection time.",b:"Message us on WhatsApp",x:""}
       :o.method==="paypal"?(o.paid?{t:"Tell us you've paid",p:"Tap below so we can match your card payment and confirm faster.",b:"Tell us on WhatsApp",x:""}:{t:"After you pay",p:"You'll see it confirmed here once your card payment goes through. Questions? Message us on WhatsApp.",b:"Message us on WhatsApp",x:""})
       :{t:"Send us your payment screenshot",p:"Once you've paid, send us your order and a screenshot of your payment on WhatsApp so we can confirm faster.",b:"Send order + screenshot",x:"\nHere's my payment screenshot:"};
@@ -2082,7 +2083,7 @@ renderDays();renderSlots();
  b.onclick=open;document.getElementById("closeMenu").onclick=close;sc.onclick=close;
  m.querySelectorAll(".side-links a").forEach(a=>a.addEventListener("click",close));
  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!m.hidden)close()});})();
-document.querySelectorAll(".wa-link").forEach(a=>a.href=waLink("Hi The Girls Club! I have a question."));
+document.querySelectorAll(".wa-link").forEach(a=>a.href=waLink("Hi "+WHO+"! I have a question."));
 document.querySelectorAll(".wa-num").forEach(el=>el.textContent=WHATSAPP?("+"+WHATSAPP.replace(/^1(246)(\d{3})(\d{4})$/,"1 ($1) $2-$3")):"");
 
 /* ==SEARCH== one box that finds products (ours + partner brands), courses, booking and help pages */
@@ -2106,7 +2107,7 @@ document.querySelectorAll(".wa-num").forEach(el=>el.textContent=WHATSAPP?("+"+WH
   {title:"Shop Bajan",sub:"Shop all · Products · Digital products",href:ACAD?window.TGC_HOME:"#shop",icon:"🛍️",words:"shop bajan marketplace store",body:"marketplace shop store buy products digital all browse"},
   {show:!ACAD,title:"Sell your brand with us",sub:"Join Shop Bajan",href:"brands.html",icon:"🛍️",words:"sell vendor",body:"sell vendor vendors brand brands partner marketplace join business seller stock"},
   {title:"Coming soon",sub:"New things on the way",target:"soon",icon:"⏳",words:"coming soon new",body:"coming soon new launch next",show:SO.show!==false&&!ACAD},
-  {title:"Message us on WhatsApp",sub:"Questions, custom orders, help",href:waLink("Hi The Girls Club! I have a question."),ext:true,icon:"💬",words:"whatsapp contact",body:"contact message chat whatsapp phone call help question instagram dm talk"}
+  {title:"Message us on WhatsApp",sub:"Questions, custom orders, help",href:waLink("Hi "+WHO+"! I have a question."),ext:true,icon:"💬",words:"whatsapp contact",body:"contact message chat whatsapp phone call help question instagram dm talk"}
  ];
  PAGES.filter(x=>x.show!==false&&(!x.target||document.getElementById(x.target))).forEach(x=>idx.push({k:"page",...x}));
  idx.forEach(e=>{if(e.p&&e.p.cat!=="gifts"&&CAT[e.p.cat])e.cw=norm(CAT[e.p.cat]).split(" ").map(stem);e.tw=norm(e.words).split(" ").filter(Boolean).map(stem);e.bw=[...new Set(norm(e.words+" "+e.body).split(" ").filter(Boolean).map(stem))];e.nt=norm(e.title)});
@@ -2127,7 +2128,7 @@ document.querySelectorAll(".wa-num").forEach(el=>el.textContent=WHATSAPP?("+"+WH
  function render(){const q=inp.value;clr.hidden=!q;sugg.hidden=!!q.trim();lastQ=q;
   if(!q.trim()){out.innerHTML="";shown=[];return}
   shown=find(q);
-  if(!shown.length){out.innerHTML=`<div class="sr-none"><p><b>No match for “${esc(q.trim())}” yet.</b><br>Tell us what you're looking for and we'll help you find it.</p><a class="btn" href="${esc(waLink("Hi The Girls Club! I searched your website for \""+q.trim()+"\". Do you have it?"))}" target="_blank" rel="noopener" data-sr-wa>Ask us on WhatsApp</a><a class="btn ghost" href="#lashes" data-sr-browse>Browse Shop Bajan</a></div>`;return}
+  if(!shown.length){out.innerHTML=`<div class="sr-none"><p><b>No match for “${esc(q.trim())}” yet.</b><br>Tell us what you're looking for and we'll help you find it.</p><a class="btn" href="${esc(waLink("Hi "+WHO+"! I searched your website for \""+q.trim()+"\". Do you have it?"))}" target="_blank" rel="noopener" data-sr-wa>Ask us on WhatsApp</a><a class="btn ghost" href="#lashes" data-sr-browse>Browse Shop Bajan</a></div>`;return}
   const g={product:[],course:[],page:[]},order=[];shown.forEach((e,i)=>{if(!order.includes(e.k))order.push(e.k);g[e.k].push(row(e,i))});
   const HEAD={product:"Shop · "+g.product.length,course:"Academy courses",page:"Book & help"};
   out.innerHTML=order.map(k=>`<div class="sr-group">${HEAD[k]}</div>`+g[k].join("")).join("")}

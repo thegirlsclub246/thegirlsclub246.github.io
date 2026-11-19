@@ -697,7 +697,7 @@ function noteSheet(p){var d=sheet("Ask for changes",'<p class="muted">'+esc(p.na
   q("#nf",d).onsubmit=function(e){e.preventDefault();var n=e.target.note.value.trim();if(!n)return;d.close();
     var v=vById(p.vendor_id);updProduct(p.id,{status:"changes",note:n},"Sent. She'll see it in her portal").then(function(){
       if(!v||!v.phone)return;
-      var wa="https://wa.me/"+waNum(v.phone)+"?text="+encodeURIComponent("Hi "+String(v.owner_name||"").split(" ")[0]+"! I checked your product \""+p.name+"\" in the Vendor Portal: "+n+" 💕 You can update it here: https://thegirlsclub246.com/vendors");
+      var wa="https://wa.me/"+waNum(v.phone)+"?text="+encodeURIComponent("Hi "+String(v.owner_name||"").split(" ")[0]+"! I checked your product \""+p.name+"\" in the Vendor Portal: "+n+" 💕 You can update it here: https://shopbajanbb.com/vendors");
       var w=sheet("Tell her on WhatsApp?",'<p class="muted">She\'ll see your note when she signs in. A quick WhatsApp makes sure she knows.</p><div class="btnrow"><a class="btn" id="waGo" href="'+esc(wa)+'" target="_blank" rel="noopener">Open WhatsApp</a><button class="btn ghost" type="button" id="waNo">No thanks</button></div>');
       q("#waGo",w).onclick=function(){w.close()};q("#waNo",w).onclick=w.close})}}
 function viewSheet(p){var v=vById(p.vendor_id)||{};
