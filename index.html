@@ -12,6 +12,10 @@ W.TGC_SITE=ac?"academy":"shop";W.TGC_HOME="https://thegirlsclub246.com/";W.TGC_A
 W.TGC_BOOK=""; /* appointments ended 14 Nov 2026. Leave "" so no Book buttons show. */
 W.TGC_DATA=/^academy\.thegirlsclub246\.com$/i.test(h)?W.TGC_HOME:"";
 document.documentElement.setAttribute("data-site",W.TGC_SITE);
+/* ==SHOP BAJAN WAITLIST MODE== true = thegirlsclub246.com shows ONLY the Shop Bajan waitlist page (opens Thu 10 Dec 2026).
+   To open the real shop on launch day set it to false (also swap the <title>, description and share tags below). The shop code is untouched. */
+W.TGC_SOON=(W.TGC_SITE==="shop")&&true;
+if(W.TGC_SOON)document.documentElement.classList.add("soon");
 var x="";try{x=decodeURIComponent(location.hash.slice(1))}catch(e){}
 if(W.TGC_SITE_FORCE)return;
 if(W.TGC_BOOK&&/^(book|booking|appointment|appointments)$/i.test(x)){location.replace(W.TGC_BOOK);return}
@@ -23,11 +27,13 @@ if(ac)W.goatcounter={path:function(p){return "/academy"+p}};
 </script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="only light">
-<meta name="description" content="The Girls Club: DIY cluster lashes, lash products and online lash courses in Barbados. Shop online 24/7 and pay by card, FirstPay or BPWCCUL.">
-<meta name="theme-color" content="#ff4d94">
-<meta property="og:title" content="The Girls Club">
-<meta property="og:description" content="DIY cluster lashes, lash products and online lash courses from Barbados.">
-<meta property="og:image" content="https://thegirlsclub246.com/img/share.jpg">
+<meta name="description" content="Shop Bajan by The Girls Club opens Thursday 10 December: Barbados' small businesses, one bag, one checkout, open 24/7. Join the waitlist for a launch-day gift.">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:title" content="Shop Bajan · Barbados' small businesses, one bag">
+<meta property="og:description" content="Opening Thursday 10 December. Join the waitlist for a launch-day gift.">
+<meta property="og:image" content="https://thegirlsclub246.com/img/shop-bajan-share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:url" content="https://thegirlsclub246.com/">
 <link rel="canonical" href="https://thegirlsclub246.com/">
 <meta property="og:type" content="website">
@@ -62,7 +68,7 @@ if(ac)W.goatcounter={path:function(p){return "/academy"+p}};
 .courses .course-cover{padding-top:2.8rem}
 .loading-note{text-align:center;padding:2rem;color:#85506b}
 </style>
-<title>The Girls Club</title>
+<title>Shop Bajan · Barbados' small businesses, one bag</title>
 <style>
 #book{display:none!important}
 html[data-site=shop] #academy,html[data-site=shop] #results,html[data-site=shop] #sideHours{display:none!important}
@@ -71,7 +77,7 @@ html[data-site=academy] #market,html[data-site=academy] #shop,html[data-site=aca
 <meta name="apple-mobile-web-app-title" content="The Girls Club">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;0,9..144,800&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#fff4f8;--card:#ffffff;--ink:#4a1636;--muted:#85506b;--pink:#ff4d94;--pink-soft:#ffc9df;--yellow:#fff27a;--yellow-soft:#fffbd1;--line:#e8418a;--edge:#e8418a;--shade:#c4256b;--plum:#4a1636;--on-pink:#ffffff}
 
@@ -608,8 +614,460 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
 <!-- GoatCounter visit counter (no cookies). Stats: https://thegirlsclub246.goatcounter.com . To stop counting your own phone/laptop, open the site once with #toggle-goatcounter at the end of the link. -->
 <script data-goatcounter="https://thegirlsclub246.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
+<style id="sb-css">
+/* ==SHOP BAJAN WAITLIST PAGE== everything is namespaced (#soonPage, .sb-*) so none of the old site styles leak in.
+   Turn it on/off with window.TGC_SOON in the first <script> in <head>. */
+html.soon body{background:#fff}
+html.soon{scroll-padding-top:0!important}
+html:not(.soon) #soonPage{display:none!important}
+html.soon body>*:not(#soonPage){display:none!important}
+#soonPage{--blue:#00267F;--navy:#001447;--gold:#FFC72C;--sun:#FFF3C7;--cream:#FFF9EC;--sky:#EEF3FF;--coral:#FF6F59;--ink:#16213E;--muted:#4A5675;--line:#DCE4F5;--rule:#B9C6E6;
+  --serif:"Fraunces",Georgia,"Times New Roman",serif;--sans:"Quicksand","Nunito","Segoe UI",system-ui,sans-serif;
+  font-family:var(--sans);font-size:17px;line-height:1.6;font-weight:500;color:var(--ink);background:#fff;-webkit-text-size-adjust:100%;overflow-x:hidden}
+#soonPage *,#soonPage *::before,#soonPage *::after{box-sizing:border-box}
+/* low-specificity resets (:where) so the component classes below always win */
+:where(#soonPage) :is(h1,h2,h3){font-family:var(--serif);font-weight:800;color:var(--blue);margin:0;line-height:1.08;letter-spacing:-.01em;text-shadow:none}
+/*p*/:where(#soonPage) p{margin:0}
+:where(#soonPage) :is(ul,ol){margin:0;padding:0}
+:where(#soonPage) a{color:inherit}
+#soonPage :focus-visible{outline:3px solid var(--coral);outline-offset:3px;border-radius:6px}
+
+.sb-wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 20px}
+
+/* buttons */
+.sb-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:54px;padding:0 26px;border-radius:999px;background:var(--gold);color:var(--blue);font:800 1.05rem/1.1 var(--sans);text-decoration:none;text-align:center;border:2.5px solid var(--blue);box-shadow:0 4px 0 var(--blue);cursor:pointer;transition:transform .12s,box-shadow .12s}
+.sb-btn:hover{transform:translateY(-1px);box-shadow:0 5px 0 var(--blue)}
+.sb-btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--blue)}
+.sb-btn[disabled]{opacity:.7;cursor:progress}
+.sb-btn-sm{min-height:44px;padding:0 18px;font-size:.92rem;box-shadow:0 3px 0 var(--blue)}
+.sb-btn-ghost{background:#fff}
+.sb-btn-line{background:transparent;color:#fff;border-color:#fff;box-shadow:none}
+.sb-btn-line:hover{box-shadow:none;background:rgba(255,255,255,.12)}
+
+/* header */
+.sb-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;max-width:1080px;margin:0 auto}
+.sb-brand{display:flex;align-items:center;gap:10px;text-decoration:none;min-height:46px}
+.sb-brand svg{width:36px;height:36px;flex:none}
+.sb-word{display:flex;flex-direction:column;line-height:1}
+.sb-word b{font-family:var(--serif);font-weight:800;font-size:1.4rem;color:var(--blue);letter-spacing:-.01em}
+.sb-word small{font-size:.66rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.sb-head-r{display:flex;align-items:center;gap:14px}
+.sb-link{font-weight:700;font-size:.92rem;text-decoration:none;color:var(--blue);padding:10px 4px}
+.sb-link:hover{text-decoration:underline}
+@media(max-width:519px){.sb-link{display:none}}
+
+/* hero */
+.sb-hero{padding:14px 0 6px}
+.sb-hero-grid{display:grid;gap:18px;align-items:center}
+.sb-pill{display:inline-flex;align-items:center;gap:9px;background:var(--sun);border:2px solid var(--blue);border-radius:999px;padding:7px 16px 7px 13px;font-weight:700;font-size:.9rem;line-height:1.2;color:var(--blue)}
+.sb-dot{width:10px;height:10px;border-radius:50%;background:var(--coral);flex:none;animation:sbPulse 2.2s infinite}
+@keyframes sbPulse{0%{box-shadow:0 0 0 0 rgba(255,111,89,.55)}70%{box-shadow:0 0 0 9px rgba(255,111,89,0)}100%{box-shadow:0 0 0 0 rgba(255,111,89,0)}}
+.sb-hero h1{font-size:clamp(2.3rem,9.9vw,4.7rem);margin:16px 0 18px;line-height:1.06}
+.sb-hl{background:linear-gradient(transparent 60%,var(--gold) 60%,var(--gold) 90%,transparent 90%);padding:0 .06em;white-space:nowrap}
+.sb-lead{font-size:1.14rem;color:var(--muted);max-width:33em}
+.sb-cta{display:flex;flex-wrap:wrap;gap:12px;margin:22px 0 16px}
+.sb-cta .sb-btn{flex:1 1 220px}
+.sb-perkline{display:flex;gap:9px;align-items:flex-start;font-weight:700;font-size:.95rem;color:var(--blue);line-height:1.4}
+.sb-perkline i{font-style:normal;flex:none}
+.sb-art{width:100%;max-width:560px;margin:4px auto 0}
+.sb-art svg{display:block;width:100%;height:auto;overflow:visible}
+@media(min-width:900px){.sb-hero{padding:34px 0 18px}.sb-hero-grid{grid-template-columns:1.02fr 1fr;gap:40px}.sb-hero h1{font-size:clamp(3.2rem,4.4vw,4.2rem)}.sb-cta .sb-btn{flex:0 0 auto}}
+
+/* trust strip */
+.sb-trust{display:flex;gap:10px;overflow-x:auto;padding:12px 20px 16px;margin:0 auto;max-width:1080px;list-style:none;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.sb-trust::-webkit-scrollbar{display:none}
+.sb-trust li{flex:none;display:flex;align-items:center;gap:8px;background:var(--sky);border-radius:999px;padding:9px 16px;font-weight:700;font-size:.9rem;color:var(--blue);white-space:nowrap}
+.sb-trust li::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 2px var(--blue)}
+@media(min-width:780px){.sb-trust{justify-content:center;flex-wrap:wrap;overflow:visible}}
+
+/* sections */
+.sb-sec{padding:58px 0}
+.sb-tint{background:var(--cream)}
+.sb-eyebrow{font-weight:800;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--coral);margin-bottom:10px}
+#soonPage .sb-h2{font-size:clamp(1.95rem,7.4vw,3.1rem);max-width:17em}
+.sb-sub{margin-top:12px;color:var(--muted);font-size:1.1rem;max-width:36em}
+.sb-center{display:flex;justify-content:center;margin-top:30px}
+
+/* scenes */
+.sb-scenes{display:grid;gap:16px;margin-top:28px}
+.sb-scene{background:#fff;border:2px solid var(--blue);border-radius:22px;padding:20px 20px 22px;box-shadow:5px 5px 0 var(--gold)}
+.sb-time{display:inline-block;background:var(--blue);color:#fff;font-weight:800;font-size:.78rem;letter-spacing:.07em;padding:5px 12px;border-radius:999px;margin-bottom:12px;text-transform:uppercase}
+#soonPage .sb-scene h3{font-size:1.42rem;margin-bottom:8px}
+.sb-scene p{color:var(--muted)}
+@media(min-width:640px){.sb-scenes{grid-template-columns:repeat(2,1fr);gap:22px}}
+@media(min-width:980px){.sb-scenes{grid-template-columns:repeat(3,1fr)}}
+
+/* steps */
+.sb-steps{display:grid;gap:24px;margin-top:30px;list-style:none}
+.sb-step{display:grid;grid-template-columns:56px 1fr;gap:16px;align-items:start}
+.sb-num{width:56px;height:56px;border-radius:50%;background:var(--gold);border:2.5px solid var(--blue);display:grid;place-items:center;font:800 1.5rem/1 var(--serif);color:var(--blue)}
+#soonPage .sb-step h3{font-size:1.3rem;margin:3px 0 6px}
+.sb-step p{color:var(--muted)}
+@media(min-width:820px){.sb-steps{grid-template-columns:repeat(3,1fr);gap:32px}.sb-step{grid-template-columns:1fr;gap:14px}}
+
+/* join */
+.sb-join{background:var(--sky)}
+.sb-join-grid{display:grid;gap:26px;align-items:start;grid-template-columns:minmax(0,1fr);grid-template-areas:"h" "c" "p"}
+.sb-join-head{grid-area:h}
+.sb-card{grid-area:c}
+.sb-perk{grid-area:p}
+.sb-count{display:inline-flex;align-items:center;gap:8px;font-weight:800;color:var(--blue);background:#fff;border:2px solid var(--blue);border-radius:999px;padding:6px 15px;font-size:.92rem;margin-top:18px}
+.sb-perk{background:#fff;border:2.5px solid var(--blue);border-radius:22px;padding:18px 18px 16px;box-shadow:5px 5px 0 var(--gold);display:grid;gap:14px}
+.sb-perk-t{font-weight:800;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--coral)}
+.sb-perk-row{display:grid;grid-template-columns:46px 1fr;gap:13px;align-items:start}
+.sb-perk-ico{width:46px;height:46px;border-radius:15px;background:var(--sun);display:grid;place-items:center;font-size:1.4rem}
+.sb-perk-row b{display:block;color:var(--blue);font-size:1.05rem;line-height:1.3}
+.sb-perk-row span{color:var(--muted);font-size:.97rem;line-height:1.45}
+.sb-card{background:#fff;border:2.5px solid var(--blue);border-radius:26px;padding:22px 18px 20px;box-shadow:6px 6px 0 var(--blue);scroll-margin-top:16px}
+#soonPage .sb-card h3{font-size:1.6rem;margin-bottom:4px}
+.sb-card-sub{color:var(--muted);font-size:.97rem;margin-bottom:14px}
+.sb-card-gift{background:var(--sun);border-radius:12px;padding:9px 12px;font-weight:700;font-size:.92rem;line-height:1.35;color:var(--blue);margin-bottom:20px}
+.sb-field{display:grid;gap:7px;margin-bottom:16px;border:0;padding:0;min-width:0}
+.sb-field label,.sb-legend{font-weight:800;font-size:.95rem;color:var(--blue);padding:0}
+.sb-opt{font-weight:600;color:var(--muted)}
+.sb-in{width:100%;min-height:54px;border:2px solid var(--rule);border-radius:14px;padding:12px 14px;font:600 16px/1.3 var(--sans);color:var(--ink);background:#fff;-webkit-appearance:none;appearance:none}
+.sb-in::placeholder{color:#8591B0;font-weight:500}
+.sb-in:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,38,127,.15)}
+textarea.sb-in{min-height:88px;resize:vertical}
+.sb-seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sb-seg label{position:relative;display:block}
+.sb-seg input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.sb-seg span{display:flex;align-items:center;justify-content:center;text-align:center;min-height:50px;padding:6px 10px;border:2px solid var(--rule);border-radius:14px;font-weight:700;font-size:.95rem;line-height:1.2;color:var(--blue);background:#fff}
+.sb-seg input:checked+span{background:var(--blue);border-color:var(--blue);color:#fff}
+.sb-seg input:focus-visible+span{outline:3px solid var(--coral);outline-offset:2px}
+.sb-err{color:#B3261E;font-weight:700;font-size:.92rem;line-height:1.35}
+.sb-err:empty{display:none}
+.sb-card .sb-btn{width:100%;font-size:1.12rem;min-height:58px}
+.sb-fine{font-size:.82rem;color:var(--muted);margin-top:16px;text-align:center;line-height:1.45}
+.sb-hp{position:absolute!important;left:-9999px;width:1px;height:1px;overflow:hidden}
+.sb-done{text-align:center;padding:6px 2px 2px}
+.sb-tick{width:68px;height:68px;border-radius:50%;background:var(--gold);border:3px solid var(--blue);display:grid;place-items:center;margin:0 auto 14px;font-size:2rem;color:var(--blue);font-weight:800}
+#soonPage .sb-done h3{font-size:1.75rem;margin-bottom:8px}
+.sb-done p{color:var(--muted);margin-bottom:10px}
+.sb-done .sb-gift{background:var(--sun);border-radius:14px;padding:10px 12px;color:var(--blue);font-weight:700;margin:14px 0 18px;line-height:1.4}
+.sb-done .sb-btn{margin-top:10px}
+@media(min-width:900px){.sb-join-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto 1fr;grid-template-areas:"h c" "p c";column-gap:48px;row-gap:26px}.sb-card{padding:28px 26px 24px}}
+
+/* brands */
+.sb-brands{background:var(--blue);color:#fff}
+.sb-brands .sb-eyebrow{color:var(--gold)}
+#soonPage .sb-brands h2{color:#fff}
+.sb-brands p{color:#DCE5FF}
+.sb-brands-grid{display:grid;gap:28px;align-items:start}
+.sb-list{list-style:none;margin:6px 0 0;display:grid;gap:13px}
+.sb-list li{display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start;font-weight:700;color:#fff;line-height:1.4}
+.sb-list li::before{content:"✓";display:grid;place-items:center;width:27px;height:27px;border-radius:50%;background:var(--gold);color:var(--blue);font-weight:800;font-size:.9rem}
+.sb-spots{margin-top:22px;background:rgba(255,255,255,.1);border:2px dashed var(--gold);border-radius:18px;padding:14px 16px;color:#fff;font-weight:700;line-height:1.45}
+.sb-brands .sb-cta{margin-top:24px}
+.sb-brands .sb-btn{box-shadow:0 4px 0 var(--navy)}
+.sb-brands .sb-btn-line{box-shadow:none}
+@media(min-width:900px){.sb-brands-grid{grid-template-columns:1.1fr .9fr;gap:52px}.sb-brands{padding:72px 0}}
+
+/* faq */
+.sb-faq{display:grid;gap:10px;margin-top:26px;max-width:780px}
+.sb-faq details{border:2px solid var(--line);border-radius:16px;background:#fff}
+.sb-faq summary{list-style:none;cursor:pointer;padding:15px 52px 15px 18px;font-weight:800;color:var(--blue);position:relative;min-height:54px;display:flex;align-items:center;line-height:1.35}
+.sb-faq summary::-webkit-details-marker{display:none}
+.sb-faq summary::after{content:"+";position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:1.6rem;font-weight:700;color:var(--coral);line-height:1}
+.sb-faq details[open]{border-color:var(--blue)}
+.sb-faq details[open] summary::after{content:"\2212"}
+.sb-faq details p{padding:0 18px 16px;color:var(--muted)}
+
+/* footer */
+.sb-foot{border-top:2px solid var(--line);padding:30px 20px 110px;text-align:center;color:var(--muted);font-size:.92rem;line-height:1.7}
+.sb-foot b{font-family:var(--serif);font-size:1.2rem;color:var(--blue)}
+.sb-foot nav,.sb-foot .sb-links{display:flex;flex-wrap:wrap;justify-content:center;gap:2px 16px;margin:10px 0}
+.sb-foot a{font-weight:700;color:var(--blue);padding:12px 4px;text-decoration:none;display:inline-block}
+.sb-foot a:hover{text-decoration:underline}
+@media(min-width:900px){.sb-foot{padding-bottom:40px}}
+
+/* sticky join button (phones) */
+.sb-sticky{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 14px);z-index:60;transform:translate(-50%,140%);opacity:0;pointer-events:none;transition:transform .28s,opacity .28s;white-space:nowrap;box-shadow:0 4px 0 var(--blue),0 12px 26px rgba(0,38,127,.28)}
+.sb-sticky.on{transform:translate(-50%,0);opacity:1;pointer-events:auto}
+@media(min-width:900px){.sb-sticky{display:none}}
+@media(prefers-reduced-motion:reduce){#soonPage *{animation:none!important;transition:none!important}}
+</style>
 </head>
 <body>
+<!-- ==SHOP BAJAN WAITLIST PAGE== (shown while window.TGC_SOON is true; the real shop below is untouched) -->
+<div id="soonPage">
+  <div class="sb-head" role="banner">
+    <a class="sb-brand" href="#sbTop" aria-label="Shop Bajan by The Girls Club, home">
+      <svg viewBox="0 0 36 36" aria-hidden="true"><path d="M9 14h18l1.6 17.2a1.6 1.6 0 0 1-1.6 1.8H9a1.6 1.6 0 0 1-1.6-1.8z" fill="#00267F"/><path d="M12.5 14v-2.2a5.5 5.5 0 0 1 11 0V14" fill="none" stroke="#FFC72C" stroke-width="3" stroke-linecap="round"/><path d="M18 28.2c-5.2-3.6-3-8 0-6 3-2 5.2 2.4 0 6z" fill="#FFC72C"/></svg>
+      <span class="sb-word"><b>Shop Bajan</b><small>by The Girls Club</small></span>
+    </a>
+    <div class="sb-head-r">
+      <a class="sb-link" href="brands.html">Sell with us</a>
+      <a class="sb-btn sb-btn-sm" href="#sbJoin" data-sb-join>Join the waitlist</a>
+    </div>
+  </div>
+
+  <main id="sbTop">
+    <section class="sb-hero" aria-labelledby="sbH1">
+      <div class="sb-wrap sb-hero-grid">
+        <div class="sb-hero-copy">
+          <p class="sb-pill"><span class="sb-dot" aria-hidden="true"></span>Opening Thursday 10 December</p>
+          <h1 id="sbH1">Barbados&rsquo; small businesses. <span class="sb-hl">One bag.</span></h1>
+          <p class="sb-lead">Your favourite Bajan brands, all in one place and open 24/7. One checkout. Delivered to your door or ready to collect. No more screenshots, no more DMs, no more &ldquo;is this still available?&rdquo;</p>
+          <div class="sb-cta" id="sbHeroCta">
+            <a class="sb-btn" href="#sbJoin" data-sb-join>Join the waitlist</a>
+            <a class="sb-btn sb-btn-ghost" href="#sbPicture">See how it feels</a>
+          </div>
+          <p class="sb-perkline"><i aria-hidden="true">&#9733;</i><span>Waitlist-only launch gift: free delivery on your first order.</span></p>
+        </div>
+        <div class="sb-art"><svg viewBox="0 0 520 410" role="img" aria-label="A little street of Bajan small-business shops with a Shop Bajan bag in front" xmlns="http://www.w3.org/2000/svg"><circle cx="430" cy="118" r="88" fill="#FFF0BC"/><circle cx="430" cy="118" r="60" fill="#FFC72C"/><path d="M14 34 Q260 98 506 34" fill="none" stroke="#00267F" stroke-width="2.5" stroke-linecap="round"/><g transform="translate(40.4 40.5) rotate(13.1)"><path d="M-11 0 H11 L0 27 Z" fill="#FFC72C" stroke-linejoin="round"/></g><g transform="translate(84.3 49.7) rotate(10.5)"><path d="M-11 0 H11 L0 27 Z" fill="#00267F" stroke-linejoin="round"/></g><g transform="translate(128.2 56.8) rotate(7.9)"><path d="M-11 0 H11 L0 27 Z" fill="#FFFFFF" stroke="#00267F" stroke-width="2" stroke-linejoin="round"/></g><g transform="translate(172.1 61.9) rotate(5.3)"><path d="M-11 0 H11 L0 27 Z" fill="#FF6F59" stroke-linejoin="round"/></g><g transform="translate(216.1 65.0) rotate(2.7)"><path d="M-11 0 H11 L0 27 Z" fill="#FFC72C" stroke-linejoin="round"/></g><g transform="translate(260.0 66.0) rotate(0.0)"><path d="M-11 0 H11 L0 27 Z" fill="#00267F" stroke-linejoin="round"/></g><g transform="translate(303.9 65.0) rotate(-2.7)"><path d="M-11 0 H11 L0 27 Z" fill="#FFFFFF" stroke="#00267F" stroke-width="2" stroke-linejoin="round"/></g><g transform="translate(347.9 61.9) rotate(-5.3)"><path d="M-11 0 H11 L0 27 Z" fill="#FF6F59" stroke-linejoin="round"/></g><g transform="translate(391.8 56.8) rotate(-7.9)"><path d="M-11 0 H11 L0 27 Z" fill="#FFC72C" stroke-linejoin="round"/></g><g transform="translate(435.7 49.7) rotate(-10.5)"><path d="M-11 0 H11 L0 27 Z" fill="#00267F" stroke-linejoin="round"/></g><g transform="translate(479.6 40.5) rotate(-13.1)"><path d="M-11 0 H11 L0 27 Z" fill="#FFFFFF" stroke="#00267F" stroke-width="2" stroke-linejoin="round"/></g><path d="M0 320 H520 V410 H0Z" fill="#EAF0FF"/><path d="M0 320 H520" stroke="#00267F" stroke-width="3"/><path d="M0 356 H520" stroke="#CFDBF7" stroke-width="2" stroke-dasharray="14 12"/><rect x="22" y="170" width="100" height="150" rx="4" fill="#FFFFFF" stroke="#00267F" stroke-width="3"/><rect x="34" y="177" width="76" height="19" rx="9.5" fill="#00267F"/><text x="72" y="191" text-anchor="middle" font-family="Quicksand,system-ui,sans-serif" font-weight="700" font-size="11.5" letter-spacing="1.4" fill="#FFFFFF">CANDLES</text><clipPath id="aw22"><path d="M16 202 H128 V226 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 Z"/></clipPath><g clip-path="url(#aw22)"><rect x="16" y="202" width="14" height="31" fill="#FFC72C"/><rect x="30" y="202" width="14" height="31" fill="#FFFFFF"/><rect x="44" y="202" width="14" height="31" fill="#FFC72C"/><rect x="58" y="202" width="14" height="31" fill="#FFFFFF"/><rect x="72" y="202" width="14" height="31" fill="#FFC72C"/><rect x="86" y="202" width="14" height="31" fill="#FFFFFF"/><rect x="100" y="202" width="14" height="31" fill="#FFC72C"/><rect x="114" y="202" width="14" height="31" fill="#FFFFFF"/></g><path d="M16 202 H128 V226 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 Z" fill="none" stroke="#00267F" stroke-width="2.5" stroke-linejoin="round"/><rect x="34" y="242" width="76" height="60" rx="7" fill="#FFF6DA" stroke="#00267F" stroke-width="2.5"/><path d="M34 284 H110" stroke="#00267F" stroke-width="2.5"/><rect x="44" y="262" width="16" height="22" rx="4" fill="#FFC72C" stroke="#00267F" stroke-width="2"/><path d="M52.0 259 q-3 -5 0 -9 q3 4 0 9z" fill="#FF6F59" stroke="#00267F" stroke-width="1.4"/><rect x="66" y="256" width="20" height="28" rx="4" fill="#FFFFFF" stroke="#00267F" stroke-width="2"/><path d="M76.0 253 q-3 -5 0 -9 q3 4 0 9z" fill="#FF6F59" stroke="#00267F" stroke-width="1.4"/><rect x="92" y="266" width="14" height="18" rx="4" fill="#FF6F59" stroke="#00267F" stroke-width="2"/><path d="M99.0 263 q-3 -5 0 -9 q3 4 0 9z" fill="#FFC72C" stroke="#00267F" stroke-width="1.4"/><rect x="34" y="302" width="76" height="18" fill="#EAF0FF" stroke="#00267F" stroke-width="2.5" rx="2"/><rect x="134" y="146" width="100" height="174" rx="4" fill="#FFFFFF" stroke="#00267F" stroke-width="3"/><rect x="146" y="153" width="76" height="19" rx="9.5" fill="#00267F"/><text x="184" y="167" text-anchor="middle" font-family="Quicksand,system-ui,sans-serif" font-weight="700" font-size="11.5" letter-spacing="1.4" fill="#FFFFFF">NAILS</text><clipPath id="aw134"><path d="M128 178 H240 V202 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 Z"/></clipPath><g clip-path="url(#aw134)"><rect x="128" y="178" width="14" height="31" fill="#00267F"/><rect x="142" y="178" width="14" height="31" fill="#FFFFFF"/><rect x="156" y="178" width="14" height="31" fill="#00267F"/><rect x="170" y="178" width="14" height="31" fill="#FFFFFF"/><rect x="184" y="178" width="14" height="31" fill="#00267F"/><rect x="198" y="178" width="14" height="31" fill="#FFFFFF"/><rect x="212" y="178" width="14" height="31" fill="#00267F"/><rect x="226" y="178" width="14" height="31" fill="#FFFFFF"/></g><path d="M128 178 H240 V202 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 Z" fill="none" stroke="#00267F" stroke-width="2.5" stroke-linejoin="round"/><rect x="146" y="218" width="76" height="60" rx="7" fill="#FFF6DA" stroke="#00267F" stroke-width="2.5"/><path d="M146 260 H222" stroke="#00267F" stroke-width="2.5"/><rect x="158" y="240" width="14" height="20" rx="4" fill="#FF6F59" stroke="#00267F" stroke-width="2"/><rect x="161.5" y="230" width="7" height="10" rx="2" fill="#FFFFFF" stroke="#00267F" stroke-width="2"/><rect x="180" y="240" width="14" height="20" rx="4" fill="#FFC72C" stroke="#00267F" stroke-width="2"/><rect x="183.5" y="230" width="7" height="10" rx="2" fill="#FFFFFF" stroke="#00267F" stroke-width="2"/><rect x="202" y="240" width="14" height="20" rx="4" fill="#00267F" stroke="#00267F" stroke-width="2"/><rect x="205.5" y="230" width="7" height="10" rx="2" fill="#FFFFFF" stroke="#00267F" stroke-width="2"/><rect x="146" y="278" width="76" height="42" fill="#EAF0FF" stroke="#00267F" stroke-width="2.5" rx="2"/><rect x="246" y="178" width="100" height="142" rx="4" fill="#FFFFFF" stroke="#00267F" stroke-width="3"/><rect x="258" y="185" width="76" height="19" rx="9.5" fill="#00267F"/><text x="296" y="199" text-anchor="middle" font-family="Quicksand,system-ui,sans-serif" font-weight="700" font-size="11.5" letter-spacing="1.4" fill="#FFFFFF">JEWELS</text><clipPath id="aw246"><path d="M240 210 H352 V234 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 Z"/></clipPath><g clip-path="url(#aw246)"><rect x="240" y="210" width="14" height="31" fill="#FF6F59"/><rect x="254" y="210" width="14" height="31" fill="#FFFFFF"/><rect x="268" y="210" width="14" height="31" fill="#FF6F59"/><rect x="282" y="210" width="14" height="31" fill="#FFFFFF"/><rect x="296" y="210" width="14" height="31" fill="#FF6F59"/><rect x="310" y="210" width="14" height="31" fill="#FFFFFF"/><rect x="324" y="210" width="14" height="31" fill="#FF6F59"/><rect x="338" y="210" width="14" height="31" fill="#FFFFFF"/></g><path d="M240 210 H352 V234 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 a7 7 0 0 1 -14 0 Z" fill="none" stroke="#00267F" stroke-width="2.5" stroke-linejoin="round"/><rect x="258" y="250" width="76" height="60" rx="7" fill="#FFF6DA" stroke="#00267F" stroke-width="2.5"/><path d="M258 292 H334" stroke="#00267F" stroke-width="2.5"/><path d="M272 258 Q296 290 320 258" fill="none" stroke="#00267F" stroke-width="2"/><path d="M296 277 l6 7 l-6 9 l-6 -9z" fill="#FFC72C" stroke="#00267F" stroke-width="2" stroke-linejoin="round"/><circle cx="274" cy="284" r="6" fill="none" stroke="#00267F" stroke-width="2.5"/><circle cx="320" cy="284" r="6" fill="none" stroke="#FFC72C" stroke-width="3"/><rect x="258" y="310" width="76" height="10" fill="#EAF0FF" stroke="#00267F" stroke-width="2.5" rx="2"/><path d="M46 358 L58 298 H108 L120 358 Z" fill="#FFFFFF" stroke="#00267F" stroke-width="3" stroke-linejoin="round"/><text x="83" y="325" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-weight="700" font-size="17" fill="#00267F">Open</text><text x="83" y="346" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-weight="800" font-size="19" fill="#FF6F59">24/7</text><path d="M376 256 C376 196 468 196 468 256" fill="none" stroke="#00267F" stroke-width="16" stroke-linecap="round"/><path d="M376 256 C376 196 468 196 468 256" fill="none" stroke="#FFC72C" stroke-width="9" stroke-linecap="round"/><rect x="378" y="222" width="40" height="40" rx="4" fill="#FF6F59" stroke="#00267F" stroke-width="3"/><path d="M398 222 V262" stroke="#FFC72C" stroke-width="7"/><path d="M378 242 H418" stroke="#FFC72C" stroke-width="7"/><path d="M398 221 q-12 -16 -17 -6 q6 9 17 6 q11 3 17 -6 q-5 -10 -17 6z" fill="#FFC72C" stroke="#00267F" stroke-width="2.2" stroke-linejoin="round"/><rect x="426" y="234" width="32" height="30" rx="6" fill="#FFFFFF" stroke="#00267F" stroke-width="3"/><rect x="430" y="224" width="24" height="12" rx="3" fill="#FFC72C" stroke="#00267F" stroke-width="3"/><path d="M352 258 H492 L506 392 Q507 402 497 402 H347 Q337 402 338 392 Z" fill="#00267F" stroke="#00267F" stroke-width="3" stroke-linejoin="round"/><path d="M352 258 H492" stroke="#1B47B3" stroke-width="3"/><text x="422" y="326" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-weight="800" font-size="31" fill="#FFFFFF">Shop</text><text x="422" y="360" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-weight="800" font-size="31" fill="#FFC72C">Bajan</text><path transform="translate(469.0 277.75) scale(0.75)" d="M12 21 C-4 10 4 -2 12 6 C20 -2 28 10 12 21Z" fill="#FF6F59"/><path d="M28 110 Q28 122 40 122 Q28 122 28 134 Q28 122 16 122 Q28 122 28 110Z" fill="#FFC72C"/><path d="M500 216 Q500 226 510 226 Q500 226 500 236 Q500 226 490 226 Q500 226 500 216Z" fill="#FFC72C"/><path d="M236 104 Q236 112 244 112 Q236 112 236 120 Q236 112 228 112 Q236 112 236 104Z" fill="#FF6F59"/></svg></div>
+      </div>
+    </section>
+
+    <ul class="sb-trust" aria-label="Why Shop Bajan">
+      <li>Open 24/7</li><li>One bag, one checkout</li><li>Delivery or collection</li><li>Handmade &amp; imported</li><li>Physical &amp; digital</li>
+    </ul>
+
+    <section class="sb-sec sb-brands" id="sbBrands" aria-labelledby="sbBrandsH">
+      <div class="sb-wrap sb-brands-grid">
+        <div>
+          <p class="sb-eyebrow">For small businesses</p>
+          <h2 class="sb-h2" id="sbBrandsH">Own a small business? Launch with us.</h2>
+          <p class="sb-sub">Shop Bajan is where Barbados finds you, 24/7. Handmade or imported, physical or digital, every category is welcome. No website to build and no checkout to set up. DM us and we&rsquo;ll design your storefront for you.</p>
+          <div class="sb-spots">We&rsquo;re looking for 4 more founding brands to complete our launch. Founding brands get special benefits that stay with them.</div>
+        </div>
+        <div>
+          <ul class="sb-list">
+            <li>Your own storefront, designed for you</li>
+            <li>We handle the keeping, hosting and selling</li>
+            <li>We cover the card fees on every online sale</li>
+            <li>Delivery, collection and meet-ups sorted</li>
+            <li>Free to start. You only pay when you sell.</li>
+          </ul>
+          <div class="sb-cta">
+            <a class="sb-btn" href="brands.html">Become a founding brand</a>
+            <a class="sb-btn sb-btn-line" id="sbWaBrand" href="https://wa.me/12468504460" target="_blank" rel="noopener">Ask us on WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sb-sec sb-tint" id="sbPicture" aria-labelledby="sbPicH">
+      <div class="sb-wrap">
+        <p class="sb-eyebrow">Picture this</p>
+        <h2 class="sb-h2" id="sbPicH">Shopping local, finally as easy as it should be.</h2>
+        <p class="sb-sub">Here&rsquo;s what your week looks like once Shop Bajan is open.</p>
+        <div class="sb-scenes">
+          <article class="sb-scene"><span class="sb-time">11:48 pm</span><h3>The birthday you forgot is tomorrow.</h3><p>Shop Bajan never closes. Find something local and lovely, check out in minutes, and wake up like you planned it all week.</p></article>
+          <article class="sb-scene"><span class="sb-time">12:30 pm</span><h3>Lunch break. One thumb. Done.</h3><p>Order from your desk between bites. Have it delivered, or collect it on your way home.</p></article>
+          <article class="sb-scene"><span class="sb-time">Sunday, on the couch</span><h3>Five businesses. One bag.</h3><p>Nails from one brand, a candle from another, earrings from a third. One checkout instead of five DMs, five transfers and five waits.</p></article>
+          <article class="sb-scene"><span class="sb-time">Any day</span><h3>&ldquo;Is this still available?&rdquo; Never typed again.</h3><p>We check stock with every brand, so what you see on the shelf is what you can order.</p></article>
+          <article class="sb-scene"><span class="sb-time">Saturday errands</span><h3>Pick it up on your route.</h3><p>Choose collection or a meet-up that fits your day, instead of waiting around for a reply.</p></article>
+          <article class="sb-scene"><span class="sb-time">This Christmas</span><h3>Everyone on your list, from Bajan hands.</h3><p>Gifts with a story, in one bag, from small businesses right here at home. Every order backs a Bajan small business.</p></article>
+        </div>
+        <div class="sb-center"><a class="sb-btn" href="#sbJoin" data-sb-join>I want in</a></div>
+      </div>
+    </section>
+
+    <section class="sb-sec" id="sbHow" aria-labelledby="sbHowH">
+      <div class="sb-wrap">
+        <p class="sb-eyebrow">How it works</p>
+        <h2 class="sb-h2" id="sbHowH">From &ldquo;I want that&rdquo; to &ldquo;it&rsquo;s mine&rdquo; in three steps.</h2>
+        <ol class="sb-steps">
+          <li class="sb-step"><span class="sb-num" aria-hidden="true">1</span><div><h3>Browse local storefronts</h3><p>Every brand gets its own storefront. Handmade or imported, physical or digital, every category is welcome.</p></div></li>
+          <li class="sb-step"><span class="sb-num" aria-hidden="true">2</span><div><h3>Fill one bag</h3><p>Add from as many brands as you like. One bag. One checkout. Done.</p></div></li>
+          <li class="sb-step"><span class="sb-num" aria-hidden="true">3</span><div><h3>Get it your way</h3><p>Have it delivered, or collect or meet up. We hold the stock and handle the handover, so you&rsquo;re never chasing anyone.</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="sb-sec sb-join" id="sbJoin" aria-labelledby="sbJoinH">
+      <div class="sb-wrap sb-join-grid">
+        <div class="sb-join-head">
+          <p class="sb-eyebrow">The waitlist</p>
+          <h2 class="sb-h2" id="sbJoinH">Be first through the door.</h2>
+          <p class="sb-sub">Join free and you&rsquo;ll hear the moment Shop Bajan opens on Thursday 10 December. Before it hits Instagram. Before anyone else.</p>
+          <p class="sb-count" aria-live="polite"><span aria-hidden="true">&#9201;</span> <span id="sbDays">Opening 10 December</span></p>
+        </div>
+
+        <div class="sb-card" id="sbCard">
+          <h3>Join the waitlist</h3>
+          <p class="sb-card-sub">Takes 20 seconds. Free to join.</p>
+          <p class="sb-card-gift"><span aria-hidden="true">&#127873;</span> Waitlist-only: free delivery on your first order.</p>
+          <form id="sbForm" novalidate>
+            <div class="sb-hp" aria-hidden="true"><label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+            <div class="sb-field">
+              <label for="sbName">Your name</label>
+              <input class="sb-in" id="sbName" name="name" type="text" autocomplete="name" placeholder="First name is fine" maxlength="80" required>
+            </div>
+            <fieldset class="sb-field">
+              <legend class="sb-legend">How should we reach you?</legend>
+              <div class="sb-seg">
+                <label><input type="radio" name="via" value="whatsapp" checked><span>WhatsApp</span></label>
+                <label><input type="radio" name="via" value="email"><span>Email</span></label>
+              </div>
+            </fieldset>
+            <div class="sb-field">
+              <label for="sbContact" id="sbContactL">Your WhatsApp number</label>
+              <input class="sb-in" id="sbContact" name="contact" type="tel" inputmode="tel" autocomplete="tel" placeholder="246 555 0123" maxlength="120" required>
+            </div>
+            <fieldset class="sb-field">
+              <legend class="sb-legend">I&rsquo;m here to&hellip;</legend>
+              <div class="sb-seg">
+                <label><input type="radio" name="role" value="shopper" checked><span>Shop local</span></label>
+                <label><input type="radio" name="role" value="brand"><span>Sell my products</span></label>
+              </div>
+            </fieldset>
+            <div class="sb-field">
+              <label for="sbWish"><span id="sbWishL">What are you hoping to find?</span> <span class="sb-opt">(optional)</span></label>
+              <textarea class="sb-in" id="sbWish" name="wish" rows="2" maxlength="400" placeholder="Gifts, nails, hair, home goods, snacks&hellip;"></textarea>
+            </div>
+            <p class="sb-err" id="sbErr" role="alert"></p>
+            <button class="sb-btn" type="submit" id="sbSubmit">Join the waitlist</button>
+            <p class="sb-fine">We only use your details to tell you about Shop Bajan. See our <a href="policies.html">shop policies</a>.</p>
+            <noscript><p class="sb-err">Please turn on JavaScript to join, or <a href="https://wa.me/12468504460?text=Hi!%20Please%20add%20me%20to%20the%20Shop%20Bajan%20waitlist.">message us on WhatsApp</a>.</p></noscript>
+          </form>
+          <div class="sb-done" id="sbDone" hidden tabindex="-1"></div>
+        </div>
+
+        <div class="sb-perk">
+          <p class="sb-perk-t">Waitlist-only</p>
+          <div class="sb-perk-row"><span class="sb-perk-ico" aria-hidden="true">&#127873;</span><div><b>Free delivery on your first order</b><span>A launch gift for people who are on the list when we open. Nobody else gets it.</span></div></div>
+          <div class="sb-perk-row"><span class="sb-perk-ico" aria-hidden="true">&#9889;</span><div><b>First to know</b><span>The doors-open message goes to the waitlist first.</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sb-sec" id="sbFaq" aria-labelledby="sbFaqH">
+      <div class="sb-wrap">
+        <p class="sb-eyebrow">Good to know</p>
+        <h2 class="sb-h2" id="sbFaqH">Quick answers.</h2>
+        <div class="sb-faq">
+          <details><summary>When does Shop Bajan open?</summary><p>Thursday 10 December 2026. People on the waitlist hear first.</p></details>
+          <details><summary>Does it cost anything to join the waitlist?</summary><p>No. It&rsquo;s free and there&rsquo;s nothing to buy. We just need your name and a way to reach you.</p></details>
+          <details><summary>What do I get for joining?</summary><p>A waitlist-only launch gift (free delivery on your first order) and the first message when the doors open.</p></details>
+          <details><summary>How do delivery and collection work?</summary><p>At checkout you choose delivery, or collection or a meet-up. We handle both, so you&rsquo;re not chasing sellers.</p></details>
+          <details><summary>I run a small business. Can I sell here?</summary><p>Yes. Handmade, imported, physical or digital, every category is welcome. See the founding brand details above, or message us and we&rsquo;ll walk you through it.</p></details>
+          <details><summary>What happens to my details?</summary><p>We only use them to tell you about Shop Bajan. Our shop policies page has the full privacy details.</p></details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="sb-foot" role="contentinfo">
+    <b>Shop Bajan</b><br>by The Girls Club &middot; Barbados
+    <div class="sb-links">
+      <a href="brands.html">Sell with us</a>
+      <a href="policies.html">Shop policies</a>
+      <a href="https://www.instagram.com/thegirlsclub246/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://wa.me/12468504460" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="https://academy.thegirlsclub246.com/">The Girls Club Academy</a>
+    </div>
+    &copy; 2026 The Girls Club
+  </div>
+
+  <a class="sb-btn sb-sticky" id="sbSticky" href="#sbJoin" data-sb-join tabindex="-1" aria-hidden="true">Join the waitlist &middot; Opens 10 Dec</a>
+</div>
+<script>
+/* ==SHOP BAJAN WAITLIST PAGE== form, countdown and sticky button */
+(function(){
+"use strict";
+if(!window.TGC_SOON)return;
+var $=function(s,r){return(r||document).querySelector(s)};
+var LAUNCH=Date.parse("2026-12-10T00:00:00-04:00"); /* Barbados time (UTC-4, no daylight saving) */
+/* Signups land in the "TGC Vendor Sign-ups (Responses)" Google Sheet, tagged type = "shop-bajan-waitlist" */
+var FORM="https://docs.google.com/forms/d/e/1FAIpQLSfGTId0Oa7jR23yfKmouDejd1AVFxPNZA8QMfMkK3JWV0mCFA/formResponse",FIELD="entry.858011822";
+var WA="12468504460",SITE="https://thegirlsclub246.com/",KEY="tgc-sb-waitlist";
+function gc(path,title){try{window.goatcounter&&window.goatcounter.count&&window.goatcounter.count({path:path,title:title,event:true})}catch(e){}}
+function store(v){try{if(v===undefined)return localStorage.getItem(KEY);if(v===null)localStorage.removeItem(KEY);else localStorage.setItem(KEY,v)}catch(e){}return null}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+
+/* days to go */
+var daysEl=$("#sbDays");
+function daysText(){var d=LAUNCH-Date.now();
+  if(d<=-864e5)return"Opening very soon";
+  if(d<=0)return"Doors open today";
+  var n=Math.ceil(d/864e5);
+  return n===1?"Opens tomorrow":n+" days to go"}
+if(daysEl)daysEl.textContent=daysText();
+
+/* sticky join button: only while neither the hero buttons nor the form are on screen */
+var sticky=$("#sbSticky"),heroCta=$("#sbHeroCta"),card=$("#sbCard"),vis={hero:true,card:false};
+function stick(){var on=!vis.hero&&!vis.card;sticky.classList.toggle("on",on);sticky.setAttribute("aria-hidden",on?"false":"true");sticky.tabIndex=on?0:-1}
+if(sticky&&heroCta&&card&&"IntersectionObserver" in window){
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.target===heroCta)vis.hero=e.isIntersecting;else vis.card=e.isIntersecting});stick()},{threshold:.15});
+  io.observe(heroCta);io.observe(card)}
+Array.prototype.forEach.call(document.querySelectorAll("[data-sb-join]"),function(a){a.addEventListener("click",function(){gc("event/waitlist-cta-click","Waitlist button")})});
+
+/* in-page links scroll by script, so they also work in in-app browsers and sandboxed previews */
+Array.prototype.forEach.call(document.querySelectorAll('#soonPage a[href^="#sb"]'),function(a){a.addEventListener("click",function(e){
+  var t=document.getElementById(a.getAttribute("href").slice(1));if(!t)return;
+  e.preventDefault();try{t.scrollIntoView({behavior:"smooth",block:"start"})}catch(x){t.scrollIntoView()}})});
+
+/* WhatsApp link for brands */
+var wb=$("#sbWaBrand");if(wb)wb.href="https://wa.me/"+WA+"?text="+encodeURIComponent("Hi! I'd love to join Shop Bajan as a founding brand.");
+
+/* form */
+var f=$("#sbForm"),nameEl=$("#sbName"),contactEl=$("#sbContact"),contactL=$("#sbContactL"),wishEl=$("#sbWish"),wishL=$("#sbWishL"),err=$("#sbErr"),btn=$("#sbSubmit"),done=$("#sbDone");
+if(!f)return;
+function setVia(){var email=f.elements.via.value==="email";
+  contactL.textContent=email?"Your email":"Your WhatsApp number";
+  contactEl.type=email?"email":"tel";contactEl.setAttribute("inputmode",email?"email":"tel");contactEl.setAttribute("autocomplete",email?"email":"tel");
+  contactEl.placeholder=email?"you@example.com":"246 555 0123";contactEl.value="";err.textContent=""}
+function setRole(){var brand=f.elements.role.value==="brand";
+  wishL.textContent=brand?"What do you sell?":"What are you hoping to find?";
+  wishEl.placeholder=brand?"Candles, jewellery, snacks, digital downloads…":"Gifts, nails, hair, home goods, snacks…"}
+Array.prototype.forEach.call(f.elements.via,function(r){r.addEventListener("change",setVia)});
+Array.prototype.forEach.call(f.elements.role,function(r){r.addEventListener("change",setRole)});
+
+function parse(v,via){v=String(v||"").trim();
+  if(via==="email")return/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)?{type:"email",value:v.toLowerCase()}:null;
+  var d=v.replace(/\D/g,"");
+  if(d.length===7)d="1246"+d;else if(d.length===10)d="1"+d;
+  return d.length>=11&&d.length<=15?{type:"whatsapp",value:"+"+d}:null}
+
+function fail(msg,el,wa,name){
+  err.textContent=msg;
+  if(wa){err.appendChild(document.createTextNode(" "));var a=document.createElement("a");a.href="https://wa.me/"+WA+"?text="+encodeURIComponent("Hi! Please add me to the Shop Bajan waitlist."+(name?" I'm "+name+".":""));a.target="_blank";a.rel="noopener";a.textContent="Join on WhatsApp instead";err.appendChild(a)}
+  if(el){el.focus();try{el.scrollIntoView({block:"center",behavior:"smooth"})}catch(e){}}}
+
+function showDone(name,role,via){
+  var first=String(name||"").trim().split(/\s+/)[0]||"love",brand=role==="brand";
+  var share="https://wa.me/?text="+encodeURIComponent("Shop Bajan opens Thursday 10 December: Barbados' small businesses, one bag, one checkout, open 24/7. Join the waitlist and get a launch gift: "+SITE+"?utm_source=waitlist-share");
+  var h='<div class="sb-tick" aria-hidden="true">✓</div><h3>You’re on the list, '+esc(first)+'!</h3>';
+  if(brand)h+='<p>Thank you! We’ll be in touch about founding brand spots. You can start your sign-up right now.</p><a class="sb-btn" href="brands.html">Start my founding brand sign-up</a>';
+  else h+='<p>We’ll message you '+(via==="email"?'by email':'on WhatsApp')+' the moment Shop Bajan opens on <b>Thursday 10 December</b>.</p><p class="sb-gift">🎁 Your waitlist-only gift is saved: free delivery on your first order.</p>';
+  h+='<a class="sb-btn'+(brand?' sb-btn-ghost':'')+'" href="'+share+'" target="_blank" rel="noopener">Tell a friend on WhatsApp</a>';
+  h+='<a class="sb-btn sb-btn-ghost" href="https://www.instagram.com/thegirlsclub246/" target="_blank" rel="noopener">Follow @thegirlsclub246</a>';
+  h+='<p class="sb-fine"><button type="button" id="sbAgain" style="all:unset;cursor:pointer;text-decoration:underline;color:inherit;padding:8px">Add someone else</button></p>';
+  done.innerHTML=h;f.hidden=true;done.hidden=false;
+  var again=$("#sbAgain");if(again)again.addEventListener("click",function(){store(null);done.hidden=true;done.innerHTML="";f.reset();setVia();setRole();f.hidden=false;nameEl.focus()});
+}
+
+f.addEventListener("submit",function(e){
+  e.preventDefault();err.textContent="";
+  var name=nameEl.value.trim(),via=f.elements.via.value,role=f.elements.role.value,wish=wishEl.value.trim();
+  if(f.elements.website.value){showDone(name,role,via);return} /* bots fill the hidden box: pretend it worked */
+  if(name.length<2){fail("Please add your name.",nameEl);return}
+  var c=parse(contactEl.value,via);
+  if(!c){fail(via==="email"?"That email doesn’t look right. Please check it.":(String(contactEl.value).indexOf("@")>-1?"That looks like an email. Tap Email above, or add your WhatsApp number.":"Please add a WhatsApp number we can reach you on, like 246 555 0123."),contactEl);return}
+  btn.disabled=true;btn.textContent="Adding you…";
+  var q=new URLSearchParams(location.search);
+  var data={type:"shop-bajan-waitlist",source:"coming-soon-page",submittedAt:new Date().toISOString(),name:name,contactVia:c.type,contact:c.value,role:role,wish:wish,
+    utm:{source:q.get("utm_source")||"",medium:q.get("utm_medium")||"",campaign:q.get("utm_campaign")||"",content:q.get("utm_content")||""},ref:document.referrer||"",page:location.href.split("#")[0]};
+  var fd=new FormData();fd.append(FIELD,JSON.stringify(data));
+  fetch(FORM,{method:"POST",mode:"no-cors",body:fd}).then(function(){
+    store(JSON.stringify({name:name,role:role,via:c.type}));
+    gc("event/waitlist-join"+(role==="brand"?"-brand":""),"Waitlist joined");
+    try{window.tgcTrack&&window.tgcTrack("Lead",{content_name:"Shop Bajan waitlist"})}catch(x){}
+    btn.disabled=false;btn.textContent="Join the waitlist";
+    showDone(name,role,c.type);
+    try{card.scrollIntoView({block:"center",behavior:"smooth"})}catch(x){}
+  },function(){
+    btn.disabled=false;btn.textContent="Join the waitlist";
+    fail("We couldn’t send that. Please check your connection and try again.",null,true,name);
+  });
+});
+
+/* already joined on this phone: show the thank-you instead of the form */
+try{var s=JSON.parse(store()||"null");if(s&&s.name)showDone(s.name,s.role,s.via)}catch(e){}
+})();
+</script>
 
 
 <div class="demo-bar" role="marquee" id="banner" hidden></div>
@@ -1078,6 +1536,7 @@ html.shop-mode main>*:not(#shop){display:none!important}
 </aside>
 <script>
 (async()=>{
+if(window.TGC_SOON)return;
 /* ==TGC DATA== Everything you can change lives in the /content folder and is edited at /admin */
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const SITE=window.TGC_SITE||"shop",ACAD=SITE==="academy",DATA=window.TGC_DATA||"";
@@ -1699,6 +2158,6 @@ if(location.hash&&!/^#(shop|lashes|marketplace|products|digital|p-)/.test(locati
 
 })();
 </script>
-<script>(function(){var s=document.createElement("script");s.src=(window.TGC_DATA||"")+"academy-theme.js";document.body.appendChild(s)})();</script>
+<script>(function(){if(window.TGC_SOON)return;var s=document.createElement("script");s.src=(window.TGC_DATA||"")+"academy-theme.js";document.body.appendChild(s)})();</script>
 </body>
 </html>
