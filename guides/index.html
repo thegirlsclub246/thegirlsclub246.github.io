@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Free guides · Shop Bajan</title>
-<meta name="description" content="Free guides for Barbados creators and small businesses from Shop Bajan.">
+<meta name="description" content="Free guides and tools for Barbados creators and small businesses from Shop Bajan.">
+<meta name="robots" content="noindex">
 <link rel="icon" type="image/png" href="../favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,65 +16,131 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;font-weight:500}
 .wrap{max-width:560px;margin:0 auto;padding:20px 16px 48px}
-header a{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--blue);font-family:var(--serif);font-weight:800;font-size:1.35rem}
-header img{width:38px;height:38px}
-.label{display:flex;align-items:center;gap:14px;margin:30px 0 12px;font-weight:700;font-size:.78rem;letter-spacing:.3em;color:var(--blue)}
+.brand{display:flex;align-items:center;gap:10px;color:var(--blue);font-family:var(--serif);font-weight:800;font-size:1.35rem}
+.brand img{width:38px;height:38px}
+.label{display:flex;align-items:center;gap:14px;margin:26px 0 12px;font-weight:700;font-size:.78rem;letter-spacing:.3em;color:var(--blue)}
 .label::before,.label::after{content:"";flex:1;height:2px;background:var(--blue)}
 h1{font-family:var(--serif);font-weight:800;text-transform:uppercase;color:var(--blue);font-size:clamp(2rem,8vw,2.8rem);line-height:1.05;margin:0 0 12px}
 h1 span{color:var(--coral)}
+h2{font-family:var(--serif);font-weight:800;color:var(--blue);font-size:1.6rem;line-height:1.15;margin:0 0 6px}
 p.lead{color:var(--muted);margin:0 0 22px}
-.card{background:#fff;border:2.5px solid var(--blue);border-radius:22px;padding:22px;box-shadow:5px 5px 0 var(--gold)}
-label{display:block;font-weight:700;color:var(--blue);margin:0 0 6px}
-input[type=text],input[type=email]{width:100%;min-height:50px;border:2px solid var(--line);border-radius:14px;padding:0 14px;font:600 1rem var(--body);color:var(--ink);margin-bottom:14px}
-input:focus{outline:3px solid var(--coral);outline-offset:1px;border-color:var(--blue)}
-.btn{display:flex;width:100%;align-items:center;justify-content:center;min-height:54px;border-radius:999px;background:var(--gold);color:var(--blue);font:800 1.05rem var(--body);border:2.5px solid var(--blue);box-shadow:0 4px 0 var(--blue);cursor:pointer;text-decoration:none}
-.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--blue)}
-.small{font-size:.85rem;color:var(--muted);margin:12px 0 0}
-.err{color:#B3261E;font-weight:700;margin:8px 0 0}
-.done h2{font-family:var(--serif);color:var(--blue);margin:0 0 8px}
+.card{background:#fff;border:2.5px solid var(--blue);border-radius:22px;padding:14px;box-shadow:5px 5px 0 var(--gold)}
 .band{background:var(--blue);color:#fff;border-radius:18px;padding:16px 18px;margin-top:22px;font-weight:600}
 .band a{color:var(--gold)}
-footer{text-align:center;font-size:.85rem;color:var(--muted);margin-top:28px}
+.shop{margin-top:40px}
+.shop>p{color:var(--muted);margin:0 0 16px}
+.items{display:grid;gap:14px}
+.item{background:#fff;border:2px solid var(--line);border-radius:18px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+.item .tag{align-self:flex-start;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border-radius:999px;padding:3px 10px;background:var(--sun);color:var(--blue)}
+.item .tag.paid{background:var(--coral);color:#fff}
+.item h3{font-family:var(--serif);font-weight:800;color:var(--blue);font-size:1.2rem;margin:0;line-height:1.2}
+.item p{margin:0;color:var(--muted);font-size:.95rem}
+.item .price{font-weight:700;color:var(--ink)}
+.go{display:inline-flex;align-self:flex-start;align-items:center;gap:8px;margin-top:6px;min-height:46px;padding:0 20px;border-radius:999px;background:#fff;color:var(--blue);font:700 1rem var(--body);border:2.5px solid var(--blue);text-decoration:none}
+.pay{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px;min-height:56px;border-radius:999px;background:var(--gold);color:var(--blue);font:800 1.1rem var(--body);border:2.5px solid var(--blue);box-shadow:0 4px 0 var(--blue);text-decoration:none;animation:bounce 2.4s ease-in-out infinite}
+.pay::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.75),transparent);animation:shine 2.4s ease-in-out infinite}
+.pay .arrow{display:inline-block;animation:nudge 1.2s ease-in-out infinite}
+.pay:hover{animation-play-state:paused;transform:translateY(-2px) scale(1.02)}
+.pay:active{transform:translateY(3px);box-shadow:0 1px 0 var(--blue)}
+@keyframes bounce{0%,70%,100%{transform:translateY(0)}78%{transform:translateY(-4px)}86%{transform:translateY(0)}92%{transform:translateY(-2px)}}
+@keyframes shine{0%,55%{left:-60%}85%,100%{left:130%}}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
+@media (prefers-reduced-motion:reduce){.pay,.pay::after,.pay .arrow{animation:none}}
+.item.mine{border-color:var(--blue);box-shadow:4px 4px 0 var(--gold)}
+.getit{margin-top:44px;scroll-margin-top:16px}
+.getit .small{color:var(--muted);margin:0 0 14px}
+html{scroll-behavior:smooth}
+footer{text-align:center;font-size:.85rem;color:var(--muted);margin-top:32px}
 [hidden]{display:none!important}
 </style>
 </head>
 <body>
 <div class="wrap">
-<header><a href="../"><img src="../shop-bajan-mark.png" alt="">Shop Bajan</a></header>
+<div class="brand"><img src="../shop-bajan-mark.png" alt="">Shop Bajan</div>
 <div class="label">SHOP BAJAN</div>
 <h1 id="title">Your free guide</h1>
-<p class="lead" id="lead">Pop in your name and email and we'll open your guide straight away.</p>
+<p class="lead" id="lead"></p>
 
-<div class="card">
-  <div class="ml-embedded" id="mlform"></div>
-</div>
+<a class="pay" href="#get"><span>Take me to my freebie</span><span class="arrow" aria-hidden="true">↓</span></a>
 
-<div class="band" id="next"></div>
+<section class="shop" aria-labelledby="shopTitle">
+  <div class="label">THE SHOP</div>
+  <h2 id="shopTitle">Everything we've got for you</h2>
+  <p>Free tools to help you build, and ways to grow with Shop Bajan.</p>
+  <div class="items" id="items"></div>
+</section>
+
+<section id="get" class="getit">
+  <div class="label">YOUR FREEBIE</div>
+  <h2 id="getTitle"></h2>
+  <div class="card">
+    <div class="ml-embedded" id="mlform"></div>
+  </div>
+  <div class="band" id="next"></div>
+</section>
+
 <footer>shopbajanbb.com · @shopbajan</footer>
 </div>
 
 <script>
-/* MailerLite free embedded forms, one per group: DIGITAL, PAID, FOUNDING.
-   Each form's own success message holds the guide link. */
+/* Each key is one sign-up: ?g=digital|paid|ready|journey|founding.
+   form = MailerLite embedded form id. Its success message holds the download link. */
 var GUIDES = {
   digital: {form:"qpX8d2", title:"Make your first <span>digital product</span>", lead:"Free guide 1 of 2 for Barbados creators. Read it in 15 minutes, make your product this week.",
-            file:"Shop-Bajan-Guide-1-Create-a-Digital-Product.pdf", btn:"Get my guide",
             next:'Want guide 2, on getting paid in Barbados? <a href="?g=paid">Get it here</a>.'},
   paid:    {form:"0KfmOj", title:"Get paid in <span>Barbados</span>", lead:"Free guide 2 of 2: what works from Barbados, what doesn't, and how to set up step by step.",
-            file:"Shop-Bajan-Guide-2-Get-Paid-in-Barbados.pdf", btn:"Get my guide",
             next:'Missed guide 1, on making your first digital product? <a href="?g=digital">Get it here</a>.'},
   ready:   {form:"X4EwlU", title:"Your free <span>digital starter bundle</span>", lead:"Both Shop Bajan guides in one: make your first digital product, then get paid for it from Barbados.",
             next:'Want to sell it on Shop Bajan? <a href="?g=founding">See our 10 founding spots</a>.'},
+  journey: {form:"vbhLfX", title:"Your free <span>task tracker</span>", lead:"A simple tracker to help you get things out of your head and get them done.",
+            next:'Ready to make something to sell? <a href="?g=ready">Get our free starter bundle</a>.'},
   founding:{form:"CNC8hq", title:"Founding <span>vendor spots</span>", lead:"The online marketplace for Barbados small businesses opens Thursday 10 December.",
-            file:"../brands.html", btn:"Show me the details", done:"See founding spot details",
             next:'Questions? Message us on Instagram <a href="https://instagram.com/shopbajan">@shopbajan</a>.'}
 };
+
+/* Storefront. Free items link to their sign-up. Paid items show the animated pay button.
+   To add a paid product: {key:"", tag:"Paid", name:"", text:"", price:"BBD $00", pay:"https://your-payment-link"} */
+var SHOP = [
+  {key:"ready",    tag:"Free bundle", name:"Digital starter bundle", text:"Both guides in one: make your first digital product and get paid for it."},
+  {key:"digital",  tag:"Free guide",  name:"Make your first digital product", text:"7 steps and copy-and-paste prompts. Read it in 15 minutes."},
+  {key:"paid",     tag:"Free guide",  name:"Get paid in Barbados", text:"What works from Barbados, what doesn't, and how to set up."},
+  {key:"journey",  tag:"Free tool",   name:"Task tracker", text:"Get it out of your head and onto one simple list."},
+  {key:"founding", tag:"Sell with us", name:"Founding vendor spots", text:"10 founding spots on Shop Bajan. We open Thursday 10 December."}
+];
+var PAY_LABEL = "Leh we go!";
+
 var key = (new URLSearchParams(location.search).get("g") || "digital").toLowerCase();
-var g = GUIDES[key] || GUIDES.digital;
+if (!GUIDES[key]) key = "digital";
+var g = GUIDES[key];
 document.getElementById("title").innerHTML = g.title;
 document.getElementById("lead").textContent = g.lead;
 document.getElementById("next").innerHTML = g.next;
 document.getElementById("mlform").setAttribute("data-form", g.form);
+
+var list = document.getElementById("items");
+var mine = SHOP.filter(function(it){ return it.key === key; })[0];
+document.getElementById("getTitle").textContent = mine ? mine.name : "Your freebie";
+var ordered = (mine ? [mine] : []).concat(SHOP.filter(function(it){ return it.key !== key; }));
+ordered.forEach(function(it){
+  var isMine = it.key === key;
+  var el = document.createElement("article");
+  el.className = "item" + (isMine ? " mine" : "");
+  var paid = !!it.pay;
+  el.innerHTML = '<span class="tag' + (paid ? ' paid' : '') + '"></span><h3></h3><p></p>' +
+    (paid ? '<p class="price"></p><a class="pay" target="_blank" rel="noopener"><span></span><span class="arrow" aria-hidden="true">→</span></a>'
+          : '<a class="go">Grab it free →</a>');
+  el.querySelector(".tag").textContent = isMine ? "Yours, free" : it.tag;
+  el.querySelector("h3").textContent = it.name;
+  el.querySelector("p").textContent = it.text;
+  if (paid){
+    el.querySelector(".price").textContent = it.price;
+    var a = el.querySelector(".pay"); a.href = it.pay; a.querySelector("span").textContent = PAY_LABEL;
+  } else {
+    var go = el.querySelector(".go");
+    if (isMine){ go.href = "#get"; go.textContent = "Get mine now ↓"; } else { go.href = "?g=" + it.key; }
+  }
+  list.appendChild(el);
+});
 </script>
 <script>
 (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[]).push(arguments);},l=d.createElement(e),l.async=1,l.src=u,n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})(window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
