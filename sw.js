@@ -17,7 +17,7 @@ self.addEventListener("fetch", function (e) {
   var req = e.request;
   var url = new URL(req.url);
   if (req.method !== "GET" || url.origin !== self.location.origin) return; /* payments, sign-ins, data: untouched */
-  if (url.pathname.indexOf("/brain-basket/") === 0 || url.pathname.indexOf("/admin") === 0) return;
+  if (url.pathname.indexOf("/brain-basket/") === 0 || url.pathname.indexOf("/bb-full-") === 0 || url.pathname.indexOf("/admin") === 0) return;
   e.respondWith(
     fetch(req, { cache: url.pathname.indexOf("/vendor/") > -1 ? "default" : "no-store" }).then(function (res) {
       if (res && res.ok && res.type === "basic") {
