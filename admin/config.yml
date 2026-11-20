@@ -194,6 +194,7 @@ collections:
           - {name: paypal_link, label: "PayPal.Me link (empty hides PayPal)", widget: string, required: false}
           - {name: creator_discount_pct, label: "Creator codes: shopper's % off their first order (0 turns codes off)", widget: number, value_type: int, min: 0, max: 50, default: 10, required: false}
           - {name: creator_commission_pct, label: "Creator codes: creator's % commission (shown on the Creators page)", widget: number, value_type: int, min: 0, max: 50, default: 5, required: false}
+          - {name: creator_app_commission_pct, label: "Creator codes: creator's % of the first payment for a paid app (Hustle Kit, DepositProof)", widget: number, value_type: int, min: 0, max: 100, default: 20, required: false}
           - {name: creator_payout_min, label: "Creator codes: minimum payout (BBD)", widget: number, value_type: int, min: 0, default: 20, required: false}
           - {name: creator_brand_bonus, label: "Creator codes: bonus for referring a brand (BBD, 0 hides it)", widget: number, value_type: int, min: 0, default: 25, required: false}
           - {name: creator_codes_payhip, label: "Creator codes: I've also added each code as a Payhip coupon (so card payments for courses get the discount too)", widget: boolean, default: false, required: false}
