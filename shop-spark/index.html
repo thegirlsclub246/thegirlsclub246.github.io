@@ -405,7 +405,7 @@ function emailGate(){
       <label class="check"><input type="checkbox" id="ok" required>
         <span>Yes, email me my ${mode === "find" ? "results, tips for my first product" : "plan, growth tips"} and news about new tiny apps. I can unsubscribe anytime.</span></label>
       <div class="err" id="err" role="alert"></div>
-      <button class="btn" id="sub">Show my plan</button>
+      <button class="btn" id="sub">${mode === "find" ? "Show my matches" : "Show my plan"}</button>
     </form>${foot}</div>`);
   document.getElementById("back").onclick = () => { step = qs().length - 1; quiz(); };
   document.getElementById("f").onsubmit = async e => {
@@ -581,7 +581,7 @@ function findResults(r){
 
     <div class="card">
       <h3>Your 30 days to a first sale</h3>
-      <p class="small muted">Built around your best match: ${esc(main.name.toLowerCase())}. One stage a week. Tick tasks off as you go; they're saved on this phone.</p>
+      <p class="small muted">Built around your best match: ${esc(main.name)}. One stage a week. Tick tasks off as you go; they're saved on this phone.</p>
       ${FIND_PLAN.map(([title, tasks], wi) => `<details class="week"${wi===0?" open":""}>
         <summary>Week ${wi+1}: ${esc(title)}</summary>
         ${tasks.map(([t,d],ti) => { const k = wi+"-"+ti; return `<label class="task${done[k]?" done":""}">
