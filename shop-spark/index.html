@@ -77,6 +77,7 @@ input[type=text],input[type=email]{width:100%;padding:15px 16px;border:2px solid
 .ring text{font-family:var(--display);font-weight:700;fill:var(--ink)}
 .bars{display:grid;gap:12px;margin-top:6px}
 .bar .row{display:flex;justify-content:space-between;font-size:15px;margin-bottom:4px}
+.bar .row span:last-child{white-space:nowrap;padding-left:10px}
 .bar .track{height:10px;background:var(--line);border-radius:99px;overflow:hidden}
 .bar .fill{height:100%;border-radius:99px;background:var(--good)}
 .bar.low .fill{background:var(--spark)}
@@ -125,7 +126,12 @@ const CONFIG = {
   promoTitle: "Want more tiny tools that make life easier?",
   promoText: "I build small, friendly apps for busy people, like Brain Basket, a calm planner for the ADHD brain. You'll be first to hear when new ones launch.",
   promoButton: "See my apps",
-  promoLink: ""
+  promoLink: "",
+  // "Where to sell it" box on both results pages.
+  sellTitle: "Where to sell it: Shop Bajan",
+  sellText: "List your product on Shop Bajan, the online marketplace for Barbados small businesses. Shop Bajan accepts payments in US$ and BBD, so you can sell to buyers at home and overseas.",
+  sellButton: "Sell on Shop Bajan",
+  sellLink: "/vendors.html"
 };
 /* ================================================================ */
 
@@ -347,6 +353,12 @@ const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">"
 const LOGO = `<svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--accent)"/><path d="M17.5 5 9 18h6l-1.5 9L23 13.5h-6.2z" fill="var(--spark)"/></svg>`;
 const brand = `<div class="brand">${LOGO}${esc(CONFIG.appName)}</div>`;
 const foot = `<footer>${esc(CONFIG.madeBy)}</footer>`;
+const sellCard = () => `<div class="card sell">
+      <span class="tag">Where to sell it</span>
+      <h3 style="margin-top:10px">${esc(CONFIG.sellTitle.replace(/^Where to sell it: /, ""))}</h3>
+      <p class="muted" style="margin:0 0 14px">${esc(CONFIG.sellText)}</p>
+      ${CONFIG.sellLink ? `<a class="btn" style="display:block;text-align:center;text-decoration:none" href="${esc(CONFIG.sellLink)}">${esc(CONFIG.sellButton)}</a>` : ""}
+    </div>`;
 function show(html){ app.innerHTML = html; app.firstElementChild?.classList.add("fade"); window.scrollTo(0,0); }
 
 /* ---------- screens ---------- */
@@ -400,6 +412,7 @@ function quiz(){
     box.hidden = true; delete answers[q.id+"_other"];
     setTimeout(next, 160);
   });
+  document.getElementById("otherIn").oninput = () => document.getElementById("otherErr").textContent = "";
   box.onsubmit = e => {
     e.preventDefault();
     const v = document.getElementById("otherIn").value.trim().replace(/\s+/g, " ");
@@ -529,6 +542,8 @@ function results(r){
       <p class="small muted" style="margin:14px 0 0">Days 29 and 30: look back. What worked? Do more of that, then retake the quiz to see your new score.</p>
     </div>
 
+    ${sellCard()}
+
     <div class="row-btns">
       <button class="btn ghost" id="print">Save as PDF</button>
       <button class="btn ghost" id="share">Share the quiz</button>
@@ -625,6 +640,8 @@ function findResults(r){
       </details>`).join("")}
       <p class="small muted" style="margin:14px 0 0">Days 29 and 30: once you've made your first sales, take the growth quiz to see your score and what to work on next.</p>
     </div>
+
+    ${sellCard()}
 
     <div class="row-btns">
       <button class="btn ghost" id="print">Save as PDF</button>
