@@ -1,7 +1,7 @@
 {
-  "name": "Shop Spark",
-  "short_name": "Shop Spark",
-  "description": "Free quizzes that show which digital products suit you, or give sellers a growth score and a 30-day plan.",
+  "name": "5K Mind",
+  "short_name": "5K Mind",
+  "description": "Free quizzes that show which digital products to sell, or how to grow your sales, with step-by-step plans and Claude prompts.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
