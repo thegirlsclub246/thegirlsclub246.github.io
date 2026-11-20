@@ -427,7 +427,7 @@ const lc = s => /^(I[ ']|Canva|Google|CapCut)/.test(s) ? s : s.charAt(0).toLower
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const LOGO = `<svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--accent)"/><path d="M17.5 5 9 18h6l-1.5 9L23 13.5h-6.2z" fill="var(--spark)"/></svg>`;
 const brand = `<div class="brand">${LOGO}${esc(CONFIG.appName)}</div>`;
-const foot = `<footer>${esc(CONFIG.madeBy)}<br>Results may vary.</footer>`;
+const foot = `<footer>${esc(CONFIG.madeBy)}<br>Results may vary. Not a promise of income.</footer>`;
 const taskHTML = (k, done, t, d, pr) => `<div class="taskwrap"><label class="task${done[k]?" done":""}">
           <input type="checkbox" data-k="${k}"${done[k]?" checked":""}><span>${esc(t)}<em>${esc(d)}</em></span></label>
           ${pr ? `<details class="pr"><summary>Your Claude prompt</summary><div class="prbox">${esc(pr)}</div><button class="copy" type="button">Copy prompt</button></details>` : ""}</div>`;
