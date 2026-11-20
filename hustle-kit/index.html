@@ -76,7 +76,7 @@
 </details>
 <details><summary>How do I sign in?</summary><p>Paid with PayPal: after you pay, tell us the email you'll sign in with. Paid by card: sign in with the email you paid with. Then open Hustle Kit and we'll email you a sign-in link and a 6-digit code. No password needed.</p></details>
 <details><summary>Why is the price in US dollars?</summary><p>PayPal and our card processor bill in US dollars. US$1 is BBD $2, so US$12 is about BBD $24. Your bank may add a small foreign exchange fee.</p></details>
-<details><summary>How do I cancel?</summary><p>Paid with PayPal: log in to PayPal, go to Settings, then Payments, then Automatic payments, and cancel. Paid by card: use the link in your receipt email, or message us on Instagram <a href="https://instagram.com/shopbajan">@shopbajan</a> and we'll cancel it. You keep access until the end of the month you paid for.</p></details>
+<details><summary>How do I cancel?</summary><p>Paid with PayPal: log in to PayPal, go to Settings, then Payments, then Automatic payments, and cancel. Paid by card: use the link in your receipt email, or email us at <a href="mailto:hello@shopbajanbb.com">hello@shopbajanbb.com</a> and we'll cancel it. You keep access until the end of the month you paid for.</p></details>
 <details><summary>Can I put it on my home screen?</summary><p>Yes. When you open Hustle Kit it shows you how, so it's one tap away like any other app.</p></details>
 
 <div class="label">More from Shop Bajan</div>
@@ -85,7 +85,9 @@
   <li><a href="../depositproof/"><img src="../depositproof/img/depositproof-icon.svg" alt=""><span><b>DepositProof</b><small>Move-in and move-out reports that protect your deposit.</small></span></a></li>
 </ul>
 
-<footer>shopbajanbb.com · <a href="https://instagram.com/shopbajan">@shopbajan</a> · <a href="../policies.html">Policies</a></footer>
+<div class="band">Have a problem? Send us an email at <a href="mailto:hello@shopbajanbb.com">hello@shopbajanbb.com</a></div>
+
+<footer>shopbajanbb.com · <a href="mailto:hello@shopbajanbb.com">hello@shopbajanbb.com</a> · <a href="../policies.html">Policies</a></footer>
 </div>
 
 <script>
@@ -124,7 +126,7 @@ function renderPayPal(){
       style: { shape: "pill", color: "gold", layout: "vertical", label: "subscribe" },
       createSubscription: function(data, actions){ return actions.subscription.create({ plan_id: HK.planId }); },
       onApprove: function(data){ showThanks(data.subscriptionID); },
-      onError: function(){ $("ppMsg").textContent = "PayPal couldn't finish that. Nothing was charged. Please try again, or message us."; }
+      onError: function(){ $("ppMsg").textContent = "PayPal couldn't finish that. Nothing was charged. Please try again, or email us at hello@shopbajanbb.com."; }
     }).render("#pp");
   }).catch(function(){
     $("pp").innerHTML = '<p class="note">PayPal couldn\'t load. Check your internet and refresh the page, or pay by card below.</p>';
@@ -152,7 +154,7 @@ function wireLinkForm(id, p){
       .catch(function(){ return { ok: false, message: "We couldn't reach the server. Check your internet and try again." }; })
       .then(function(res){
         btn.disabled = false; btn.textContent = "Set up my sign-in";
-        if (!res || !res.ok) { msg.textContent = (res && res.message) || "That didn't work. Please try again, or message us."; return; }
+        if (!res || !res.ok) { msg.textContent = (res && res.message) || "That didn't work. Please try again, or email us at hello@shopbajanbb.com."; return; }
         var url = HK.appUrl + "?email=" + encodeURIComponent(res.email);
         f.outerHTML = '<div class="thanks"><strong>You\'re all set</strong><span>Sign in to Hustle Kit with <b>' + esc(res.email) + '</b>. We\'ll email you a sign-in link and code.</span></div>' +
           '<a class="pay" href="' + esc(url) + '"><span>Open Hustle Kit</span><span class="arrow" aria-hidden="true">→</span></a>';
@@ -172,7 +174,7 @@ function showCardThanks(email){
     '<span>Thank you. Your card payment went through, and a receipt is on its way to your email.</span>' +
     '<span>Sign in to Hustle Kit with ' + (email ? '<b>' + esc(email) + '</b>, ' : '') + 'the same email you paid with. We\'ll email you a sign-in link and code. If it says you\'re not subscribed yet, wait a minute and try again.</span></div>' +
     '<a class="pay" href="' + esc(url) + '"><span>Open Hustle Kit</span><span class="arrow" aria-hidden="true">→</span></a>' +
-    '<p class="note">To cancel, use the link in your receipt email, or message us and we\'ll cancel it for you.</p>';
+    '<p class="note">To cancel, use the link in your receipt email, or email us at hello@shopbajanbb.com and we\'ll cancel it for you.</p>';
 }
 
 /* Paid already but skipped the email step */
