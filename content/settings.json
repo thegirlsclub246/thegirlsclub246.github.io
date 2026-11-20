@@ -13,9 +13,11 @@
   "bpwccul_share": "04",
   "creator_discount_pct": 10,
   "creator_commission_pct": 5,
+  "creator_course_commission_pct": 20,
   "creator_app_commission_pct": 20,
   "creator_payout_min": 20,
   "creator_brand_bonus": 25,
   "creator_codes_payhip": false,
+  "creator_dashboard_url": "",
   "creator_codes": []
 }

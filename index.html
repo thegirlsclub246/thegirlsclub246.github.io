@@ -1588,6 +1588,8 @@ const PAY={
 };
 const PAYPAL_ME=String(S.paypal_link||"").trim();
 const DODO_LINK=String(S.dodo_link||"https://checkout.dodopayments.com/buy/pdt_0NsM938IZ3fGJuJhiPeAU?quantity=1").trim();
+/* Tags the Dodo payment with the order and creator code, so creator dashboards update by themselves */
+const dodoHref=o=>{try{const u=new URL(DODO_LINK);u.searchParams.set("metadata_order_id",o.id||"");if(o.code)u.searchParams.set("metadata_creator_code",o.code);return u.toString()}catch(e){return DODO_LINK}};
 const dodoOk=()=>!!DODO_LINK&&cart.length>0&&cart.every(c=>{if(c.course)return true;const p=products.find(x=>x.id===c.id);return !!p&&!!(p.digital||p.isCourse||p.cat==="vouchers"||p.cat==="guides")});
 const usd=v=>"USD $"+(v/2).toFixed(2);
 const PP_CLIENT="BAAZkLN-1YQuwpFsSdH3p0fEY99MCiUNLh5m1aoRJQGX5pHj3ZO1Ab1ENTLnLsQpp9sT-6m5dIF-yS810M";
@@ -1971,7 +1973,7 @@ function renderDrawer(){
       <h3>${o.paid?"Thank you, gorgeous!":"Order placed, gorgeous!"}</h3>
       <p class="muted">Your order number</p><div class="order-id">${o.id}</div>
       <div class="wa-sent">${o.paid?"<b>Paid and confirmed.</b> We've got your order.":(o.method==="cash"?"<b>Order saved.</b> Pay in cash when you collect.":"<b>Order saved.</b> Now complete your payment below.")}</div>
-      <div class="pay-step"><span class="step-n">1</span><div><b>${o.method==="cash"?"Pay BBD "+money(o.total)+" in cash when you collect":"Pay "+(o.method==="paypal"||o.method==="dodo"?usd(o.total)+" (BBD "+money(o.total)+")":"BBD "+money(o.total))+" by "+P.label}</b><p>${P.how}</p>${o.method==="dodo"&&!o.paid?`<a class="btn" href="${DODO_LINK}" target="_blank" rel="noopener" style="width:100%;margin:.4rem 0">Pay ${usd(o.total)} with Dodo</a>`:""}${o.method==="paypal"?(o.paid?`<div class="paid-ok"><b>Card payment received. Thank you!</b>${o.paidRef?`<br><small>Payment ref: ${esc(o.paidRef)}</small>`:""}</div>`:`<div id="cardPay" class="card-pay"><p class="muted">Loading secure card form…</p></div>`):""}
+      <div class="pay-step"><span class="step-n">1</span><div><b>${o.method==="cash"?"Pay BBD "+money(o.total)+" in cash when you collect":"Pay "+(o.method==="paypal"||o.method==="dodo"?usd(o.total)+" (BBD "+money(o.total)+")":"BBD "+money(o.total))+" by "+P.label}</b><p>${P.how}</p>${o.method==="dodo"&&!o.paid?`<a class="btn" href="${esc(dodoHref(o))}" target="_blank" rel="noopener" style="width:100%;margin:.4rem 0">Pay ${usd(o.total)} with Dodo</a>`:""}${o.method==="paypal"?(o.paid?`<div class="paid-ok"><b>Card payment received. Thank you!</b>${o.paidRef?`<br><small>Payment ref: ${esc(o.paidRef)}</small>`:""}</div>`:`<div id="cardPay" class="card-pay"><p class="muted">Loading secure card form…</p></div>`):""}
         ${P.rows.map(([k,v])=>`<div class="pay-row"><span>${k}</span><b class="${v.startsWith("[")?"todo":""}">${v}</b><button type="button" class="copy" data-copy="${v}">Copy</button></div>`).join("")}
         <div class="pay-row"><span>Reference</span><b>${o.id}</b><button type="button" class="copy" data-copy="${o.id}">Copy</button></div></div></div>
       <div class="pay-step"><span class="step-n">2</span><div><b>${s2.t}</b><p>${s2.p}</p>

@@ -31,6 +31,7 @@ function record(what,detail){
 document.addEventListener("click",function(e){
   var a=e.target&&e.target.closest&&e.target.closest("a[href]");if(!a)return;
   var h=a.href||"";
+  if(/checkout\.dodopayments\.com\/buy\//i.test(h)&&get()){try{var u=new URL(h);if(!u.searchParams.get("metadata_creator_code")){u.searchParams.set("metadata_creator_code",get());u.searchParams.set("metadata_creator_app",app());a.href=h=u.toString()}}catch(x){}}
   if(/paypal\.com\/(ncp\/payment|webapps\/billing)|checkout\.dodopayments\.com|paypal\.me\//i.test(h))record("went-to-pay",h);
 },true);
 window.sbCreator={code:get,record:record};
