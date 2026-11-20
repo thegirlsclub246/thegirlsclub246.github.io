@@ -8,3 +8,8 @@
 /shop-spark/sw.js
   Cache-Control: no-cache
   Service-Worker-Allowed: /shop-spark/
+/bb-full-893dbd1d/*
+  X-Robots-Tag: noindex, nofollow
+/bb-full-893dbd1d/sw.js
+  Cache-Control: no-cache
+  Service-Worker-Allowed: /bb-full-893dbd1d/
