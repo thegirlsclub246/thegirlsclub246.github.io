@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#3B2257">
-<meta name="description" content="Shop Spark: free 3-minute quizzes that show you which digital products suit you, or give current sellers a growth score and a 30-day plan.">
+<meta name="description" content="5K Mind: free 3-minute quizzes that show you which digital products to sell, or how to grow the sales you have, with step-by-step plans and Claude prompts from a real Barbados business.">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Shop Spark">
-<title>Shop Spark</title>
+<meta name="apple-mobile-web-app-title" content="5K Mind">
+<title>5K Mind</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&display=swap">
 <style>
@@ -93,6 +93,19 @@ ol.steps li{margin:0 0 10px}
 .task input{width:22px;height:22px;flex:none;margin-top:2px;accent-color:var(--good)}
 .task.done span{text-decoration:line-through;color:var(--muted)}
 .task em{display:block;font-style:normal;font-size:14px;color:var(--muted)}
+.taskwrap{border-top:1px solid var(--line)}
+.taskwrap .task{border-top:0}
+.pr{margin:0 0 12px 34px}
+.pr summary{cursor:pointer;font-size:14px;font-weight:700;color:var(--accent);list-style:none}
+.pr summary::-webkit-details-marker{display:none}
+.pr summary::before,.week .pr summary::before,.week[open] .pr summary::before{content:"✦ "}
+.prbox{background:var(--accent-soft);border-radius:12px;padding:12px 14px;margin-top:8px;font-size:15px;line-height:1.45;white-space:pre-wrap}
+.copy{appearance:none;border:2px solid var(--accent);background:transparent;color:var(--accent);border-radius:999px;padding:8px 16px;font:700 14px var(--body);cursor:pointer;margin-top:8px}
+.start{border:2px solid var(--spark)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.stats div{background:var(--spark-soft);border-radius:12px;padding:10px 8px;text-align:center}
+.stats b{display:block;font-family:var(--display);font-size:20px}
+.stats span{font-size:12px;color:var(--muted);line-height:1.3;display:block}
 .cta{background:var(--accent);color:var(--on-accent);border-radius:var(--r);padding:22px 20px;margin:8px 0 16px}
 .cta h3{color:inherit}
 .cta a{color:inherit;font-weight:700}
@@ -113,7 +126,7 @@ footer{margin-top:auto;padding-top:28px;font-size:13px;color:var(--muted);text-a
 <script>
 /* ===================== SETTINGS: edit these ===================== */
 const CONFIG = {
-  appName: "Shop Spark",
+  appName: "5K Mind",
   madeBy: "Made with care in Barbados",
   // MailerLite: open your form's "Embed" code and copy the two numbers from the URL that looks like
   // https://assets.mailerlite.com/jsonp/ACCOUNT_ID/forms/FORM_ID/subscribe
@@ -177,71 +190,104 @@ const QUESTIONS = [
 
 const NOUN = {ebook:"ebook", template:"template", course:"course", app:"app"};
 
-/* Step library. Each area has a "start" set (for low scores) and a "grow" set (for good scores). */
+/* Growth plan library. Every task comes from the 1K Month and 5K Month playbooks:
+   [title, why / how, Claude prompt]. {p} = what they sell. Fill the [square brackets] before pasting into Claude. */
 const LIB = {
   offer:{
     start:[
-      ["Write your one-sentence promise", "\"My {p} helps [who] to [result] without [pain].\" Put it at the top of your sales page."],
-      ["Talk to 3 real buyers or fans", "Ask: what made you want this? Copy their exact words into your notes."],
-      ["Check 5 similar products", "Write down their prices. Set yours in the middle, not the bottom."],
-      ["Add one quick win", "Make sure buyers get one result in the first 10 minutes of using your {p}."]
+      ["Set up your scoreboard", "Judge with numbers, not feelings. We once made fast changes with no numbers and couldn't tell what worked.",
+       "Make me a simple Google Sheets scoreboard for a small business. Columns: date, posts, views, link clicks, chats, email sign-ups, sales, money in, ad spend, money out. Add formulas for weekly totals, cost per chat, cost per sale and profit. Tell me exactly what to type in each cell."],
+      ["Do your money maths", "A number turns a wish into a plan. One low-price {p} needs lots of buyers; a mix of offers needs fewer.",
+       "My products and prices are: [list]. Last month I made [amount] from [number] sales. Show me 3 realistic ways to reach [1,000 or 5,000] [BBD or US$] in 30 days using a mix of my products, a bundle and repeat buyers. Show sales needed per week, and tell me which plan needs the fewest new buyers."],
+      ["Set one standard price", "We changed our course price 4 times in 6 weeks (BBD 30, then US$25, then US$10). Buyers got confused and waited for the next drop.",
+       "I sell [product] in Barbados. I've tried these prices: [list] with these results: [sales at each]. My costs are [costs]. Recommend one standard price (and a US$ version for overseas buyers), and a rule for when to run a discount. Explain simply."],
+      ["Show the price, never \"DM for price\"", "\"DM for price\" loses buyers. Say the price, what's inside and who it's for, everywhere.",
+       "Write a product description for my {p}, [name], at [price] for [buyer]. Include: a one-line hook about their problem, who it's for, what's inside as bullet points, what they'll be able to do after, and how they receive it. Then a 2-line short version. No promises of results or income. Simple words."]
     ],
     grow:[
-      ["Raise your price a little", "Try 10 to 20% more for the next 2 weeks and watch what happens."],
-      ["Make a bundle", "Pair your {p} with a small bonus and sell it as a higher-priced bundle."],
-      ["Collect 3 short reviews", "Put them right next to your buy button."],
-      ["Write a simple FAQ", "Answer the top 3 questions people ask before buying."]
+      ["Build your offer ladder", "Your easiest sale is to someone who already bought from you. Free taster, then starter, then main product, then bundle.",
+       "My main product is [product] at [price] for [buyer]. Design an offer ladder: a free taster, a starter under [low price], my main product, and a premium bundle around [high price]. For each, say what's included, the price, and how I'd offer the next step after someone buys."],
+      ["Pair digital with physical", "Our course buyers needed tools, so trays and kits sold alongside the courses. One buyer, two sales.",
+       "I sell [digital or physical product] to [buyer]. Suggest 5 [physical / digital] products that would help them use it, with the cost to make, a price, and how I'd offer it at checkout or in a follow-up. Flag which ones I can test before buying stock."],
+      ["Make gift and voucher offers", "Gift buyers are a second audience: people buying for someone else.",
+       "I sell [products]. Create 2 gift offers for [holiday]: a gift voucher and a gift set. For each, write a name, what's included, a price, a 2-line description, and 3 post hooks aimed at people buying for someone else."],
+      ["Freeze new builds for 3 weeks", "Our biggest drain was building new things before the last one had a chance. Sell what you have first.",
+       "Here's everything I'm working on: [list]. My goal is [amount] this month. Tell me which 1 or 2 things to focus on, which to park until next month, and which to drop. Be direct, I tend to start too many things."]
     ]
   },
   audience:{
     start:[
-      ["Start a free email list", "Use a free tool like MailerLite. Even 10 people is a real start."],
-      ["Make a free taster", "A checklist, sample page or mini lesson from your {p} that people get for their email."],
-      ["Pick 2 posting days", "Put them in your calendar. Two steady days beat seven random ones."],
-      ["Reply to every comment for a week", "Conversations turn followers into buyers."]
+      ["Start your email list", "Followers can disappear with an algorithm change. An email list is yours. A free plan (MailerLite) is enough.",
+       "Write the text for a short sign-up page for my free [taster]: a headline, 3 bullet points on what they get, the button text, and a privacy line saying I'll email tips and offers and they can unsubscribe any time."],
+      ["Make a free taster", "\"Watch a FREE lesson first\" was one of our best hooks. A taster builds trust and grows your list.",
+       "My paid product is my {p}, [name], for [buyer]. Suggest 5 free tasters I could make in under an hour that solve one small problem and make people want the full product. For the best one, write the full content and a closing line that points to [name] at [price]."],
+      ["Pick 5 content pillars", "Finding ideas every day is draining. Pillars turn it into a menu. Ours: tips, glow-up Friday, polls, money maths, gifts.",
+       "My business sells [products] to [buyer]. Suggest 5 content pillars with a name, what goes in each, 5 post ideas per pillar, and which day of the week to post each. Include one pillar for money maths (marked \"example only\") and one for polls."],
+      ["Make a low-energy content kit", "Editing video and finding ideas drained us most. A kit keeps you posting on tired days, in 15 minutes.",
+       "Give me 15 posts I can make in under 15 minutes each with no filming: voiceover over screen recordings, text-on-screen, type-only posters, polls and questions. For [product] and [buyer]. Include the text for each."]
     ],
     grow:[
-      ["Send one helpful email a week", "One tip, one story, one link. Short is fine."],
-      ["Ask your list a question", "\"What are you stuck on?\" Their answers are your next posts and products."],
-      ["Welcome new subscribers", "Set up a 3-email welcome that introduces you and your {p}."],
-      ["Batch your content", "Write a week of posts in one sitting, then schedule them."]
+      ["Tag your email list", "Someone who wanted a free lesson needs different emails from someone who bought.",
+       "I have these freebies and keywords: [list]. And these products: [list]. Suggest an email tag structure, what each group should get first, and when someone should move from one group to another."],
+      ["Write a 4-email sequence", "Most people don't buy on day one. Day 1 tool, day 3 story, day 5 tip, day 7 offer.",
+       "Write a 4-email sequence for people who got my free [taster] about [topic]. Day 1: deliver it and one quick win. Day 3: a short story about [buyer]'s struggle (no fake testimonials). Day 5: one practical tip. Day 7: offer [product] at [price] with what's inside and how to pay. Under 150 words each, 2 subject lines each."],
+      ["Build a brand character", "A story people follow keeps them coming back, and it works without showing your face.",
+       "Create a brand character for [business] that speaks to [buyer]. Give me: a first name, situation, the struggle that matches my buyer's, the turning point (finding [product]), their voice in 5 words, 5 story themes and 3 post ideas. They speak for the business as \"we\" and never claim personal results or fake reviews."],
+      ["Plan 30 days in one sitting", "One planning session beats 30 days of \"what do I post today?\".",
+       "Make a 30-day Instagram and Facebook content calendar for [business] selling [products]. Use these pillars: [list]. My launch is on [date]. 1 to 2 posts a day. For each: date, format, hook, what to show (faceless), a 1 to 3 sentence caption, and a comment keyword. Put it in a table."]
     ]
   },
   traffic:{
     start:[
-      ["Make one clean buy link", "One page with your promise, 3 bullet points, a photo and a buy button."],
-      ["Put the link everywhere", "Your bio, WhatsApp status, email signature and pinned post."],
-      ["Choose one main platform", "Go where your buyers already hang out, and focus there for 30 days."],
-      ["Post your promise 3 ways", "A tip, a before and after, and a behind-the-scenes look at your {p}."]
+      ["Fix your profile", "New visitors decide in seconds whether to follow, chat or leave. Your bio is your shop window.",
+       "Write 5 Instagram bio options for [business] that sells [product] to [buyer]. Each under 150 characters, with what we do, who it's for, and one call to action like \"Comment FREE\" or \"Tap the link\"."],
+      ["Write 20 hooks", "The first line decides whether anyone stays. Posts showing the money maths got our strongest reaction.",
+       "Write 20 scroll-stopping first lines for posts about [product] for [buyer]. Mix: a number or money maths, a relatable moment, a mistake, a myth, \"free lesson\", a before/after. Under 12 words each. No income promises."],
+      ["Make reels that hold attention", "Payoff in the first second, under 30 seconds. Our cluster reel reached 826 views on a page with under 500 followers.",
+       "Write 3 faceless reel scripts for [product] built for watch time and shares. Each: a first-second hook, 4 shots I can film with my phone, on-screen text per shot, and a line that makes people send it to a friend. Under 25 seconds."],
+      ["Set up comment-keyword DMs", "The comment pushes the post to more people, and the DM starts a conversation. Conversations sell.",
+       "Write the auto-DM someone gets when they comment [KEYWORD] on my post about [product]. Thank them, ask them to follow so the message doesn't land in requests, give the [free taster / product] link, and ask one question to start a chat."]
     ],
     grow:[
-      ["Find one partner", "Someone with the same buyers but a different product. Swap a shout-out."],
-      ["Turn your best post into a pin or short video", "Reuse what already worked on a second platform."],
-      ["Track where visitors come from", "Use a free link tracker so you know what's working."],
-      ["Test a tiny ad", "Spend a small amount on your best post for 5 days and compare the clicks."]
+      ["Before you spend a cent on ads", "Link your pixel, check your card works, and budget for about 17.5% VAT on Meta ads in Barbados. Write a stop rule: stop any ad that spends about US$20 with no chat or sale.",
+       "I'm about to run Meta ads for [product] from Barbados with a budget of [amount] a day. Give me a pre-launch checklist: pixel and tracking, payment method, tax on ad spend, what to set up on my page or WhatsApp, and a simple stop rule. Tell me what to check in Meta's own help pages."],
+      ["Pick the right ad goal, never Traffic", "Our Traffic ad spent US$40.60 for 0 orders. Our WhatsApp chat ad to Barbados women got 39 chats at about US$1 each. Ask Meta for chats or buyers, not clicks.",
+       "I sell [product] at [price]. Most buyers [chat on WhatsApp first and pay by bank transfer / pay by card on my site]. I get about [number] sales a week. Which Meta campaign goal and conversion location should I use, and what should I optimise for? Simple words, and tell me what to watch in the first 3 days."],
+      ["Target places you can sell to", "With Worldwide targeting, about 90% of one test's spend went to countries where we had no buyers.",
+       "I sell [product] to [buyer]. Suggest Meta ad targeting: countries, age range, and 5 interests to test. Split it into a Barbados audience and a diaspora audience (US, UK, Canada). Tell me how to check where my money is actually going after 2 days."],
+      ["Read your numbers on day 3", "Same budget, very different results: one chat ad cost about US$1.44 a chat, another about US$9.14. Pause losers, keep the winner for 3 more days.",
+       "Here are my ad results after 3 days: [per ad: spend, results, cost per result, clicks, countries]. Which ads should I pause, keep or test again? Are these buyer signals or cheap-click signals? Give me one change to make and when to check again."]
     ]
   },
   sales:{
     start:[
-      ["Ask for the sale", "End 1 in every 3 posts with a clear \"Get it here\" and your link."],
-      ["Make buying easy", "Fewer clicks, clear price, and a payment option your buyers already use."],
-      ["Run a 48-hour launch", "A small reason to act now: a bonus or a launch price that ends on a set day."],
-      ["Follow up with lookers", "Message people who asked about your {p} but didn't buy. Be kind, not pushy."]
+      ["Do a full test purchase", "Our ads once got 18 people to start checkout and 0 to pay. Buy your own {p} like a stranger, from post to delivery.",
+       "Here's my buying path: [each step from seeing a post to receiving the product]. Act as a busy buyer on a phone. Where would you give up? List the top 5 friction points and a fix for each."],
+      ["Set up WhatsApp Business", "Our real buyers chatted on WhatsApp first, then paid by bank transfer. Quick replies stop you typing the same answers at midnight.",
+       "Write 4 WhatsApp Business quick replies for [product] at [price]: /price, /pay (bank transfer and card link), /how (how they receive it), /thanks. Also a greeting and an away message. Friendly, short, Bajan-warm, no pressure."],
+      ["Offer local and overseas ways to pay", "Pick one way for local buyers (bank transfer worked best for us) and one for overseas buyers (a card link). Shop Bajan takes US$ and BBD.",
+       "I sell [product] from Barbados to [local / overseas / both] buyers. Compare bank transfer, PayPal and card links for me: who can pay, how I get the money into my local bank, fees to check, and risks. Recommend one local option and one overseas option, and what to double-check on each provider's own site."],
+      ["Follow up every chat", "We paid for 39 chats but didn't track how many bought. Reply within an hour and work out your close rate: sales divided by chats.",
+       "Someone messaged \"[their message]\" about [product]. Write my reply: friendly, ask one question to understand what they need, then explain how it helps, the price and how to pay. Under 60 words. Also a polite follow-up for if they don't reply in 24 hours."]
     ],
     grow:[
-      ["Send a thank-you email", "Include a tip for using your {p} and ask for a review."],
-      ["Offer a next step", "Show buyers one related product or upgrade after they buy."],
-      ["Win back old buyers", "Email past buyers a special offer on something new."],
-      ["Check your numbers", "Visitors, sales and the percentage who buy. Pick one to improve this month."]
+      ["Plan a deadline launch", "A real deadline gives people a reason to decide. Say \"limited\" only if it is.",
+       "Plan a 5-day launch for [offer] at [price], ending [date] because [real reason]. For each day: 1 post, 3 stories, 1 email subject and 1 WhatsApp status. Day 1 opens, days 2 to 4 answer worries and show the product, day 5 is the last call."],
+      ["Catch the people who almost bought", "A short reminder catches some of the people who started checkout. Ask what stopped them; often it's the payment method.",
+       "Write 2 short emails: 1) an abandoned checkout reminder for [product] sent 24 hours later, 2) a \"still waiting\" email a week later. Both should ask what stopped them, offer bank transfer or WhatsApp as another way to pay, and stay kind."],
+      ["Sell to people who already bought", "They already trust you. It's the cheapest sale you'll ever make.",
+       "Write an email and a WhatsApp message to people who bought [product 1], offering [product 2] at a customer-only price of [price] until [date]. Explain why it's the natural next step for them. Short and personal."],
+      ["Turn buyers into referrals", "A friend's tag beats any ad. Check in on progress first, then ask for a review and a referral.",
+       "Create a simple referral offer for [business]: what the customer gets, what the friend gets, how they claim it, and the WhatsApp message customers can forward. Keep it cheap for me and easy for them."]
     ]
   }
 };
 
 const BLOCK_TIPS = {
-  time:"Your plan uses tiny tasks of 15 to 30 minutes. Do one a day, and skip guilt on busy days.",
-  content:"Your audience's questions are your content. Answer one question per post and you'll never run out.",
-  convert:"Looking without buying usually means the promise isn't clear or buying feels hard. Your plan starts there.",
-  stuck:"Start with Week 1, Day 1 only. Don't read ahead. One small step builds momentum."
+  time:"Do one task a day, 30 to 60 minutes. Missed a day? Do it tomorrow, don't skip it. Make a low-energy content kit so tired days still count.",
+  content:"Use 5 content pillars so ideas become a menu. Posts showing the money maths got our strongest reaction. Always label them \"example only\".",
+  convert:"Looking without buying usually means buying feels hard. Show the price, offer bank transfer and a card link, and do a full test purchase. 18 people once started our checkout and none paid.",
+  stuck:"Freeze new builds. Pick 1 or 2 offers for this month, park every other idea in a list, and do Week 1, task 1 only."
 };
 
 /* ===================== PRODUCT FINDER (for people who haven't started selling) ===================== */
@@ -312,26 +358,54 @@ const FIND_QS = [
 ];
 
 const FIND_PLAN = [
-  ["Plan it", [
-    ["Pick one buyer and one problem", "Finish this: \"My {p} helps [who] to [result].\""],
-    ["Check 5 similar products", "Note their prices and what buyers say in reviews. Price yours in the middle."],
-    ["Outline your {p}", "Bullet points only. Keep it small enough to finish in 2 weeks."],
-    ["Start a free email list", "Make a free MailerLite account so you can tell people when it's ready."]]],
-  ["Make it", [
-    ["Make the first draft", "Work in 30-minute sessions. Done is better than perfect."],
-    ["Add one quick win", "Make sure buyers get one result in the first 10 minutes."],
-    ["Let 2 people try it free", "Ask them: what was confusing, and what did you love?"],
-    ["Fix the top issue", "Change the one thing both testers mentioned, then call it finished."]]],
-  ["Get ready to sell", [
-    ["Make one clean buy link", "One page with your promise, 3 bullet points, a photo and a buy button."],
-    ["Make a free taster", "A sample page or mini version people get for their email."],
-    ["Make 3 good photos or mockups", "Show your {p} in use, not just the cover."],
-    ["Write 3 posts about the problem", "Talk about the problem first. Mention your {p} at the end."]]],
-  ["Launch", [
-    ["Announce it with a launch price", "Give it a clear end date, like 3 days from now."],
-    ["Put the link everywhere", "Your bio, WhatsApp status, email signature and pinned post."],
-    ["Ask for the sale", "End 1 in every 3 posts with \"Get it here\" and your link."],
-    ["Thank your first buyers", "Ask each one for a short review you can share."]]]
+  ["Pick it and make it", "By the end of this week you have one finished {p} that one real person has tried.", [
+    ["Check people want it", "Ask before you build. Our rule: don't spend weeks building until about 10 people say \"yes, I'd buy that\".",
+     "My product idea is a {p} for [buyer]. Write me: 1) one Instagram story poll question with two answers, 2) a short, friendly WhatsApp message I can send to people I know asking if they'd buy it, without sounding pushy, 3) three questions to ask if they say yes, so I learn what they really want."],
+    ["Set your price and your 1K maths", "A number turns a wish into a plan. Example only: 1,000 / 50 = 20 sales = 5 a week.",
+     "I'm selling a {p} to [buyer] in Barbados. Similar products sell for [price 1], [price 2], [price 3]. Suggest one launch price and explain why. Then show me how many sales I need for 1,000 [BBD or US$] this month, how many per week, and one bundle idea that would raise the average order."],
+    ["Plan what goes inside", "Planning first stops you making something too big to finish.",
+     "I'm making a {p} for [buyer]. Write an outline with 5 to 8 sections, short enough to use in one sitting. Under each, list the key points in plain language."],
+    ["Make it: done beats perfect", "Your first version only has to help one person. Then give it a clear title and good photos, because buyers judge the cover first.",
+     "Here is my outline: [paste outline]. Write a first draft of section [number] only, for [buyer]. Use short sentences and simple words. Add one example that fits someone in Barbados. Mark any fact I should double-check with [CHECK]."],
+    ["Test it on one real person", "One honest tester catches the confusing parts before paying customers do. Their words can become your first review, with their permission.",
+     "Read this as if you were [buyer]. Point out anything confusing, missing or repeated, and suggest fixes. [paste your product]"]
+  ]],
+  ["Get paid and set up shop", "By the end of this week someone can find your {p}, ask about it, pay you and receive it, and you've tested every step.", [
+    ["Choose how you'll get paid", "Our real buyers chatted on WhatsApp, then paid by bank transfer. Set up one local way and one overseas way. Shop Bajan takes US$ and BBD.",
+     "I sell a {p} from Barbados to [local / overseas / both] buyers. Compare bank transfer, PayPal and card links for me: who can pay, how I get the money into my local bank, fees to check, and risks. Recommend one local and one overseas option, and what to double-check on each provider's own site."],
+    ["Set up WhatsApp Business", "WhatsApp chats produced our real buyers. Quick replies stop you typing the same answers at midnight.",
+     "Write 4 WhatsApp Business quick replies for my {p} at [price]: /price, /pay, /how (how they receive it), /thanks. Also a greeting and an away message. Friendly, short, Bajan-warm, no pressure."],
+    ["Write your description, with the price", "\"DM for price\" loses buyers. Show the price, what's inside and who it's for.",
+     "Write a product description for my {p}, [name], at [price] for [buyer]. Include: a one-line hook about their problem, who it's for, what's inside as bullet points, what they'll be able to do after, and how they receive it. Then a 2-line short version. No promises of results or income."],
+    ["Do a full test purchase", "Our ads once got 18 people to start checkout and 0 to pay. Buy your own {p} like a stranger, from post to delivery.",
+     "Here's my buying path: [each step from seeing a post to receiving the product]. Act as a busy buyer on a phone. Where would you give up? List the top 5 friction points and a fix for each."],
+    ["Make a free taster", "\"Watch a FREE lesson first\" was one of our best hooks. A taster builds trust and grows your email list.",
+     "My paid product is a {p} for [buyer]. Suggest 5 free tasters I could make in under an hour that solve one small problem and make people want the full product. For the best one, write the full content and a closing line that points to the {p} at [price]."]
+  ]],
+  ["Faceless content that sells", "By the end of this week you're posting daily without showing your face, and comments turn into chats.", [
+    ["Fix your profile", "New visitors decide in seconds. Line 1: who you help. Line 2: your product and free taster. Line 3: Barbados and where you deliver. One link.",
+     "Write 5 Instagram bio options for [business] that sells a {p} to [buyer]. Each under 150 characters, with what we do, who it's for, and one call to action like \"Comment FREE\" or \"Tap the link\"."],
+    ["Write 20 hooks", "The first line decides whether anyone stays. Mix money maths, relatable moments, mistakes and \"free lesson\".",
+     "Write 20 scroll-stopping first lines for posts about my {p} for [buyer]. Mix: a number or money maths, a relatable moment, a mistake, a myth, \"free lesson\", a before/after. Under 12 words each. No income promises."],
+    ["Make your first reel", "Reels reach people who don't follow you yet. Put the payoff first: 0 to 1 second hook, show it, then \"Comment [KEYWORD]\".",
+     "Write a 20-second faceless reel script for my {p}. Give me the on-screen hook (first second), 4 shots I can film with my phone without my face, the text for each shot, and a caption ending with \"Comment [KEYWORD]\"."],
+    ["Post your money maths", "Posts showing the maths got our strongest reaction. Always label them \"example only\" and never promise income.",
+     "My product is a {p} for [buyer]. Write a simple, honest maths example of what someone could earn or save using it, like \"[price] x [number] a day x [days] = [total]\". Keep it realistic, add \"example only\", and write 3 captions ending in \"Comment [KEYWORD]\"."],
+    ["Set up comment-keyword DMs", "The comment pushes your post to more people, and the DM starts a conversation. Conversations sell.",
+     "Write the auto-DM someone gets when they comment [KEYWORD] on my post about my {p}. Thank them, ask them to follow so the message doesn't land in requests, give the [free taster / product] link, and ask one question to start a chat."]
+  ]],
+  ["Emails, launch and sell", "By day 30 you've launched, followed up every chat, and know what to do next month.", [
+    ["Start your email list", "Followers can disappear with an algorithm change. An email list is yours. A free MailerLite plan is enough.",
+     "Write the text for a short sign-up page for my free [taster]: a headline, 3 bullet points on what they get, the button text, and a privacy line saying I'll email tips and offers and they can unsubscribe any time."],
+    ["Write 3 welcome emails", "New subscribers are most interested in the first few days. Email 1 delivers, email 2 helps, email 3 invites.",
+     "Write 3 welcome emails for people who downloaded my free [taster]. Email 1: deliver it and say who we are. Email 2: one quick tip and a short story about [the problem]. Email 3: invite them to buy my {p} at [price], with what's inside and how to pay. Under 150 words each, warm."],
+    ["Launch day", "The people who said yes in week 1 are your warmest buyers. Message them first.",
+     "Write a launch email and a WhatsApp broadcast for my {p} at [price], open from today. Say what it is, who it's for, what's inside, how to pay, and a launch bonus that ends [date]. Short and warm, no hype."],
+    ["Turn chats into sales", "Most of our sales came after a chat. Reply within an hour, ask one question, then give the price and how to pay.",
+     "Someone messaged \"[their message]\" about my {p}. Write my reply: friendly, ask one question to understand what they need, then explain how it helps, the price and how to pay. Under 60 words. Also a polite follow-up for if they don't reply in 24 hours."],
+    ["Ask for reviews, then review your month", "Real reviews sell better than anything you say. Then count your numbers and keep what worked.",
+     "Here are my numbers for 30 days: [views], [comments], [chats], [email sign-ups], [sales], [money in], [money out]. My best post was [post] and most buyers came from [source]. Tell me what worked, what to stop, and the 3 actions with the biggest impact next month. Be direct."]
+  ]]
 ];
 
 /* ---------- state ---------- */
@@ -349,10 +423,48 @@ const configured = (CONFIG.mailerliteAccountId && CONFIG.mailerliteFormId) || CO
 document.getElementById("testmode").hidden = !!configured;
 if (!configured) app.style.paddingBottom = "90px";
 
+const lc = s => /^(I[ ']|Canva|Google|CapCut)/.test(s) ? s : s.charAt(0).toLowerCase() + s.slice(1);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const LOGO = `<svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--accent)"/><path d="M17.5 5 9 18h6l-1.5 9L23 13.5h-6.2z" fill="var(--spark)"/></svg>`;
 const brand = `<div class="brand">${LOGO}${esc(CONFIG.appName)}</div>`;
 const foot = `<footer>${esc(CONFIG.madeBy)}</footer>`;
+const taskHTML = (k, done, t, d, pr) => `<div class="taskwrap"><label class="task${done[k]?" done":""}">
+          <input type="checkbox" data-k="${k}"${done[k]?" checked":""}><span>${esc(t)}<em>${esc(d)}</em></span></label>
+          ${pr ? `<details class="pr"><summary>Your Claude prompt</summary><div class="prbox">${esc(pr)}</div><button class="copy" type="button">Copy prompt</button></details>` : ""}</div>`;
+const startCard = (title, text, pr) => `<div class="card start">
+      <span class="tag">Start here</span>
+      <h3 style="margin-top:10px">${esc(title)}</h3>
+      <p class="muted small" style="margin:0 0 4px">${esc(text)}</p>
+      <div class="prbox">${esc(pr)}</div>
+      <button class="copy" type="button">Copy prompt</button>
+      <p class="small muted" style="margin:10px 0 0">Paste it into Claude (free at claude.ai or the Claude app). Every task in your plan has its own prompt too. Fill in anything in [square brackets] first.</p>
+    </div>`;
+const LESSONS = {
+  find:["Ask before you build: get about 10 people to say yes before you spend weeks making it.",
+        "Most real buyers chatted on WhatsApp first, then paid by bank transfer.",
+        "One card sale took about 1,500 page views. Cheap clicks are not buyers.",
+        "We lost money changing too much, too fast, with no numbers to judge it."],
+  grow:["WhatsApp chat ads aimed at local women brought our real buyers. When we switched them off by mistake, sales dropped.",
+        "Ads on the Traffic goal bought cheap clicks, not buyers: about 1,500 page views for 1 card sale.",
+        "Worldwide targeting sent about 90% of one test's budget to countries where nobody bought.",
+        "Change one thing at a time, for a fixed window, so you can tell what worked."]
+};
+const lessonsCard = m => `<div class="card">
+      <span class="tag">From our own numbers</span>
+      <h3 style="margin-top:10px">What a real Barbados business learned</h3>
+      <p class="muted small" style="margin:0">Everything in your plan comes from what we did ourselves, selling video courses and kits from Barbados, Oct 5 to Nov 3.</p>
+      <div class="stats"><div><b>121</b><span>sales in 30 days</span></div><div><b>$5,826</b><span>net in 30 days</span></div><div><b>~US$1</b><span>per WhatsApp chat on our best ad</span></div></div>
+      <ol class="steps">${LESSONS[m].map(l => `<li>${esc(l)}</li>`).join("")}</ol>
+      <p class="small muted" style="margin:6px 0 0">Results vary. This is what we learned, not a promise of income.</p>
+    </div>`;
+function wireCopy(){
+  app.querySelectorAll(".copy").forEach(b => b.onclick = async () => {
+    const box = b.previousElementSibling, txt = box.textContent;
+    try { await navigator.clipboard.writeText(txt); }
+    catch(e) { const r = document.createRange(); r.selectNodeContents(box); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); try { document.execCommand("copy"); } catch(_){} }
+    b.textContent = "Copied!"; setTimeout(() => b.textContent = "Copy prompt", 1800);
+  });
+}
 const sellCard = () => `<div class="card sell">
       <span class="tag">Where to sell it</span>
       <h3 style="margin-top:10px">${esc(CONFIG.sellTitle.replace(/^Where to sell it: /, ""))}</h3>
@@ -365,12 +477,12 @@ function show(html){ app.innerHTML = html; app.firstElementChild?.classList.add(
 function home(){
   const saved = store.get("result"), fsaved = store.get("fresult");
   show(`<div>${brand}
-    <h1>Sell digital products that work for you.</h1>
-    <p class="muted">Two free 3-minute quizzes. Pick the one that fits where you are today.</p>
+    <h1>Think like a seller. Grow like one.</h1>
+    <p class="muted">Two free 3-minute quizzes built on a real Barbados business's playbook. You get a clear plan, one task a day, and the exact Claude prompts we use. Pick the quiz that fits where you are today.</p>
     <div class="card path">
       <span class="tag">I haven't started yet</span>
       <h3 style="margin-top:10px">Find your best digital products</h3>
-      <p class="muted small">8 quick questions. Get your top 3 product matches, what to make first, and a 30-day plan to your first sale.</p>
+      <p class="muted small">8 quick questions. Get your top 3 product matches, what to make first, and a 30-day plan toward your first 1,000 in sales.</p>
       <button class="btn" id="goFind">Find my products</button>
       ${fsaved ? `<button class="btn ghost" id="againFind" style="margin-top:10px">See my last matches</button>` : ""}
     </div>
@@ -492,9 +604,11 @@ function build(name){
   const p = NOUN[type];
   const fill = s => s.replace(/\{p\}/g, p);
   // weeks: weakest area first; each week takes 4 tasks from that area (start set if < 70%, grow set otherwise)
-  const weeks = order.map(a => ({area:a, tasks:(pct[a] < 70 ? LIB[a].start : LIB[a].grow).map(([t,d]) => [fill(t), fill(d)])}));
+  const weeks = order.map(a => ({area:a, tasks:(pct[a] < 70 ? LIB[a].start : LIB[a].grow).map(([t,d,pr]) => [fill(t), fill(d), fill(pr)])}));
   const top3 = [weeks[0].tasks[0], weeks[0].tasks[1], weeks[1].tasks[0]];
-  return {name, total, pct, order, focus:order[0], strong:order[3], type, block, weeks, top3};
+  const ans = id => { const q = QUESTIONS.find(x => x.id === id); return lc(q.opts[answers[id] ?? 0].t); };
+  const startPrompt = `I sell ${ans("type")} from Barbados. I've been selling: ${ans("stage")}. Can I describe my buyer in one sentence: ${ans("who")}. How I feel about my price: ${ans("price")}. My email list: ${ans("list")}. I show up: ${ans("show")}. Most buyers find me through: ${ans("where")}. My buy link: ${ans("page")}. Sales in a normal month: ${ans("sales")}. After someone buys: ${ans("repeat")}. My biggest block: ${ans("block")}. My weakest area is ${AREAS[order[0]].name} and my strongest is ${AREAS[order[3]].name}. Act as my business coach. Tell me, in simple steps, the 3 actions with the biggest impact on my sales in the next 30 days, what to stop doing, and what number to track each week. Be direct, and don't promise income.`;
+  return {name, total, pct, order, focus:order[0], strong:order[3], type, block, weeks, top3, startPrompt};
 }
 
 function level(t){
@@ -524,6 +638,8 @@ function results(r){
         <div class="track"><div class="fill" style="width:${Math.max(r.pct[a],3)}%"></div></div></div>`).join("")}</div>
     </div>
 
+    ${startCard("Your coaching prompt", "We turned your answers into one prompt. Paste it into Claude and you'll get advice for your exact situation.", r.startPrompt || "")}
+
     <div class="card">
       <h3>Your top 3 next steps</h3>
       <ol class="steps">${r.top3.map(([t,d]) => `<li><strong>${esc(t)}.</strong> <span class="muted">${esc(d)}</span></li>`).join("")}</ol>
@@ -532,15 +648,16 @@ function results(r){
 
     <div class="card">
       <h3>Your 30-day plan</h3>
-      <p class="small muted">One area a week, weakest first. Tick tasks off as you go; they're saved on this phone.</p>
+      <p class="small muted">One area a week, weakest first. One task a day, 30 to 60 minutes. Ticks are saved on this phone.</p>
       ${r.weeks.map((w,wi) => `<details class="week"${wi===0?" open":""}>
         <summary>Week ${wi+1}: ${AREAS[w.area].name}</summary>
         <p class="small muted" style="margin:0 0 6px">${AREAS[w.area].blurb}.</p>
-        ${w.tasks.map(([t,d],ti) => { const k = wi+"-"+ti; return `<label class="task${done[k]?" done":""}">
-          <input type="checkbox" data-k="${k}"${done[k]?" checked":""}><span>${esc(t)}<em>${esc(d)}</em></span></label>`; }).join("")}
+        ${w.tasks.map(([t,d,pr],ti) => taskHTML(wi+"-"+ti, done, t, d, pr)).join("")}
       </details>`).join("")}
-      <p class="small muted" style="margin:14px 0 0">Days 29 and 30: look back. What worked? Do more of that, then retake the quiz to see your new score.</p>
+      <p class="small muted" style="margin:14px 0 0">Days 29 and 30: look back at your scoreboard. What worked? Do more of that, then retake the quiz to see your new score.</p>
     </div>
+
+    ${lessonsCard("grow")}
 
     ${sellCard()}
 
@@ -561,6 +678,7 @@ function results(r){
     const d = store.get("done") || {}; d[c.dataset.k] = c.checked; store.set("done", d);
     c.closest(".task").classList.toggle("done", c.checked);
   });
+  wireCopy();
   document.getElementById("print").onclick = () => { app.querySelectorAll("details").forEach(d => d.open = true); window.print(); };
   document.getElementById("share").onclick = async () => {
     const data = {title:CONFIG.appName, text:"I just got my free growth plan. Try the 3-minute quiz:", url:location.href.split("#")[0]};
@@ -582,7 +700,9 @@ function buildFind(name){
   const ranked = Object.keys(PRODUCTS).sort((a,b) => pts[b] - pts[a]);
   const best = Math.max(pts[ranked[0]], 1);
   const top = ranked.slice(0,3).map(k => ({k, fit:Math.max(40, Math.min(98, Math.round(pts[k] / best * 95))), why:why[k].slice(0,3)}));
-  return {name, top, skill:answers.skill_other || ""};
+  const t = id => { const q = FIND_QS.find(x => x.id === id), o = q.opts[answers[id] ?? 0]; return lc(o.other ? answers[id+"_other"] : o.t); };
+  const startPrompt = `I live in Barbados. I'm good at ${t("skill")}. People ask me about: ${t("asked")}. I have ${t("time")} a week. I'd love to help ${t("who")}. On camera: ${t("camera")}. Tools I'm comfortable with: ${t("tools")}. Followers: ${t("followers")}. What I want first: ${t("goal")}. Suggest 6 digital products I could sell this month. For each, tell me who buys it, what's included, a starter price in US$ and BBD, and what I'd need to make it in one week. Then tell me which one to start with and why. Keep it simple, I'm a beginner.`;
+  return {name, top, skill:answers.skill_other || "", startPrompt};
 }
 
 /* Product ideas made from the skill someone typed under "Something else". */
@@ -616,6 +736,8 @@ function findResults(r){
         <div class="track"><div class="fill" style="width:${t.fit}%"></div></div></div>`).join("")}</div>
     </div>
 
+    ${startCard("Your product prompt", "We turned your answers into one prompt. Paste it into Claude to get 6 product ideas made for you, and which one to start with.", r.startPrompt || "")}
+
     ${r.skill ? `<div class="card">
       <span class="tag">Made from your answer</span>
       <h3 style="margin-top:10px">3 product ideas from your skill: ${esc(r.skill)}</h3>
@@ -632,14 +754,16 @@ function findResults(r){
 
     <div class="card">
       <h3>Your 30 days to a first sale</h3>
-      <p class="small muted">Built around your best match: ${esc(main.name)}. One stage a week. Tick tasks off as you go; they're saved on this phone.</p>
-      ${FIND_PLAN.map(([title, tasks], wi) => `<details class="week"${wi===0?" open":""}>
+      <p class="small muted">Built around your best match: ${esc(main.name)}. One task a day, 20 to 60 minutes. Missed a day? Do it tomorrow, don't skip it. Ticks are saved on this phone.</p>
+      ${FIND_PLAN.map(([title, goal, tasks], wi) => `<details class="week"${wi===0?" open":""}>
         <summary>Week ${wi+1}: ${esc(title)}</summary>
-        ${tasks.map(([t,d],ti) => { const k = wi+"-"+ti; return `<label class="task${done[k]?" done":""}">
-          <input type="checkbox" data-k="${k}"${done[k]?" checked":""}><span>${esc(fill(t))}<em>${esc(fill(d))}</em></span></label>`; }).join("")}
+        <p class="small muted" style="margin:0 0 6px">${esc(fill(goal))}</p>
+        ${tasks.map(([t,d,pr],ti) => taskHTML(wi+"-"+ti, done, fill(t), fill(d), fill(pr))).join("")}
       </details>`).join("")}
-      <p class="small muted" style="margin:14px 0 0">Days 29 and 30: once you've made your first sales, take the growth quiz to see your score and what to work on next.</p>
+      <p class="small muted" style="margin:14px 0 0">Once you've made your first sales, take the growth quiz to see your score and what to work on next.</p>
     </div>
+
+    ${lessonsCard("find")}
 
     ${sellCard()}
 
@@ -661,6 +785,7 @@ function findResults(r){
     const d = store.get("fdone") || {}; d[c.dataset.k] = c.checked; store.set("fdone", d);
     c.closest(".task").classList.toggle("done", c.checked);
   });
+  wireCopy();
   document.getElementById("print").onclick = () => { app.querySelectorAll("details").forEach(d => d.open = true); window.print(); };
   document.getElementById("share").onclick = async () => {
     const data = {title:CONFIG.appName, text:"I just found out which digital products suit me. Try the free 3-minute quiz:", url:location.href.split("#")[0]};
