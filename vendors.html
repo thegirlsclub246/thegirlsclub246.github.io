@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Vendor Portal · Shop Bajan by The Girls Club</title>
+<title>Vendor Portal · Shop Bajan</title>
 <meta name="description" content="Sign in to manage your brand on Shop Bajan: add products and photos, see your sales and Sunday payouts.">
 <meta name="robots" content="noindex,follow">
 <link rel="canonical" href="https://shopbajanbb.com/vendors">
-<meta name="theme-color" content="#FFF4B0">
+<meta name="theme-color" content="#00267F">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&family=Quicksand:wght@500;600;700&display=swap">
 <style>
 :root{
-  --bg:#FFF6FA; --card:#FFFFFF; --ink:#4A143D; --muted:#7A4A6A; --pink:#FF4D94; --deep:#C4256B;
-  --lemon:#FFF4B0; --blush:#FFE6F0; --rose:#F06292; --line:#F3C6DA; --ok:#1E7A4C; --okbg:#E3F6EC; --warn:#8A5A00; --warnbg:#FFF1CC;
-  --display:"Pacifico","Brush Script MT",cursive; --body:"Quicksand","Nunito","Segoe UI",system-ui,sans-serif;
+  --bg:#FFF9EC; --card:#FFFFFF; --ink:#16213E; --muted:#4A5675; --pink:#00267F; --deep:#00267F; --gold:#FFC72C; --coral:#FF6F59;
+  --lemon:#FFF3C7; --blush:#EEF3FF; --rose:#00267F; --line:#DCE4F5; --ok:#1E7A4C; --okbg:#E3F6EC; --warn:#8A5A00; --warnbg:#FFF1CC;
+  --display:"Fraunces",Georgia,"Times New Roman",serif; --body:"Quicksand","Nunito","Segoe UI",system-ui,sans-serif;
   color-scheme:light;
 }
 *{box-sizing:border-box}
@@ -60,7 +60,7 @@ h2.sec{font-size:20px;font-weight:700;margin:26px 0 10px}
 .stat b{display:block;font-size:26px;line-height:1.2}
 .stat span{font-size:14px;color:var(--muted);font-weight:600}
 .stat.big{grid-column:1/-1;background:var(--ink);border-color:var(--ink);color:#fff}
-.stat.big span{color:#F7CDE0}
+.stat.big span{color:#DCE5FF}
 .stat.big b{font-size:34px}
 .note{border-radius:14px;padding:12px 14px;font-weight:600;margin-top:14px}
 .note.ok{background:var(--okbg);color:var(--ok)}
@@ -94,7 +94,7 @@ h2.sec{font-size:20px;font-weight:700;margin:26px 0 10px}
 .pick{display:grid;gap:10px;margin-top:10px}
 .pick label{display:flex;gap:12px;align-items:flex-start;background:#fff;border:2px solid var(--line);border-radius:16px;padding:14px;cursor:pointer}
 .pick input{width:22px;height:22px;margin-top:2px;accent-color:var(--pink);flex:0 0 auto}
-.pick label:has(input:checked){border-color:var(--pink);background:#FFF0F6}
+.pick label:has(input:checked){border-color:var(--pink);background:#F7F9FF}
 .pick b{display:block}
 .pick span{font-size:14px;color:var(--muted)}
 .chk{display:flex;gap:12px;align-items:flex-start;margin-top:14px;font-weight:600}
@@ -130,7 +130,7 @@ details summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;alig
 .photos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
 @media(min-width:600px){.photos{grid-template-columns:repeat(4,1fr)}}
 .photo{position:relative;aspect-ratio:1;border-radius:14px;background:var(--blush) center/cover no-repeat;border:2px solid var(--line)}
-.photo button{position:absolute;top:4px;right:4px;width:34px;height:34px;border-radius:50%;border:0;background:rgba(74,20,61,.85);color:#fff;font-size:18px;cursor:pointer}
+.photo button{position:absolute;top:4px;right:4px;width:34px;height:34px;border-radius:50%;border:0;background:rgba(0,20,71,.85);color:#fff;font-size:18px;cursor:pointer}
 .photo .first{position:absolute;left:4px;bottom:4px;background:#fff;border-radius:999px;font-size:11px;font-weight:700;padding:2px 8px}
 .addphoto{aspect-ratio:1;border-radius:14px;border:2px dashed var(--rose);background:#fff;display:grid;place-items:center;text-align:center;font-weight:700;font-size:14px;color:var(--deep);cursor:pointer;padding:6px}
 .addphoto input{position:absolute;width:1px;height:1px;opacity:0}
@@ -157,7 +157,7 @@ details summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;alig
 .empty{background:#fff;border:2px dashed var(--line);border-radius:16px;padding:20px;text-align:center;color:var(--muted);font-weight:600;margin-top:12px}
 
 /* sheet (add/edit) */
-.sheet{position:fixed;inset:0;z-index:20;background:rgba(74,20,61,.45);display:flex;align-items:flex-end;justify-content:center}
+.sheet{position:fixed;inset:0;z-index:20;background:rgba(0,20,71,.45);display:flex;align-items:flex-end;justify-content:center}
 .sheet .panel{background:var(--bg);width:100%;max-width:760px;max-height:94vh;overflow:auto;border-radius:24px 24px 0 0;padding:18px max(16px,env(safe-area-inset-left,0px)) 28px}
 @media(min-width:800px){.sheet{align-items:center}.sheet .panel{border-radius:24px}}
 .sheet .head{display:flex;justify-content:space-between;align-items:center;gap:10px}
@@ -175,6 +175,19 @@ details summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;alig
 .loading{text-align:center;padding:60px 0;color:var(--muted);font-weight:700}
 .vpick{margin-top:14px}
 footer{text-align:center;font-size:14px;color:var(--muted);padding:30px 16px}
+/* Shop Bajan theme */
+.top{background:#fff;border-bottom:2px solid var(--line)}
+h1,h2,h3,h1.page{font-family:var(--display);font-weight:800;color:var(--pink);letter-spacing:-.01em}
+.prod h3,h2.sec,legend{font-family:var(--body)}
+.btn{background:var(--gold);color:var(--pink);border:2.5px solid var(--pink);box-shadow:0 4px 0 var(--pink);font-weight:800}
+.btn.plum{background:var(--pink);color:#fff;border-color:var(--pink);box-shadow:0 4px 0 var(--gold)}
+.btn.ghost{background:#fff;color:var(--pink);border-color:var(--pink);box-shadow:none}
+.btn.sm{box-shadow:none}
+.tabs .count{background:var(--coral)}
+.card.pinkbox{border-color:var(--pink);box-shadow:5px 5px 0 var(--gold)}
+.stat.big{background:var(--pink);border-color:var(--pink)}
+.agree{background:#FFFDF5;border-color:var(--lemon)}
+.addphoto{border-color:#B9C6E6}
 </style>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,800&display=swap">
 </head>
@@ -185,7 +198,7 @@ footer{text-align:center;font-size:14px;color:var(--muted);padding:30px 16px}
 </div></header>
 <nav class="tabs" id="tabs" role="tablist" hidden></nav>
 <main class="wrap" id="app"><p class="loading">Loading your portal…</p></main>
-<footer>Shop Bajan by The Girls Club · St. Thomas, Barbados · <a href="brands.html">For brands</a> · <a href="policies.html">Policies</a> · <a href="https://wa.me/12468504460" target="_blank" rel="noopener">WhatsApp help</a></footer>
+<footer>Shop Bajan · St. Thomas, Barbados · <a href="brands.html">For brands</a> · <a href="policies.html">Policies</a> · <a href="https://wa.me/12468504460" target="_blank" rel="noopener">WhatsApp help</a></footer>
 <div id="toast" class="toast" role="status" hidden></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.79.0/dist/umd/supabase.js"></script>
@@ -452,7 +465,7 @@ function prodCard(p,admin,vend){
   var h='<div class="prod"><div class="ph" style="'+(ph?"background-image:url('"+esc(photoUrl(ph))+"')":"")+'">'+(ph?"":(p.digital?"💻":"🛍️"))+'</div><div>';
   if(admin&&vend)h+='<div class="small muted" style="font-weight:700">'+esc(vend.business)+'</div>';
   h+='<h3>'+esc(p.name)+'</h3><div class="meta">'+money2(p.price)+' · '+(p.digital?"Digital":(Number(p.stock)||0)+" in stock")+(p.category?" · "+esc(p.category):"")+'</div>'+chip(p.status);
-  if(p.note&&(p.status==="changes"||admin))h+='<div class="fromher">'+(admin?"Your note: ":"From The Girls Club: ")+esc(p.note)+'</div>';
+  if(p.note&&(p.status==="changes"||admin))h+='<div class="fromher">'+(admin?"Your note: ":"From Shop Bajan: ")+esc(p.note)+'</div>';
   h+='</div><div class="acts">';
   if(admin){
     h+='<button class="btn sm green" data-approve="'+p.id+'">'+(p.status==="live"?"Live ✓":"Approve")+'</button><button class="btn sm ghost" data-changes="'+p.id+'">Ask for changes</button><button class="btn sm ghost" data-view="'+p.id+'">View</button>';
@@ -490,7 +503,7 @@ function vBusiness(v){
   '<label class="f">About your brand<textarea name="bio" maxlength="600">'+esc(v.bio)+'</textarea></label>'+
   '<label class="f">How you get paid<select name="payout_method">'+["Bank transfer","FirstPay","BPWCCUL"].map(function(m){return'<option'+(m===v.payout_method?" selected":"")+'>'+m+'</option>'}).join("")+'</select></label>'+
   '<p class="err" id="berr" role="alert"></p><div class="btnrow"><button class="btn" type="submit" id="bbtn">Save changes</button></div></form>';
-  h+='<div class="card"><h2 style="font-size:19px">Your plan: '+esc(pl.name||v.plan)+'</h2><p class="muted" style="margin-top:6px">'+(pl.fee?"$"+pl.fee+" a month + ":"Free, ")+esc(feeText(v))+'. To change your plan, WhatsApp us.</p><div class="btnrow"><a class="btn sm ghost" href="https://wa.me/'+WA+'?text='+encodeURIComponent("Hi The Girls Club! I'd like to change my Shop Bajan plan for "+v.business+".")+'" target="_blank" rel="noopener">Change my plan</a></div></div>';
+  h+='<div class="card"><h2 style="font-size:19px">Your plan: '+esc(pl.name||v.plan)+'</h2><p class="muted" style="margin-top:6px">'+(pl.fee?"$"+pl.fee+" a month + ":"Free, ")+esc(feeText(v))+'. To change your plan, WhatsApp us.</p><div class="btnrow"><a class="btn sm ghost" href="https://wa.me/'+WA+'?text='+encodeURIComponent("Hi Shop Bajan! I'd like to change my plan for "+v.business+".")+'" target="_blank" rel="noopener">Change my plan</a></div></div>';
   h+=payBox(v,pl);
   var c=v.contract||{};
   h+='<div class="card"><h2 style="font-size:19px">Your agreement</h2><p class="muted" style="margin-top:6px">Signed by '+esc(c.name||"")+(c.signedAt?" on "+esc(fmtDate(c.signedAt)):"")+'.</p><details><summary>Read the agreement</summary><ol class="agree">'+A.clauses(c.plan||v.plan,c).map(function(x){return"<li><b>"+esc(x[0])+".</b> "+esc(x[1])+"</li>"}).join("")+'</ol></details></div>';
@@ -514,7 +527,7 @@ function wireVendor(){
 function setStatusVendor(id,st){
   if(S.viewAs)return toast("You're viewing as this vendor. Use the Overseer tabs to change things.");
   sb.from("products").update({status:st}).eq("id",id).select().single().then(function(r){if(r.error)return toast(friendly(r.error));
-    var i=S.products.findIndex(function(p){return p.id===id});S.products[i]=r.data;renderVendor();toast(st==="hidden"?"Hidden from the website":"Sent to The Girls Club to show again")});
+    var i=S.products.findIndex(function(p){return p.id===id});S.products[i]=r.data;renderVendor();toast(st==="hidden"?"Hidden from the website":"Sent to Shop Bajan to show again")});
 }
 
 /* ---------- photos ---------- */
@@ -535,7 +548,7 @@ function productSheet(p){
   var rate=rateOf(S.vendor);
   var d=document.createElement("div");d.className="sheet";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-label",isNew?"Add a product":"Edit product");
   d.innerHTML='<div class="panel"><div class="head"><h2>'+(isNew?"Add a product":"Edit product")+'</h2><button class="x" type="button" aria-label="Close">×</button></div>'+
-  (p.status==="changes"&&p.note?'<div class="fromher">From The Girls Club: '+esc(p.note)+'</div>':"")+
+  (p.status==="changes"&&p.note?'<div class="fromher">From Shop Bajan: '+esc(p.note)+'</div>':"")+
   '<form id="pf" novalidate>'+
   '<div class="f">Photos <span class="hint">Up to 5. The first one is the main picture. Bright, clear photos sell best.</span><div class="photos" id="phs"></div></div>'+
   '<label class="f">Product name<input name="name" maxlength="90" required value="'+esc(p.name)+'" placeholder="e.g. Vanilla body butter 8oz"></label>'+
@@ -548,7 +561,7 @@ function productSheet(p){
   '<label class="f">Profit you want on each (BBD)<input id="ppProfit" type="number" inputmode="decimal" min="0" step="0.01" placeholder="e.g. 15"></label></div>'+
   '<div class="pp-out" id="ppOut"></div><p class="pp-guide" id="ppGuide"></p></div></details>'+
   '<label class="switch">This is a digital product (e-book, guide, template, class)<input type="checkbox" name="digital"'+(p.digital?" checked":"")+'></label>'+
-  '<label class="f" id="dlF">Download link <span class="hint">Only you and The Girls Club see this. We send it to the customer after they pay.</span><input name="delivery_link" type="url" inputmode="url" maxlength="500" value="'+esc(p.delivery_link)+'" placeholder="https://"></label>'+
+  '<label class="f" id="dlF">Download link <span class="hint">Only you and Shop Bajan see this. We send it to the customer after they pay.</span><input name="delivery_link" type="url" inputmode="url" maxlength="500" value="'+esc(p.delivery_link)+'" placeholder="https://"></label>'+
   '<label class="f">Category<select name="category">'+CATS.map(function(c){return'<option'+(c===p.category?" selected":"")+'>'+esc(c)+'</option>'}).join("")+'</select></label>'+
   '<label class="f">Options <span class="hint">optional · sizes, colours or scents, separated by commas</span><input name="variants" maxlength="300" value="'+esc((p.variants||[]).join(", "))+'" placeholder="e.g. Vanilla, Coconut, Shea"></label>'+
   '<label class="f">Description<textarea name="description" maxlength="1200" placeholder="What it is, size, how to use, ingredients">'+esc(p.description)+'</textarea></label>'+
@@ -655,7 +668,7 @@ function aApprove(){
   if(pp.some(function(p){var v=vById(p.vendor_id);return v&&v.status!=="approved"}))h+='<p class="small muted" style="margin-top:12px">Products from shops that aren\'t approved yet stay off the website until you approve the shop too.</p>';
   return h;
 }
-function aVendors(){return'<h1 class="page">Vendors</h1><p class="lead">'+S.all.vendors.length+' brand'+(S.all.vendors.length===1?"":"s")+' signed up.</p>'+(S.all.vendors.length?S.all.vendors.map(vendorCard).join(""):'<div class="empty">No vendors yet. Share <b>thegirlsclub246.com/vendors</b> or the For Brands page.</div>')}
+function aVendors(){return'<h1 class="page">Vendors</h1><p class="lead">'+S.all.vendors.length+' brand'+(S.all.vendors.length===1?"":"s")+' signed up.</p>'+(S.all.vendors.length?S.all.vendors.map(vendorCard).join(""):'<div class="empty">No vendors yet. Share <b>shopbajanbb.com/vendors</b> or the For Brands page.</div>')}
 function aProducts(){
   var h='<h1 class="page">All products</h1><label class="f vpick">Show<select id="pfilt"><option value="">All</option><option value="live">Live</option><option value="pending">Waiting</option><option value="changes">Changes asked</option><option value="hidden">Hidden</option></select></label>';
   var list=S.all.products.filter(function(p){return!S.pfilt||p.status===S.pfilt});
