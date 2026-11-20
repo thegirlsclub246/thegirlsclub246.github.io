@@ -51,6 +51,11 @@ p{margin:0 0 12px}
 .shots{display:flex;gap:12px;overflow-x:auto;padding:4px 2px 14px;scroll-snap-type:x mandatory}
 .shots img{height:420px;width:auto;border-radius:18px;border:2.5px solid var(--blue);scroll-snap-align:start;flex:none;background:#fff}
 .wide{width:100%;height:auto;border-radius:18px;border:2.5px solid var(--blue);box-shadow:5px 5px 0 var(--gold);background:#fff;display:block}
+.shot{position:relative;overflow:hidden}
+.shot img{display:block;width:100%;height:auto}
+/* Bree loops in the phone preview of editor.png (box at 76,77 to 456,753 on a 1200x900 image) */
+.shot-reel{position:absolute;left:6.333%;top:8.556%;width:31.667%;height:75.111%;object-fit:cover;border-radius:5.8%/3.25%;background:#e9e2d4}
+.shot-over{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .plans{display:grid;gap:12px;margin:0;padding:0;list-style:none}
 .plans li{background:#fff;border:2px solid var(--line);border-radius:18px;padding:14px 16px}
 .plans li.best{border-color:var(--blue);box-shadow:4px 4px 0 var(--gold)}
