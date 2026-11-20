@@ -1,0 +1,2002 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Hustle Cut</title>
+<meta name="description" content="Free video editor in your browser. Upload a talking video. Hustle Cut cuts the pauses and the ummm, adds captions, zooms, effects and music, and gives you an MP4 ready for Reels, TikTok and Shorts.">
+<meta name="theme-color" content="#00267F">
+<link rel="icon" href="data:image/svg+xml,%3Csvg viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='64' height='64' rx='16' fill='%23FF6F59'/%3E%3Crect x='20' y='10' width='24' height='44' rx='6' fill='%23fff'/%3E%3Cpath d='M29 25v14l11-7z' fill='%23FF6F59'/%3E%3Cpath d='M10 46 54 18' stroke='%23FFC72C' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&family=Quicksand:wght@500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600;800&family=Bebas+Neue&family=Permanent+Marker&display=swap">
+<style>
+/* ============================================================
+   COLOURS: the Shop Bajan palette is at the end of this style block. Change it there.
+   ============================================================ */
+:root{
+  --bg:#f5f7f4; --surface:#ffffff; --ink:#13231f; --muted:#5a6a65; --line:#dbe3de;
+  --sea:#0e6e62; --sea-ink:#ffffff; --sea-soft:#e2f1ed; --sun:#f4b63f; --sun-ink:#3a2900; --coral:#e2725b;
+  --cut:#e2725b; --cut-soft:#fbe5df; --navy:#1b3a6b;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"Inter",ui-sans-serif,system-ui,-apple-system,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0c1513; --surface:#14201d; --ink:#e6eeea; --muted:#9aaba5; --line:#23332f;
+  --sea:#5cc6b3; --sea-ink:#06201b; --sea-soft:#14302a; --sun:#f4c25a; --sun-ink:#2a1e00; --coral:#f08c76;
+  --cut:#f08c76; --cut-soft:#3a201a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c1513; --surface:#14201d; --ink:#e6eeea; --muted:#9aaba5; --line:#23332f;
+  --sea:#5cc6b3; --sea-ink:#06201b; --sea-soft:#14302a; --sun:#f4c25a; --sun-ink:#2a1e00; --coral:#f08c76;
+  --cut:#f08c76; --cut-soft:#3a201a; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.5;-webkit-text-size-adjust:100%;overflow-x:hidden}
+h1,h2,h3{font-family:var(--display);margin:0;line-height:1.1;text-wrap:balance}
+p{margin:0}
+a{color:var(--sea)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.wrap{max-width:1080px;margin:0 auto;padding:16px max(16px,env(safe-area-inset-left)) 64px max(16px,env(safe-area-inset-right))}
+
+/* in-app browser banner */
+.iab{background:var(--sun);color:var(--sun-ink);padding:12px max(16px,env(safe-area-inset-left));display:grid;gap:8px;font-size:14.5px}
+.iab b{font-weight:800}
+.iab .row{gap:8px}
+.iab .btn{background:var(--sun-ink);color:var(--sun);min-height:40px;padding:8px 14px;font-size:14px}
+.iab .btn.ghost{background:transparent;color:var(--sun-ink);border:1.5px solid var(--sun-ink)}
+
+/* header */
+.top{display:flex;align-items:center;gap:12px;justify-content:space-between;padding-bottom:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.brand svg{width:40px;height:40px;flex:none}
+.brand b{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.01em;display:block;line-height:1}
+.brand small{color:var(--muted);font-size:12.5px}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:99px;padding:7px 14px;font-weight:600;font-size:14px;border:1px solid var(--line);background:var(--surface);text-decoration:none;color:inherit}
+.pill.ok{background:var(--sea-soft);border-color:transparent;color:var(--sea)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:12px 18px;font-weight:600;background:var(--sea);color:var(--sea-ink);min-height:46px;text-decoration:none;text-align:center}
+.btn:hover{filter:brightness(1.07)}
+.btn:disabled{opacity:.5;cursor:default;filter:none}
+.btn.sun{background:var(--sun);color:var(--sun-ink)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.small{min-height:36px;padding:7px 12px;font-size:14px;border-radius:10px}
+.btn.wide{width:100%}
+
+/* upload screen */
+.hero{display:grid;gap:22px;padding:24px 0 8px;max-width:680px}
+.hero h1{font-size:clamp(34px,6vw,54px);font-weight:800;letter-spacing:-.025em}
+.hero p.lead{color:var(--muted);font-size:18px;max-width:52ch}
+.drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;border:2px dashed var(--line);border-radius:20px;background:var(--surface);padding:40px 20px;cursor:pointer;transition:border-color .15s,background .15s}
+.drop:hover,.drop.over{border-color:var(--sea);background:var(--sea-soft)}
+.drop b{font-family:var(--display);font-size:22px}
+.drop span{color:var(--muted);font-size:14px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:4px}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px}
+.step i{font-style:normal;display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--sun);color:var(--sun-ink);font-weight:700;font-size:13px;margin-bottom:6px}
+.step p{font-size:14px;color:var(--muted)}
+.step strong{display:block;color:var(--ink);font-size:15px}
+
+/* editor */
+.editor{display:none;grid-template-columns:minmax(260px,380px) 1fr;gap:24px;align-items:start}
+.editor.on{display:grid}
+@media (max-width:760px){.editor.on{grid-template-columns:minmax(0,1fr)}}
+.stage{position:sticky;top:12px;display:flex;flex-direction:column;gap:10px;min-width:0}
+@media (max-width:760px){.stage{position:static}}
+.screen{position:relative;width:100%;max-width:380px;margin:0 auto;aspect-ratio:9/16;border-radius:22px;overflow:hidden;background:#000;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+@media (max-width:760px){.screen{max-width:min(320px,100%)}.screen.wide{max-width:100%}}
+.screen canvas{width:100%;height:100%;display:block}
+.busy{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:rgba(8,20,17,.72);color:#fff;text-align:center;padding:20px;font-weight:600}
+.busy.on{display:flex}
+.spin{width:34px;height:34px;border-radius:50%;border:4px solid rgba(255,255,255,.25);border-top-color:#f4b63f;animation:sp 0.9s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.controls{display:flex;align-items:center;gap:10px;max-width:380px;width:100%;margin:0 auto}
+.play{width:46px;height:46px;border-radius:50%;border:0;background:var(--sea);color:var(--sea-ink);display:grid;place-items:center;flex:none}
+.play svg{width:20px;height:20px}
+.time{font-variant-numeric:tabular-nums;font-size:13.5px;color:var(--muted);min-width:86px;text-align:right}
+.track{position:relative;flex:1;height:30px;border-radius:8px;background:var(--sea-soft);cursor:pointer;overflow:hidden;touch-action:none}
+.track .c{position:absolute;top:0;bottom:0;background:repeating-linear-gradient(135deg,var(--cut) 0 4px,transparent 4px 8px);opacity:.55}
+.track .c.f{background:repeating-linear-gradient(135deg,var(--sun) 0 4px,transparent 4px 8px);opacity:.8}
+.track .cb{position:absolute;top:4px;bottom:4px;width:2px;margin-left:-1px;background:var(--sea);opacity:.7;border-radius:1px}
+.track .ph{position:absolute;top:0;bottom:0;width:3px;margin-left:-1px;background:var(--ink);border-radius:2px}
+.stats{max-width:380px;margin:0 auto;width:100%;font-size:13.5px;color:var(--muted);text-align:center}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;min-width:0}
+.tabs{display:flex;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:1;min-width:max-content;border:0;background:none;padding:14px clamp(8px,2.5vw,14px);font-size:clamp(14px,3.8vw,15.5px);font-weight:600;color:var(--muted);border-bottom:3px solid transparent}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--sun)}
+@media (max-width:520px){.tabs{display:grid;grid-template-columns:repeat(3,1fr)}.tabs button{min-width:0;padding:12px 6px}}
+.pane{display:none;padding:18px;flex-direction:column;gap:18px}
+.pane.on{display:flex}
+.pane h3{font-size:18px}
+.hint{color:var(--muted);font-size:13.5px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.field{display:grid;gap:6px}
+.field label{font-weight:600;font-size:14px;display:flex;justify-content:space-between;gap:8px}
+.field label output{font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--sea)}
+input[type=checkbox],input[type=radio]{accent-color:var(--sea);width:18px;height:18px;flex:none}
+.toggle{display:flex;align-items:center;gap:10px;font-weight:600}
+.list{display:flex;flex-direction:column;gap:4px;max-height:260px;overflow:auto;border:1px solid var(--line);border-radius:12px;padding:6px}
+.list .it{display:flex;align-items:center;gap:10px;padding:6px 8px;border-radius:8px;font-size:14px;font-variant-numeric:tabular-nums}
+.list .it:hover{background:var(--sea-soft)}
+.list .it button{margin-left:auto;border:0;background:none;color:var(--sea);font-weight:600;font-size:13px}
+.list .it .tag{font-size:12px;font-weight:600;border-radius:6px;padding:1px 6px;background:var(--cut-soft);color:var(--cut);white-space:nowrap}
+.clips .it{gap:8px}
+.clips .cname{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1}
+.clips .cbtns{display:flex;gap:2px;margin-left:auto}
+.clips .cbtns button{margin:0;width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:12px}
+.clips .cbtns button:disabled{opacity:.35;cursor:default}
+.list .empty{color:var(--muted);font-size:14px;padding:8px}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 12px;font-weight:600;font-size:14px}
+.seg button[aria-pressed="true"]{border-color:var(--sea);background:var(--sea-soft);color:var(--sea)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips label{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:99px;padding:6px 12px;font-size:14px;font-weight:600;cursor:pointer;background:var(--surface)}
+.chips label:has(input:checked){border-color:var(--sea);background:var(--sea-soft);color:var(--sea)}
+.chips input{width:16px;height:16px}
+.styles{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
+.styles button{border:2px solid var(--line);border-radius:12px;background:#1d2b28;color:#fff;padding:14px 6px;font-family:var(--display);font-weight:800;font-size:15px;line-height:1.1;min-height:58px}
+.styles button[aria-pressed="true"]{border-color:var(--sun);box-shadow:0 0 0 2px var(--sun)}
+.styles em{font-style:normal}
+.tpls{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.tpls button{text-align:left;border:2px solid var(--line);border-radius:14px;background:var(--surface);padding:12px;display:grid;gap:4px}
+.tpls button b{font-family:var(--display);font-size:16px}
+.tpls button span{font-size:12.5px;color:var(--muted);line-height:1.35}
+.tpls button i{font-style:normal;font-size:22px;line-height:1}
+.tpls button[aria-pressed="true"]{border-color:var(--sea);background:var(--sea-soft)}
+.swatches{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.swatches button{width:30px;height:30px;border-radius:50%;border:2px solid var(--surface);box-shadow:0 0 0 1px var(--line)}
+.swatches button[aria-pressed="true"]{box-shadow:0 0 0 2px var(--ink)}
+.swatches input{width:36px;height:32px;border:0;background:none;padding:0}
+.words{display:flex;flex-wrap:wrap;gap:4px;max-height:300px;overflow:auto;border:1px solid var(--line);border-radius:12px;padding:10px}
+.words .w{border:0;background:var(--sea-soft);border-radius:6px;padding:3px 6px;font-size:14.5px}
+.words .w.cut{background:var(--cut-soft);color:var(--cut);text-decoration:line-through}
+.words .w.fill{background:#fff1cf;color:#7a5200;text-decoration:line-through}
+.words .w.now{outline:2px solid var(--sun)}
+.words input{width:auto;min-width:40px;font-size:14.5px;padding:2px 4px;border:1px solid var(--sea);border-radius:6px;background:var(--surface)}
+textarea{width:100%;min-height:110px;border:1px solid var(--line);border-radius:12px;padding:10px;background:var(--bg);resize:vertical}
+input[type=text]{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg);min-width:0;width:100%}
+select{border:1px solid var(--line);border-radius:10px;padding:9px 10px;background:var(--bg)}
+.note{background:var(--sea-soft);border-radius:12px;padding:12px 14px;font-size:14px}
+.note.warn{background:var(--cut-soft)}
+.bar{height:10px;border-radius:99px;background:var(--sea-soft);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--sea);transition:width .2s}
+details summary{cursor:pointer;font-weight:600;color:var(--sea)}
+.sub{border-top:1px solid var(--line);padding-top:16px;display:flex;flex-direction:column;gap:14px}
+.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:12px;font-weight:500;max-width:calc(100% - 32px);box-shadow:0 8px 24px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .2s;z-index:10}
+.toast.on{opacity:1}
+.foot{margin-top:40px;color:var(--muted);font-size:13px;text-align:center}
+.hidden{display:none!important}
+
+/* ===== Shop Bajan look (added Nov 2026): cream, Bajan blue #00267F, gold #FFC72C, coral #FF6F59;
+   Fraunces for headings, Quicksand for text. Light colours only, to match shopbajanbb.com. ===== */
+:root,:root:not([data-theme="light"]),:root[data-theme="dark"]{
+  --bg:#FFF9EC; --surface:#FFFFFF; --ink:#16213E; --muted:#4A5675; --line:#E3E8F4;
+  --sea:#00267F; --sea-ink:#FFFFFF; --sea-soft:#E6ECFA; --sun:#FFC72C; --sun-ink:#00267F; --coral:#FF6F59;
+  --cut:#FF6F59; --cut-soft:#FFE6E1; --navy:#00267F;
+  --display:"Fraunces",Georgia,serif;
+  --body:"Quicksand","Segoe UI",system-ui,sans-serif;
+  color-scheme:light}
+body{font-weight:500}
+</style>
+</head>
+<body>
+<div class="iab hidden" id="iab" role="region" aria-label="Open in your browser">
+  <div><b id="iabTitle">You're inside an app's browser.</b> <span id="iabText">Hustle Cut works best in Safari or Chrome. Saving your video may not work in here.</span></div>
+  <div class="row">
+    <a class="btn" id="iabOpen" href="#">Open in browser</a>
+    <button class="btn ghost" id="iabCopy">Copy link</button>
+    <button class="btn ghost" id="iabHide">Stay here</button>
+  </div>
+</div>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#" id="home">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#FF6F59"/><rect x="20" y="10" width="24" height="44" rx="6" fill="#fff"/><path d="M29 25v14l11-7z" fill="#FF6F59"/><path d="M10 46 54 18" stroke="#FFC72C" stroke-width="5" stroke-linecap="round"/></svg>
+      <span><b id="appName">Hustle Cut</b><small id="byline">by Shop Bajan</small></span>
+    </a>
+    <button class="pill" id="unlockBtn">Enter access code</button>
+  </header>
+
+  <!-- ===== Step 1: upload ===== -->
+  <section class="hero" id="upload">
+    <h1 id="headline">Film it. We'll cut it.</h1>
+    <p class="lead" id="lead">Upload a talking video. Hustle Cut cuts the pauses and the "ummm", adds captions, zooms, effects and music, and gives you an MP4 ready for Reels, TikTok and Shorts.</p>
+    <label class="drop" id="drop">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M6 10l6-6 6 6"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
+      <b>Pick your clips</b>
+      <span id="dropNote">One video or several clips, up to 5 minutes in total. Any phone video works (MP4, MOV, WebM). They stay on your device.</span>
+      <input type="file" id="file" accept="video/*,.mov,.mp4,.m4v,.webm,.mkv,.3gp" multiple hidden>
+    </label>
+    <div class="steps">
+      <div class="step"><i>1</i><strong>Upload</strong><p>One video or a few clips. We join them in order. Any shape works.</p></div>
+      <div class="step"><i>2</i><strong>We cut it</strong><p>Pauses and "ummm" removed, zooms, captions, effects and music in one tap.</p></div>
+      <div class="step"><i>3</i><strong>Tweak and post</strong><p>Pick a look, fix any word, then save an MP4 to your phone.</p></div>
+    </div>
+  </section>
+
+  <!-- ===== Step 2: editor ===== -->
+  <section class="editor" id="editor">
+    <div class="stage">
+      <div class="screen" id="screen">
+        <canvas id="cv" width="1080" height="1920"></canvas>
+        <div class="busy" id="busy"><div class="spin"></div><div id="busyText">Working…</div></div>
+      </div>
+      <div class="controls">
+        <button class="play" id="playBtn" aria-label="Play"><svg viewBox="0 0 24 24" fill="currentColor" id="playIcon"><path d="M7 4v16l13-8z"/></svg></button>
+        <div class="track" id="track"><div class="ph" id="ph"></div></div>
+        <div class="time" id="time">0:00 / 0:00</div>
+      </div>
+      <p class="stats" id="stats"></p>
+      <button class="btn ghost small" id="newBtn" style="align-self:center">Start a new video</button>
+    </div>
+
+    <div class="panel">
+      <div class="tabs" role="tablist">
+        <button role="tab" data-tab="look" aria-selected="true">Look</button>
+        <button role="tab" data-tab="cuts" aria-selected="false">Cuts</button>
+        <button role="tab" data-tab="caps" aria-selected="false">Captions</button>
+        <button role="tab" data-tab="fx" aria-selected="false">Effects</button>
+        <button role="tab" data-tab="sound" aria-selected="false">Sound</button>
+        <button role="tab" data-tab="export" aria-selected="false">Save</button>
+      </div>
+
+      <!-- Look: templates, shape, intro -->
+      <div class="pane on" data-pane="look">
+        <div>
+          <h3>Pick a look</h3>
+          <p class="hint">One tap sets the cuts, captions, effects and music. You can change anything after.</p>
+        </div>
+        <div class="tpls" id="tpls"></div>
+        <div class="sub">
+          <div>
+            <h3>Shape</h3>
+            <p class="hint">Pick where you're posting.</p>
+          </div>
+          <div class="seg" id="ratio">
+            <button data-r="9:16" aria-pressed="true">9:16 Reels, TikTok, Shorts</button>
+            <button data-r="4:5" aria-pressed="false">4:5 Feed post</button>
+            <button data-r="1:1" aria-pressed="false">1:1 Square</button>
+            <button data-r="16:9" aria-pressed="false">16:9 YouTube</button>
+          </div>
+          <div class="field">
+            <label>When the video doesn't fit</label>
+            <div class="seg" id="fit">
+              <button data-f="fill" aria-pressed="true">Fill the screen (crop)</button>
+              <button data-f="blur" aria-pressed="false">Show it all, blurred behind</button>
+            </div>
+          </div>
+        </div>
+        <div class="sub">
+          <div>
+            <h3>Intro</h3>
+            <p class="hint">The first second decides if people keep watching.</p>
+          </div>
+          <div class="seg" id="intro">
+            <button data-i="none" aria-pressed="false">None</button>
+            <button data-i="punch" aria-pressed="true">Punch in</button>
+            <button data-i="flash" aria-pressed="false">Flash</button>
+            <button data-i="glitch" aria-pressed="false">Glitch</button>
+            <button data-i="shake" aria-pressed="false">Shake</button>
+          </div>
+          <div class="field">
+            <label for="hookTxt">Hook title on top <output id="hookDurOut"></output></label>
+            <input type="text" id="hookTxt" maxlength="70" placeholder="e.g. 3 things I wish I knew before…">
+            <input type="range" id="hookDur" min="1.5" max="8" step="0.5" aria-label="How long the hook title shows">
+          </div>
+          <div class="field">
+            <label>Hook style</label>
+            <div class="seg" id="hookStyle">
+              <button data-h="sticker" aria-pressed="true">Sticker</button>
+              <button data-h="banner" aria-pressed="false">White banner</button>
+              <button data-h="big" aria-pressed="false">Big outline</button>
+              <button data-h="marker" aria-pressed="false">Marker</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cuts -->
+      <div class="pane" data-pane="cuts">
+        <div>
+          <h3>Your clips</h3>
+          <p class="hint" id="clipHint"></p>
+        </div>
+        <div class="list clips" id="clipList"></div>
+        <label class="btn ghost small" style="align-self:flex-start">+ Add more clips<input type="file" id="addFile" accept="video/*,.mov,.mp4,.m4v,.webm,.mkv,.3gp" multiple hidden></label>
+
+        <div class="sub">
+          <div>
+            <h3>Filler words</h3>
+            <p class="hint">Cuts "ummm", "uh", repeated words and any phrases you pick. Gold stripes on the bar are filler cuts.</p>
+          </div>
+          <label class="toggle"><input type="checkbox" id="fillOn" checked> Cut filler words</label>
+          <div class="chips" id="fillSet">
+            <label><input type="checkbox" data-k="um" checked> um / uh / er / hmm</label>
+            <label><input type="checkbox" data-k="gap" checked> ummm the reader didn't spell</label>
+            <label><input type="checkbox" data-k="repeat" checked> repeated words</label>
+            <label><input type="checkbox" data-k="youknow"> "you know"</label>
+            <label><input type="checkbox" data-k="imean"> "I mean"</label>
+            <label><input type="checkbox" data-k="like"> "like"</label>
+            <label><input type="checkbox" data-k="basically"> "basically"</label>
+            <label><input type="checkbox" data-k="actually"> "actually"</label>
+            <label><input type="checkbox" data-k="literally"> "literally"</label>
+            <label><input type="checkbox" data-k="so"> "so" to start a sentence</label>
+          </div>
+          <div class="field">
+            <label for="customFill">Your own words or phrases to cut</label>
+            <input type="text" id="customFill" placeholder="e.g. kinda, alright so, you see">
+            <p class="hint">Separate them with commas.</p>
+          </div>
+          <button class="btn sun" id="findFill">Find filler words</button>
+          <div class="bar hidden" id="fillBar"><i></i></div>
+          <p class="hint" id="fillHint">This listens to your video with the speech reader, the same one that writes captions. The first time it downloads about 80 MB, so use Wi-Fi. Your video is never uploaded.</p>
+          <div class="list hidden" id="fillList"></div>
+        </div>
+
+        <div class="sub">
+          <div>
+            <h3>Pauses</h3>
+            <p class="hint">Striped parts of the bar get skipped. Untick any cut to keep that bit.</p>
+          </div>
+          <label class="toggle"><input type="checkbox" id="silOn" checked> Cut the pauses</label>
+          <div class="field">
+            <label for="thr">What counts as quiet <output id="thrOut"></output></label>
+            <input type="range" id="thr" min="-60" max="-15" step="1">
+            <p class="hint">Slide right if background noise is stopping cuts.</p>
+          </div>
+          <div class="field">
+            <label for="minSil">Shortest pause to cut <output id="minSilOut"></output></label>
+            <input type="range" id="minSil" min="0.25" max="1.5" step="0.05">
+          </div>
+          <div class="field">
+            <label for="pad">Breathing room <output id="padOut"></output></label>
+            <input type="range" id="pad" min="0.03" max="0.35" step="0.01">
+          </div>
+          <div class="list" id="cutList"></div>
+        </div>
+
+        <div class="sub">
+          <div>
+            <h3>Quick montage</h3>
+            <p class="hint">For clips with no talking (your work, products, behind the scenes). Keeps the middle of each clip.</p>
+          </div>
+          <div class="field">
+            <label for="maxClip">Longest part of each clip <output id="maxClipOut"></output></label>
+            <input type="range" id="maxClip" min="0" max="8" step="0.5">
+          </div>
+        </div>
+      </div>
+
+      <!-- Captions -->
+      <div class="pane" data-pane="caps">
+        <div>
+          <h3>Captions</h3>
+          <p class="hint">Words pop up as you say them.</p>
+        </div>
+        <div id="capStart" class="field">
+          <button class="btn sun" id="aiBtn">Make captions for me</button>
+          <p class="hint" id="aiHint">The first time, this downloads a speech reader (about 80 MB) to your browser. Use Wi-Fi. Your video is never uploaded.</p>
+          <div class="bar hidden" id="aiBar"><i></i></div>
+          <details>
+            <summary>Or type your script instead</summary>
+            <div class="field" style="margin-top:10px">
+              <textarea id="script" placeholder="Paste what you said in the video…"></textarea>
+              <button class="btn ghost small" id="scriptBtn">Use this script</button>
+              <p class="hint">Timing is guessed from your pauses, so it may drift a little.</p>
+            </div>
+          </details>
+        </div>
+        <label class="toggle"><input type="checkbox" id="capOn" checked> Show captions</label>
+        <div class="field">
+          <label>Style</label>
+          <div class="styles" id="styles">
+            <button data-style="bold" aria-pressed="true">BIG <em style="color:#f4b63f">BOLD</em></button>
+            <button data-style="karaoke" aria-pressed="false"><em style="color:#f4b63f">Kara</em>oke</button>
+            <button data-style="single" aria-pressed="false" style="font-size:20px">ONE</button>
+            <button data-style="boxed" aria-pressed="false"><span style="background:#fff;color:#111;padding:2px 5px;border-radius:5px">Boxed</span></button>
+            <button data-style="pill" aria-pressed="false"><span style="background:rgba(8,22,19,.85);padding:3px 6px;border-radius:6px">On a <em style="background:#0e6e62;padding:1px 4px;border-radius:4px">pill</em></span></button>
+            <button data-style="neon" aria-pressed="false" style="text-shadow:0 0 8px #5cc6b3,0 0 2px #fff">Neon</button>
+            <button data-style="outline" aria-pressed="false" style="color:#ffe14a;-webkit-text-stroke:1px #000;font-family:'Bebas Neue',sans-serif;font-size:20px;font-weight:400">OUTLINE</button>
+            <button data-style="marker" aria-pressed="false" style="font-family:'Permanent Marker',cursive;font-weight:400">Marker</button>
+            <button data-style="clean" aria-pressed="false" style="font-family:var(--body);font-weight:600">Clean <em style="border-bottom:3px solid #e2725b">line</em></button>
+            <button data-style="minimal" aria-pressed="false" style="font-family:var(--body);font-weight:500;text-transform:lowercase">minimal</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>Animation</label>
+          <div class="seg" id="anim">
+            <button data-a="pop" aria-pressed="true">Pop</button>
+            <button data-a="bounce" aria-pressed="false">Bounce</button>
+            <button data-a="slide" aria-pressed="false">Slide up</button>
+            <button data-a="fade" aria-pressed="false">Fade</button>
+            <button data-a="type" aria-pressed="false">Word by word</button>
+            <button data-a="shake" aria-pressed="false">Shake</button>
+            <button data-a="none" aria-pressed="false">None</button>
+          </div>
+        </div>
+        <label class="toggle"><input type="checkbox" id="emojiOn"> Add emoji to key words</label>
+        <div class="field">
+          <label>Highlight colour</label>
+          <div class="swatches" id="swatches"></div>
+        </div>
+        <div class="field">
+          <label for="perGroup">Words on screen at once <output id="perGroupOut"></output></label>
+          <input type="range" id="perGroup" min="1" max="5" step="1">
+        </div>
+        <div class="field">
+          <label for="capSize">Caption size <output id="capSizeOut"></output></label>
+          <input type="range" id="capSize" min="0.6" max="1.5" step="0.05">
+        </div>
+        <div class="field">
+          <label for="capY">Caption height <output id="capYOut"></output></label>
+          <input type="range" id="capY" min="0.15" max="0.88" step="0.01">
+        </div>
+        <div class="field" id="wordsField">
+          <label>Your words</label>
+          <div class="seg" id="wordMode">
+            <button data-mode="cut" aria-pressed="true">Tap to cut a word</button>
+            <button data-mode="fix" aria-pressed="false">Tap to fix spelling</button>
+          </div>
+          <div class="words" id="words"><span class="hint">Make captions first, and your words show up here.</span></div>
+          <p class="hint">Gold words are fillers we cut. Tap one to keep it.</p>
+        </div>
+      </div>
+
+      <!-- Effects -->
+      <div class="pane" data-pane="fx">
+        <div>
+          <h3>Zooms</h3>
+          <p class="hint">Quick punch-ins keep people watching.</p>
+        </div>
+        <label class="toggle"><input type="checkbox" id="zoomOn" checked> Add zooms</label>
+        <div class="field">
+          <label>How often</label>
+          <div class="seg" id="density">
+            <button data-d="0" aria-pressed="false">Only at cuts</button>
+            <button data-d="1" aria-pressed="true">Sometimes</button>
+            <button data-d="2" aria-pressed="false">Often</button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="zoomAmt">Zoom strength <output id="zoomAmtOut"></output></label>
+          <input type="range" id="zoomAmt" min="0.05" max="0.35" step="0.01">
+        </div>
+        <div class="list" id="zoomList"></div>
+        <div class="sub">
+          <div>
+            <h3>Colour</h3>
+            <p class="hint">A filter over the whole video.</p>
+          </div>
+          <div class="seg" id="filter">
+            <button data-f="none" aria-pressed="true">Natural</button>
+            <button data-f="vivid" aria-pressed="false">Vivid</button>
+            <button data-f="warm" aria-pressed="false">Golden hour</button>
+            <button data-f="cool" aria-pressed="false">Cool</button>
+            <button data-f="film" aria-pressed="false">Film</button>
+            <button data-f="fade" aria-pressed="false">Faded</button>
+            <button data-f="bw" aria-pressed="false">Black &amp; white</button>
+            <button data-f="dreamy" aria-pressed="false">Dreamy</button>
+          </div>
+          <label class="toggle"><input type="checkbox" id="vigOn"> Dark edges (vignette)</label>
+          <label class="toggle"><input type="checkbox" id="grainOn"> Film grain</label>
+        </div>
+        <div class="sub">
+          <div>
+            <h3>At each cut</h3>
+            <p class="hint">A quick effect where the video jumps.</p>
+          </div>
+          <div class="seg" id="trans">
+            <button data-t="none" aria-pressed="true">Plain</button>
+            <button data-t="flash" aria-pressed="false">Flash</button>
+            <button data-t="shake" aria-pressed="false">Shake</button>
+            <button data-t="glitch" aria-pressed="false">Glitch</button>
+          </div>
+          <label class="toggle"><input type="checkbox" id="progOn"> Progress bar along the bottom</label>
+        </div>
+      </div>
+
+      <!-- Sound -->
+      <div class="pane" data-pane="sound">
+        <div>
+          <h3>Sound on zoom</h3>
+          <p class="hint">A small sound each time it zooms in.</p>
+        </div>
+        <div class="seg" id="sfx">
+          <button data-s="none" aria-pressed="true">None</button>
+          <button data-s="pop" aria-pressed="false">Pop</button>
+          <button data-s="click" aria-pressed="false">Click</button>
+          <button data-s="whoosh" aria-pressed="false">Whoosh</button>
+          <button data-s="ding" aria-pressed="false">Ding</button>
+          <button data-s="boom" aria-pressed="false">Boom</button>
+          <button data-s="snap" aria-pressed="false">Snap</button>
+        </div>
+        <div class="field">
+          <label for="sfxVol">Sound volume <output id="sfxVolOut"></output></label>
+          <input type="range" id="sfxVol" min="0.05" max="1" step="0.05">
+        </div>
+        <div class="field">
+          <label>Sound at the start</label>
+          <div class="seg" id="introSfx">
+            <button data-s="none" aria-pressed="true">None</button>
+            <button data-s="whoosh" aria-pressed="false">Whoosh</button>
+            <button data-s="boom" aria-pressed="false">Boom</button>
+            <button data-s="ding" aria-pressed="false">Ding</button>
+            <button data-s="riser" aria-pressed="false">Riser</button>
+          </div>
+        </div>
+        <div class="sub">
+          <div>
+            <h3>Background music</h3>
+            <p class="hint">Our beats are made here, free to use anywhere. It gets quieter while you talk.</p>
+          </div>
+          <div class="seg" id="music">
+            <button data-m="none" aria-pressed="true">None</button>
+            <button data-m="lofi" aria-pressed="false">Chill</button>
+            <button data-m="bouncy" aria-pressed="false">Bouncy</button>
+            <button data-m="island" aria-pressed="false">Island</button>
+            <button data-m="hype" aria-pressed="false">Hype</button>
+            <button data-m="own" aria-pressed="false">My own song…</button>
+          </div>
+          <input type="file" id="musicFile" accept="audio/*,.mp3,.m4a,.wav,.aac,.ogg" hidden>
+          <p class="hint hidden" id="ownNote">Only use music you have the rights to. Instagram and TikTok can mute videos with copyrighted songs.</p>
+          <div class="field">
+            <label for="musVol">Music volume <output id="musVolOut"></output></label>
+            <input type="range" id="musVol" min="0.05" max="1" step="0.05">
+          </div>
+          <label class="toggle"><input type="checkbox" id="duckOn" checked> Quieter while I talk</label>
+        </div>
+      </div>
+
+      <!-- Export -->
+      <div class="pane" data-pane="export">
+        <div>
+          <h3>Save your video</h3>
+          <p class="hint" id="expSummary"></p>
+        </div>
+        <div class="field">
+          <label>Quality</label>
+          <div class="seg" id="res">
+            <button data-q="1080" aria-pressed="true">HD 1080p</button>
+            <button data-q="720" aria-pressed="false">720p (faster, smaller)</button>
+          </div>
+        </div>
+        <div class="note warn" id="wmNote">Free videos have a small "<span class="wmText"></span>" mark. <a href="#" id="buyLink">Get an access code</a> for clean downloads, or <a href="#" id="codeLink">enter yours</a>.</div>
+        <div class="note" id="speedNote">Keep this page open and your screen on until it's done.</div>
+        <button class="btn sun wide" id="expBtn">Make my video</button>
+        <button class="btn ghost wide hidden" id="cancelBtn">Stop</button>
+        <div class="bar hidden" id="expBar"><i></i></div>
+        <p class="hint hidden" id="expMsg"></p>
+        <button class="btn wide hidden" id="shareBtn">Save video</button>
+        <a class="btn ghost wide hidden" id="dlLink" download>Download the file</a>
+        <p class="hint hidden" id="saveTip"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- unlock box -->
+  <section class="panel hidden" id="unlockBox" style="max-width:480px;margin:24px auto 0;padding:18px;display:grid;gap:12px">
+    <h3>Enter your access code</h3>
+    <p class="hint">Members get downloads with no watermark.</p>
+    <div class="row" style="flex-wrap:nowrap"><input type="text" id="codeIn" placeholder="Your code" autocomplete="off" autocapitalize="characters" style="flex:1"><button class="btn small" id="codeGo">Unlock</button></div>
+    <p class="hint">No code yet? <a href="#" id="buyLink2">Get one here</a>.</p>
+  </section>
+
+  <p class="foot"><span id="footName">Hustle Cut</span> is a Shop Bajan app. Made in Barbados.</p>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+/* ============================================================
+   SETTINGS: change these to rebrand or set your own codes.
+   ============================================================ */
+const CONFIG = {
+  appName: "Hustle Cut",
+  byline: "by Shop Bajan",
+  headline: "Film it. We'll cut it.",
+  watermark: "Made with Hustle Cut · Shop Bajan",
+  siteUrl: "https://shopbajanbb.com/hustle-cut/app/",
+  buyUrl: "../#access-code",          // where "Get an access code" goes
+  maxSeconds: 300,                   // longest total video allowed (5 minutes)
+  warnSeconds: 180,                  // above this, warn that phones may run short of memory
+  // Access codes are stored scrambled (SHA-256) so they can't be read from the page.
+  // To add a code, open this page with ?makecode=YOURCODE at the end of the link,
+  // copy the long text it shows, and paste it into this list. Never write the code itself here.
+  accessCodeHashes: [
+    "27a6be2eee378342b8bd4c81e5e57fab5275481244c6c472c971d228933b268b",
+  ],
+  captionColours: ["#f4b63f", "#5cc6b3", "#e2725b", "#ffffff", "#ff6fb5", "#7cc4ff", "#b6ff4a"],
+  speechModel: "onnx-community/whisper-base_timestamped",
+  // The speech library is tried from these in order, so one blocked CDN doesn't stop captions.
+  speechLibraries: [
+    "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.7.5",
+    "https://unpkg.com/@huggingface/transformers@3.7.5/dist/transformers.min.js",
+  ],
+  speechDownloadMB: 80,
+  language: "en",
+  // Video tools are stored on this site (no outside download needed).
+  mediaLib: "./vendor/mediabunny.min.mjs",
+  aacLib: "./vendor/mediabunny-aac-encoder.min.mjs",
+};
+
+/* ============================================================ */
+const HOP = 0.02, FPS = 30;
+let W = 720, H = 1280, U = W / 1080;         // preview size; export uses the chosen quality
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const cv = $("#cv"); let ctx = cv.getContext("2d");
+
+const S = {
+  duration: 0, db: null, pcm16: null, noAudio: false,
+  silOn: true, thr: -40, minSil: 0.5, pad: 0.12, silCuts: [],
+  fillOn: true, fill: { um: true, gap: true, repeat: true, youknow: false, imean: false, like: false, basically: false, actually: false, literally: false, so: false, custom: true }, customFill: "", gapCuts: [],
+  maxClip: 0,
+  words: [], groups: [], capOn: true, style: "bold", anim: "pop", emoji: false, accent: CONFIG.captionColours[0], perGroup: 3, capY: 0.7, capSize: 1,
+  zoomOn: true, density: 1, zoomAmt: 0.14, zooms: [], zoomOff: new Set(),
+  filter: "none", vig: false, grain: false, trans: "none", prog: false,
+  intro: "punch", hook: "", hookDur: 3, hookStyle: "sticker",
+  ratio: "9:16", fit: "fill", res: 1080,
+  sfx: "none", sfxVol: 0.5, introSfx: "none", music: "none", musVol: 0.35, duck: true,
+  ranges: [], segs: [], outDur: 0, cutOuts: [],
+  unlocked: false, exporting: false, cancel: false, jumping: false, wordMode: "cut", lastT: 0, template: null,
+};
+
+/* ---------- small helpers ---------- */
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const ease = p => 1 - Math.pow(1 - clamp(p, 0, 1), 3);
+const once = (el, ev) => new Promise(r => el.addEventListener(ev, r, { once: true }));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+function fmt(t, dec) { t = Math.max(0, t || 0); const m = Math.floor(t / 60), s = t - m * 60; return m + ":" + (dec ? s.toFixed(1).padStart(4, "0") : String(Math.floor(s)).padStart(2, "0")); }
+let toastTimer;
+function toast(msg, ms) { const el = $("#toast"); el.textContent = msg; el.classList.add("on"); clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove("on"), ms || 4200); }
+function busy(text) { $("#busy").classList.toggle("on", !!text); if (text) $("#busyText").textContent = text; }
+function store(k, v) { try { localStorage.setItem("hustlecut." + k, v); } catch (e) {} }
+function recall(k) { try { return localStorage.getItem("hustlecut." + k); } catch (e) { return null; } }
+async function sha256(txt) {
+  if (window.crypto && crypto.subtle) { const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(txt)); return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, "0")).join(""); }
+  return "";
+}
+function rnd(seed) { let x = Math.sin(seed * 12.9898 + 78.233) * 43758.5453; return x - Math.floor(x); }
+
+/* ---------- which browser are we in? ---------- */
+const UA = navigator.userAgent || "";
+const IS_IOS = /iPhone|iPad|iPod/i.test(UA) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+const IS_ANDROID = /Android/i.test(UA);
+function inAppName() {
+  if (/Instagram/i.test(UA)) return "Instagram";
+  if (/FBAN|FBAV|FB_IAB|FBIOS|FB4A|MessengerForiOS|\bMessenger\b/i.test(UA)) return "Facebook";
+  if (/musical_ly|Bytedance|BytedanceWebview|TikTok|\btrill\b|aweme/i.test(UA)) return "TikTok";
+  if (/Snapchat/i.test(UA)) return "Snapchat";
+  if (/Threads|Barcelona/i.test(UA)) return "Threads";
+  if (/LinkedInApp/i.test(UA)) return "LinkedIn";
+  if (/Pinterest/i.test(UA)) return "Pinterest";
+  if (/\bLine\//i.test(UA)) return "LINE";
+  if (/WhatsApp/i.test(UA)) return "WhatsApp";
+  if (/Twitter|TwitterAndroid/i.test(UA)) return "X";
+  if (IS_ANDROID && /; wv\)/.test(UA)) return "an app";
+  if (IS_IOS && !/Safari\//.test(UA) && /AppleWebKit/.test(UA) && !/CriOS|FxiOS|EdgiOS|OPiOS/.test(UA)) return "an app";
+  return "";
+}
+const IN_APP = inAppName();
+(function inAppBanner() {
+  if (!IN_APP || recall("iabHidden") === "1") return;
+  const url = location.href.split("#")[0];
+  const browser = IS_IOS ? "Safari" : "Chrome";
+  $("#iabTitle").textContent = `You're inside ${IN_APP}'s browser.`;
+  $("#iabText").textContent = IS_IOS
+    ? `Saving videos works best in Safari. Tap the ••• or share button at the top, then "Open in browser" (or "Open in Safari"). Or tap the button below.`
+    : `Saving videos works best in Chrome. Tap ⋮ at the top, then "Open in Chrome" (or "Open in browser"). Or tap the button below.`;
+  const open = $("#iabOpen");
+  open.textContent = `Open in ${browser}`;
+  if (IS_IOS) open.href = "x-safari-" + url;                     // iOS 17+ opens Safari from in-app browsers
+  else if (IS_ANDROID) open.href = `intent://${url.replace(/^https?:\/\//, "")}#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(url)};end`;
+  else open.classList.add("hidden");
+  open.addEventListener("click", () => setTimeout(() => toast(`If nothing opened, tap Copy link and paste it into ${browser}.`), 1500));
+  $("#iabCopy").onclick = async () => {
+    try { await navigator.clipboard.writeText(url); toast(`Link copied. Paste it into ${browser}.`); }
+    catch (e) { toast("Copy this link: " + url, 9000); }
+  };
+  $("#iabHide").onclick = () => { $("#iab").classList.add("hidden"); store("iabHidden", "1"); };
+  $("#iab").classList.remove("hidden");
+})();
+
+/* ---------- branding from CONFIG ---------- */
+document.title = CONFIG.appName;
+$("#appName").textContent = CONFIG.appName; $("#footName").textContent = CONFIG.appName;
+$("#byline").textContent = CONFIG.byline; $("#headline").textContent = CONFIG.headline;
+$("#lead").textContent = $("#lead").textContent.replace("Hustle Cut", CONFIG.appName);
+$$(".wmText").forEach(e => e.textContent = CONFIG.watermark);
+["#buyLink", "#buyLink2"].forEach(s => { $(s).href = CONFIG.buyUrl; $(s).target = "_blank"; $(s).rel = "noopener"; });
+const FONT_LOADS = ['800 80px "Bricolage Grotesque"', '600 40px "Inter"', '800 40px "Inter"', '500 40px "Inter"', '400 80px "Bebas Neue"', '400 80px "Permanent Marker"'];
+const fontsReady = Promise.race([Promise.all(FONT_LOADS.map(f => document.fonts && document.fonts.load(f))).catch(() => {}), sleep(4000)]);
+
+/* ---------- access code ---------- */
+function setUnlocked(v) {
+  S.unlocked = v; const b = $("#unlockBtn");
+  b.textContent = v ? "Member: no watermark" : "Enter access code"; b.classList.toggle("ok", v);
+  $("#wmNote").classList.toggle("hidden", v); draw();
+}
+(async () => {
+  const saved = recall("code");
+  if (saved && CONFIG.accessCodeHashes.includes(saved)) setUnlocked(true);
+  const mk = new URLSearchParams(location.search).get("makecode");
+  if (mk) {
+    const h = await sha256(mk.trim().toUpperCase());
+    const box = $("#unlockBox"); box.classList.remove("hidden");
+    box.innerHTML = `<h3>Code maker</h3><p class="hint">Paste this into accessCodeHashes in the settings at the top of the page's code. Don't write the code itself anywhere in the page.</p><input type="text" readonly value="${h}" onclick="this.select()">`;
+  }
+})();
+function showUnlock() { if (S.unlocked) return; $("#unlockBox").classList.remove("hidden"); $("#codeIn").focus(); $("#unlockBox").scrollIntoView({ behavior: "smooth", block: "center" }); }
+$("#unlockBtn").onclick = showUnlock;
+$("#codeLink").onclick = e => { e.preventDefault(); showUnlock(); };
+$("#codeGo").onclick = async () => {
+  const h = await sha256($("#codeIn").value.trim().toUpperCase());
+  if (h && CONFIG.accessCodeHashes.includes(h)) { store("code", h); setUnlocked(true); $("#unlockBox").classList.add("hidden"); toast("Unlocked. Your downloads have no watermark now."); }
+  else toast("That code didn't work. Check the spelling and try again.");
+};
+$("#codeIn").addEventListener("keydown", e => { if (e.key === "Enter") $("#codeGo").click(); });
+
+/* ---------- video tools (loaded from this site when first needed) ---------- */
+let MBp = null;
+function loadMB() { if (!MBp) MBp = import(CONFIG.mediaLib).catch(e => { console.warn("media tools failed to load", e); MBp = null; return null; }); return MBp; }
+let aacReady = null;
+async function ensureAac(MB) {
+  if (await MB.canEncodeAudio("aac").catch(() => false)) return true;
+  if (!aacReady) aacReady = import(CONFIG.aacLib).then(m => { m.registerAacEncoder(); return true; }).catch(e => { console.warn(e); aacReady = null; return false; });
+  return aacReady;
+}
+
+/* ---------- shape (aspect ratio) ---------- */
+const SHAPES = { "9:16": [9, 16], "4:5": [4, 5], "1:1": [1, 1], "16:9": [16, 9] };
+function dims(ratio, short) { const [a, b] = SHAPES[ratio]; return a <= b ? [short, Math.round(short * b / a / 2) * 2] : [Math.round(short * a / b / 2) * 2, short]; }
+function setCanvasSize(w, h) { W = w; H = h; U = Math.min(W, H) / 1080; if (cv.width !== W) cv.width = W; if (cv.height !== H) cv.height = H; ctx = cv.getContext("2d"); }
+function applyShape() {
+  const [w, h] = dims(S.ratio, 720); setCanvasSize(w, h);
+  const sc = $("#screen"); sc.style.aspectRatio = `${w}/${h}`; sc.classList.toggle("wide", w > h);
+  sc.style.maxWidth = w > h ? "100%" : w === h ? "380px" : "";
+  renderStats(); draw();
+}
+
+/* ---------- clips: one or more videos joined into one timeline ---------- */
+// Everything else in the editor works on one "timeline time" (t). Clip k covers
+// t from clips[k].off to clips[k].off + clips[k].dur.
+const clips = []; let cur = 0;
+const V = () => clips[cur] && clips[cur].el;
+function curT() { const c = clips[cur]; return c ? c.off + (c.el.currentTime || 0) : 0; }
+function clipAt(t) { for (let k = 0; k < clips.length; k++) if (t < clips[k].off + clips[k].dur - 0.001) return k; return clips.length - 1; }
+async function setT(t) {
+  t = clamp(t, 0, Math.max(0, S.duration - 0.01));
+  const k = clipAt(t);
+  if (k !== cur && clips[cur]) clips[cur].el.pause();
+  cur = k; const c = clips[k], local = clamp(t - c.off, 0, c.dur - 0.01);
+  if (Math.abs(c.el.currentTime - local) > 0.001) { const p = Promise.race([once(c.el, "seeked"), sleep(3000)]); c.el.currentTime = local; await p; }
+}
+const natural = (a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: "base" });
+const isVideo = f => /^video\//.test(f.type) || /\.(mp4|mov|m4v|webm|mkv|3gp|avi|hevc)$/i.test(f.name);
+
+const drop = $("#drop");
+$("#file").onchange = e => { const f = [...e.target.files]; e.target.value = ""; if (f.length) addClips(f, false); };
+$("#addFile").onchange = e => { const f = [...e.target.files]; e.target.value = ""; if (f.length) addClips(f, true); };
+["dragenter", "dragover"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add("over"); }));
+["dragleave", "drop"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove("over"); }));
+drop.addEventListener("drop", e => { const f = [...e.dataTransfer.files]; if (f.length) addClips(f, false); });
+$("#newBtn").onclick = () => { if (S.exporting) return; stopPlayback(); $("#editor").classList.remove("on"); $("#upload").classList.remove("hidden"); };
+$("#home").onclick = e => { e.preventDefault(); $("#newBtn").click(); };
+
+// Why a clip can't open, in plain words.
+async function whyCantOpen(file) {
+  const MB = await loadMB();
+  let codec = null;
+  if (MB) { try { const inp = new MB.Input({ source: new MB.BlobSource(file), formats: MB.ALL_FORMATS }); const vt = await inp.getPrimaryVideoTrack(); codec = vt ? vt.codec : "none"; } catch (e) { codec = "unknown"; } }
+  if (codec === "hevc") return `${file.name} was filmed in iPhone's "High Efficiency" format (HEVC), and this browser can't read it. Fixes: open this page in Safari on your iPhone, or in Chrome on a newer phone or computer. Or on iPhone go to Settings > Camera > Formats > Most Compatible and film again. Sending the video to yourself on WhatsApp also converts it.`;
+  if (codec === "none") return `${file.name} has no video in it. Pick a video file.`;
+  if (codec === "unknown") return `We couldn't read ${file.name}. It may be damaged or in an unusual format. Try exporting it again from your camera app as MP4.`;
+  return `This browser can't play ${file.name}${codec ? ` (${codec.toUpperCase()} video)` : ""}. Open this page in Chrome or Safari, or save the clip as MP4 and try again.`;
+}
+
+async function openClip(file) {
+  const el = document.createElement("video");
+  el.playsInline = true; el.setAttribute("playsinline", ""); el.setAttribute("webkit-playsinline", ""); el.preload = "auto"; el.crossOrigin = "anonymous";
+  const url = URL.createObjectURL(file); el.src = url; el.load();
+  try { await Promise.race([once(el, "loadedmetadata"), new Promise((_, rj) => { el.onerror = rj; }), sleep(20000).then(() => { throw new Error("timeout"); })]); }
+  catch (e) { URL.revokeObjectURL(url); return { error: await whyCantOpen(file) }; }
+  // the first frame has to decode too, or the preview stays black
+  if (!el.videoWidth) { try { await Promise.race([once(el, "loadeddata"), sleep(4000)]); } catch (e) {} }
+  if (!el.videoWidth) { URL.revokeObjectURL(url); return { error: await whyCantOpen(file) }; }
+  let dur = el.duration;
+  if (!isFinite(dur) || !dur) { // some WebM files don't say how long they are
+    const MB = await loadMB();
+    try { const inp = new MB.Input({ source: new MB.BlobSource(file), formats: MB.ALL_FORMATS }); dur = await inp.computeDuration(); } catch (e) { dur = 0; }
+    if (!dur) { el.currentTime = 1e9; await Promise.race([once(el, "seeked"), sleep(3000)]); dur = el.duration; el.currentTime = 0; }
+  }
+  if (!isFinite(dur) || !dur) { URL.revokeObjectURL(url); return { error: `We couldn't tell how long ${file.name} is. Try saving it as MP4.` }; }
+  el.addEventListener("ended", () => onClipEnded(el));
+  const c = { file, url, el, name: file.name, dur, vw: el.videoWidth, vh: el.videoHeight, off: 0, db: null, pcm: null, noAudio: false, src: null };
+  if (AC) connectClip(c);
+  return c;
+}
+function dropClip(c) { c.el.pause(); c.el.removeAttribute("src"); c.el.load(); URL.revokeObjectURL(c.url); if (c.input && c.input.dispose) try { c.input.dispose(); } catch (e) {} }
+
+async function addClips(files, append) {
+  if (S.exporting) return;
+  const vids = files.filter(isVideo).sort(natural);
+  if (!vids.length) { toast("That doesn't look like a video. Pick a video from your camera roll."); return; }
+  if (vids.length < files.length) toast("Some files weren't videos, so we skipped them.");
+  const big = vids.find(f => f.size > 1.5e9);
+  if (big) toast(`${big.name} is a very big file (${(big.size / 1e9).toFixed(1)} GB). If the page reloads, trim it shorter first.`, 7000);
+  if (append) $("#editor").classList.add("on"); else busyUpload(true);
+  busy("Opening your clips…");
+  const fresh = [], errors = [];
+  for (const f of vids) { const c = await openClip(f); if (c && !c.error) fresh.push(c); else errors.push(c.error); }
+  busy(null); busyUpload(false);
+  if (errors.length) toast(errors[0], 12000);
+  if (!fresh.length) return;
+  const keep = append ? clips.slice() : [];
+  const total = keep.concat(fresh).reduce((s, c) => s + c.dur, 0);
+  if (total > CONFIG.maxSeconds + 0.5) { fresh.forEach(dropClip); toast(`That's ${fmt(total)} of video. The limit is ${fmt(CONFIG.maxSeconds)} in total. Trim it in your camera app first.`, 7000); return; }
+  if (total > CONFIG.warnSeconds && !errors.length) toast(`That's ${fmt(total)} of video. Long videos use a lot of memory on phones, so if the page reloads, try under ${fmt(CONFIG.warnSeconds)}.`, 7000);
+  if (!append) { clips.forEach(dropClip); clips.length = 0; }
+  clips.push(...fresh);
+  $("#upload").classList.add("hidden"); $("#editor").classList.add("on");
+  await rebuildTimeline(!append);
+}
+function busyUpload(on) { const b = $("#drop b"); b.textContent = on ? "Opening…" : "Pick your clips"; }
+
+// Re-join the clips after adding, removing or reordering them.
+async function rebuildTimeline(fresh) {
+  stopPlayback();
+  const hadWords = S.words.length > 0;
+  let off = 0; clips.forEach(c => { c.off = off; off += c.dur; });
+  Object.assign(S, { duration: off, words: [], groups: [], silCuts: [], gapCuts: [], zoomOff: new Set(), noAudio: false });
+  if (fresh) S.thrSet = false;
+  resetSaved();
+  renderWords(); renderClips(); renderFillers(); $("#capStart").classList.remove("hidden"); $("#findFill").classList.remove("hidden");
+  if (hadWords) toast("Your clips changed, so make the captions again.");
+  busy("Listening for pauses…");
+  await fontsReady;
+  const failed = [];
+  for (const c of clips) if (!c.db && !c.noAudio) {
+    try { await analyseClip(c); }
+    catch (e) { c.noAudio = true; if (!e || e.message !== "noaudio") { console.warn(e); failed.push(c.name); } }
+  }
+  if (failed.length) toast(failed.length === clips.length ? "We couldn't read the sound in this video, so pauses can't be cut automatically." : `We couldn't read the sound in ${failed.join(", ")}, so its pauses won't be cut.`);
+  joinAudio();
+  S.noAudio = clips.every(c => c.noAudio);
+  cur = 0; await setT(0.05);
+  buildSilenceCuts(); recompute(true);
+  busy(null); draw();
+}
+
+// Read a clip's sound: loudness every 20 ms, plus a 16 kHz mono copy for the speech reader.
+// Streams the sound in pieces so long clips don't need the whole file in memory.
+async function analyseClip(c) {
+  const MB = await loadMB();
+  if (MB) {
+    try { return await analyseStream(MB, c); }
+    catch (e) { if (e && e.message === "noaudio") throw e; console.warn("stream read failed, trying the simple way", e); }
+  }
+  return analyseWhole(c);
+}
+async function clipInput(MB, c) {
+  if (!c.input) { c.input = new MB.Input({ source: new MB.BlobSource(c.file), formats: MB.ALL_FORMATS }); c.base = await c.input.getFirstTimestamp().catch(() => 0); if (!isFinite(c.base) || c.base < 0) c.base = 0; }
+  return c.input;
+}
+async function analyseStream(MB, c) {
+  const inp = await clipInput(MB, c);
+  const at = await inp.getPrimaryAudioTrack();
+  if (!at) throw new Error("noaudio");
+  if (!(await at.canDecode())) throw new Error("cannot decode audio");
+  const nF = Math.ceil(c.dur / HOP) + 1, nP = Math.ceil(c.dur * 16000) + 1;
+  const acc = new Float64Array(nF), cnt = new Uint32Array(nF), pacc = new Float32Array(nP), pcnt = new Uint8Array(nP);
+  const sink = new MB.AudioBufferSink(at);
+  for await (const wb of sink.buffers()) {
+    const b = wb.buffer, sr = b.sampleRate, ch = b.numberOfChannels, n = b.length;
+    const chans = []; for (let k = 0; k < ch; k++) chans.push(b.getChannelData(k));
+    const t0 = wb.timestamp - c.base;
+    for (let i = 0; i < n; i++) {
+      let v = 0; for (let k = 0; k < ch; k++) v += chans[k][i]; v /= ch;
+      const tt = t0 + i / sr; if (tt < 0) continue;
+      const f = Math.floor(tt / HOP); if (f >= nF) break;
+      acc[f] += v * v; cnt[f]++;
+      const p = Math.floor(tt * 16000); if (p < nP && pcnt[p] < 255) { pacc[p] += v; pcnt[p]++; }
+    }
+  }
+  const db = new Float32Array(nF);
+  for (let i = 0; i < nF; i++) db[i] = cnt[i] ? 10 * Math.log10(acc[i] / cnt[i] + 1e-10) : -100;
+  let last = 0; for (let i = 0; i < nP; i++) { if (pcnt[i]) last = pacc[i] / pcnt[i]; pacc[i] = pcnt[i] ? last : last * 0.98; }
+  c.db = db; c.pcm = pacc;
+}
+async function analyseWhole(c) {
+  const C = window.AudioContext || window.webkitAudioContext;
+  const ac = new C();
+  let ab;
+  try { ab = await new Promise((res, rej) => c.file.arrayBuffer().then(b => ac.decodeAudioData(b, res, rej), rej)); }
+  finally { ac.close && ac.close(); }
+  const n = ab.length, ch = ab.numberOfChannels, sr = ab.sampleRate, hop = Math.round(sr * HOP);
+  const chans = []; for (let k = 0; k < ch; k++) chans.push(ab.getChannelData(k));
+  const frames = Math.floor(n / hop), db = new Float32Array(frames);
+  for (let i = 0; i < frames; i++) {
+    let sum = 0; const o = i * hop;
+    for (let j = 0; j < hop; j++) { let v = 0; for (let k = 0; k < ch; k++) v += chans[k][o + j]; v /= ch; sum += v * v; }
+    db[i] = 10 * Math.log10(sum / hop + 1e-10);
+  }
+  c.db = db;
+  const OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+  const off = new OAC(1, Math.ceil(ab.duration * 16000), 16000);
+  const src = off.createBufferSource(); src.buffer = ab; src.connect(off.destination); src.start();
+  const r = await off.startRendering(); c.pcm = r.getChannelData(0);
+}
+
+// Stitch every clip's loudness and 16 kHz sound end to end, lined up with the timeline.
+function joinAudio() {
+  const nF = Math.round(S.duration / HOP), nP = Math.round(S.duration * 16000);
+  const db = new Float32Array(nF).fill(-100), pcm = new Float32Array(nP);
+  const real = [];
+  clips.forEach(c => {
+    const f0 = Math.round(c.off / HOP), fN = Math.min(Math.round(c.dur / HOP), nF - f0);
+    const p0 = Math.round(c.off * 16000), pN = Math.min(Math.round(c.dur * 16000), nP - p0);
+    if (!c.db) db.fill(0, f0, f0 + fN); // no sound read: never cut it as a pause
+    if (c.db) { db.set(c.db.subarray(0, Math.min(fN, c.db.length)), f0); for (let i = 0; i < Math.min(fN, c.db.length); i += 2) real.push(c.db[i]); }
+    if (c.pcm) pcm.set(c.pcm.subarray(0, Math.min(pN, c.pcm.length)), p0);
+  });
+  S.db = real.length ? db : null;
+  S.pcm16 = real.length ? pcm : null;
+  if (real.length && !S.thrSet) {
+    real.sort((a, b) => a - b);
+    const p10 = real[Math.floor(real.length * 0.1)], p90 = real[Math.floor(real.length * 0.9)];
+    S.thr = clamp(Math.round(p10 + (p90 - p10) * 0.35), -60, -15); S.thrSet = true;
+    $("#thr").value = S.thr; $("#thrOut").textContent = S.thr + " dB";
+  }
+}
+function dbAt(t) { if (!S.db) return 0; const i = Math.floor(t / HOP); return i >= 0 && i < S.db.length ? S.db[i] : -100; }
+function talkingAt(t) { if (!S.db) return false; for (let d = -0.1; d <= 0.1; d += HOP) if (dbAt(t + d) > S.thr + 3) return true; return false; }
+
+function renderClips() {
+  const el = $("#clipList");
+  el.innerHTML = clips.map((c, i) => `<div class="it"><b style="font-variant-numeric:tabular-nums">${i + 1}.</b> <span class="cname">${esc(c.name)}</span> <span class="hint">${fmt(c.dur)}</span>
+    <span class="cbtns"><button data-up="${i}" ${i ? "" : "disabled"} aria-label="Move up">▲</button><button data-down="${i}" ${i < clips.length - 1 ? "" : "disabled"} aria-label="Move down">▼</button><button data-rm="${i}" aria-label="Remove">✕</button></span></div>`).join("");
+  $("#clipHint").textContent = clips.length > 1 ? `${clips.length} clips joined in this order. ${fmt(S.duration)} in total.` : "Add more clips and they'll be joined into one video.";
+}
+$("#clipList").addEventListener("click", async e => {
+  const b = e.target.closest("button"); if (!b || S.exporting) return;
+  if (b.dataset.rm !== undefined) {
+    if (clips.length === 1) return toast("That's your only clip. Use “Start a new video” to pick a different one.");
+    const [c] = clips.splice(+b.dataset.rm, 1); dropClip(c);
+  } else {
+    const i = +(b.dataset.up ?? b.dataset.down), j = b.dataset.up !== undefined ? i - 1 : i + 1;
+    [clips[i], clips[j]] = [clips[j], clips[i]];
+  }
+  await rebuildTimeline(false);
+});
+
+/* ---------- pauses ---------- */
+function buildSilenceCuts() {
+  const prev = new Map(S.silCuts.map(c => [Math.round(c.a * 10), c.on]));
+  S.silCuts = [];
+  if (!S.db) return;
+  const db = S.db, len = db.length, minF = S.minSil / HOP;
+  let run = -1;
+  for (let i = 0; i <= len; i++) {
+    const quiet = i < len && db[i] < S.thr;
+    if (quiet && run < 0) run = i;
+    if (!quiet && run >= 0) {
+      if (i - run >= minF) {
+        let a = run * HOP + S.pad, b = i * HOP - S.pad;
+        if (run === 0) a = 0;
+        if (i === len) b = S.duration;
+        // a pause that runs into the start or end of a clip gets cut right up to the join
+        for (const c of clips) { if (Math.abs(i * HOP - c.off) < 2 * HOP) b = c.off; if (Math.abs(run * HOP - (c.off + c.dur)) < 2 * HOP) a = c.off + c.dur; }
+        if (b - a > 0.15) { const on = prev.get(Math.round(a * 10)); S.silCuts.push({ a, b, on: on === undefined ? true : on }); }
+      }
+      run = -1;
+    }
+  }
+}
+
+/* ---------- filler words ---------- */
+const UM_RE = /^(u+h*m+|h*u+m+|u+h+|uhh*|e+r+m*|e+r+h*|a+h+m*|a+h+|h+m+|m+h*m+|uh-?huh|um-?hum)$/;
+const PHRASES = { youknow: ["you", "know"], imean: ["i", "mean"], basically: ["basically"], actually: ["actually"], literally: ["literally"] };
+const norm = s => s.toLowerCase().replace(/[’]/g, "'").replace(/[^a-z0-9'\-]/g, "").replace(/^-+|-+$/g, "");
+function customPhrases() { return S.customFill.split(",").map(p => p.trim().toLowerCase().split(/\s+/).map(norm).filter(Boolean)).filter(p => p.length); }
+// Marks each word with the kind of filler it is (w.fk), or none.
+function detectFillers() {
+  const ws = S.words, n = ws.length, N = ws.map(w => norm(w.text));
+  ws.forEach(w => { w.fk = null; });
+  const mark = (i, len, k) => { for (let j = i; j < i + len && j < n; j++) if (!ws[j].fk) ws[j].fk = k; };
+  const match = (i, p) => p.every((x, j) => N[i + j] === x);
+  for (let i = 0; i < n; i++) {
+    if (UM_RE.test(N[i])) { mark(i, 1, "um"); continue; }
+    for (const [k, p] of Object.entries(PHRASES)) if (i + p.length <= n && match(i, p)) mark(i, p.length, k);
+    for (const p of customPhrases()) if (i + p.length <= n && match(i, p)) mark(i, p.length, "custom");
+    if (N[i] === "like" && (/,$/.test(ws[i].text) || (i > 0 && /,$/.test(ws[i - 1].text)))) mark(i, 1, "like");
+    if (N[i] === "so" && (i === 0 || /[.?!]$/.test(ws[i - 1].text) || ws[i].start - ws[i - 1].end > 0.5)) mark(i, 1, "so");
+    // stutters: "I I", "the the", "I was I was"
+    if (N[i] && i + 1 < n && N[i] === N[i + 1] && ws[i + 1].start - ws[i].end < 0.8) mark(i, 1, "repeat");
+    if (N[i] && i + 3 < n && N[i] === N[i + 2] && N[i + 1] === N[i + 3] && N[i] !== N[i + 1] && ws[i + 2].start - ws[i + 1].end < 0.8) mark(i, 2, "repeat");
+  }
+  buildGapCuts();
+}
+// The speech reader often leaves "ummm" out of its words. Any stretch of sound between
+// two words, with no word in it, is almost always an ummm, an ahh or a breath.
+function buildGapCuts() {
+  const prev = new Map(S.gapCuts.map(c => [Math.round(c.a * 10), c.on]));
+  S.gapCuts = [];
+  if (!S.db || !S.words.length) return;
+  const ws = S.words.filter(w => w.text.trim()), M = 0.08;
+  const gaps = [];
+  ws.forEach((w, i) => { const a = i ? ws[i - 1].end : 0; if (w.start - a > 0.3) gaps.push([a + (i ? M : 0), w.start - M]); });
+  const last = ws[ws.length - 1]; if (S.duration - last.end > 0.3) gaps.push([last.end + M, S.duration]);
+  const loud = S.thr + 4;
+  for (const [ga, gb] of gaps) {
+    if (gb - ga < 0.25) continue;
+    let run = -1;
+    const f0 = Math.ceil(ga / HOP), f1 = Math.floor(gb / HOP);
+    for (let f = f0; f <= f1 + 1; f++) {
+      const on = f <= f1 && dbAt(f * HOP) > loud;
+      if (on && run < 0) run = f;
+      if (!on && run >= 0) {
+        const a = run * HOP, b = f * HOP, d = b - a;
+        if (d >= 0.22 && d <= 1.8) { const ca = Math.max(ga, a - 0.05), cb = Math.min(gb, b + 0.05); const was = prev.get(Math.round(ca * 10)); S.gapCuts.push({ a: ca, b: cb, on: was === undefined ? true : was }); }
+        run = -1;
+      }
+    }
+  }
+}
+const isFillCut = w => S.fillOn && w.fk && S.fill[w.fk] && !w.keep;
+const isCut = w => w.cut || isFillCut(w);
+const FILL_LABEL = { um: "um / uh", repeat: "repeat", youknow: "you know", imean: "I mean", like: "like", basically: "basically", actually: "actually", literally: "literally", so: "so", custom: "your word", gap: "ummm" };
+function renderFillers() {
+  const el = $("#fillList");
+  if (!S.words.length) { el.classList.add("hidden"); $("#fillHint").classList.remove("hidden"); return; }
+  $("#fillHint").classList.add("hidden"); el.classList.remove("hidden");
+  const items = [];
+  S.words.forEach((w, i) => { if (w.fk && S.fill[w.fk] && (i === 0 || S.words[i - 1].fk !== w.fk || w.fk === "um")) items.push({ kind: w.fk, a: w.start, b: w.end, i, text: w.text, on: !w.keep }); });
+  if (S.fill.gap) S.gapCuts.forEach((g, j) => items.push({ kind: "gap", a: g.a, b: g.b, j, text: "(sound, no words)", on: g.on }));
+  items.sort((x, y) => x.a - y.a);
+  if (!items.length) { el.innerHTML = `<div class="empty">No filler words found. Nice and clean.</div>`; return; }
+  el.innerHTML = items.map(it => `<label class="it"><input type="checkbox" ${it.on ? "checked" : ""} ${it.i !== undefined ? `data-w="${it.i}"` : `data-g="${it.j}"`}> <span class="tag">${FILL_LABEL[it.kind]}</span> ${esc(it.text)} <span class="hint">${fmt(it.a, 1)}</span><button data-t="${it.a}">Watch</button></label>`).join("");
+  el.querySelectorAll("input").forEach(x => x.onchange = () => {
+    if (x.dataset.w !== undefined) { const i = +x.dataset.w, k = S.words[i].fk; for (let j = i; j < S.words.length && S.words[j].fk === k; j++) { S.words[j].keep = !x.checked; if (k === "um") break; } }
+    else S.gapCuts[+x.dataset.g].on = x.checked;
+    recompute(false); renderWords();
+  });
+  el.querySelectorAll("button").forEach(x => x.onclick = e => { e.preventDefault(); seekTo(Math.max(0, +x.dataset.t - 1.5), true); });
+}
+
+/* ---------- putting the cuts together ---------- */
+function recompute(rebuildZooms) {
+  const r = [];
+  if (S.silOn) S.silCuts.forEach(c => c.on && r.push([c.a, c.b, "p"]));
+  // The speech reader times short sounds like "um" too tightly, so a filler cut reaches out
+  // to the words either side (up to 0.6 s), or the tail of the ummm is left behind.
+  S.words.forEach((w, i) => {
+    if (!isCut(w)) return;
+    if (w.cut) return r.push([Math.max(0, w.start - 0.03), Math.min(S.duration, w.end + 0.03), "w"]);
+    const reach = w.fk === "um" ? 0.6 : 0.25, p = S.words[i - 1], n = S.words[i + 1];
+    const a = Math.min(w.start - 0.03, Math.max(p ? p.end + 0.05 : 0, w.start - reach));
+    const b = Math.max(w.end + 0.03, Math.min(n ? n.start - 0.05 : S.duration, w.end + reach));
+    r.push([Math.max(0, a), Math.min(S.duration, b), "f"]);
+  });
+  if (S.fillOn && S.fill.gap) S.gapCuts.forEach(g => g.on && r.push([g.a, g.b, "f"]));
+  if (S.maxClip > 0) clips.forEach(c => { if (c.dur > S.maxClip + 0.2) { const s = c.off + (c.dur - S.maxClip) / 2; r.push([c.off, s, "m"]); r.push([s + S.maxClip, c.off + c.dur, "m"]); } });
+  r.sort((x, y) => x[0] - y[0]);
+  const m = [];
+  r.forEach(([a, b, k]) => { const l = m[m.length - 1]; if (l && a <= l[1] + 0.05) { l[1] = Math.max(l[1], b); if (k === "f") l[2] = "f"; } else m.push([a, b, k]); });
+  S.ranges = m;
+  const segs = []; let t = 0;
+  m.forEach(([a, b]) => { if (a - t > 0.05) segs.push({ a: t, b: a }); t = Math.max(t, b); });
+  if (S.duration - t > 0.05) segs.push({ a: t, b: S.duration });
+  S.segs = segs; S.outDur = segs.reduce((s, g) => s + g.b - g.a, 0);
+  S.cutOuts = []; let o = 0; segs.forEach((g, i) => { if (i) S.cutOuts.push(o); o += g.b - g.a; });
+  if (rebuildZooms !== false) buildZooms();
+  buildGroups();
+  renderCuts(); renderZooms(); renderTrack(); renderStats(); renderFillers(); draw();
+}
+function cutAt(t) { for (const r of S.ranges) { if (t >= r[0] && t < r[1] - 0.01) return r; if (r[0] > t) break; } return null; }
+function srcToOut(t) { let o = 0; for (const s of S.segs) { if (t >= s.b) o += s.b - s.a; else { if (t > s.a) o += t - s.a; break; } } return o; }
+function outToSrc(o) { for (const s of S.segs) { const d = s.b - s.a; if (o < d) return s.a + o; o -= d; } const l = S.segs[S.segs.length - 1]; return l ? l.b - 0.001 : 0; }
+
+/* ---------- zooms ---------- */
+function buildZooms() {
+  const iv = [0, 6, 3.2][S.density];
+  const pts = [];
+  S.segs.forEach(s => { pts.push({ t: s.a, hard: true }); if (iv) for (let t = s.a + iv; t < s.b - 1.2; t += iv) pts.push({ t, hard: false }); });
+  // a new clip starting is a natural place to punch in or out
+  clips.slice(1).forEach(c => { if (!cutAt(c.off) && !pts.some(p => Math.abs(p.t - c.off) < 0.8)) pts.push({ t: c.off, hard: true }); });
+  pts.sort((x, y) => x.t - y.t);
+  S.zooms = pts.map((p, i) => ({ ...p, scale: i % 2 ? 1 + S.zoomAmt : 1, on: !S.zoomOff.has(Math.round(p.t * 10)) }));
+}
+function scaleAt(t) {
+  let prev = 1, cur = 1, tz = -1, hard = true;
+  for (const z of S.zooms) { if (z.t > t + 1e-3) break; if (!z.on) continue; prev = cur; cur = z.scale; tz = z.t; hard = z.hard; }
+  if (hard || tz < 0) return cur;
+  const p = clamp((t - tz) / 0.18, 0, 1), e = 1 - Math.pow(1 - p, 3);
+  return prev + (cur - prev) * e;
+}
+
+/* ---------- captions ---------- */
+function buildGroups() {
+  const ws = S.words.filter(w => !isCut(w) && w.text.trim());
+  const per = S.style === "single" ? 1 : S.perGroup;
+  const g = []; let cur = null;
+  ws.forEach((w, i) => {
+    const p = ws[i - 1];
+    const chars = cur ? cur.words.reduce((s, x) => s + x.text.length + 1, 0) : 0;
+    const brk = !cur || cur.words.length >= per || w.start - p.end > 0.6 || /[.?!,;:]$/.test(p.text) || chars + w.text.length > 22;
+    if (brk) { cur = { words: [] }; g.push(cur); }
+    cur.words.push(w);
+  });
+  g.forEach(x => { x.a = x.words[0].start; x.emoji = S.emoji ? pickEmoji(x.words) : ""; });
+  g.forEach((x, i) => { const e = x.words[x.words.length - 1].end; const n = g[i + 1]; x.b = n ? Math.min(n.a, e + 0.6) : e + 0.6; if (x.b <= x.a) x.b = x.a + 0.3; });
+  S.groups = g;
+}
+const EMOJI = [
+  [/^(money|cash|paid|pay|price|prices|profit|rich|dollars?|\$\d*)$/, "💰"], [/^(fire|hot|lit)$/, "🔥"], [/^(love|loved|heart)$/, "❤️"],
+  [/^(time|minutes?|hours?|fast|quick|quickly)$/, "⏱️"], [/^(phone|app|apps|online|link)$/, "📱"], [/^(book|booking|bookings|booked|appointment)$/, "📅"],
+  [/^(idea|tip|tips|secret|hack)$/, "💡"], [/^(happy|smile|fun)$/, "😄"], [/^(wow|crazy|insane|omg)$/, "🤯"], [/^(no|stop|never|don't|dont)$/, "🚫"],
+  [/^(yes|done|easy|perfect)$/, "✅"], [/^(hair|cut|haircut|barber|fade)$/, "💈"], [/^(nails?|lashes|makeup|beauty)$/, "💅"], [/^(food|eat|cook|cooking|lunch|dinner)$/, "🍽️"],
+  [/^(car|cars|drive|detail|detailing)$/, "🚗"], [/^(music|dj|song|party)$/, "🎶"], [/^(win|winning|best|top|first)$/, "🏆"], [/^(grow|growth|more|up|increase)$/, "📈"],
+  [/^(barbados|bajan|island|beach)$/, "🏝️"], [/^(think|thinking|why|what|how)$/, "🤔"], [/^(video|videos|camera|film|reel|reels)$/, "🎬"], [/^(work|business|hustle|shop)$/, "💼"],
+  [/^(free)$/, "🆓"], [/^(new)$/, "✨"], [/^(look|see|watch)$/, "👀"],
+];
+function pickEmoji(words) { for (const w of words) { const n = norm(w.text); for (const [re, e] of EMOJI) if (re.test(n)) return e; } return ""; }
+
+const CAP = {
+  bold:    { font: "Bricolage Grotesque", w: 800, size: 92, upper: true, stroke: 16 },
+  karaoke: { font: "Bricolage Grotesque", w: 800, size: 86, upper: true, stroke: 14, karaoke: true },
+  single:  { font: "Bricolage Grotesque", w: 800, size: 150, upper: true, stroke: 20 },
+  boxed:   { font: "Inter", w: 800, size: 70, boxed: true },
+  pill:    { font: "Bricolage Grotesque", w: 800, size: 78, pill: true },
+  neon:    { font: "Bricolage Grotesque", w: 800, size: 86, upper: true, neon: true },
+  outline: { font: "Bebas Neue", w: 400, size: 128, upper: true, stroke: 14, fill: "#ffe14a" },
+  marker:  { font: "Permanent Marker", w: 400, size: 86, shadow: true },
+  clean:   { font: "Inter", w: 600, size: 70, shadow: true, underline: true },
+  minimal: { font: "Inter", w: 500, size: 58, lower: true, shadow: true, plain: true },
+};
+function roundRect(g, x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
+function inkOn(hex) { const n = parseInt(hex.slice(1), 16), r = n >> 16, gg = (n >> 8) & 255, b = n & 255; return (r * 299 + gg * 587 + b * 114) / 1000 > 150 ? "#13231f" : "#ffffff"; }
+const EMOJI_FONT = '"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
+function wrapWords(g, items, maxW, sp) {
+  const lines = [[]], lw = [0];
+  items.forEach(it => { const L = lines.length - 1; if (lines[L].length && lw[L] + sp + it.wd > maxW) { lines.push([]); lw.push(0); } const k = lines.length - 1; lw[k] += (lines[k].length ? sp : 0) + it.wd; lines[k].push(it); });
+  return { lines, lw };
+}
+function drawCaption(g, t) {
+  const grp = S.groups.find(x => t >= x.a && t < x.b); if (!grp) return;
+  const st = CAP[S.style] || CAP.bold, fs = st.size * U * S.capSize;
+  g.font = `${st.w} ${fs}px "${st.font}", system-ui, sans-serif`;
+  g.textBaseline = "middle"; g.textAlign = "left";
+  const sp = g.measureText(" ").width * (st.boxed ? 1.6 : 1) + (st.stroke ? st.stroke * U * S.capSize * 0.6 : 0), maxW = W * 0.86;
+  const items = grp.words.map(w => { const txt = st.upper ? w.text.toUpperCase() : st.lower ? w.text.toLowerCase().replace(/[.,!?;:]+$/, "") : w.text; return { w, txt, wd: g.measureText(txt).width }; });
+  const { lines, lw } = wrapWords(g, items, maxW, sp);
+  let active = null; for (const w of grp.words) if (w.start <= t) active = w;
+  const lh = fs * (st.boxed ? 1.45 : 1.25), age = t - grp.a, A = S.anim;
+  let rise = 0, alpha = 1, gscale = 1;
+  if (A === "slide") { rise = 46 * U * (1 - ease(age / 0.16)); alpha = clamp(age / 0.12, 0, 1); }
+  if (A === "fade") alpha = clamp(age / 0.18, 0, 1);
+  if (A === "pop") { const p = clamp(age / 0.14, 0, 1); gscale = 0.82 + 0.18 * ease(p) + 0.06 * Math.sin(p * Math.PI); }
+  if (A === "bounce") { const p = clamp(age / 0.35, 0, 1); rise = -38 * U * Math.abs(Math.cos(p * Math.PI * 2.5)) * (1 - p); }
+  const cx = W / 2, cy = H * S.capY;
+  g.save(); g.globalAlpha = alpha;
+  g.translate(cx, cy + rise); g.scale(gscale, gscale); g.translate(-cx, -cy);
+  if (grp.emoji) {
+    const ep = clamp(age / 0.2, 0, 1), es = (st.size * 1.05) * U * S.capSize * (0.6 + 0.4 * ease(ep));
+    g.save(); g.font = `${es}px ${EMOJI_FONT}`; g.textAlign = "center"; g.textBaseline = "middle";
+    g.fillText(grp.emoji, cx, cy - (lines.length * lh) / 2 - es * 0.62); g.restore();
+  }
+  let y = cy - (lines.length * lh) / 2 + lh / 2;
+  lines.forEach((line, li) => {
+    let x = cx - lw[li] / 2;
+    if (st.pill) { g.fillStyle = "rgba(8,22,19,.84)"; roundRect(g, x - 28 * U, y - lh / 2 - 4 * U, lw[li] + 56 * U, lh + 8 * U, 26 * U); g.fill(); }
+    line.forEach(it => {
+      const on = it.w === active, spoken = it.w.start <= t, wAge = t - it.w.start;
+      if (A === "type" && !spoken) { x += it.wd + sp; return; }
+      let pop = 1, jx = 0, jy = 0;
+      if (on && (A === "pop" || A === "bounce" || A === "type")) pop = 1 + 0.12 * (1 - clamp(wAge / 0.14, 0, 1));
+      if (on && A === "shake") { const k = Math.floor(t * 30); jx = (rnd(k) - 0.5) * 8 * U; jy = (rnd(k + 7) - 0.5) * 8 * U; }
+      g.save(); g.translate(x + it.wd / 2 + jx, y + jy); g.scale(pop, pop);
+      const L = -it.wd / 2;
+      if (st.boxed) { g.fillStyle = on ? S.accent : "#ffffff"; roundRect(g, L - 14 * U, -lh * 0.42, it.wd + 28 * U, lh * 0.84, 12 * U); g.fill(); g.fillStyle = on ? inkOn(S.accent) : "#111"; g.fillText(it.txt, L, 0); g.restore(); x += it.wd + sp; return; }
+      if (st.pill && on) { g.fillStyle = S.accent; roundRect(g, L - 12 * U, -fs * 0.6, it.wd + 24 * U, fs * 1.2, 16 * U); g.fill(); }
+      if (st.shadow) { g.shadowColor = "rgba(0,0,0,.75)"; g.shadowBlur = 18 * U; g.shadowOffsetY = 4 * U; }
+      if (st.neon) { g.shadowColor = on ? S.accent : "rgba(255,255,255,.9)"; g.shadowBlur = 28 * U; }
+      if (st.stroke) { g.lineJoin = "round"; g.lineWidth = st.stroke * U * S.capSize; g.strokeStyle = "#000"; g.strokeText(it.txt, L, 0); }
+      const base = st.fill || "#fff";
+      let col = base;
+      if (st.karaoke) col = spoken && !on ? S.accent : base;
+      else if (on && !st.plain) col = st.pill ? inkOn(S.accent) : st.underline ? "#fff" : S.accent;
+      g.fillStyle = col; g.fillText(it.txt, L, 0);
+      if (st.neon) { g.shadowBlur = 10 * U; g.fillText(it.txt, L, 0); }
+      if (st.karaoke && on) { // fill the word with colour as it's said
+        const p = clamp(wAge / Math.max(0.12, it.w.end - it.w.start), 0, 1);
+        g.save(); g.beginPath(); g.rect(L - 4, -fs, (it.wd + 8) * p, fs * 2); g.clip(); g.fillStyle = S.accent; g.fillText(it.txt, L, 0); g.restore();
+      }
+      if (st.underline && on) { g.shadowColor = "transparent"; g.fillStyle = S.accent; roundRect(g, L, fs * 0.52, it.wd, 10 * U, 5 * U); g.fill(); }
+      g.restore();
+      x += it.wd + sp;
+    });
+    y += lh;
+  });
+  g.restore();
+}
+
+/* ---------- hook title (the first few seconds) ---------- */
+function wrapText(g, text, maxW) {
+  const words = text.split(/\s+/).filter(Boolean), lines = []; let line = "";
+  words.forEach(w => { const test = line ? line + " " + w : w; if (line && g.measureText(test).width > maxW) { lines.push(line); line = w; } else line = test; });
+  if (line) lines.push(line); return lines;
+}
+function drawHook(g, o) {
+  const txt = S.hook.trim(); if (!txt || o >= S.hookDur) return;
+  const pin = ease(o / 0.3), pout = clamp((S.hookDur - o) / 0.25, 0, 1);
+  const st = { sticker: ["Bricolage Grotesque", 800, 64], banner: ["Inter", 800, 56], big: ["Bebas Neue", 400, 112], marker: ["Permanent Marker", 400, 70] }[S.hookStyle] || ["Inter", 800, 56];
+  const fs = st[2] * U;
+  g.save(); g.globalAlpha = pout;
+  g.font = `${st[1]} ${fs}px "${st[0]}", system-ui, sans-serif`; g.textBaseline = "middle"; g.textAlign = "center";
+  const text = S.hookStyle === "big" ? txt.toUpperCase() : txt;
+  const lines = wrapText(g, text, W * 0.8), lh = fs * 1.18;
+  const bw = Math.max(...lines.map(l => g.measureText(l).width)) + 56 * U, bh = lines.length * lh + 34 * U;
+  const cy = H * (W > H ? 0.17 : 0.15) + bh / 2 - (1 - pin) * 120 * U;
+  g.translate(W / 2, cy);
+  const rot = S.hookStyle === "sticker" ? -0.035 : S.hookStyle === "marker" ? -0.02 : 0;
+  g.rotate(rot); g.scale(0.85 + 0.15 * pin, 0.85 + 0.15 * pin);
+  if (S.hookStyle === "sticker") { g.fillStyle = S.accent; roundRect(g, -bw / 2, -bh / 2, bw, bh, 22 * U); g.fill(); g.fillStyle = inkOn(S.accent); }
+  else if (S.hookStyle === "banner") { g.shadowColor = "rgba(0,0,0,.35)"; g.shadowBlur = 20 * U; g.fillStyle = "#fff"; roundRect(g, -bw / 2, -bh / 2, bw, bh, 14 * U); g.fill(); g.shadowColor = "transparent"; g.fillStyle = "#111"; }
+  else if (S.hookStyle === "marker") { g.shadowColor = "rgba(0,0,0,.8)"; g.shadowBlur = 14 * U; g.shadowOffsetY = 4 * U; g.fillStyle = "#fff"; }
+  else { g.lineJoin = "round"; g.lineWidth = 14 * U; g.strokeStyle = "#000"; lines.forEach((l, i) => g.strokeText(l, 0, (i - (lines.length - 1) / 2) * lh)); g.fillStyle = "#fff"; }
+  lines.forEach((l, i) => g.fillText(l, 0, (i - (lines.length - 1) / 2) * lh));
+  g.restore();
+}
+
+/* ---------- effects ---------- */
+let bgCanvas = null, noiseCanvas = null;
+function smallCopy(src, sw, sh) { // a tiny copy of the frame: stretched back up, it looks blurred
+  if (!bgCanvas) { bgCanvas = document.createElement("canvas"); }
+  const w = 24, h = Math.max(8, Math.round(24 * H / W));
+  if (bgCanvas.width !== w || bgCanvas.height !== h) { bgCanvas.width = w; bgCanvas.height = h; }
+  const b = bgCanvas.getContext("2d"), sc = Math.max(w / sw, h / sh);
+  b.drawImage(src, (w - sw * sc) / 2, (h - sh * sc) / 2, sw * sc, sh * sc);
+  return bgCanvas;
+}
+function noise() {
+  if (noiseCanvas) return noiseCanvas;
+  noiseCanvas = document.createElement("canvas"); noiseCanvas.width = noiseCanvas.height = 192;
+  const n = noiseCanvas.getContext("2d"), im = n.createImageData(192, 192);
+  for (let i = 0; i < im.data.length; i += 4) { const v = Math.random() * 255; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; }
+  n.putImageData(im, 0, 0); return noiseCanvas;
+}
+function sinceCut(o) { let d = Infinity; for (const c of S.cutOuts) { if (c > o + 1e-4) break; d = o - c; } return d; }
+function drawVideo(g, src, sw, sh, t, o) {
+  let z = S.zoomOn ? scaleAt(t) : 1;
+  if (S.intro === "punch" && o < 0.6) z *= 1 + 0.32 * (1 - ease(o / 0.6));
+  let sx = 0, sy = 0;
+  const dc = sinceCut(o), k = Math.floor(o * 30);
+  let shake = 0;
+  if (S.intro === "shake" && o < 0.45) shake = 1 - o / 0.45;
+  if (S.trans === "shake" && dc < 0.25) shake = Math.max(shake, 1 - dc / 0.25);
+  if (shake) { sx = (rnd(k) - 0.5) * 36 * U * shake; sy = (rnd(k + 3) - 0.5) * 36 * U * shake; z *= 1 + 0.04 * shake; }
+  const portraitFit = S.fit === "blur" && Math.abs(sw / sh - W / H) > 0.04;
+  let x, y, dw, dh;
+  if (portraitFit) {
+    const bg = smallCopy(src, sw, sh);
+    g.imageSmoothingEnabled = true; g.imageSmoothingQuality = "high";
+    g.drawImage(bg, -W * 0.05, -H * 0.05, W * 1.1, H * 1.1);
+    g.fillStyle = "rgba(0,0,0,.28)"; g.fillRect(0, 0, W, H);
+    const base = Math.min(W / sw, H / sh) * z; dw = sw * base; dh = sh * base;
+    x = W / 2 - dw / 2 + sx; y = H / 2 - dh / 2 + sy;
+  } else {
+    const base = Math.max(W / sw, H / sh) * z; dw = sw * base; dh = sh * base;
+    x = clamp(W / 2 - dw / 2, W - dw, 0) + sx; y = clamp(H * 0.4 - dh * 0.4, H - dh, 0) + sy;
+  }
+  try { g.drawImage(src, x, y, dw, dh); } catch (e) {}
+  applyFilter(g, src, x, y, dw, dh, sw, sh);
+}
+function applyFilter(g, src, x, y, dw, dh, sw, sh) {
+  const f = S.filter;
+  g.save();
+  if (f === "vivid") { g.globalCompositeOperation = "overlay"; g.globalAlpha = 0.32; try { g.drawImage(src, x, y, dw, dh); } catch (e) {} }
+  if (f === "warm") { g.globalCompositeOperation = "soft-light"; g.globalAlpha = 0.5; g.fillStyle = "#ff9a3c"; g.fillRect(0, 0, W, H); }
+  if (f === "cool") { g.globalCompositeOperation = "soft-light"; g.globalAlpha = 0.5; g.fillStyle = "#3c8cff"; g.fillRect(0, 0, W, H); }
+  if (f === "bw") { g.globalCompositeOperation = "saturation"; g.fillStyle = "#808080"; g.fillRect(0, 0, W, H); g.globalCompositeOperation = "soft-light"; g.globalAlpha = 0.35; g.fillStyle = "#000"; g.fillRect(0, 0, W, H); }
+  if (f === "film") { g.globalCompositeOperation = "saturation"; g.globalAlpha = 0.45; g.fillStyle = "#808080"; g.fillRect(0, 0, W, H); g.globalCompositeOperation = "soft-light"; g.globalAlpha = 0.55; g.fillStyle = "#c08a3e"; g.fillRect(0, 0, W, H); }
+  if (f === "fade") { g.globalCompositeOperation = "lighten"; g.fillStyle = "#2b2b31"; g.fillRect(0, 0, W, H); g.globalCompositeOperation = "soft-light"; g.globalAlpha = 0.3; g.fillStyle = "#f3e2cf"; g.fillRect(0, 0, W, H); }
+  if (f === "dreamy") { g.globalCompositeOperation = "screen"; g.globalAlpha = 0.4; g.imageSmoothingEnabled = true; g.drawImage(smallCopy(src, sw, sh), 0, 0, W, H); g.globalCompositeOperation = "soft-light"; g.globalAlpha = 0.25; g.fillStyle = "#ff9ec8"; g.fillRect(0, 0, W, H); }
+  g.restore();
+  if (S.vig || f === "film") {
+    const r = g.createRadialGradient(W / 2, H / 2, Math.min(W, H) * 0.35, W / 2, H / 2, Math.hypot(W, H) * 0.6);
+    r.addColorStop(0, "rgba(0,0,0,0)"); r.addColorStop(1, "rgba(0,0,0,.55)"); g.fillStyle = r; g.fillRect(0, 0, W, H);
+  }
+  if (S.grain || f === "film") {
+    g.save(); g.globalCompositeOperation = "overlay"; g.globalAlpha = 0.16;
+    const n = noise(), pat = g.createPattern(n, "repeat"); const ox = Math.floor(Math.random() * 192), oy = Math.floor(Math.random() * 192);
+    g.translate(-ox, -oy); g.fillStyle = pat; g.scale(U * 1.5, U * 1.5); g.fillRect(0, 0, (W + 400) / (U * 1.5), (H + 400) / (U * 1.5)); g.restore();
+  }
+}
+function glitch(g, k, seed) {
+  for (let i = 0; i < 7; i++) {
+    const y = rnd(seed + i) * H, h = (16 + rnd(seed + i + 50) * 110) * U, dx = (rnd(seed + i + 90) - 0.5) * 90 * U * k;
+    try { g.drawImage(g.canvas, 0, y, W, h, dx, y, W, h); } catch (e) {}
+  }
+  g.save(); g.globalCompositeOperation = "screen"; g.globalAlpha = 0.35 * k;
+  g.fillStyle = "#ff2a6d"; g.fillRect(0, rnd(seed + 5) * H, W, 40 * U);
+  g.fillStyle = "#05d9e8"; g.fillRect(0, rnd(seed + 6) * H, W, 26 * U); g.restore();
+}
+function drawOverlays(g, o) {
+  const dc = sinceCut(o), seed = Math.floor(o * 30);
+  if (S.intro === "glitch" && o < 0.5) glitch(g, 1 - o / 0.5, seed);
+  if (S.trans === "glitch" && dc < 0.22) glitch(g, 1 - dc / 0.22, seed);
+  let flash = 0;
+  if (S.intro === "flash" && o < 0.32) flash = 1 - o / 0.32;
+  if (S.trans === "flash" && dc < 0.2) flash = Math.max(flash, 0.75 * (1 - dc / 0.2));
+  if (flash) { g.fillStyle = `rgba(255,255,255,${flash.toFixed(3)})`; g.fillRect(0, 0, W, H); }
+}
+
+/* ---------- drawing ---------- */
+function drawScene(g, src, sw, sh, t, o) {
+  g.setTransform(1, 0, 0, 1, 0, 0);
+  g.globalAlpha = 1; g.globalCompositeOperation = "source-over"; g.shadowColor = "transparent";
+  g.fillStyle = "#000"; g.fillRect(0, 0, W, H);
+  if (src && sw) drawVideo(g, src, sw, sh, t, o);
+  drawOverlays(g, o);
+  if (S.capOn && S.groups.length) drawCaption(g, t);
+  drawHook(g, o);
+  if (S.prog && S.outDur) { g.fillStyle = "rgba(255,255,255,.25)"; g.fillRect(0, H - 12 * U, W, 12 * U); g.fillStyle = S.accent; g.fillRect(0, H - 12 * U, W * clamp(o / S.outDur, 0, 1), 12 * U); }
+  if (!S.unlocked) {
+    g.font = `600 ${32 * U}px "Inter", system-ui, sans-serif`; g.textBaseline = "middle"; g.textAlign = "left";
+    const txt = CONFIG.watermark, w = g.measureText(txt).width, yb = H - (S.prog ? 190 : 170) * U;
+    g.fillStyle = "rgba(0,0,0,.42)"; roundRect(g, W / 2 - w / 2 - 22 * U, yb, w + 44 * U, 58 * U, 29 * U); g.fill();
+    g.fillStyle = "rgba(255,255,255,.92)"; g.fillText(txt, W / 2 - w / 2, yb + 29 * U);
+  }
+}
+function draw() {
+  if (S.exporting === "fast") return;
+  const t = curT(), c = clips[cur], o = srcToOut(t);
+  drawScene(ctx, c && c.el, c ? c.el.videoWidth || c.vw : 0, c ? c.el.videoHeight || c.vh : 0, t, o);
+  $("#time").textContent = fmt(o) + " / " + fmt(S.outDur);
+  $("#ph").style.left = (S.duration ? (t / S.duration) * 100 : 0) + "%";
+  highlightWord(t);
+}
+
+/* ---------- sound: live graph for preview, and the same sounds for export ---------- */
+let AC = null, master = null, recDest = null, musicGain = null, musicNode = null;
+function ensureAudio() {
+  if (AC) { if (AC.state === "suspended") AC.resume(); return; }
+  const C = window.AudioContext || window.webkitAudioContext;
+  AC = new C(); master = AC.createGain();
+  master.connect(AC.destination);
+  if (AC.createMediaStreamDestination) { recDest = AC.createMediaStreamDestination(); master.connect(recDest); }
+  musicGain = AC.createGain(); musicGain.gain.value = S.musVol; musicGain.connect(master);
+  clips.forEach(connectClip);
+}
+function connectClip(c) { if (c.src || !AC) return; try { c.src = AC.createMediaElementSource(c.el); c.src.connect(master); } catch (e) { console.warn(e); } }
+
+// Every sound effect is made here from scratch, so they're free to use anywhere.
+function noiseBuf(ac, dur) { const b = ac.createBuffer(1, Math.max(1, Math.ceil(ac.sampleRate * dur)), ac.sampleRate), d = b.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; return b; }
+function playSfx(kind, ac, t0, dest, v) {
+  if (!ac || !kind || kind === "none") return;
+  ac = ac || AC; dest = dest || master; t0 = t0 ?? ac.currentTime; v = v ?? S.sfxVol;
+  const g = ac.createGain(); g.connect(dest);
+  const osc = (type, f0, f1, dur) => { const o = ac.createOscillator(); o.type = type; o.frequency.setValueAtTime(f0, t0); if (f1) o.frequency.exponentialRampToValueAtTime(f1, t0 + dur); o.connect(g); o.start(t0); o.stop(t0 + dur + 0.05); return o; };
+  const nz = (dur, ftype, f0, f1, q) => { const s = ac.createBufferSource(); s.buffer = noiseBuf(ac, dur); const f = ac.createBiquadFilter(); f.type = ftype; f.Q.value = q || 1; f.frequency.setValueAtTime(f0, t0); if (f1) f.frequency.exponentialRampToValueAtTime(f1, t0 + dur); s.connect(f); f.connect(g); s.start(t0); s.stop(t0 + dur + 0.02); };
+  const env = (peak, a, d) => { g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(Math.max(0.0002, peak * v), t0 + a); g.gain.exponentialRampToValueAtTime(0.0001, t0 + a + d); };
+  if (kind === "pop") { env(0.9, 0.005, 0.12); osc("sine", 900, 180, 0.09); }
+  else if (kind === "click") { env(0.8, 0.002, 0.035); nz(0.035, "highpass", 2500); }
+  else if (kind === "whoosh") { g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(0.6 * v, t0 + 0.19); g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.32); nz(0.32, "bandpass", 300, 3500, 1.2); }
+  else if (kind === "ding") { env(0.5, 0.004, 0.7); osc("sine", 1320); osc("sine", 1980); osc("triangle", 2640); }
+  else if (kind === "boom") { env(1, 0.006, 0.8); osc("sine", 120, 38, 0.6); nz(0.25, "lowpass", 400, 80); }
+  else if (kind === "snap") { [0, 0.012, 0.026].forEach((d, i) => { const gg = ac.createGain(); gg.connect(dest); gg.gain.setValueAtTime(0.0001, t0 + d); gg.gain.exponentialRampToValueAtTime(0.7 * v / (i + 1), t0 + d + 0.002); gg.gain.exponentialRampToValueAtTime(0.0001, t0 + d + 0.06); const s = ac.createBufferSource(); s.buffer = noiseBuf(ac, 0.07); const f = ac.createBiquadFilter(); f.type = "bandpass"; f.frequency.value = 1800; f.Q.value = 0.9; s.connect(f); f.connect(gg); s.start(t0 + d); }); }
+  else if (kind === "riser") { g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(0.5 * v, t0 + 1.1); g.gain.exponentialRampToValueAtTime(0.0001, t0 + 1.25); nz(1.25, "bandpass", 300, 7000, 2); osc("sawtooth", 180, 900, 1.2); }
+}
+
+/* ---------- background music, made in the browser ---------- */
+const MUSIC = {}; let ownMusic = null;
+async function musicBuffer(kind) {
+  if (kind === "own") return ownMusic;
+  if (kind === "none") return null;
+  if (MUSIC[kind]) return MUSIC[kind];
+  const spec = { lofi: [80, 4], bouncy: [112, 4], island: [104, 4], hype: [140, 4] }[kind];
+  const [bpm, bars] = spec, beat = 60 / bpm, dur = bars * 4 * beat, sr = 44100;
+  const OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+  const ac = new OAC(2, Math.ceil(dur * sr), sr);
+  const out = ac.createGain(); out.gain.value = 0.8; out.connect(ac.destination);
+  const comp = ac.createDynamicsCompressor ? ac.createDynamicsCompressor() : null; if (comp) { out.disconnect(); out.connect(comp); comp.connect(ac.destination); }
+  const nb = noiseBuf(ac, 0.5);
+  const hz = m => 440 * Math.pow(2, (m - 69) / 12);
+  const note = (t, m, len, type, vol, cutoff, pan) => {
+    const o = ac.createOscillator(), g = ac.createGain(), f = ac.createBiquadFilter();
+    o.type = type; o.frequency.value = hz(m); f.type = "lowpass"; f.frequency.value = cutoff || 2000;
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + len);
+    o.connect(f); f.connect(g);
+    if (pan && ac.createStereoPanner) { const p = ac.createStereoPanner(); p.pan.value = pan; g.connect(p); p.connect(out); } else g.connect(out);
+    o.start(t); o.stop(t + len + 0.05);
+  };
+  const pan = (t, m, len, vol) => { [[1, 1], [2, 0.45], [3.01, 0.18], [4.2, 0.07]].forEach(([mul, a]) => { const o = ac.createOscillator(), g = ac.createGain(); o.type = "sine"; o.frequency.value = hz(m) * mul; g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol * a, t + 0.006); g.gain.exponentialRampToValueAtTime(0.0001, t + len * (mul > 2 ? 0.4 : 1)); o.connect(g); g.connect(out); o.start(t); o.stop(t + len + 0.05); }); };
+  const kick = (t, vol = 0.9, low = 45) => { const o = ac.createOscillator(), g = ac.createGain(); o.frequency.setValueAtTime(150, t); o.frequency.exponentialRampToValueAtTime(low, t + 0.12); g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.35); o.connect(g); g.connect(out); o.start(t); o.stop(t + 0.4); };
+  const hitN = (t, len, vol, type, freq, q) => { const s = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain(); s.buffer = nb; f.type = type; f.frequency.value = freq; f.Q.value = q || 0.8; g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.0001, t + len); s.connect(f); f.connect(g); g.connect(out); s.start(t, Math.random() * 0.2); s.stop(t + len + 0.02); };
+  const hat = (t, vol = 0.12, open) => hitN(t, open ? 0.18 : 0.04, vol, "highpass", 7000);
+  const snare = (t, vol = 0.35) => { hitN(t, 0.16, vol, "bandpass", 1900, 0.7); note(t, 50, 0.08, "triangle", vol * 0.5, 800); };
+  const clap = (t, vol = 0.35) => [0, 0.01, 0.022].forEach(d => hitN(t + d, 0.09, vol, "bandpass", 1500, 1.1));
+  const shaker = (t, vol = 0.07) => hitN(t, 0.05, vol, "bandpass", 6000, 1.5);
+  const b = i => i * beat;
+  if (kind === "lofi") {
+    const chords = [[53, 57, 60, 64], [52, 55, 59, 62], [50, 53, 57, 60], [48, 52, 55, 59]];
+    for (let bar = 0; bar < 4; bar++) {
+      const t0 = b(bar * 4);
+      chords[bar].forEach((m, i) => note(t0 + i * 0.02, m, 4 * beat * 0.95, "triangle", 0.07, 1100, (i - 1.5) * 0.2));
+      note(t0, chords[bar][0] - 12, beat * 1.8, "sine", 0.25, 400); note(t0 + b(2.5), chords[bar][0] - 12, beat, "sine", 0.18, 400);
+      kick(t0, 0.7); kick(t0 + b(2.5), 0.55); snare(t0 + b(1), 0.18); snare(t0 + b(3), 0.18);
+      for (let i = 0; i < 8; i++) hat(t0 + b(i / 2) + (i % 2 ? beat * 0.08 : 0), i % 2 ? 0.05 : 0.08);
+    }
+    for (let i = 0; i < 40; i++) hitN(Math.random() * dur, 0.01, 0.03, "highpass", 3000); // vinyl crackle
+  } else if (kind === "bouncy") {
+    const roots = [48, 43, 45, 41], arps = [[60, 64, 67, 72], [59, 62, 67, 71], [57, 60, 64, 69], [57, 60, 65, 69]];
+    for (let bar = 0; bar < 4; bar++) {
+      const t0 = b(bar * 4);
+      for (let i = 0; i < 4; i++) { kick(t0 + b(i), 0.85); hat(t0 + b(i + 0.5), 0.1, true); note(t0 + b(i + 0.5), roots[bar] - 12, beat * 0.4, "sawtooth", 0.16, 500); }
+      clap(t0 + b(1)); clap(t0 + b(3));
+      for (let i = 0; i < 16; i++) if (i % 3 !== 2) note(t0 + b(i / 4), arps[bar][i % 4], beat * 0.22, "square", 0.045, 2500, i % 2 ? 0.3 : -0.3);
+    }
+  } else if (kind === "island") {
+    const roots = [41, 48, 50, 46];
+    const tune = [[72, 0], [74, 0.5], [77, 1], [74, 1.75], [72, 2.5], [69, 3], [72, 4], [77, 4.75], [79, 5.5], [77, 6], [74, 6.5], [72, 7], [74, 8], [72, 8.5], [69, 9], [67, 9.75], [69, 10.5], [72, 11], [74, 12], [77, 12.5], [79, 13], [81, 13.75], [79, 14.5], [77, 15]];
+    for (let bar = 0; bar < 4; bar++) {
+      const t0 = b(bar * 4);
+      for (let i = 0; i < 4; i++) { kick(t0 + b(i), 0.8, 50); for (let j = 0; j < 4; j++) shaker(t0 + b(i + j / 4), j === 2 ? 0.1 : 0.05); }
+      snare(t0 + b(1.75), 0.15); snare(t0 + b(2.5), 0.22); snare(t0 + b(3.75), 0.15);
+      [0, 0.75, 1.5, 2, 3, 3.5].forEach(p => note(t0 + b(p), roots[bar] - 12 + (p === 3.5 ? 7 : 0), beat * 0.45, "sine", 0.3, 600));
+    }
+    tune.forEach(([m, p]) => pan(b(p), m, beat * 0.9, 0.12));
+  } else if (kind === "hype") {
+    const roots = [45, 45, 41, 43];
+    for (let bar = 0; bar < 4; bar++) {
+      const t0 = b(bar * 4);
+      kick(t0, 1, 38); kick(t0 + b(2.75), 0.8, 38);
+      { const o = ac.createOscillator(), g = ac.createGain(); o.type = "sine"; o.frequency.setValueAtTime(hz(roots[bar] - 12), t0); g.gain.setValueAtTime(0.5, t0); g.gain.exponentialRampToValueAtTime(0.0001, t0 + b(3.9)); o.connect(g); g.connect(out); o.start(t0); o.stop(t0 + b(4)); }
+      clap(t0 + b(2), 0.45);
+      for (let i = 0; i < 8; i++) hat(t0 + b(i / 2), 0.09);
+      if (bar % 2) for (let i = 0; i < 6; i++) hat(t0 + b(3.5) + i * beat / 12, 0.06);
+      [0, 1.5, 3].forEach(p => note(t0 + b(p), roots[bar] + 24, beat * 0.3, "square", 0.05, 1800));
+    }
+  }
+  MUSIC[kind] = await ac.startRendering();
+  return MUSIC[kind];
+}
+async function startMusic(o) {
+  stopMusic();
+  if (S.music === "none" || !AC) return;
+  const buf = await musicBuffer(S.music); if (!buf || !S.playing) return;
+  musicNode = AC.createBufferSource(); musicNode.buffer = buf; musicNode.loop = true; musicNode.connect(musicGain);
+  musicGain.gain.value = S.musVol; musicNode.start(0, o % buf.duration);
+}
+function stopMusic() { if (musicNode) { try { musicNode.stop(); } catch (e) {} musicNode.disconnect(); musicNode = null; } }
+
+/* ---------- playback loop ---------- */
+let finishCb = null;
+function setPlayIcon(p) { $("#playIcon").innerHTML = p ? '<path d="M6 4h4v16H6zM14 4h4v16h-4z"/>' : '<path d="M7 4v16l13-8z"/>'; $("#playBtn").setAttribute("aria-label", p ? "Pause" : "Play"); }
+async function jumpTo(to) {
+  S.jumping = true;
+  if (S.exporting === "live" && rec && rec.state === "recording") rec.pause();
+  V().pause(); await setT(to); S.lastT = to; draw();
+  try { await V().play(); } catch (e) {}
+  if (S.exporting === "live" && rec && rec.state === "paused") rec.resume();
+  S.jumping = false;
+}
+function stopPlayback() { S.playing = false; V() && V().pause(); setPlayIcon(false); stopMusic(); }
+function endPlayback() { stopPlayback(); if (finishCb) { const f = finishCb; finishCb = null; f(); } }
+let introDone = false;
+function tick() {
+  if (S.playing && !S.jumping && V()) {
+    const t = curT(), k = clips[cur];
+    const last = S.segs[S.segs.length - 1];
+    if (!last || t >= last.b - 0.02) endPlayback();
+    else {
+      const c = cutAt(t);
+      if (c) jumpTo(c[1]);
+      else if (cur < clips.length - 1 && k.el.currentTime >= k.dur - 0.04) jumpTo(clips[cur + 1].off);
+      else if (S.zoomOn && S.sfx !== "none") { for (const z of S.zooms) if (z.on && z.scale > 1 && z.t > S.lastT && z.t <= t) { playSfx(S.sfx, AC); break; } }
+      if (!introDone && S.introSfx !== "none" && srcToOut(t) < 0.3) { introDone = true; playSfx(S.introSfx, AC); }
+      if (musicGain && musicNode) { const target = S.duck && talkingAt(t) ? S.musVol * 0.35 : S.musVol; musicGain.gain.setTargetAtTime(target, AC.currentTime, 0.08); }
+      S.lastT = t;
+    }
+    if (S.exporting === "live") { const p = srcToOut(curT()) / S.outDur; $("#expBar i").style.width = (p * 100).toFixed(1) + "%"; }
+  }
+  if (S.exporting !== "fast") draw();
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+function onClipEnded(el) {
+  if (!S.playing || S.jumping || el !== V()) return;
+  if (cur >= clips.length - 1) endPlayback(); else jumpTo(clips[cur + 1].off);
+}
+
+$("#playBtn").onclick = async () => {
+  if (S.exporting || !S.duration) return;
+  ensureAudio();
+  if (S.playing) { stopPlayback(); return; }
+  let t = curT(); const last = S.segs[S.segs.length - 1];
+  if (!last) return toast("Everything is cut. Untick a cut to keep some video.");
+  if (t >= last.b - 0.05) t = S.segs[0].a;
+  const c = cutAt(t); if (c) t = c[1];
+  await setT(t);
+  S.lastT = t; S.playing = true; setPlayIcon(true); introDone = srcToOut(t) > 0.3;
+  try { await V().play(); startMusic(srcToOut(t)); } catch (e) { S.playing = false; setPlayIcon(false); }
+};
+document.addEventListener("keydown", e => { if (e.code === "Space" && !/INPUT|TEXTAREA|BUTTON|SELECT/.test(e.target.tagName) && $("#editor").classList.contains("on")) { e.preventDefault(); $("#playBtn").click(); } });
+async function seekTo(t, raw) { if (S.exporting) return; if (S.playing) stopPlayback(); if (!raw) { const c = cutAt(t); if (c) t = c[1]; } S.lastT = t; await setT(t); }
+$("#track").addEventListener("pointerdown", e => { const r = e.currentTarget.getBoundingClientRect(); seekTo(((e.clientX - r.left) / r.width) * S.duration); });
+
+/* ---------- panels ---------- */
+$$(".tabs button").forEach(b => b.onclick = () => {
+  $$(".tabs button").forEach(x => x.setAttribute("aria-selected", x === b));
+  $$(".pane").forEach(p => p.classList.toggle("on", p.dataset.pane === b.dataset.tab));
+});
+const RANGES = [];
+function bindRange(id, key, show, after) {
+  const el = $("#" + id), out = $("#" + id + "Out");
+  const sync = () => { el.value = S[key]; out.textContent = show(S[key]); };
+  sync(); RANGES.push(sync);
+  el.oninput = () => { S[key] = parseFloat(el.value); out.textContent = show(S[key]); after(); };
+}
+const silAgain = () => { buildSilenceCuts(); if (S.words.length) buildGapCuts(); recompute(); };
+bindRange("thr", "thr", v => v + " dB", silAgain);
+bindRange("minSil", "minSil", v => v.toFixed(2) + " s", silAgain);
+bindRange("pad", "pad", v => v.toFixed(2) + " s", silAgain);
+bindRange("maxClip", "maxClip", v => v ? v + " s" : "off", () => recompute());
+bindRange("perGroup", "perGroup", v => v, () => { buildGroups(); draw(); });
+bindRange("capSize", "capSize", v => Math.round(v * 100) + "%", draw);
+bindRange("capY", "capY", v => v < 0.35 ? "top" : v > 0.65 ? "low" : "middle", draw);
+bindRange("zoomAmt", "zoomAmt", v => "+" + Math.round(v * 100) + "%", () => recompute());
+bindRange("sfxVol", "sfxVol", v => Math.round(v * 100) + "%", () => {});
+bindRange("musVol", "musVol", v => Math.round(v * 100) + "%", () => { if (musicGain) musicGain.gain.value = S.musVol; });
+bindRange("hookDur", "hookDur", v => v + " s", draw);
+const CHECKS = { silOn: () => recompute(), fillOn: () => { recompute(); renderWords(); }, capOn: draw, zoomOn: draw, emojiOn: () => { buildGroups(); draw(); }, vigOn: draw, grainOn: draw, progOn: draw, duckOn: () => {} };
+const CHECK_KEY = { emojiOn: "emoji", vigOn: "vig", grainOn: "grain", progOn: "prog", duckOn: "duck" };
+Object.entries(CHECKS).forEach(([id, after]) => { $("#" + id).onchange = e => { S[CHECK_KEY[id] || id] = e.target.checked; after(); }; });
+$$("#fillSet input").forEach(x => x.onchange = () => { S.fill[x.dataset.k] = x.checked; if (S.words.length) { detectFillers(); recompute(false); buildZooms(); renderZooms(); renderWords(); } });
+$("#customFill").addEventListener("change", e => { S.customFill = e.target.value; if (S.words.length) { detectFillers(); recompute(false); renderWords(); } });
+$("#hookTxt").addEventListener("input", e => { S.hook = e.target.value; draw(); });
+const SEGS = [];
+function bindSeg(sel, attr, key, apply) {
+  const sync = () => $$(sel + " button").forEach(x => x.setAttribute("aria-pressed", String(x.dataset[attr] === String(S[key]))));
+  $$(sel + " button").forEach(b => b.onclick = () => { const v = b.dataset[attr]; S[key] = /^\d+$/.test(v) ? +v : v; sync(); apply(S[key]); });
+  sync(); SEGS.push(sync);
+}
+bindSeg("#styles", "style", "style", () => { buildGroups(); draw(); });
+bindSeg("#anim", "a", "anim", draw);
+bindSeg("#density", "d", "density", () => recompute());
+bindSeg("#sfx", "s", "sfx", v => { ensureAudio(); playSfx(v, AC); });
+bindSeg("#introSfx", "s", "introSfx", v => { ensureAudio(); playSfx(v, AC); });
+bindSeg("#wordMode", "mode", "wordMode", () => {});
+bindSeg("#ratio", "r", "ratio", () => { applyShape(); resetSaved(); renderStats(); });
+bindSeg("#fit", "f", "fit", draw);
+bindSeg("#intro", "i", "intro", () => previewIntro());
+bindSeg("#hookStyle", "h", "hookStyle", draw);
+bindSeg("#filter", "f", "filter", draw);
+bindSeg("#trans", "t", "trans", draw);
+bindSeg("#res", "q", "res", () => { resetSaved(); renderStats(); });
+bindSeg("#music", "m", "music", async v => {
+  $("#ownNote").classList.toggle("hidden", v !== "own");
+  if (v === "own" && !ownMusic) { $("#musicFile").click(); return; }
+  if (S.playing) { ensureAudio(); startMusic(srcToOut(curT())); }
+  else if (v !== "none") { ensureAudio(); await musicBuffer(v); toast("Press play to hear it with your video."); }
+});
+$("#musicFile").onchange = async e => {
+  const f = e.target.files[0]; e.target.value = ""; if (!f) { if (!ownMusic) { S.music = "none"; SEGS.forEach(s => s()); } return; }
+  ensureAudio();
+  try { ownMusic = await new Promise((res, rej) => f.arrayBuffer().then(b => AC.decodeAudioData(b, res, rej), rej)); toast(`Using ${f.name}. Press play to hear it.`); }
+  catch (err) { ownMusic = null; S.music = "none"; SEGS.forEach(s => s()); toast("This browser can't read that song. Try an MP3 or M4A."); }
+};
+function previewIntro() { if (S.playing || S.exporting || !S.segs.length) return; seekTo(S.segs[0].a); }
+function syncUI() {
+  RANGES.forEach(f => f()); SEGS.forEach(f => f());
+  Object.keys(CHECKS).forEach(id => { $("#" + id).checked = !!S[CHECK_KEY[id] || id]; });
+  $$("#fillSet input").forEach(x => { x.checked = !!S.fill[x.dataset.k]; });
+  $("#hookTxt").value = S.hook; $("#customFill").value = S.customFill;
+  $("#ownNote").classList.toggle("hidden", S.music !== "own");
+  renderSwatches();
+}
+function renderSwatches() {
+  const el = $("#swatches");
+  el.innerHTML = CONFIG.captionColours.map(c => `<button style="background:${c}" data-c="${c}" aria-label="Colour ${c}" aria-pressed="${c === S.accent}"></button>`).join("") + `<input type="color" id="customColour" value="${S.accent}" aria-label="Pick any colour">`;
+  el.querySelectorAll("button").forEach(b => b.onclick = () => { S.accent = b.dataset.c; renderSwatches(); draw(); });
+  $("#customColour").oninput = e => { S.accent = e.target.value; el.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", "false")); draw(); };
+}
+
+/* ---------- looks (templates) ---------- */
+const LOOK_BASE = { silOn: true, fillOn: true, capOn: true, style: "bold", anim: "pop", emoji: false, zoomOn: true, density: 1, sfx: "none", introSfx: "none", intro: "none", filter: "none", vig: false, grain: false, trans: "none", prog: false, music: "none", duck: true, maxClip: 0, hookStyle: "sticker" };
+const LOOKS = [
+  { id: "talk", icon: "🗣️", name: "Talking tip", desc: "Cuts pauses and ummm. Big captions, zooms with a pop.", set: { style: "bold", anim: "pop", sfx: "pop", intro: "punch" } },
+  { id: "quick", icon: "⚡", name: "Quick cut, no captions", desc: "Auto-cuts pauses and ummm. Fast zooms, whoosh and a beat.", set: { capOn: false, density: 2, sfx: "whoosh", intro: "flash", introSfx: "whoosh", filter: "vivid", trans: "shake", music: "bouncy", prog: true } },
+  { id: "hype", icon: "🔥", name: "Hype", desc: "One word at a time, emoji, glitch intro, boom and a hard beat.", set: { style: "single", anim: "bounce", emoji: true, density: 2, sfx: "boom", intro: "glitch", introSfx: "boom", filter: "vivid", trans: "glitch", music: "hype", prog: true } },
+  { id: "story", icon: "📖", name: "Story time", desc: "Clean captions, film colour, chill beat.", set: { style: "clean", anim: "fade", density: 0, filter: "film", vig: true, grain: true, music: "lofi" } },
+  { id: "karaoke", icon: "🎤", name: "Karaoke captions", desc: "Words light up as you say them.", set: { style: "karaoke", anim: "none", intro: "punch" } },
+  { id: "show", icon: "💅", name: "Show your work", desc: "No talking needed. A quick montage of your clips with music.", set: { silOn: false, fillOn: false, capOn: false, maxClip: 2, density: 1, intro: "punch", introSfx: "whoosh", filter: "vivid", trans: "flash", music: "island", duck: false } },
+  { id: "clean", icon: "✨", name: "Clean and simple", desc: "Just the cuts and small captions. No effects.", set: { style: "minimal", anim: "fade", zoomOn: false } },
+];
+function renderLooks() {
+  $("#tpls").innerHTML = LOOKS.map(l => `<button data-id="${l.id}" aria-pressed="${S.template === l.id}"><i>${l.icon}</i><b>${esc(l.name)}</b><span>${esc(l.desc)}</span></button>`).join("");
+  $$("#tpls button").forEach(b => b.onclick = () => applyLook(b.dataset.id));
+}
+async function applyLook(id) {
+  const l = LOOKS.find(x => x.id === id); if (!l || S.exporting) return;
+  Object.assign(S, LOOK_BASE, l.set); S.template = id;
+  syncUI(); renderLooks(); buildGroups(); recompute(); renderWords();
+  if (S.playing) { ensureAudio(); startMusic(srcToOut(curT())); }
+  if (S.music !== "none" && S.music !== "own") musicBuffer(S.music);
+  const wantsWords = S.fillOn || S.capOn;
+  if (wantsWords && !S.words.length && S.pcm16) toast(S.capOn ? "Now tap Make captions in the Captions tab. It also finds the ummm to cut." : "Tap Find filler words in the Cuts tab to cut the ummm too.", 6000);
+  else toast(`${l.name} look on. Press play to see it.`);
+}
+
+function renderTrack() {
+  const tr = $("#track"); tr.querySelectorAll(".c,.cb").forEach(e => e.remove());
+  clips.slice(1).forEach(c => { const d = document.createElement("div"); d.className = "cb"; d.style.left = (c.off / S.duration * 100) + "%"; tr.prepend(d); });
+  S.ranges.forEach(([a, b, k]) => { const d = document.createElement("div"); d.className = "c" + (k === "f" ? " f" : ""); d.style.left = (a / S.duration * 100) + "%"; d.style.width = ((b - a) / S.duration * 100) + "%"; tr.prepend(d); });
+}
+function renderStats() {
+  const cut = S.duration - S.outDur;
+  const nf = S.words.filter(isFillCut).length + (S.fillOn && S.fill.gap ? S.gapCuts.filter(g => g.on).length : 0);
+  $("#stats").textContent = S.noAudio ? `${fmt(S.duration)} long. No sound found to cut pauses.` : `Cut ${cut.toFixed(1)}s${nf ? ` (including ${nf} filler${nf > 1 ? "s" : ""})` : ""}. New length ${fmt(S.outDur)} (was ${fmt(S.duration)}).`;
+  const [w, h] = dims(S.ratio, S.res);
+  $("#expSummary").textContent = `${S.ratio} video, ${w}×${h}, ${fmt(S.outDur)} long${S.capOn && S.groups.length ? ", with captions" : ""}${S.music !== "none" ? ", with music" : ""}.`;
+}
+function renderCuts() {
+  const el = $("#cutList");
+  if (!S.silCuts.length) { el.innerHTML = `<div class="empty">${S.noAudio ? "No sound to work with." : "No pauses found at these settings. Try sliding “What counts as quiet” to the right."}</div>`; return; }
+  el.innerHTML = S.silCuts.map((c, i) => `<label class="it"><input type="checkbox" data-i="${i}" ${c.on ? "checked" : ""}> ${fmt(c.a, 1)} to ${fmt(c.b, 1)} <span class="hint">(${(c.b - c.a).toFixed(1)}s)</span><button data-go="${i}">Watch</button></label>`).join("");
+  el.querySelectorAll("input").forEach(x => x.onchange = () => { S.silCuts[x.dataset.i].on = x.checked; recompute(); });
+  el.querySelectorAll("button").forEach(x => x.onclick = e => { e.preventDefault(); const c = S.silCuts[x.dataset.go]; seekTo(Math.max(0, c.a - 1.5), true); });
+}
+function renderZooms() {
+  const el = $("#zoomList");
+  const ins = S.zooms.filter(z => z.scale > 1);
+  if (!ins.length) { el.innerHTML = `<div class="empty">No zoom points yet.</div>`; return; }
+  el.innerHTML = ins.map(z => `<label class="it"><input type="checkbox" data-k="${Math.round(z.t * 10)}" ${z.on ? "checked" : ""}> Zoom in at ${fmt(srcToOut(z.t), 1)}<button data-t="${z.t}">Watch</button></label>`).join("");
+  el.querySelectorAll("input").forEach(x => x.onchange = () => { const k = +x.dataset.k; if (x.checked) S.zoomOff.delete(k); else S.zoomOff.add(k); S.zooms.forEach(z => { if (Math.round(z.t * 10) === k) z.on = x.checked; }); draw(); });
+  el.querySelectorAll("button").forEach(x => x.onclick = e => { e.preventDefault(); seekTo(Math.max(0, +x.dataset.t - 1)); });
+}
+
+/* ---------- transcript chips ---------- */
+function renderWords() {
+  const el = $("#words");
+  if (!S.words.length) { el.innerHTML = `<span class="hint">Make captions first, and your words show up here.</span>`; return; }
+  el.innerHTML = S.words.map((w, i) => `<button class="w${w.cut ? " cut" : isFillCut(w) ? " fill" : ""}" data-i="${i}">${esc(w.text)}</button>`).join("");
+  lastNow = -1;
+}
+$("#words").addEventListener("click", e => {
+  const b = e.target.closest(".w"); if (!b) return;
+  const w = S.words[b.dataset.i];
+  if (S.wordMode === "cut") {
+    if (isFillCut(w)) w.keep = true; else if (w.fk && w.keep && !w.cut) w.keep = false; else w.cut = !w.cut;
+    recompute(false); buildZooms(); renderZooms(); renderWords(); return;
+  }
+  const inp = document.createElement("input"); inp.value = w.text; inp.size = Math.max(3, w.text.length + 1);
+  b.replaceWith(inp); inp.focus(); inp.select();
+  const done = () => { const v = inp.value.trim(); if (v) w.text = v; else w.cut = true; detectFillers(); renderWords(); recompute(false); };
+  inp.addEventListener("keydown", ev => { if (ev.key === "Enter") inp.blur(); if (ev.key === "Escape") { inp.value = w.text; inp.blur(); } });
+  inp.addEventListener("blur", done, { once: true });
+});
+let lastNow = -1;
+function highlightWord(t) {
+  if (!S.words.length) return;
+  let k = -1; for (let i = 0; i < S.words.length; i++) { if (S.words[i].start <= t) k = i; else break; }
+  if (k === lastNow) return;
+  const el = $("#words"); el.querySelector(".now")?.classList.remove("now");
+  el.querySelector(`.w[data-i="${k}"]`)?.classList.add("now"); lastNow = k;
+}
+function setWords(words, fromScript, rough) {
+  S.words = words.filter(w => w.text).map(w => ({ text: w.text, start: w.start, end: Math.max(w.end, w.start + 0.08), cut: false, keep: false, fk: null }));
+  if (!fromScript && !rough) detectFillers(); else S.gapCuts = [];
+  if (rough) toast("Word timings on this device are rough, so filler words weren't cut. Tap any word to cut it.", 6000);
+  renderWords(); recompute(false); buildZooms(); renderZooms();
+  $("#capStart").classList.add("hidden"); $("#findFill").classList.add("hidden");
+  const nf = S.words.filter(isFillCut).length + (S.fillOn && S.fill.gap ? S.gapCuts.filter(g => g.on).length : 0);
+  if (!rough) toast(`Got ${S.words.length} words${nf ? ` and cut ${nf} filler${nf > 1 ? "s" : ""}` : ""}. Tap any word to cut or keep it.`, 5000);
+}
+
+/* ---------- speech reader (runs in the browser, nothing uploaded) ---------- */
+const WORKER_SRC = `
+let asr = null, T = null;
+self.onmessage = async (e) => {
+  const { pcm, libs, model, lang } = e.data;
+  try {
+    if (!T) {
+      let lastErr;
+      for (const lib of libs) { try { T = await import(lib); break; } catch (err) { lastErr = err; } }
+      if (!T) throw new Error("network: could not load the speech library (" + (lastErr && lastErr.message) + ")");
+      T.env.allowLocalModels = false;
+    }
+    const progress_callback = p => self.postMessage({ type: "progress", p: { status: p.status, file: p.file, loaded: p.loaded, total: p.total } });
+    if (!asr) {
+      const gpu = !!(self.navigator && navigator.gpu);
+      try { if (!gpu) throw 0; asr = await T.pipeline("automatic-speech-recognition", model, { device: "webgpu", dtype: { encoder_model: "fp32", decoder_model_merged: "q4" }, progress_callback }); }
+      catch (err) { asr = await T.pipeline("automatic-speech-recognition", model, { device: "wasm", dtype: "q8", progress_callback }); }
+    }
+    self.postMessage({ type: "status", text: "Listening to your video…" });
+    const opts = { chunk_length_s: 30, stride_length_s: 5, language: lang, task: "transcribe" };
+    let out, kind = "word";
+    try { out = await asr(pcm, { ...opts, return_timestamps: "word" }); }
+    catch (err) { kind = "segment"; out = await asr(pcm, { ...opts, return_timestamps: true }); }
+    self.postMessage({ type: "done", kind, chunks: (out.chunks || []).map(c => ({ text: c.text, ts: c.timestamp })), text: out.text });
+  } catch (err) { self.postMessage({ type: "error", message: String((err && err.message) || err) }); }
+};`;
+let worker = null, speechBusy = false;
+function speechErrorText(msg) {
+  msg = String(msg || "");
+  if (/network|fetch|load|Failed to|NetworkError|404|403|CORS/i.test(msg)) return IN_APP ? `The speech reader couldn't download inside ${IN_APP}. Open this page in your browser and try again, or type your script instead.` : "The speech reader couldn't download. Check your internet and try again, or type your script instead.";
+  if (/memory|allocation|Out of|RangeError|wasm/i.test(msg)) return "This phone ran out of memory for the speech reader. Try a shorter video, close other apps, or type your script instead.";
+  return "Captions didn't work on this device. You can type your script instead.";
+}
+function runSpeech(btn, bar, idleText) {
+  if (speechBusy) return toast("Already listening. Hang on…");
+  if (!S.pcm16) return toast("We couldn't read the sound in this video. Try typing your script instead.");
+  if (typeof Worker === "undefined") return toast("This browser can't run the speech reader. Open the page in Chrome or Safari, or type your script.");
+  speechBusy = true;
+  const reset = () => { speechBusy = false; busy(null); btn.disabled = false; btn.textContent = idleText; bar.classList.add("hidden"); };
+  btn.disabled = true; btn.textContent = "Getting the speech reader…"; bar.classList.remove("hidden"); bar.querySelector("i").style.width = "2%";
+  try { if (!worker) worker = new Worker(URL.createObjectURL(new Blob([WORKER_SRC], { type: "text/javascript" })), { type: "module" }); }
+  catch (e) { reset(); return toast("This browser can't run the speech reader. Open the page in Chrome or Safari, or type your script."); }
+  const files = {};
+  worker.onerror = e => { reset(); console.error(e); toast(speechErrorText(e && e.message)); };
+  worker.onmessage = e => {
+    const m = e.data;
+    if (m.type === "progress" && m.p.total) {
+      files[m.p.file] = m.p; const L = Object.values(files).reduce((s, f) => s + (f.loaded || 0), 0), Tt = Object.values(files).reduce((s, f) => s + (f.total || 0), 0);
+      bar.querySelector("i").style.width = (L / Tt * 100).toFixed(0) + "%";
+      btn.textContent = `Getting the speech reader… ${Math.round(L / 1e6)} of ${Math.round(Tt / 1e6)} MB`;
+    }
+    if (m.type === "status") { btn.textContent = m.text; bar.querySelector("i").style.width = "100%"; busy(`Listening to your video… this takes about ${Math.max(10, Math.round(S.duration * 0.6))} seconds`); }
+    if (m.type === "done") {
+      reset();
+      const words = [];
+      if (m.kind === "word") m.chunks.forEach(c => { const s = c.ts[0], e2 = c.ts[1] ?? s + 0.3; const t = c.text.trim(); if (t) words.push({ text: t, start: s, end: e2 }); });
+      else m.chunks.forEach(c => { const s = c.ts[0], e2 = c.ts[1] ?? Math.min(S.duration, s + 5); spread(c.text, s, e2).forEach(w => words.push(w)); });
+      if (!words.length) return toast("We couldn't hear any words. Try typing your script instead.");
+      setWords(words, false, m.kind !== "word");
+    }
+    if (m.type === "error") { reset(); console.error(m.message); toast(speechErrorText(m.message), 8000); }
+  };
+  const copy = S.pcm16.slice();
+  worker.postMessage({ pcm: copy, libs: CONFIG.speechLibraries, model: CONFIG.speechModel, lang: CONFIG.language }, [copy.buffer]);
+}
+$("#aiBtn").onclick = () => runSpeech($("#aiBtn"), $("#aiBar"), "Make captions for me");
+$("#findFill").onclick = () => runSpeech($("#findFill"), $("#fillBar"), "Find filler words");
+(function dataWarning() {
+  const c = navigator.connection; if (!c) return;
+  if (c.saveData || /2g|3g/.test(c.effectiveType || "") || c.type === "cellular") {
+    const t = `You look to be on mobile data. The speech reader is a one-time ${CONFIG.speechDownloadMB} MB download, so Wi-Fi is better.`;
+    $("#aiHint").textContent = t; $("#fillHint").textContent = t;
+  }
+})();
+function spread(text, a, b) {
+  const ws = text.split(/\s+/).filter(Boolean); const tot = ws.reduce((s, w) => s + w.length + 2, 0); let t = a; const out = [];
+  ws.forEach(w => { const d = (b - a) * (w.length + 2) / tot; out.push({ text: w, start: t, end: t + d * 0.92 }); t += d; });
+  return out;
+}
+$("#scriptBtn").onclick = () => {
+  const txt = $("#script").value.trim(); if (!txt) return toast("Paste your script first.");
+  const ws = txt.split(/\s+/); const tot = ws.reduce((s, w) => s + w.length + 2, 0); let o = 0; const out = [];
+  ws.forEach(w => { const d = S.outDur * (w.length + 2) / tot; const a = outToSrc(o + 0.001), b = outToSrc(o + d * 0.92); out.push({ text: w, start: a, end: Math.max(b, a + 0.08) }); o += d; });
+  setWords(out, true);
+};
+
+/* ---------- export ---------- */
+let rec = null, wakeLock = null, savedFile = null, savedUrl = null;
+async function keepAwake(on) {
+  try {
+    if (on && "wakeLock" in navigator && !wakeLock) { wakeLock = await navigator.wakeLock.request("screen"); wakeLock.addEventListener("release", () => { wakeLock = null; }); }
+    if (!on && wakeLock) { await wakeLock.release(); wakeLock = null; }
+  } catch (e) {}
+}
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible" && S.exporting) keepAwake(true);
+  if (document.visibilityState === "hidden" && S.exporting === "live") toast("Come back to this page. The video only builds while it's on screen.", 8000);
+});
+function resetSaved() {
+  ["#shareBtn", "#dlLink", "#saveTip", "#expMsg"].forEach(s => $(s).classList.add("hidden"));
+  if (savedUrl) URL.revokeObjectURL(savedUrl); savedUrl = null; savedFile = null;
+  if (!S.exporting) { $("#expBtn").textContent = "Make my video"; $("#expBar").classList.add("hidden"); }
+}
+function fileName(ext) { return `${CONFIG.appName.toLowerCase().replace(/\s+/g, "-")}-${new Date().toISOString().slice(0, 10)}-${S.ratio.replace(":", "x")}.${ext}`; }
+function exportUI(on, msg) {
+  S.cancel = false;
+  $("#expBtn").disabled = on; $("#expBtn").textContent = on ? "Making your video…" : "Make it again";
+  $("#cancelBtn").classList.toggle("hidden", !on);
+  $("#expBar").classList.remove("hidden"); if (on) $("#expBar i").style.width = "0%";
+  $("#expMsg").classList.remove("hidden"); if (msg) $("#expMsg").textContent = msg;
+  $$(".tabs button, #newBtn, #playBtn").forEach(b => b.disabled = on);
+}
+$("#cancelBtn").onclick = () => { S.cancel = true; if (S.exporting === "live") endPlayback(); };
+
+$("#expBtn").onclick = async () => {
+  if (S.exporting || !S.segs.length) return;
+  stopPlayback(); resetSaved();
+  ensureAudio();
+  await keepAwake(true);
+  let result = null;
+  try {
+    result = await exportFast();
+    if (result === "fallback") result = await exportLive();
+  } catch (e) {
+    console.error(e);
+    if (!S.cancel) { toast("Something went wrong building the video. Trying the slower way…", 5000); try { result = await exportLive(); } catch (e2) { console.error(e2); result = null; } }
+  }
+  S.exporting = false; await keepAwake(false);
+  const [pw, ph] = dims(S.ratio, 720); setCanvasSize(pw, ph);
+  exportUI(false);
+  if (!result || S.cancel) { $("#expMsg").textContent = S.cancel ? "Stopped." : "That didn't work on this device. Try 720p, a shorter video, or open the page in Chrome or Safari."; $("#expBtn").textContent = "Make my video"; draw(); return; }
+  offerSave(result.blob, result.ext);
+  draw();
+};
+
+// Fast way: decodes each frame and builds an MP4 directly. Usually quicker than the video's length.
+async function exportFast() {
+  if (!window.VideoEncoder || !window.VideoFrame) return "fallback";
+  const MB = await loadMB(); if (!MB) return "fallback";
+  const [w, h] = dims(S.ratio, S.res);
+  const bitrate = Math.round(w * h * FPS * 0.16);
+  const can = await MB.canEncodeVideo("avc", { width: w, height: h, bitrate }).catch(() => false);
+  if (!can) return "fallback";
+  if (!(await ensureAac(MB))) return "fallback";
+  // every clip's video must be readable this way
+  for (const c of clips) {
+    const inp = await clipInput(MB, c).catch(() => null); if (!inp) return "fallback";
+    const vt = await inp.getPrimaryVideoTrack().catch(() => null);
+    if (!vt || !(await vt.canDecode().catch(() => false))) return "fallback";
+    c.vt = vt; c.at = await inp.getPrimaryAudioTrack().catch(() => null);
+    if (c.at && !(await c.at.canDecode().catch(() => false))) c.at = null;
+  }
+  S.exporting = "fast"; exportUI(true, "Mixing the sound…");
+  setCanvasSize(w, h);
+  // 1. the sound
+  const audio = await renderAudio(MB);
+  if (S.cancel) return null;
+  // 2. the pictures
+  const output = new MB.Output({ format: new MB.Mp4OutputFormat({ fastStart: "in-memory" }), target: new MB.BufferTarget() });
+  const vsrc = new MB.CanvasSource(cv, { codec: "avc", bitrate, keyFrameInterval: 2, latencyMode: "quality" });
+  output.addVideoTrack(vsrc, { frameRate: FPS });
+  const asrc = new MB.AudioBufferSource({ codec: "aac", bitrate: 160000 });
+  output.addAudioTrack(asrc);
+  await output.start();
+  await asrc.add(audio); asrc.close();
+  $("#expMsg").textContent = "Building your video. Keep this page open.";
+  const N = Math.max(1, Math.round(S.outDur * FPS));
+  // work out which clip and moment each output frame comes from
+  const runs = []; let run = null;
+  for (let i = 0; i < N; i++) { const o = i / FPS, t = outToSrc(o), k = clipAt(t); if (!run || run.k !== k) { run = { k, frames: [] }; runs.push(run); } run.frames.push({ o, t }); }
+  let done = 0, last = null, lastW = 0, lastH = 0, t0 = performance.now();
+  for (const r of runs) {
+    const c = clips[r.k];
+    const dw = c.vt.displayWidth, dh = c.vt.displayHeight, sc = Math.min(1, 1920 / Math.max(dw, dh));
+    const sink = new MB.CanvasSink(c.vt, { width: Math.round(dw * sc / 2) * 2, height: Math.round(dh * sc / 2) * 2, fit: "fill", poolSize: 3 });
+    const ts = r.frames.map(f => clamp(f.t - c.off, 0, c.dur - 0.001) + (c.base || 0));
+    let j = 0;
+    for await (const wc of sink.canvasesAtTimestamps(ts)) {
+      if (S.cancel) { await output.cancel(); return null; }
+      const f = r.frames[j++];
+      if (wc) { last = wc.canvas; lastW = wc.canvas.width; lastH = wc.canvas.height; }
+      drawScene(ctx, last, lastW, lastH, f.t, f.o);
+      await vsrc.add(f.o, 1 / FPS);
+      done++;
+      if (done % 6 === 0) {
+        $("#expBar i").style.width = (done / N * 100).toFixed(1) + "%";
+        const el = (performance.now() - t0) / 1000, left = el / done * (N - done);
+        $("#expMsg").textContent = `Building your video… ${Math.round(done / N * 100)}%${done > 30 ? `, about ${fmt(left)} left` : ""}. Keep this page open.`;
+      }
+    }
+  }
+  vsrc.close();
+  $("#expMsg").textContent = "Finishing…";
+  await output.finalize();
+  return { blob: new Blob([output.target.buffer], { type: "video/mp4" }), ext: "mp4" };
+}
+
+// The full soundtrack: your voice with the cuts, sound effects and music, all mixed.
+async function renderAudio(MB) {
+  const sr = 48000, len = Math.max(1, Math.ceil(S.outDur * sr));
+  const OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+  const ac = new OAC(2, len, sr);
+  const out = ac.createGain(); out.connect(ac.destination);
+  // voice
+  let o = 0;
+  for (const s of S.segs) {
+    for (const c of clips) {
+      const a = Math.max(s.a, c.off), b = Math.min(s.b, c.off + c.dur);
+      if (b - a < 0.005) continue;
+      const startOut = o + (a - s.a);
+      if (c.at) {
+        const sink = new MB.AudioBufferSink(c.at), base = c.base || 0, la = a - c.off + base, lb = b - c.off + base;
+        const gg = ac.createGain(); gg.connect(out);
+        const end = startOut + (b - a);
+        gg.gain.setValueAtTime(0, startOut); gg.gain.linearRampToValueAtTime(1, startOut + 0.006); gg.gain.setValueAtTime(1, Math.max(startOut + 0.006, end - 0.006)); gg.gain.linearRampToValueAtTime(0, end);
+        for await (const wb of sink.buffers(la, lb)) {
+          const off = Math.max(0, la - wb.timestamp), when = startOut + (wb.timestamp + off - la), dur = Math.min(wb.duration - off, lb - (wb.timestamp + off));
+          if (dur <= 0) continue;
+          const src = ac.createBufferSource(); src.buffer = wb.buffer; src.connect(gg); src.start(Math.max(0, when), off, dur);
+        }
+      }
+    }
+    o += s.b - s.a;
+  }
+  // sound effects
+  if (S.introSfx !== "none") playSfx(S.introSfx, ac, 0.01, out);
+  if (S.zoomOn && S.sfx !== "none") S.zooms.forEach(z => { if (z.on && z.scale > 1 && !cutAt(z.t)) playSfx(S.sfx, ac, srcToOut(z.t), out); });
+  // music
+  const mb = await musicBuffer(S.music);
+  if (mb) {
+    const src = ac.createBufferSource(); src.buffer = mb; src.loop = true;
+    const mg = ac.createGain(); src.connect(mg); mg.connect(out);
+    mg.gain.setValueAtTime(S.musVol, 0);
+    if (S.duck) for (let t = 0; t < S.outDur; t += 0.05) mg.gain.setTargetAtTime(talkingAt(outToSrc(t)) ? S.musVol * 0.35 : S.musVol, t, 0.08);
+    mg.gain.setTargetAtTime(0, Math.max(0, S.outDur - 0.6), 0.2); // fade out at the end
+    src.start(0); src.stop(S.outDur);
+  }
+  return ac.startRendering();
+}
+
+// Slow way (older browsers): plays the video through once and records the screen.
+function pickType() {
+  const c = ['video/mp4;codecs="avc1.640028,mp4a.40.2"', 'video/mp4;codecs="avc1.42E01E,mp4a.40.2"', "video/mp4", 'video/webm;codecs="vp9,opus"', 'video/webm;codecs="vp8,opus"', "video/webm"];
+  return c.find(t => window.MediaRecorder && MediaRecorder.isTypeSupported(t)) || "";
+}
+async function exportLive() {
+  if (!window.MediaRecorder || !cv.captureStream || !recDest) { toast("This browser can't make videos. Open the page in Chrome or Safari.", 7000); return null; }
+  const [w, h] = dims(S.ratio, S.res); setCanvasSize(w, h);
+  const type = pickType();
+  const stream = cv.captureStream(FPS);
+  recDest.stream.getAudioTracks().forEach(t => stream.addTrack(t));
+  const chunks = [];
+  rec = new MediaRecorder(stream, { mimeType: type || undefined, videoBitsPerSecond: Math.round(w * h * FPS * 0.14), audioBitsPerSecond: 160000 });
+  rec.ondataavailable = e => e.data.size && chunks.push(e.data);
+  S.exporting = "live"; exportUI(true, "It plays your video through once to build it, so it takes about as long as the video. Keep this page open and on screen.");
+  S.playing = false; V().pause(); await setT(S.segs[0].a); S.lastT = S.segs[0].a; draw();
+  const done = new Promise(r => { rec.onstop = r; });
+  finishCb = () => { if (rec.state !== "inactive") rec.stop(); };
+  rec.start(500);
+  setPlayIcon(true); S.playing = true; introDone = false;
+  try { await V().play(); startMusic(0); } catch (e) { S.playing = false; toast("Tap Make my video again to start."); rec.stop(); }
+  await done;
+  stopMusic(); setPlayIcon(false);
+  if (S.cancel) return null;
+  const realType = (rec.mimeType || type || "video/webm").split(";")[0];
+  return { blob: new Blob(chunks, { type: realType }), ext: realType.includes("mp4") ? "mp4" : "webm" };
+}
+
+/* ---------- saving: share sheet first (works on iPhone), download link as backup ---------- */
+function offerSave(blob, ext) {
+  const name = fileName(ext);
+  savedFile = new File([blob], name, { type: blob.type || (ext === "mp4" ? "video/mp4" : "video/webm") });
+  savedUrl = URL.createObjectURL(blob);
+  const a = $("#dlLink"); a.href = savedUrl; a.download = name; a.textContent = `Download the file (${(blob.size / 1e6).toFixed(1)} MB)`; a.classList.remove("hidden");
+  $("#expBar i").style.width = "100%";
+  let canShare = false; try { canShare = !!(navigator.canShare && navigator.canShare({ files: [savedFile] })); } catch (e) {}
+  const sb = $("#shareBtn"); sb.classList.toggle("hidden", !canShare);
+  sb.textContent = IS_IOS ? "Save to Photos or share" : "Save or share video";
+  a.classList.toggle("btn", true); a.classList.toggle("ghost", canShare);
+  const tip = $("#saveTip"); tip.classList.remove("hidden");
+  if (canShare && IS_IOS) tip.textContent = `Tap "Save to Photos or share", then pick "Save Video". It lands in your Photos, ready to post.`;
+  else if (canShare) tip.textContent = "Tap Save or share, then pick Photos, Gallery, Instagram or TikTok. Or use Download the file.";
+  else if (IN_APP) tip.textContent = `If Download doesn't work inside ${IN_APP}, open this page in ${IS_IOS ? "Safari" : "Chrome"} (button at the top) and make it there.`;
+  else tip.textContent = IS_IOS ? "Tap Download, then open it from the Files app and tap Share > Save Video." : "It saves to your Downloads folder.";
+  $("#expMsg").textContent = ext === "mp4" ? "Done. Your MP4 is ready." : "Done. This browser can only make WebM videos. Some apps won't take WebM, so for an MP4 open this page in Chrome or Safari.";
+  if (!S.unlocked) $("#expMsg").textContent += " Free videos have the small Hustle Cut mark.";
+}
+$("#shareBtn").onclick = async () => {
+  if (!savedFile) return;
+  try { await navigator.share({ files: [savedFile], title: CONFIG.appName }); }
+  catch (e) { if (e && e.name === "AbortError") return; console.warn(e); toast("Sharing didn't work here. Use Download the file instead."); }
+};
+window.addEventListener("beforeunload", e => { if (S.exporting) { e.preventDefault(); e.returnValue = ""; } });
+
+/* ---------- start ---------- */
+renderLooks(); syncUI(); applyShape();
+window.addEventListener("load", () => setTimeout(loadMB, 1500)); // get the video tools ready in the background
+
+// for testing
+window.HustleCut = { S, setWords, recompute, clips, curT, detectFillers, applyLook, exportFast, renderAudio, dims, outToSrc, srcToOut };
+</script>
+</body>
+</html>

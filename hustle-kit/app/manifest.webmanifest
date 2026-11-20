@@ -1,0 +1,16 @@
+{
+  "name": "Hustle Kit",
+  "short_name": "Hustle Kit",
+  "description": "Bookings, payments, clients and invoices for small businesses in Barbados.",
+  "start_url": "app.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFF9EC",
+  "theme_color": "#00267F",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
