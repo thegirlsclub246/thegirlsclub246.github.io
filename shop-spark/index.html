@@ -495,7 +495,7 @@ function home(){
       <button class="btn" id="go">Start the growth quiz</button>
       ${saved ? `<button class="btn ghost" id="again" style="margin-top:10px">See my last plan</button>` : ""}
     </div>
-    ${rmv("These quizzes share what worked for us. They are a guide, not a promise of income.")}
+    ${rmv("These quizzes share what worked for us, as a guide.")}
     ${foot}</div>`);
   document.getElementById("goFind").onclick = () => start("find");
   document.getElementById("go").onclick = () => start("grow");
@@ -621,7 +621,7 @@ function level(t){
   return ["Glowing stage", "You're ahead of most sellers. Your plan focuses on scaling up."];
 }
 
-const rmv = t => `<p class="rmv"><b>Results may vary.</b> ${t}</p>`;
+const rmv = t => `<p class="rmv"><b>Results may vary. Not a promise of income.</b> ${t}</p>`;
 
 function results(r){
   const [lvl, lvlText] = level(r.total);
@@ -641,7 +641,7 @@ function results(r){
       <div class="bars">${Object.keys(AREAS).map(a => `
         <div class="bar${a===r.focus?" low":""}"><div class="row"><span><strong>${AREAS[a].name}</strong>${a===r.focus?" · focus here first":a===r.strong?" · your strength":""}</span><span>${r.pct[a]}%</span></div>
         <div class="track"><div class="fill" style="width:${Math.max(r.pct[a],3)}%"></div></div></div>`).join("")}</div>
-      ${rmv("Your score is based on your answers only. It is a guide to where to focus, not a promise of sales.")}
+      ${rmv("Your score is based on your answers only. It shows where to focus first.")}
     </div>
 
     ${startCard("Your coaching prompt", "We turned your answers into one prompt. Paste it into Claude and you'll get advice for your exact situation.", r.startPrompt || "")}
@@ -741,7 +741,7 @@ function findResults(r){
       <div class="bars">${r.top.map((t,i) => `
         <div class="bar${i?"":" low"}"><div class="row"><span><strong>${i+1}. ${esc(PRODUCTS[t.k].name)}</strong>${i?"":" · best match"}</span><span>${t.fit}% fit</span></div>
         <div class="track"><div class="fill" style="width:${t.fit}%"></div></div></div>`).join("")}</div>
-      ${rmv("Fit scores and starter prices are guides based on your answers, not a promise of sales.")}
+      ${rmv("Fit scores and starter prices are guides based on your answers.")}
     </div>
 
     ${startCard("Your product prompt", "We turned your answers into one prompt. Paste it into Claude to get 6 product ideas made for you, and which one to start with.", r.startPrompt || "")}
@@ -750,7 +750,7 @@ function findResults(r){
       <span class="tag">Made from your answer</span>
       <h3 style="margin-top:10px">3 product ideas from your skill: ${esc(r.skill)}</h3>
       <ol class="steps">${skillIdeas(r.skill).map(([k,d,pr]) => `<li><strong>${esc(k)}:</strong> ${esc(d)} <span class="muted">Starter price: ${esc(pr)}.</span></li>`).join("")}</ol>
-      <p class="small muted" style="margin:8px 0 0"><b>Results may vary.</b></p>
+      <p class="small muted" style="margin:8px 0 0"><b>Results may vary. Not a promise of income.</b></p>
     </div>` : ""}
 
     ${r.top.map((t,i) => { const P = PRODUCTS[t.k]; return `<div class="card">
@@ -759,7 +759,7 @@ function findResults(r){
       <p style="margin:0 0 6px"><strong>Make first:</strong> ${esc(P.first)}</p>
       <p style="margin:0 0 12px"><strong>Starter price idea:</strong> ${esc(P.price)}</p>
       <ol class="steps">${P.steps.map(s => `<li>${esc(s)}</li>`).join("")}</ol>
-      <p class="small muted" style="margin:8px 0 0"><b>Results may vary.</b></p>
+      <p class="small muted" style="margin:8px 0 0"><b>Results may vary. Not a promise of income.</b></p>
     </div>`; }).join("")}
 
     <div class="card">
@@ -771,7 +771,7 @@ function findResults(r){
         ${tasks.map(([t,d,pr],ti) => taskHTML(wi+"-"+ti, done, fill(t), fill(d), fill(pr))).join("")}
       </details>`).join("")}
       <p class="small muted" style="margin:14px 0 0">Once you've made your first sales, take the growth quiz to see your score and what to work on next.</p>
-      ${rmv("The 1,000 goal is a target to work toward, not a promise. Your results depend on your product, your effort and your market.")}
+      ${rmv("The 1,000 goal is a target to work toward. Your results depend on your product, your effort and your market.")}
     </div>
 
     ${lessonsCard("find")}
