@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#3B2257">
+<meta name="description" content="Shop Spark: free 3-minute quizzes that show you which digital products suit you, or give current sellers a growth score and a 30-day plan.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Shop Spark">
+<title>Shop Spark</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&display=swap">
+<style>
+:root{
+  --bg:#FBF6F1; --surface:#FFFFFF; --ink:#231A2C; --muted:#6C5F75; --line:#EADFD6;
+  --accent:#3B2257; --accent-soft:#ECE4F3; --on-accent:#FFFFFF;
+  --spark:#F08A3C; --spark-soft:#FDE6D3; --good:#2E8B6A; --warn:#C2553F;
+  --display:"Bricolage Grotesque","Avenir Next",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r:16px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#17121C; --surface:#221A29; --ink:#F1EAF5; --muted:#A99BB3; --line:#352B3E;
+  --accent:#C9A8F0; --accent-soft:#2F2340; --on-accent:#1A1220;
+  --spark:#F5A262; --spark-soft:#3D2A1D; --good:#5CC79E; --warn:#E5806B; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#17121C; --surface:#221A29; --ink:#F1EAF5; --muted:#A99BB3; --line:#352B3E;
+  --accent:#C9A8F0; --accent-soft:#2F2340; --on-accent:#1A1220;
+  --spark:#F5A262; --spark-soft:#3D2A1D; --good:#5CC79E; --warn:#E5806B; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:17px/1.5 var(--body);-webkit-font-smoothing:antialiased;
+  padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+main{max-width:560px;margin:0 auto;padding:20px 16px 48px;min-height:100vh;display:flex;flex-direction:column}
+h1,h2,h3{font-family:var(--display);line-height:1.15;margin:0 0 .4em;letter-spacing:-.01em}
+h1{font-size:clamp(30px,8vw,42px)}
+h2{font-size:26px}
+h3{font-size:19px}
+p{margin:0 0 1em}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+.brand{display:flex;align-items:center;gap:8px;font-family:var(--display);font-weight:700;font-size:18px;margin-bottom:28px}
+.brand svg{width:28px;height:28px}
+.btn{appearance:none;border:0;border-radius:999px;padding:16px 24px;font:700 18px var(--body);cursor:pointer;
+  background:var(--accent);color:var(--on-accent);width:100%;min-height:56px}
+.btn:focus-visible,.opt:focus-visible,input:focus-visible{outline:3px solid var(--spark);outline-offset:2px}
+.btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--line)}
+.btn[disabled]{opacity:.5;cursor:default}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;margin-bottom:16px}
+.hero-spark{background:var(--spark-soft);border-radius:var(--r);padding:18px 20px;margin:18px 0 24px}
+.hero-spark ul{margin:0;padding-left:20px}
+.hero-spark li{margin:4px 0}
+/* quiz */
+.progress{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:0 0 6px}
+.progress i{display:block;height:100%;background:var(--spark);width:0;transition:width .3s}
+.qcount{font-size:14px;color:var(--muted);margin-bottom:22px;display:flex;justify-content:space-between}
+.qcount button{background:none;border:0;color:var(--muted);font:inherit;cursor:pointer;padding:0;text-decoration:underline}
+.opts{display:grid;gap:10px;margin-top:18px}
+.opt{appearance:none;text-align:left;border:2px solid var(--line);background:var(--surface);color:var(--ink);
+  border-radius:var(--r);padding:16px 18px;font:400 17px/1.35 var(--body);cursor:pointer;min-height:58px}
+.opt:hover{border-color:var(--accent)}
+.opt.picked{border-color:var(--accent);background:var(--accent-soft)}
+/* email */
+label{display:block;font-weight:700;margin:0 0 6px}
+input[type=text],input[type=email]{width:100%;padding:15px 16px;border:2px solid var(--line);border-radius:12px;
+  font:17px var(--body);background:var(--surface);color:var(--ink);margin-bottom:14px}
+.check{display:flex;gap:10px;align-items:flex-start;font-weight:400;font-size:15px;color:var(--muted)}
+.check input{width:22px;height:22px;margin-top:1px;flex:none}
+.err{color:var(--warn);font-size:15px;min-height:1.3em;margin:4px 0 10px}
+/* results */
+.score{display:flex;align-items:center;gap:20px}
+.ring{width:120px;height:120px;flex:none}
+.ring text{font-family:var(--display);font-weight:700;fill:var(--ink)}
+.bars{display:grid;gap:12px;margin-top:6px}
+.bar .row{display:flex;justify-content:space-between;font-size:15px;margin-bottom:4px}
+.bar .track{height:10px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar .fill{height:100%;border-radius:99px;background:var(--good)}
+.bar.low .fill{background:var(--spark)}
+.tag{display:inline-block;font-size:13px;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--spark-soft);color:var(--ink)}
+ol.steps{padding-left:22px;margin:0}
+ol.steps li{margin:0 0 10px}
+.week{margin-top:14px}
+.week summary{cursor:pointer;font-family:var(--display);font-weight:700;font-size:18px;padding:6px 0;list-style:none}
+.week summary::-webkit-details-marker{display:none}
+.week summary::before{content:"▸ ";color:var(--spark)}
+.week[open] summary::before{content:"▾ "}
+.task{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line);font-weight:400;cursor:pointer}
+.task input{width:22px;height:22px;flex:none;margin-top:2px;accent-color:var(--good)}
+.task.done span{text-decoration:line-through;color:var(--muted)}
+.task em{display:block;font-style:normal;font-size:14px;color:var(--muted)}
+.cta{background:var(--accent);color:var(--on-accent);border-radius:var(--r);padding:22px 20px;margin:8px 0 16px}
+.cta h3{color:inherit}
+.cta a{color:inherit;font-weight:700}
+.row-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0 16px}
+.row-btns .btn{font-size:16px;padding:14px 12px}
+.testmode{position:fixed;left:0;right:0;bottom:0;background:var(--warn);color:#fff;font-size:13px;text-align:center;padding:6px 12px calc(6px + env(safe-area-inset-bottom,0))}
+footer{margin-top:auto;padding-top:28px;font-size:13px;color:var(--muted);text-align:center}
+.fade{animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.fade{animation:none}.progress i{transition:none}}
+@media print{.btn,.row-btns,.testmode,.qcount,.cta,footer{display:none!important}body{background:#fff}.week{break-inside:avoid}details>*{display:block}}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<div class="testmode" id="testmode" hidden>Test mode: emails aren't being saved yet. Add your MailerLite details in the settings at the top of the code.</div>
+
+<script>
+/* ===================== SETTINGS: edit these ===================== */
+const CONFIG = {
+  appName: "Shop Spark",
+  madeBy: "Made with care in Barbados",
+  // MailerLite: open your form's "Embed" code and copy the two numbers from the URL that looks like
+  // https://assets.mailerlite.com/jsonp/ACCOUNT_ID/forms/FORM_ID/subscribe
+  mailerliteAccountId: "2810799",
+  mailerliteFormId: "204626417117300470",        // "Shop Spark - Growth quiz" form, adds people to the SHOP SPARK GROWTH group
+  mailerliteFinderFormId: "204626332385019538",  // "Shop Spark - Product finder" form, adds people to the SHOP SPARK FINDER group
+  // Or any other form service that accepts a POST with "email" and "name" (Formspree, Google Apps Script...).
+  otherFormUrl: "",
+  // The box at the end of the results that markets your business. Leave link empty to hide the button.
+  promoTitle: "Want more tiny tools that make life easier?",
+  promoText: "I build small, friendly apps for busy people, like Brain Basket, a calm planner for the ADHD brain. You'll be first to hear when new ones launch.",
+  promoButton: "See my apps",
+  promoLink: ""
+};
+/* ================================================================ */
+
+const AREAS = {
+  offer:    {name:"Offer",    blurb:"How clear and well-priced your product is"},
+  audience: {name:"Audience", blurb:"How well you know and keep in touch with your buyers"},
+  traffic:  {name:"Traffic",  blurb:"How many of the right people see your product"},
+  sales:    {name:"Sales",    blurb:"How well you turn visitors into buyers, and buyers into repeat buyers"}
+};
+
+const QUESTIONS = [
+  {id:"type", q:"What do you sell?", opts:[
+    {t:"Ebooks or guides", v:"ebook"}, {t:"Templates, planners or printables", v:"template"},
+    {t:"Courses or workshops", v:"course"}, {t:"Apps, tools or something else digital", v:"app"}]},
+  {id:"stage", q:"How long have you been selling?", opts:[
+    {t:"Not yet, I'm about to launch", v:"pre"}, {t:"Less than 6 months", v:"new"},
+    {t:"6 months to 2 years", v:"mid"}, {t:"More than 2 years", v:"old"}]},
+  {id:"who", area:"offer", q:"Can you describe your buyer in one sentence?", opts:[
+    {t:"Not really, it's for anyone", s:0}, {t:"Roughly, but it changes", s:1},
+    {t:"Yes, I know who it's for", s:2}, {t:"Yes, and I know the exact problem it solves for them", s:3}]},
+  {id:"price", area:"offer", q:"How do you feel about your price?", opts:[
+    {t:"I guessed it", s:0}, {t:"I think it's too low", s:1},
+    {t:"I checked what others charge", s:2}, {t:"I've tested it and buyers happily pay it", s:3}]},
+  {id:"list", area:"audience", q:"How many people are on your email list?", opts:[
+    {t:"I don't have a list", s:0}, {t:"Under 100", s:1}, {t:"100 to 1,000", s:2}, {t:"Over 1,000", s:3}]},
+  {id:"show", area:"audience", q:"How often do you show up for your audience (posts, emails, lives)?", opts:[
+    {t:"Rarely", s:0}, {t:"When I remember", s:1}, {t:"Every week", s:2}, {t:"Most days, on a plan", s:3}]},
+  {id:"where", area:"traffic", q:"Where do most buyers find you?", opts:[
+    {t:"I'm not sure", s:0}, {t:"Friends and word of mouth", s:1},
+    {t:"Social media posts", s:2}, {t:"Several places: social, search, ads or partners", s:3}]},
+  {id:"page", area:"traffic", q:"Do you have one clear page or link where people can buy?", opts:[
+    {t:"No, people message me", s:0}, {t:"Sort of, it's a bit messy", s:1},
+    {t:"Yes, a simple shop or link", s:2}, {t:"Yes, and I know how many people visit it", s:3}]},
+  {id:"sales", area:"sales", q:"How many sales do you make in a normal month?", opts:[
+    {t:"None yet", s:0}, {t:"1 to 10", s:1}, {t:"11 to 50", s:2}, {t:"More than 50", s:3}]},
+  {id:"repeat", area:"sales", q:"What happens after someone buys?", opts:[
+    {t:"Nothing, that's it", s:0}, {t:"I say thank you", s:1},
+    {t:"I follow up and ask for a review", s:2}, {t:"I offer them something else they'd like", s:3}]},
+  {id:"block", q:"What's your biggest block right now?", opts:[
+    {t:"Not enough time or energy", v:"time"}, {t:"I don't know what to post or say", v:"content"},
+    {t:"People look but don't buy", v:"convert"}, {t:"I feel stuck and don't know where to start", v:"stuck"}]}
+];
+
+const NOUN = {ebook:"ebook", template:"template", course:"course", app:"app"};
+
+/* Step library. Each area has a "start" set (for low scores) and a "grow" set (for good scores). */
+const LIB = {
+  offer:{
+    start:[
+      ["Write your one-sentence promise", "\"My {p} helps [who] to [result] without [pain].\" Put it at the top of your sales page."],
+      ["Talk to 3 real buyers or fans", "Ask: what made you want this? Copy their exact words into your notes."],
+      ["Check 5 similar products", "Write down their prices. Set yours in the middle, not the bottom."],
+      ["Add one quick win", "Make sure buyers get one result in the first 10 minutes of using your {p}."]
+    ],
+    grow:[
+      ["Raise your price a little", "Try 10 to 20% more for the next 2 weeks and watch what happens."],
+      ["Make a bundle", "Pair your {p} with a small bonus and sell it as a higher-priced bundle."],
+      ["Collect 3 short reviews", "Put them right next to your buy button."],
+      ["Write a simple FAQ", "Answer the top 3 questions people ask before buying."]
+    ]
+  },
+  audience:{
+    start:[
+      ["Start a free email list", "Use a free tool like MailerLite. Even 10 people is a real start."],
+      ["Make a free taster", "A checklist, sample page or mini lesson from your {p} that people get for their email."],
+      ["Pick 2 posting days", "Put them in your calendar. Two steady days beat seven random ones."],
+      ["Reply to every comment for a week", "Conversations turn followers into buyers."]
+    ],
+    grow:[
+      ["Send one helpful email a week", "One tip, one story, one link. Short is fine."],
+      ["Ask your list a question", "\"What are you stuck on?\" Their answers are your next posts and products."],
+      ["Welcome new subscribers", "Set up a 3-email welcome that introduces you and your {p}."],
+      ["Batch your content", "Write a week of posts in one sitting, then schedule them."]
+    ]
+  },
+  traffic:{
+    start:[
+      ["Make one clean buy link", "One page with your promise, 3 bullet points, a photo and a buy button."],
+      ["Put the link everywhere", "Your bio, WhatsApp status, email signature and pinned post."],
+      ["Choose one main platform", "Go where your buyers already hang out, and focus there for 30 days."],
+      ["Post your promise 3 ways", "A tip, a before and after, and a behind-the-scenes look at your {p}."]
+    ],
+    grow:[
+      ["Find one partner", "Someone with the same buyers but a different product. Swap a shout-out."],
+      ["Turn your best post into a pin or short video", "Reuse what already worked on a second platform."],
+      ["Track where visitors come from", "Use a free link tracker so you know what's working."],
+      ["Test a tiny ad", "Spend a small amount on your best post for 5 days and compare the clicks."]
+    ]
+  },
+  sales:{
+    start:[
+      ["Ask for the sale", "End 1 in every 3 posts with a clear \"Get it here\" and your link."],
+      ["Make buying easy", "Fewer clicks, clear price, and a payment option your buyers already use."],
+      ["Run a 48-hour launch", "A small reason to act now: a bonus or a launch price that ends on a set day."],
+      ["Follow up with lookers", "Message people who asked about your {p} but didn't buy. Be kind, not pushy."]
+    ],
+    grow:[
+      ["Send a thank-you email", "Include a tip for using your {p} and ask for a review."],
+      ["Offer a next step", "Show buyers one related product or upgrade after they buy."],
+      ["Win back old buyers", "Email past buyers a special offer on something new."],
+      ["Check your numbers", "Visitors, sales and the percentage who buy. Pick one to improve this month."]
+    ]
+  }
+};
+
+const BLOCK_TIPS = {
+  time:"Your plan uses tiny tasks of 15 to 30 minutes. Do one a day, and skip guilt on busy days.",
+  content:"Your audience's questions are your content. Answer one question per post and you'll never run out.",
+  convert:"Looking without buying usually means the promise isn't clear or buying feels hard. Your plan starts there.",
+  stuck:"Start with Week 1, Day 1 only. Don't read ahead. One small step builds momentum."
+};
+
+/* ===================== PRODUCT FINDER (for people who haven't started selling) ===================== */
+/* Each option gives points to product types (p) and a short reason (r) shown in the results. */
+const PRODUCTS = {
+  printables:{name:"Printables and planners", noun:"printable", first:"A 5-page planner or tracker that solves one problem for your buyer.", price:"US$5 to US$12",
+    steps:["Pick one problem, like meal planning or bill tracking, and sketch the pages on paper.", "Design it in Canva using a free planner layout, then export it as a PDF.", "Make 3 mockup photos of it printed out and share them with your buy link."]},
+  templates:{name:"Canva templates", noun:"template pack", first:"A pack of 10 social media or business templates people can edit in Canva.", price:"US$12 to US$29",
+    steps:["Choose one use, like Instagram posts for salons or invoices for small shops.", "Design 10 matching templates and share them with a Canva template link.", "Post a before and after showing a plain post turned into one of yours."]},
+  ebook:{name:"Ebook or guide", noun:"guide", first:"A 15 to 25 page guide that answers the question people ask you most.", price:"US$9 to US$19",
+    steps:["Write down the question people ask you most. That's your title.", "Outline 5 short chapters, then write one chapter a day in Google Docs.", "Add a simple cover in Canva and save it as a PDF."]},
+  course:{name:"Mini video course", noun:"mini course", first:"A 5-lesson mini course, about 10 minutes a lesson, filmed on your phone.", price:"US$29 to US$79",
+    steps:["List the 5 steps you'd walk a beginner through. Each step is one lesson.", "Film each lesson on your phone in good daylight. Done is better than perfect.", "Upload the lessons to an unlisted YouTube playlist or a course platform."]},
+  checklist:{name:"Checklist or cheat sheet", noun:"checklist", first:"A one-page checklist or cheat sheet that saves someone time today.", price:"US$3 to US$7",
+    steps:["Write the 10 to 15 steps you always follow for one task you're good at.", "Lay it out on one page in Canva or Google Docs.", "Share a blurred preview on your story with your buy link."]},
+  workbook:{name:"Workbook", noun:"workbook", first:"A fill-in workbook that walks someone through one goal, step by step.", price:"US$9 to US$19",
+    steps:["Pick one goal your buyer has, like saving for a trip or planning a small business.", "Write a short lesson and 3 fill-in questions for each step.", "Design it so it can be printed or filled in on a tablet."]},
+  membership:{name:"Membership or monthly pack", noun:"monthly pack", first:"A monthly pack of new printables, templates or tips for one group of people.", price:"US$5 to US$15 a month",
+    steps:["Ask your followers what they'd want new every month.", "Make the first month's pack before you announce anything.", "Open 20 founding spots at a lower price to test it."]},
+  app:{name:"Tiny app or tool", noun:"tiny tool", first:"A simple calculator, tracker or quiz that solves one everyday problem.", price:"US$3 to US$10, one-time or monthly",
+    steps:["Write down one sum or task people find annoying, like pricing a cake or splitting bills.", "Sketch the screens on paper: what goes in, and what comes out.", "Build a first version with a no-code tool or an AI helper, then test it with 5 people."]}
+};
+
+const FIND_QS = [
+  {id:"skill", q:"What are you good at?", opts:[
+    {t:"Teaching or explaining things", p:{course:3, workbook:2, ebook:1}, r:"you're good at teaching"},
+    {t:"Organising and planning", p:{printables:3, checklist:2, templates:1}, r:"you're a natural organiser"},
+    {t:"Design and making things look nice", p:{templates:3, printables:2}, r:"you have an eye for design"},
+    {t:"Writing", p:{ebook:3, checklist:1, workbook:1}, r:"you like to write"},
+    {t:"A skill or trade, like lashes, baking or hair", p:{course:3, ebook:1, checklist:1}, r:"you have a skill people want to learn"},
+    {t:"Business or money", p:{app:2, templates:2, workbook:1}, r:"you know business and money"}]},
+  {id:"time", q:"How much time can you give this each week?", opts:[
+    {t:"Under 2 hours", p:{checklist:3, printables:2, templates:1}, r:"it fits into under 2 hours a week"},
+    {t:"2 to 5 hours", p:{printables:2, templates:2, ebook:1, checklist:1}, r:"it fits into a few hours a week"},
+    {t:"5 to 10 hours", p:{ebook:2, workbook:2, course:1}, r:"you have time for something more detailed"},
+    {t:"More than 10 hours", p:{course:3, membership:2, app:2}, r:"you have time to build something bigger"}]},
+  {id:"who", q:"Who would you love to help?", opts:[
+    {t:"Moms and families", p:{printables:2, workbook:1, checklist:1}, r:"families love printables they can use right away"},
+    {t:"Students", p:{workbook:2, printables:1, course:1}, r:"students like step-by-step help"},
+    {t:"Small business owners", p:{templates:3, app:1, course:1}, r:"business owners pay to save time"},
+    {t:"Beauty or wellness clients", p:{course:2, ebook:1, checklist:1}, r:"beauty and wellness clients love to learn from a pro"},
+    {t:"Other creators", p:{templates:2, membership:1, app:1}, r:"creators always need fresh templates and tools"}]},
+  {id:"asked", q:"What do people already ask you about?", opts:[
+    {t:"How I do my job or skill", p:{course:3, ebook:1}, r:"people already ask how you do it"},
+    {t:"How I stay organised", p:{printables:2, templates:1, checklist:1}, r:"people already ask how you stay organised"},
+    {t:"Recipes or home tips", p:{ebook:2, checklist:2}, r:"people already ask for your tips"},
+    {t:"How I started my business", p:{ebook:2, workbook:1, course:1}, r:"people want your business story"},
+    {t:"Nobody asks yet", p:{checklist:1, printables:1}, r:"it's an easy first product to test"}]},
+  {id:"camera", q:"How do you feel about being on camera?", opts:[
+    {t:"I love it", p:{course:3, membership:1}, r:"you're happy on camera"},
+    {t:"Fine with voice only", p:{course:1, ebook:1, workbook:1}, r:"you can teach without showing your face"},
+    {t:"I'd rather stay behind the scenes", p:{printables:2, templates:2, ebook:1, app:1, course:-2}, r:"you can stay behind the scenes"}]},
+  {id:"tools", q:"What tools are you comfortable with?", opts:[
+    {t:"Canva", p:{templates:3, printables:2, workbook:1}, r:"you already know Canva"},
+    {t:"Google Docs or Word", p:{ebook:3, checklist:1, workbook:1}, r:"you can make it in Google Docs or Word"},
+    {t:"My phone camera and CapCut", p:{course:3}, r:"you can film and edit on your phone"},
+    {t:"None yet", p:{checklist:2, ebook:1}, r:"it needs very few tools"}]},
+  {id:"followers", q:"How many followers do you have, on your biggest account?", opts:[
+    {t:"Under 100", p:{checklist:2, printables:1}, r:"a low price is easy to say yes to"},
+    {t:"100 to 1,000", p:{templates:1, ebook:1, printables:1}, r:"it suits a small, growing audience"},
+    {t:"1,000 to 5,000", p:{course:1, workbook:1, membership:1}, r:"your audience is big enough for a bigger offer"},
+    {t:"More than 5,000", p:{membership:3, course:2}, r:"your audience can support monthly income"}]},
+  {id:"goal", q:"What do you want first?", opts:[
+    {t:"A quick first sale", p:{checklist:3, printables:2}, r:"you can make it fast and sell it this month"},
+    {t:"Steady monthly income", p:{membership:3, templates:1}, r:"it can bring in money every month"},
+    {t:"Something bigger I can grow later", p:{course:2, app:2}, r:"it can grow into something bigger"}]}
+];
+
+const FIND_PLAN = [
+  ["Plan it", [
+    ["Pick one buyer and one problem", "Finish this: \"My {p} helps [who] to [result].\""],
+    ["Check 5 similar products", "Note their prices and what buyers say in reviews. Price yours in the middle."],
+    ["Outline your {p}", "Bullet points only. Keep it small enough to finish in 2 weeks."],
+    ["Start a free email list", "Make a free MailerLite account so you can tell people when it's ready."]]],
+  ["Make it", [
+    ["Make the first draft", "Work in 30-minute sessions. Done is better than perfect."],
+    ["Add one quick win", "Make sure buyers get one result in the first 10 minutes."],
+    ["Let 2 people try it free", "Ask them: what was confusing, and what did you love?"],
+    ["Fix the top issue", "Change the one thing both testers mentioned, then call it finished."]]],
+  ["Get ready to sell", [
+    ["Make one clean buy link", "One page with your promise, 3 bullet points, a photo and a buy button."],
+    ["Make a free taster", "A sample page or mini version people get for their email."],
+    ["Make 3 good photos or mockups", "Show your {p} in use, not just the cover."],
+    ["Write 3 posts about the problem", "Talk about the problem first. Mention your {p} at the end."]]],
+  ["Launch", [
+    ["Announce it with a launch price", "Give it a clear end date, like 3 days from now."],
+    ["Put the link everywhere", "Your bio, WhatsApp status, email signature and pinned post."],
+    ["Ask for the sale", "End 1 in every 3 posts with \"Get it here\" and your link."],
+    ["Thank your first buyers", "Ask each one for a short review you can share."]]]
+];
+
+/* ---------- state ---------- */
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem("ss_"+k)); }catch(e){ return null; } },
+  set(k,v){ try{ localStorage.setItem("ss_"+k, JSON.stringify(v)); }catch(e){} }
+};
+let answers = store.get("answers") || {};
+let step = 0;
+let mode = "grow"; // "grow" = growth quiz for sellers, "find" = product finder for beginners
+const qs = () => mode === "find" ? FIND_QS : QUESTIONS;
+function start(m){ mode = m; answers = {}; step = 0; quiz(); }
+const app = document.getElementById("app");
+const configured = (CONFIG.mailerliteAccountId && CONFIG.mailerliteFormId) || CONFIG.otherFormUrl;
+document.getElementById("testmode").hidden = !!configured;
+if (!configured) app.style.paddingBottom = "90px";
+
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const LOGO = `<svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--accent)"/><path d="M17.5 5 9 18h6l-1.5 9L23 13.5h-6.2z" fill="var(--spark)"/></svg>`;
+const brand = `<div class="brand">${LOGO}${esc(CONFIG.appName)}</div>`;
+const foot = `<footer>${esc(CONFIG.madeBy)}</footer>`;
+function show(html){ app.innerHTML = html; app.firstElementChild?.classList.add("fade"); window.scrollTo(0,0); }
+
+/* ---------- screens ---------- */
+function home(){
+  const saved = store.get("result"), fsaved = store.get("fresult");
+  show(`<div>${brand}
+    <h1>Sell digital products that work for you.</h1>
+    <p class="muted">Two free 3-minute quizzes. Pick the one that fits where you are today.</p>
+    <div class="card path">
+      <span class="tag">I haven't started yet</span>
+      <h3 style="margin-top:10px">Find your best digital products</h3>
+      <p class="muted small">8 quick questions. Get your top 3 product matches, what to make first, and a 30-day plan to your first sale.</p>
+      <button class="btn" id="goFind">Find my products</button>
+      ${fsaved ? `<button class="btn ghost" id="againFind" style="margin-top:10px">See my last matches</button>` : ""}
+    </div>
+    <div class="card path">
+      <span class="tag">I already sell</span>
+      <h3 style="margin-top:10px">Find out what's holding your sales back</h3>
+      <p class="muted small">11 quick questions. Get your growth score out of 100, your weakest area, and a 30-day plan of small steps.</p>
+      <button class="btn" id="go">Start the growth quiz</button>
+      ${saved ? `<button class="btn ghost" id="again" style="margin-top:10px">See my last plan</button>` : ""}
+    </div>
+    ${foot}</div>`);
+  document.getElementById("goFind").onclick = () => start("find");
+  document.getElementById("go").onclick = () => start("grow");
+  if (saved) document.getElementById("again").onclick = () => { mode = "grow"; results(saved); };
+  if (fsaved) document.getElementById("againFind").onclick = () => { mode = "find"; findResults(fsaved); };
+}
+
+function quiz(){
+  const Q = qs(), q = Q[step];
+  const pct = Math.round(step / Q.length * 100);
+  show(`<div>${brand}
+    <div class="progress" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div>
+    <div class="qcount"><span>Question ${step+1} of ${Q.length}</span><button id="back">Back</button></div>
+    <h2>${esc(q.q)}</h2>
+    <div class="opts">${q.opts.map((o,i)=>`<button class="opt${answers[q.id]===i?" picked":""}" data-i="${i}">${esc(o.t)}</button>`).join("")}</div>
+    ${foot}</div>`);
+  app.querySelectorAll(".opt").forEach(b => b.onclick = () => {
+    answers[q.id] = +b.dataset.i; b.classList.add("picked");
+    setTimeout(() => { step++; step < Q.length ? quiz() : emailGate(); }, 160);
+  });
+  document.getElementById("back").onclick = () => { if (step) { step--; quiz(); } else home(); };
+}
+
+function emailGate(){
+  show(`<div>${brand}
+    <div class="progress"><i style="width:100%"></i></div>
+    <div class="qcount"><span>All done!</span><button id="back">Back</button></div>
+    <h2>${mode === "find" ? "Your product matches are ready." : "Your growth plan is ready."}</h2>
+    <p class="muted">Where should I send it? You'll see it right away too.</p>
+    <form id="f" novalidate>
+      <label for="nm">First name</label>
+      <input type="text" id="nm" autocomplete="given-name" required>
+      <label for="em">Email</label>
+      <input type="email" id="em" autocomplete="email" inputmode="email" required>
+      <label class="check"><input type="checkbox" id="ok" required>
+        <span>Yes, email me my ${mode === "find" ? "results, tips for my first product" : "plan, growth tips"} and news about new tiny apps. I can unsubscribe anytime.</span></label>
+      <div class="err" id="err" role="alert"></div>
+      <button class="btn" id="sub">Show my plan</button>
+    </form>${foot}</div>`);
+  document.getElementById("back").onclick = () => { step = qs().length - 1; quiz(); };
+  document.getElementById("f").onsubmit = async e => {
+    e.preventDefault();
+    const name = document.getElementById("nm").value.trim();
+    const email = document.getElementById("em").value.trim();
+    const err = document.getElementById("err");
+    if (!name) return err.textContent = "Please add your first name.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return err.textContent = "That email doesn't look quite right.";
+    if (!document.getElementById("ok").checked) return err.textContent = "Please tick the box so I can send your plan.";
+    const btn = document.getElementById("sub"); btn.disabled = true; btn.textContent = mode === "find" ? "Finding your matches..." : "Building your plan...";
+    if (mode === "find") {
+      const fr = buildFind(name);
+      await saveLead(name, email, {quiz:"Product finder", match:PRODUCTS[fr.top[0].k].name});
+      store.set("fanswers", answers); store.set("fresult", fr); store.set("fdone", {});
+      return findResults(fr);
+    }
+    const result = build(name);
+    await saveLead(name, email, {quiz:"Growth quiz", score:result.total, focus:AREAS[result.focus].name, sells:result.type});
+    store.set("answers", answers); store.set("result", result); store.set("done", {});
+    results(result);
+  };
+}
+
+async function saveLead(name, email, extra){
+  const fields = {name, email, ...extra};
+  try {
+    const formId = mode === "find" ? (CONFIG.mailerliteFinderFormId || CONFIG.mailerliteFormId) : CONFIG.mailerliteFormId;
+    if (CONFIG.mailerliteAccountId && formId) {
+      const fd = new FormData();
+      fd.append("fields[email]", email); fd.append("fields[name]", name);
+      fd.append("ml-submit", "1"); fd.append("anticsrf", "true");
+      await fetch(`https://assets.mailerlite.com/jsonp/${encodeURIComponent(CONFIG.mailerliteAccountId)}/forms/${encodeURIComponent(formId)}/subscribe`,
+        {method:"POST", body:fd, mode:"no-cors"});
+    } else if (CONFIG.otherFormUrl) {
+      const fd = new FormData(); Object.entries(fields).forEach(([k,v]) => fd.append(k, v));
+      await fetch(CONFIG.otherFormUrl, {method:"POST", body:fd, mode:"no-cors"});
+    } else {
+      console.warn("Shop Spark test mode: email not sent anywhere.", fields);
+    }
+  } catch(e) { console.warn("Could not save email", e); }
+}
+
+/* ---------- scoring + plan ---------- */
+function build(name){
+  const sc = {offer:0, audience:0, traffic:0, sales:0};
+  QUESTIONS.forEach(q => { if (q.area) sc[q.area] += q.opts[answers[q.id] ?? 0].s; });
+  const pct = {}; Object.keys(sc).forEach(k => pct[k] = Math.round(sc[k] / 6 * 100));
+  const total = Math.round(Object.values(pct).reduce((a,b)=>a+b,0) / 4);
+  const order = Object.keys(pct).sort((a,b) => pct[a]-pct[b]);
+  const type = QUESTIONS[0].opts[answers.type ?? 0].v;
+  const block = QUESTIONS.find(q => q.id === "block").opts[answers.block ?? 0].v;
+  const p = NOUN[type];
+  const fill = s => s.replace(/\{p\}/g, p);
+  // weeks: weakest area first; each week takes 4 tasks from that area (start set if < 70%, grow set otherwise)
+  const weeks = order.map(a => ({area:a, tasks:(pct[a] < 70 ? LIB[a].start : LIB[a].grow).map(([t,d]) => [fill(t), fill(d)])}));
+  const top3 = [weeks[0].tasks[0], weeks[0].tasks[1], weeks[1].tasks[0]];
+  return {name, total, pct, order, focus:order[0], strong:order[3], type, block, weeks, top3};
+}
+
+function level(t){
+  if (t < 35) return ["Spark stage", "You're at the start, and that's a great place to be. A few basics will make a big difference fast."];
+  if (t < 60) return ["Building stage", "The foundations are there. Fixing your weakest area will unlock the next level."];
+  if (t < 80) return ["Growing stage", "You're doing a lot right. Now it's about doing more of what works."];
+  return ["Glowing stage", "You're ahead of most sellers. Your plan focuses on scaling up."];
+}
+
+function results(r){
+  const [lvl, lvlText] = level(r.total);
+  const done = store.get("done") || {};
+  const C = 2 * Math.PI * 50, off = C * (1 - r.total / 100);
+  show(`<div>${brand}
+    <div class="card">
+      <div class="score">
+        <svg class="ring" viewBox="0 0 120 120" role="img" aria-label="Score ${r.total} out of 100">
+          <circle cx="60" cy="60" r="50" fill="none" stroke="var(--line)" stroke-width="12"/>
+          <circle cx="60" cy="60" r="50" fill="none" stroke="var(--spark)" stroke-width="12" stroke-linecap="round"
+            stroke-dasharray="${C}" stroke-dashoffset="${off}" transform="rotate(-90 60 60)"/>
+          <text x="60" y="68" text-anchor="middle" font-size="32">${r.total}</text></svg>
+        <div><span class="tag">${lvl}</span><h2 style="margin-top:8px">${esc(r.name)}, here's your growth score</h2></div>
+      </div>
+      <p class="muted" style="margin-top:12px">${lvlText}</p>
+      <div class="bars">${Object.keys(AREAS).map(a => `
+        <div class="bar${a===r.focus?" low":""}"><div class="row"><span><strong>${AREAS[a].name}</strong>${a===r.focus?" · focus here first":a===r.strong?" · your strength":""}</span><span>${r.pct[a]}%</span></div>
+        <div class="track"><div class="fill" style="width:${Math.max(r.pct[a],3)}%"></div></div></div>`).join("")}</div>
+    </div>
+
+    <div class="card">
+      <h3>Your top 3 next steps</h3>
+      <ol class="steps">${r.top3.map(([t,d]) => `<li><strong>${esc(t)}.</strong> <span class="muted">${esc(d)}</span></li>`).join("")}</ol>
+      <p class="small muted" style="margin:6px 0 0"><strong>About your block:</strong> ${esc(BLOCK_TIPS[r.block])}</p>
+    </div>
+
+    <div class="card">
+      <h3>Your 30-day plan</h3>
+      <p class="small muted">One area a week, weakest first. Tick tasks off as you go; they're saved on this phone.</p>
+      ${r.weeks.map((w,wi) => `<details class="week"${wi===0?" open":""}>
+        <summary>Week ${wi+1}: ${AREAS[w.area].name}</summary>
+        <p class="small muted" style="margin:0 0 6px">${AREAS[w.area].blurb}.</p>
+        ${w.tasks.map(([t,d],ti) => { const k = wi+"-"+ti; return `<label class="task${done[k]?" done":""}">
+          <input type="checkbox" data-k="${k}"${done[k]?" checked":""}><span>${esc(t)}<em>${esc(d)}</em></span></label>`; }).join("")}
+      </details>`).join("")}
+      <p class="small muted" style="margin:14px 0 0">Days 29 and 30: look back. What worked? Do more of that, then retake the quiz to see your new score.</p>
+    </div>
+
+    <div class="row-btns">
+      <button class="btn ghost" id="print">Save as PDF</button>
+      <button class="btn ghost" id="share">Share the quiz</button>
+    </div>
+
+    <div class="cta">
+      <h3>${esc(CONFIG.promoTitle)}</h3>
+      <p style="margin:0${CONFIG.promoLink?" 0 14px":""}">${esc(CONFIG.promoText)}</p>
+      ${CONFIG.promoLink ? `<a class="btn" style="display:block;text-align:center;text-decoration:none;background:var(--spark);color:#231A2C" href="${esc(CONFIG.promoLink)}" target="_blank" rel="noopener">${esc(CONFIG.promoButton)}</a>` : ""}
+    </div>
+
+    <button class="btn ghost" id="retake">Retake the quiz</button>
+    ${foot}</div>`);
+  app.querySelectorAll(".task input").forEach(c => c.onchange = () => {
+    const d = store.get("done") || {}; d[c.dataset.k] = c.checked; store.set("done", d);
+    c.closest(".task").classList.toggle("done", c.checked);
+  });
+  document.getElementById("print").onclick = () => { app.querySelectorAll("details").forEach(d => d.open = true); window.print(); };
+  document.getElementById("share").onclick = async () => {
+    const data = {title:CONFIG.appName, text:"I just got my free growth plan. Try the 3-minute quiz:", url:location.href.split("#")[0]};
+    if (navigator.share) { try { await navigator.share(data); } catch(e){} }
+    else { try { await navigator.clipboard.writeText(data.url); document.getElementById("share").textContent = "Link copied!"; } catch(e){} }
+  };
+  document.getElementById("retake").onclick = () => start("grow");
+}
+
+/* ---------- product finder: scoring + results ---------- */
+function buildFind(name){
+  const pts = {}, why = {};
+  Object.keys(PRODUCTS).forEach(k => { pts[k] = 0; why[k] = []; });
+  FIND_QS.forEach(q => {
+    const o = q.opts[answers[q.id] ?? 0];
+    Object.entries(o.p).forEach(([k,v]) => { pts[k] += v; if (v >= 2) why[k].push(o.r); });
+  });
+  const ranked = Object.keys(PRODUCTS).sort((a,b) => pts[b] - pts[a]);
+  const best = Math.max(pts[ranked[0]], 1);
+  const top = ranked.slice(0,3).map(k => ({k, fit:Math.max(40, Math.min(98, Math.round(pts[k] / best * 95))), why:why[k].slice(0,3)}));
+  return {name, top};
+}
+
+function whyText(list){
+  if (!list.length) return "It's a simple, low-risk way to make your first sale.";
+  const s = list.length === 1 ? list[0] : list.slice(0,-1).join(", ") + " and " + list[list.length-1];
+  return "It fits because " + s + ".";
+}
+
+function findResults(r){
+  const done = store.get("fdone") || {};
+  const main = PRODUCTS[r.top[0].k];
+  const fill = s => s.replace(/\{p\}/g, main.noun);
+  show(`<div>${brand}
+    <div class="card">
+      <span class="tag">Your product matches</span>
+      <h2 style="margin-top:8px">${esc(r.name)}, here's what to sell first</h2>
+      <p class="muted">Based on your skills, time and audience, these are the digital products most likely to work for you.</p>
+      <div class="bars">${r.top.map((t,i) => `
+        <div class="bar${i?"":" low"}"><div class="row"><span><strong>${i+1}. ${esc(PRODUCTS[t.k].name)}</strong>${i?"":" · best match"}</span><span>${t.fit}% fit</span></div>
+        <div class="track"><div class="fill" style="width:${t.fit}%"></div></div></div>`).join("")}</div>
+    </div>
+
+    ${r.top.map((t,i) => { const P = PRODUCTS[t.k]; return `<div class="card">
+      <h3>${i+1}. ${esc(P.name)}</h3>
+      <p class="muted">${esc(whyText(t.why))}</p>
+      <p style="margin:0 0 6px"><strong>Make first:</strong> ${esc(P.first)}</p>
+      <p style="margin:0 0 12px"><strong>Starter price idea:</strong> ${esc(P.price)}</p>
+      <ol class="steps">${P.steps.map(s => `<li>${esc(s)}</li>`).join("")}</ol>
+    </div>`; }).join("")}
+
+    <div class="card">
+      <h3>Your 30 days to a first sale</h3>
+      <p class="small muted">Built around your best match: ${esc(main.name.toLowerCase())}. One stage a week. Tick tasks off as you go; they're saved on this phone.</p>
+      ${FIND_PLAN.map(([title, tasks], wi) => `<details class="week"${wi===0?" open":""}>
+        <summary>Week ${wi+1}: ${esc(title)}</summary>
+        ${tasks.map(([t,d],ti) => { const k = wi+"-"+ti; return `<label class="task${done[k]?" done":""}">
+          <input type="checkbox" data-k="${k}"${done[k]?" checked":""}><span>${esc(fill(t))}<em>${esc(fill(d))}</em></span></label>`; }).join("")}
+      </details>`).join("")}
+      <p class="small muted" style="margin:14px 0 0">Days 29 and 30: once you've made your first sales, take the growth quiz to see your score and what to work on next.</p>
+    </div>
+
+    <div class="row-btns">
+      <button class="btn ghost" id="print">Save as PDF</button>
+      <button class="btn ghost" id="share">Share the quiz</button>
+    </div>
+
+    <div class="cta">
+      <h3>${esc(CONFIG.promoTitle)}</h3>
+      <p style="margin:0${CONFIG.promoLink?" 0 14px":""}">${esc(CONFIG.promoText)}</p>
+      ${CONFIG.promoLink ? `<a class="btn" style="display:block;text-align:center;text-decoration:none;background:var(--spark);color:#231A2C" href="${esc(CONFIG.promoLink)}" target="_blank" rel="noopener">${esc(CONFIG.promoButton)}</a>` : ""}
+    </div>
+
+    <button class="btn ghost" id="growq" style="margin-bottom:10px">Already selling? Take the growth quiz</button>
+    <button class="btn ghost" id="retake">Retake the product finder</button>
+    ${foot}</div>`);
+  app.querySelectorAll(".task input").forEach(c => c.onchange = () => {
+    const d = store.get("fdone") || {}; d[c.dataset.k] = c.checked; store.set("fdone", d);
+    c.closest(".task").classList.toggle("done", c.checked);
+  });
+  document.getElementById("print").onclick = () => { app.querySelectorAll("details").forEach(d => d.open = true); window.print(); };
+  document.getElementById("share").onclick = async () => {
+    const data = {title:CONFIG.appName, text:"I just found out which digital products suit me. Try the free 3-minute quiz:", url:location.href.split("#")[0]};
+    if (navigator.share) { try { await navigator.share(data); } catch(e){} }
+    else { try { await navigator.clipboard.writeText(data.url); document.getElementById("share").textContent = "Link copied!"; } catch(e){} }
+  };
+  document.getElementById("growq").onclick = () => start("grow");
+  document.getElementById("retake").onclick = () => start("find");
+}
+
+home();
+if ("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script>
+</body>
+</html>
