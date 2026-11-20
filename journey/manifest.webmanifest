@@ -1,0 +1,16 @@
+{
+  "name": "Brain Basket Lite",
+  "short_name": "Brain Basket",
+  "description": "A free daily tracker for side hustlers, from Shop Bajan.",
+  "id": "/journey/",
+  "start_url": "/journey/?source=homescreen",
+  "scope": "/journey/",
+  "display": "standalone",
+  "background_color": "#00267F",
+  "theme_color": "#00267F",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
