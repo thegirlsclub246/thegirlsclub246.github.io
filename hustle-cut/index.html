@@ -32,17 +32,29 @@
   <video class="shot-reel" src="img/bree-preview.mp4" poster="img/bree-preview.jpg" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
   <svg class="shot-over" viewBox="0 0 1200 900" aria-hidden="true">
     <g font-family="Quicksand, system-ui, sans-serif" font-weight="700" text-anchor="middle" stroke="#111" stroke-width="7" stroke-linejoin="round" paint-order="stroke">
-      <text x="266" y="560" font-size="31" fill="#fff">WUH <tspan fill="#F4B23F">GINE</tspan> ON?</text>
+      <text x="266" y="560" font-size="31" fill="#fff"><tspan data-w="0">WUH</tspan> <tspan data-w="1" fill="#F4B23F">GINE</tspan> <tspan data-w="2">ON?</tspan></text>
     </g>
     <rect x="199" y="693" width="134" height="20" rx="10" fill="#000" fill-opacity=".55"/>
     <text x="266" y="707.5" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="600" text-anchor="middle" fill="#fff">Made with <tspan fill="#F4B23F">Hustle Kit</tspan></text>
     <g font-family="Inter, system-ui, sans-serif" font-size="15" text-anchor="middle" fill="#13231F">
-      <rect x="510" y="636" width="46" height="26" rx="4" fill="#E2F1ED"/><text x="533" y="654">wuh</text>
-      <rect x="560" y="636" width="46" height="26" rx="5" fill="#ECE4C2" stroke="#F4B23F" stroke-width="2"/><text x="583" y="654">gine</text>
-      <rect x="610" y="636" width="42" height="26" rx="4" fill="#E2F1ED"/><text x="631" y="654">on?</text>
+      <rect data-w="0" x="510" y="636" width="46" height="26" rx="5" fill="#E2F1ED" stroke-width="2"/><text x="533" y="654">wuh</text>
+      <rect data-w="1" x="560" y="636" width="46" height="26" rx="5" fill="#ECE4C2" stroke="#F4B23F" stroke-width="2"/><text x="583" y="654">gine</text>
+      <rect data-w="2" x="610" y="636" width="42" height="26" rx="5" fill="#E2F1ED" stroke-width="2"/><text x="631" y="654">on?</text>
     </g>
     <text x="600" y="860" font-family="Inter, system-ui, sans-serif" font-size="15" font-weight="500" text-anchor="middle" fill="#fff">Captions ready: 3 words. Tap any word to cut it.</text>
   </svg>
+  <script>
+  /* Move the yellow highlight in time with Bree: "Wuh" until 2.05s, "gine" until 2.3s, then "on?" */
+  (function(){
+    var v=document.currentScript.parentNode.querySelector('video'), sh=v.parentNode, cur=-1;
+    function show(i){ if(i===cur) return; cur=i;
+      sh.querySelectorAll('tspan[data-w]').forEach(function(t){ t.setAttribute('fill', +t.dataset.w===i ? '#F4B23F' : '#fff'); });
+      sh.querySelectorAll('rect[data-w]').forEach(function(r){ var on=+r.dataset.w===i;
+        r.setAttribute('fill', on ? '#ECE4C2' : '#E2F1ED'); r.setAttribute('stroke', on ? '#F4B23F' : 'none'); }); }
+    function tick(){ var t=v.currentTime; show(t<2.05?0:t<2.3?1:2); requestAnimationFrame(tick); }
+    requestAnimationFrame(tick);
+  })();
+  </script>
 </div>
 
 <div class="label">What it does</div>
