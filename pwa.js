@@ -6,7 +6,39 @@
     window.addEventListener("load", function () { navigator.serviceWorker.register("/sw.js").catch(function () {}); });
   }
   var standalone = (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone;
-  if (standalone) return;
+  if (standalone) { keepFresh(); return; }
+
+  /* Home-screen app: phones resume the old page instead of reloading it.
+     Each time the app comes back on screen, check the site; if the page changed, reload it.
+     Never reloads while someone is typing in a form. */
+  function keepFresh() {
+    var url = location.pathname + location.search, base = null, busy = false;
+    function sig(t) { var h = 0; for (var i = 0; i < t.length; i++) { h = (h * 31 + t.charCodeAt(i)) | 0; } return t.length + ":" + h; }
+    /* the admin editor keeps page text in content/pages/<page>.json, so watch that too */
+    var m = location.pathname.match(/\/(brands|vendors|policies)(\.html)?$/), page = m ? m[1] : (/\/(index\.html)?$/.test(location.pathname) ? "home" : null);
+    function text(u) { return fetch(u, { cache: "no-store", credentials: "same-origin" }).then(function (r) { return r.ok ? r.text() : ""; }).catch(function () { return null; }); }
+    function get() {
+      return Promise.all([text(url), page ? text("/content/pages/" + page + ".json") : ""]).then(function (a) {
+        return a[0] ? sig(a[0] + "\u0000" + (a[1] || "")) : null;
+      });
+    }
+    function typing() { var a = document.activeElement; return a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) || !!document.querySelector(".sheet:not([hidden])"); }
+    function check() {
+      if (busy || document.visibilityState !== "visible") return;
+      busy = true;
+      try { navigator.serviceWorker && navigator.serviceWorker.getRegistration().then(function (r) { r && r.update(); }); } catch (e) {}
+      get().then(function (now) {
+        busy = false;
+        if (!now) return;
+        if (base === null) { base = now; return; }
+        if (now !== base && !typing()) location.reload();
+      });
+    }
+    get().then(function (s) { if (base === null) base = s; });
+    document.addEventListener("visibilitychange", check);
+    window.addEventListener("pageshow", function (e) { if (e.persisted) check(); });
+    window.addEventListener("focus", check);
+  }
   var KEY = "sb-a2hs-off";
   try { if (localStorage.getItem(KEY)) return; } catch (e) {}
   if (/\/vendors(\.html)?$/.test(location.pathname)) return; /* keep the vendor portal clean */
