@@ -90,6 +90,7 @@
 <footer>shopbajanbb.com · <a href="mailto:hello@shopbajanbb.com">hello@shopbajanbb.com</a> · <a href="../policies.html">Policies</a></footer>
 </div>
 
+<script src="/creator-ref.js?v=1"></script>
 <script>
 /* ===== SETTINGS (same PayPal plan and Dodo product as before) ===== */
 var HK = {
@@ -127,7 +128,7 @@ function renderPayPal(){
     paypal.Buttons({
       style: { shape: "pill", color: "gold", layout: "vertical", label: "subscribe" },
       createSubscription: function(data, actions){ return actions.subscription.create({ plan_id: HK.planId }); },
-      onApprove: function(data){ showThanks(data.subscriptionID); },
+      onApprove: function(data){ window.sbCreator && sbCreator.record("paid", "PayPal subscription " + data.subscriptionID); showThanks(data.subscriptionID); },
       onError: function(){ $("ppMsg").textContent = "PayPal couldn't finish that. Nothing was charged. Please try again, or email us at hello@shopbajanbb.com."; }
     }).render("#pp");
   }).catch(function(){
@@ -188,6 +189,7 @@ wireLinkForm(null, "late");
   var q = new URLSearchParams(location.search);
   if (q.get("paid") !== "hustle-kit") { renderPayPal(); return; }
   var status = (q.get("status") || "").toLowerCase(), email = q.get("email") || "";
+  if (["failed", "cancelled", "canceled", "expired"].indexOf(status) === -1 && window.sbCreator) sbCreator.record("paid", "Dodo " + status + " " + (q.get("subscription_id") || q.get("payment_id") || ""));
   history.replaceState(null, "", location.pathname + "#buy");
   if (["failed", "cancelled", "canceled", "expired"].indexOf(status) > -1) {
     renderPayPal();

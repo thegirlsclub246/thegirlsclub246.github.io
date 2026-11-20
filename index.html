@@ -812,6 +812,7 @@ textarea.sb-in{min-height:88px;resize:vertical}
     </div>
   </div>
   <a class="sb-sell-strip" href="brands.html">Own a small business? <b data-sb="t6:4d9c23b9">Sell with us</b> <span aria-hidden="true">&rarr;</span></a>
+  <a class="sb-sell-strip" href="creators.html" style="background:var(--sun);border-top:1px solid rgba(0,38,127,.12)">Creator? <b>Earn with your own code</b> <span aria-hidden="true">&rarr;</span></a>
 
   <main id="sbTop">
     <section class="sb-hero" aria-labelledby="sbH1">
@@ -964,6 +965,7 @@ textarea.sb-in{min-height:88px;resize:vertical}
     <b data-sb="t84:2f7b2beb">Shop Bajan</b><br>Barbados&rsquo; small businesses, one bag
     <div class="sb-links">
       <a href="brands.html" data-sb="t85:4d9c23b9">Sell with us</a>
+      <a href="creators.html">Creators: earn with us</a>
       <a href="policies.html" data-sb="t86:396a1301">Shop policies</a>
       <a href="https://www.instagram.com/shopbajan/" target="_blank" rel="noopener" data-sb="t87:0f95701b">Instagram</a>
       <a href="https://wa.me/12468504460" target="_blank" rel="noopener" data-sb="t88:b1332787">WhatsApp</a>
@@ -1586,6 +1588,8 @@ const PAY={
 };
 const PAYPAL_ME=String(S.paypal_link||"").trim();
 const DODO_LINK=String(S.dodo_link||"https://checkout.dodopayments.com/buy/pdt_0NsM938IZ3fGJuJhiPeAU?quantity=1").trim();
+/* Tags the Dodo payment with the order and creator code, so creator dashboards update by themselves */
+const dodoHref=o=>{try{const u=new URL(DODO_LINK);u.searchParams.set("metadata_order_id",o.id||"");if(o.code)u.searchParams.set("metadata_creator_code",o.code);return u.toString()}catch(e){return DODO_LINK}};
 const dodoOk=()=>!!DODO_LINK&&cart.length>0&&cart.every(c=>{if(c.course)return true;const p=products.find(x=>x.id===c.id);return !!p&&!!(p.digital||p.isCourse||p.cat==="vouchers"||p.cat==="guides")});
 const usd=v=>"USD $"+(v/2).toFixed(2);
 const PP_CLIENT="BAAZkLN-1YQuwpFsSdH3p0fEY99MCiUNLh5m1aoRJQGX5pHj3ZO1Ab1ENTLnLsQpp9sT-6m5dIF-yS810M";
@@ -1729,6 +1733,7 @@ function renderAcademy(){
     ${list(c.points).length?`<ul class="perks">${list(c.points).map(p=>`<li>${esc(p)}</li>`).join("")}</ul>`:""}
     ${c.payhip_id&&c.free_lesson!==false?`<a class="free-lesson" data-free="${esc(c.title)}" href="https://payhip.com/order?link=${encodeURIComponent(c.payhip_id)}&free_preview_mode=1" target="_blank" rel="noopener">🎁 Watch a free lesson first</a><p class="muted free-note">Free · just your email · no card needed</p>`:""}
     <p class="paywith">Choose how to pay</p>
+    ${creatorCode&&CC_PCT&&!ccUsed()?`<p class="muted paynote" style="color:#1E7B4F;font-weight:700">Creator code ${esc(creatorCode)}: ${CC_PCT}% off${S.creator_codes_payhip?`. Paying by card? Type ${esc(creatorCode)} in the coupon box`:" when you pay with FirstPay or BPWCCUL"}.</p>`:""}
     ${c.payhip_id?`<a class="btn payhip-buy-button" href="https://payhip.com/b/${encodeURIComponent(c.payhip_id)}" data-theme="none" data-product="${esc(c.payhip_id)}" style="display:flex;width:100%;text-align:center">Pay by card</a>${c.usd_note?`<p class="muted paynote">${esc(c.usd_note)}</p>`:""}`:""}
     ${c.local_pay!==false?`<div class="localpay"><a class="btn" data-course="${i}" data-pay="firstpay" href="#">Pay with FirstPay</a><a class="btn" data-course="${i}" data-pay="bpwccul" href="#">Pay with BPWCCUL</a></div><p class="muted paynote">Pay in BBD ${money(pr)}${usd?" (US$"+usd+")":""} · we email your login once payment is in</p>`:""}
     <a class="ask-wa" data-ask="${esc(c.title)}" href="${waLink("Hi The Girls Club! I'm interested in the "+c.title+" ("+(usd?"US$"+usd:"BBD "+money(pr))+"). Can you help me enrol?")}" target="_blank" rel="noopener">Questions? Enrol on WhatsApp</a>
@@ -1968,7 +1973,7 @@ function renderDrawer(){
       <h3>${o.paid?"Thank you, gorgeous!":"Order placed, gorgeous!"}</h3>
       <p class="muted">Your order number</p><div class="order-id">${o.id}</div>
       <div class="wa-sent">${o.paid?"<b>Paid and confirmed.</b> We've got your order.":(o.method==="cash"?"<b>Order saved.</b> Pay in cash when you collect.":"<b>Order saved.</b> Now complete your payment below.")}</div>
-      <div class="pay-step"><span class="step-n">1</span><div><b>${o.method==="cash"?"Pay BBD "+money(o.total)+" in cash when you collect":"Pay "+(o.method==="paypal"||o.method==="dodo"?usd(o.total)+" (BBD "+money(o.total)+")":"BBD "+money(o.total))+" by "+P.label}</b><p>${P.how}</p>${o.method==="dodo"&&!o.paid?`<a class="btn" href="${DODO_LINK}" target="_blank" rel="noopener" style="width:100%;margin:.4rem 0">Pay ${usd(o.total)} with Dodo</a>`:""}${o.method==="paypal"?(o.paid?`<div class="paid-ok"><b>Card payment received. Thank you!</b>${o.paidRef?`<br><small>Payment ref: ${esc(o.paidRef)}</small>`:""}</div>`:`<div id="cardPay" class="card-pay"><p class="muted">Loading secure card form…</p></div>`):""}
+      <div class="pay-step"><span class="step-n">1</span><div><b>${o.method==="cash"?"Pay BBD "+money(o.total)+" in cash when you collect":"Pay "+(o.method==="paypal"||o.method==="dodo"?usd(o.total)+" (BBD "+money(o.total)+")":"BBD "+money(o.total))+" by "+P.label}</b><p>${P.how}</p>${o.method==="dodo"&&!o.paid?`<a class="btn" href="${esc(dodoHref(o))}" target="_blank" rel="noopener" style="width:100%;margin:.4rem 0">Pay ${usd(o.total)} with Dodo</a>`:""}${o.method==="paypal"?(o.paid?`<div class="paid-ok"><b>Card payment received. Thank you!</b>${o.paidRef?`<br><small>Payment ref: ${esc(o.paidRef)}</small>`:""}</div>`:`<div id="cardPay" class="card-pay"><p class="muted">Loading secure card form…</p></div>`):""}
         ${P.rows.map(([k,v])=>`<div class="pay-row"><span>${k}</span><b class="${v.startsWith("[")?"todo":""}">${v}</b><button type="button" class="copy" data-copy="${v}">Copy</button></div>`).join("")}
         <div class="pay-row"><span>Reference</span><b>${o.id}</b><button type="button" class="copy" data-copy="${o.id}">Copy</button></div></div></div>
       <div class="pay-step"><span class="step-n">2</span><div><b>${s2.t}</b><p>${s2.p}</p>
@@ -2197,5 +2202,6 @@ if(location.hash&&!/^#(shop|lashes|marketplace|products|digital|p-)/.test(locati
 </script>
 <script>(function(){if(window.TGC_SOON)return;var s=document.createElement("script");s.src=(window.TGC_DATA||"")+"academy-theme.js";document.body.appendChild(s)})();</script>
 <script src="popups.js?v=20261120" defer></script>
-<script src="/sb-content.js?v=1" data-page="home" defer></script></body>
+<script src="/sb-content.js?v=1" data-page="home" defer></script><script src="/creator-ref.js?v=1" defer></script>
+</body>
 </html>

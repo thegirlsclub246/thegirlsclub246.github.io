@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="only light">
+<title>Creator dashboard · Shop Bajan</title>
+<meta name="description" content="Shop Bajan creators: see your sales, earnings and payouts.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,800&family=Quicksand:wght@500;600;700&display=swap">
+<style>
+:root{--bg:#FFF9EC;--card:#fff;--ink:#16213E;--muted:#4A5675;--blue:#00267F;--gold:#FFC72C;--coral:#FF6F59;--sun:#FFF3C7;--sky:#EEF3FF;--line:#DCE4F5;--ok:#1E7B4F;color-scheme:only light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Quicksand",system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:500;font-size:16.5px;line-height:1.55}
+.wrap{max-width:820px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{background:#fff;border-bottom:2px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px}
+.logo{text-decoration:none}
+.btn{display:inline-block;font:inherit;font-weight:700;color:var(--blue);text-decoration:none;border:2.5px solid var(--blue);border-radius:999px;padding:9px 18px;background:var(--gold);box-shadow:0 3px 0 var(--blue);cursor:pointer}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--blue)}
+.btn.small{padding:5px 12px;font-size:14px;box-shadow:0 2px 0 var(--blue)}
+.btn.ghost{background:#fff}
+.kicker{display:flex;align-items:center;gap:12px;color:var(--blue);font-weight:700;letter-spacing:.2em;font-size:13px;margin:28px 0 4px}
+.kicker::before,.kicker::after{content:"";flex:1;height:2px;background:var(--blue);opacity:.35}
+h1{font-family:"Fraunces",Georgia,serif;font-weight:800;color:var(--blue);font-size:clamp(30px,6vw,44px);margin:4px 0 14px;line-height:1.05;text-transform:uppercase;text-align:center}
+h2{font-family:"Fraunces",Georgia,serif;font-weight:800;font-size:22px;margin:0 0 10px;color:var(--blue)}
+section{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:18px 20px;margin:16px 0}
+form{display:grid;gap:12px;max-width:420px;margin:0 auto}
+label{font-weight:700;font-size:15px;display:grid;gap:4px}
+input{font:inherit;color:var(--ink);background:#fff;border:2px solid var(--line);border-radius:14px;padding:10px 12px;width:100%}
+input:focus{outline:none;border-color:var(--blue)}
+.err{color:#B3261E;font-weight:700;font-size:15px;margin:0}
+.muted{color:var(--muted);font-size:14.5px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:16px 0}
+.tile{background:var(--blue);color:#fff;border-radius:18px;padding:14px 16px}
+.tile b{display:block;font-family:"Fraunces",Georgia,serif;font-size:28px;color:var(--gold);line-height:1.1}
+.tile span{font-size:14px}
+.tile.alt{background:#fff;color:var(--ink);border:2px solid var(--line)}
+.tile.alt b{color:var(--blue)}
+.links{display:grid;gap:10px}
+.link{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--sky);border-radius:14px;padding:10px 12px}
+.link code{font-family:inherit;font-weight:700;word-break:break-all;color:var(--blue)}
+.tbl{width:100%;border-collapse:collapse;font-size:15px}
+.tbl th{text-align:left;font-size:13px;color:var(--muted);font-weight:700;border-bottom:2px solid var(--line);padding:6px 6px}
+.tbl td{border-bottom:1px solid var(--line);padding:8px 6px;vertical-align:top}
+.tbl td.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.pill{display:inline-block;font-size:12.5px;font-weight:700;border-radius:999px;padding:2px 9px;white-space:nowrap}
+.pill.ok{background:#E3F4EA;color:var(--ok)}
+.pill.wait{background:var(--sun);color:#7A5A00}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+@media (max-width:520px){.tbl .hide-sm{display:none}}
+footer{color:var(--muted);font-size:14px;text-align:center;padding:10px 0 40px}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="logo" href="./"><span style="display:inline-flex;align-items:center;gap:10px"><img src="shop-bajan-mark.png" alt="" width="40" height="40" style="width:40px;height:40px;border-radius:10px;display:block"><span style="font-family:Fraunces,Georgia,serif;font-weight:800;font-size:22px;color:#00267F">Shop Bajan</span></span></a><a class="btn ghost small" href="creators.html">Creator program</a></div></header>
+<main class="wrap">
+<p class="kicker">SHOP BAJAN CREATORS</p>
+<h1>Your dashboard</h1>
+
+<section id="login">
+  <form id="lf">
+    <label>Your creator code<input id="code" autocomplete="username" autocapitalize="characters" spellcheck="false" style="text-transform:uppercase" placeholder="e.g. BREE10" required></label>
+    <label>PIN<input id="pin" type="password" inputmode="numeric" autocomplete="current-password" placeholder="6 digits" required></label>
+    <p class="err" id="err" hidden></p>
+    <button class="btn" type="submit" id="go">See my sales</button>
+    <p class="muted" style="margin:0;text-align:center">We sent your PIN on WhatsApp when you joined. Lost it? <a href="https://wa.me/12468504460?text=Hi%20Shop%20Bajan!%20I%20need%20my%20creator%20dashboard%20PIN." target="_blank" rel="noopener">WhatsApp us</a>.</p>
+  </form>
+</section>
+
+<div id="dash" hidden>
+  <div class="top"><p style="margin:0">Hi <b id="who"></b> · code <b id="mycode"></b></p><button class="btn ghost small" id="out" type="button">Sign out</button></div>
+  <div class="tiles">
+    <div class="tile"><b id="tMonth">$0</b><span>earned this month (<span id="tMonthN">0</span> sales)</span></div>
+    <div class="tile"><b id="tOwed">$0</b><span>owed to you, paid in the first week of next month</span></div>
+    <div class="tile alt"><b id="tPending">$0</b><span>waiting for payment to be confirmed</span></div>
+    <div class="tile alt"><b id="tPaid">$0</b><span>paid to you so far</span></div>
+  </div>
+  <p class="muted" id="minNote"></p>
+
+  <section>
+    <h2>Your links</h2>
+    <div class="links" id="links"></div>
+    <p class="muted" style="margin:10px 0 0">Anyone who taps your link has your code saved for 30 days. Your code also works if they type it at checkout.</p>
+  </section>
+
+  <section>
+    <h2>Your sales</h2>
+    <div style="overflow-x:auto"><table class="tbl"><thead><tr><th>Date</th><th>What</th><th class="hide-sm" style="text-align:right">Paid (BBD)</th><th style="text-align:right">You earn</th><th>Status</th></tr></thead><tbody id="sales"></tbody></table></div>
+    <p class="muted" id="none" hidden>No sales yet. Share your links and they'll show up here.</p>
+    <p class="muted" style="margin:10px 0 0"><span class="pill ok">Confirmed</span> means the payment is in. Card payments through Dodo confirm within minutes. <span class="pill wait">Pending</span> means we're waiting for a FirstPay, bank or PayPal payment to come through. <span id="apps"></span></p>
+  </section>
+
+  <section id="paysec" hidden>
+    <h2>Payouts</h2>
+    <table class="tbl"><thead><tr><th>For</th><th>Paid on</th><th>How</th><th style="text-align:right">Amount (BBD)</th></tr></thead><tbody id="pays"></tbody></table>
+  </section>
+  <p class="muted" style="text-align:center">Updated <span id="upd"></span> · <a href="#" id="refresh">Refresh</a></p>
+</div>
+
+<section id="soon" hidden><p style="margin:0">The creator dashboard opens soon. For now, WhatsApp us at 1 (246) 850-4460 and we'll send you your numbers.</p></section>
+</main>
+<footer>&copy; 2026 Shop Bajan · Barbados · <a href="creators.html#terms" style="color:inherit">Creator terms</a></footer>
+<script>
+(function(){
+"use strict";
+var $=function(s){return document.querySelector(s)};
+var API="",KEY="sb-creator-dash-code",last=null;
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function money(n){return "$"+(Number(n)||0).toFixed(2)}
+function store(v){try{if(v===undefined)return localStorage.getItem(KEY)||"";localStorage.setItem(KEY,v)}catch(e){}return ""}
+$("#code").value=store();
+
+fetch("content/settings.json",{cache:"no-cache"}).then(function(r){return r.ok?r.json():{}}).then(function(s){
+  API=String((s&&s.creator_dashboard_url)||"").trim();
+  if(!API){$("#login").hidden=true;$("#soon").hidden=false}
+}).catch(function(){});
+
+function load(code,pin){
+  var err=$("#err");err.hidden=true;var b=$("#go");b.disabled=true;b.textContent="Loading…";
+  fetch(API+(API.indexOf("?")>-1?"&":"?")+"code="+encodeURIComponent(code)+"&pin="+encodeURIComponent(pin)).then(function(r){return r.json()}).then(function(d){
+    b.disabled=false;b.textContent="See my sales";
+    if(!d||!d.ok){err.textContent=(d&&d.error)||"Something went wrong. Please try again.";err.hidden=false;return}
+    last={code:code,pin:pin};store(d.code);show(d);
+  }).catch(function(){b.disabled=false;b.textContent="See my sales";err.textContent="We couldn't load your dashboard. Check your connection and try again.";err.hidden=false});
+}
+function show(d){
+  $("#login").hidden=true;$("#dash").hidden=false;
+  $("#who").textContent=d.name||"there";$("#mycode").textContent=d.code;
+  var s=d.summary||{};
+  $("#tMonth").textContent=money(s.thisMonthEarned);$("#tMonthN").textContent=s.thisMonthSales||0;
+  $("#tOwed").textContent=money(s.owed);$("#tPending").textContent=money(s.pending);$("#tPaid").textContent=money(s.paid);
+  $("#minNote").textContent=(s.owed>0&&s.owed<d.payoutMin)?"Payouts start at BBD $"+d.payoutMin+". Anything under that carries over to next month.":"";
+  var c=encodeURIComponent(d.code),L=[["Academy courses","https://academy.thegirlsclub246.com/?ref="+c],["Hustle Book (booking app)","https://shopbajanbb.com/hustle-kit/?ref="+c],["DepositProof","https://shopbajanbb.com/depositproof/?ref="+c],["Hustle Cut (free)","https://shopbajanbb.com/hustle-cut/?ref="+c],["Shop Bajan (from 10 Dec)","https://shopbajanbb.com/?ref="+c]];
+  $("#links").innerHTML=L.map(function(l){return '<div class="link"><span><span class="muted">'+esc(l[0])+'</span><br><code>'+esc(l[1].replace(/^https:\/\//,""))+'</code></span><button class="btn small" type="button" data-copy="'+esc(l[1])+'">Copy</button></div>'}).join("");
+  var rows=d.sales||[];$("#none").hidden=rows.length>0;
+  $("#sales").innerHTML=rows.map(function(r){return "<tr><td>"+esc(r.date)+"</td><td>"+esc(r.what)+'</td><td class="num hide-sm">'+(r.amount===""?"":money(r.amount))+'</td><td class="num"><b>'+money(r.commission)+'</b></td><td><span class="pill '+(r.status==="Confirmed"?"ok":"wait")+'">'+esc(r.status)+"</span></td></tr>"}).join("");
+  $("#apps").textContent=d.appCheckouts?"People have gone to pay for an app through your links "+d.appCheckouts+" time"+(d.appCheckouts===1?"":"s")+". We add app sales here once we've matched the payment.":"";
+  var p=d.payouts||[];$("#paysec").hidden=!p.length;
+  $("#pays").innerHTML=p.map(function(x){return "<tr><td>"+esc(x.month)+"</td><td>"+esc(x.on)+"</td><td>"+esc(x.method)+'</td><td class="num">'+money(x.amount)+"</td></tr>"}).join("");
+  $("#upd").textContent=d.updated||"just now";
+}
+$("#lf").addEventListener("submit",function(e){e.preventDefault();var c=$("#code").value.trim().toUpperCase(),p=$("#pin").value.trim();if(!c||!p){$("#err").textContent="Enter your code and PIN.";$("#err").hidden=false;return}load(c,p)});
+$("#out").onclick=function(){last=null;$("#pin").value="";$("#dash").hidden=true;$("#login").hidden=false};
+$("#refresh").onclick=function(e){e.preventDefault();if(last)load(last.code,last.pin)};
+document.addEventListener("click",function(e){var b=e.target.closest("[data-copy]");if(!b)return;var t=b.getAttribute("data-copy");
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){b.textContent="Copied ✓";setTimeout(function(){b.textContent="Copy"},1500)}).catch(function(){window.prompt("Copy your link:",t)})});
+})();
+</script>
+</body>
+</html>
