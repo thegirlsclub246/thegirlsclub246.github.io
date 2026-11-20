@@ -61,9 +61,9 @@
     <p class="note" style="margin-top:0">Cancel any time. No commission.</p>
     <div class="paypal-slot" id="pp"></div>
     <p class="note" id="ppMsg">Pay with your PayPal balance, or a card through PayPal.</p>
-    <div class="or">or</div>
+    <div id="cardBox"><div class="or">or</div>
     <a class="btn blue" id="cardBtn" href="#" rel="noopener">Pay with debit or credit card</a>
-    <p class="note">No PayPal needed. Billed monthly by Dodo Payments. Use the email you'll sign in with.</p>
+    <p class="note">No PayPal needed. Billed monthly by Dodo Payments. Use the email you'll sign in with.</p></div>
     <div class="pays" aria-label="Accepted"><span>PayPal</span><span>Visa</span><span>Mastercard</span><span>Debit cards</span></div>
     <p class="note">🔒 Secure checkout. We never see your card number.</p>
   </div>
@@ -96,6 +96,7 @@ var HK = {
   paypalClientId: "BAAZkLN-1YQuwpFsSdH3p0fEY99MCiUNLh5m1aoRJQGX5pHj3ZO1Ab1ENTLnLsQpp9sT-6m5dIF-yS810M",
   planId: "P-8H829833M2433814MNL2KWPQ",          // PayPal plan, US$12 a month
   dodoProduct: "pdt_0Ns4ntKmc0EIGFHh4KQ8v",       // Dodo product, US$12 a month
+  cardOn: false,                                  // true = show "Pay with debit or credit card" (turn on once Dodo is fully set up)
   subscribeApi: "https://ogcjmjwarjfodnirovcz.supabase.co/functions/v1/hustle-subscribe",
   supabaseKey: "sb_publishable_nEVysiH26TV4uUaTiq2x-Q_xyLLMyYw",
   appUrl: "app/"
@@ -106,6 +107,7 @@ function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c
 
 /* Card checkout (Dodo). Comes back to this page with ?paid=hustle-kit&status=... */
 var back = location.origin + location.pathname + "?paid=hustle-kit";
+if (!HK.cardOn) $("cardBox").hidden = true;
 $("cardBtn").href = "https://checkout.dodopayments.com/buy/" + encodeURIComponent(HK.dodoProduct) + "?quantity=1&redirect_url=" + encodeURIComponent(back);
 
 /* PayPal Subscribe button */
