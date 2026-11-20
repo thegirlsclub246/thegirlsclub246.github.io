@@ -140,8 +140,8 @@ footer{color:var(--muted);font-size:14px;text-align:center;padding:10px 0 40px}
       <div class="earn">
         <div><b><span data-n="course">20</span>%</b>of what the shopper pays for a course. Your followers get <span data-n="disc">10</span>% off.</div>
         <div><b><span data-n="app">20</span>%</b>of the first payment when someone pays for Hustle Kit or DepositProof.</div>
-        <div><b>BBD $<span data-n="brand">25</span></b>for each Bajan brand you bring to Shop Bajan, once they make their first sale.</div>
-        <div><b><span data-n="comm">5</span>%</b>on Bajan brands' products from Thu 10 Dec, when the marketplace opens.</div>
+        <div><b>BBD $<span data-n="brand">25</span></b>for each Bajan small business you bring to Shop Bajan, once they make their first sale.</div>
+        <div><b><span data-n="comm">5</span>%</b>on Bajan small businesses' products from Thu 10 Dec, when the marketplace opens.</div>
       </div>
       <p class="muted" style="margin:6px 0 0">Example: 10 people buy the Cluster Lash Course (US$25) with your code. They each pay US$22.50 and you earn US$45 (BBD $90).</p>
     </section>
@@ -152,6 +152,7 @@ footer{color:var(--muted);font-size:14px;text-align:center;padding:10px 0 40px}
     <section>
       <div class="codebox"><span>Your code<br><b id="code2"></b></span><button class="btn small" type="button" id="copyCode">Copy code</button></div>
       <p>Share these links. Anyone who taps one has your code saved on their phone for 30 days, so you still get credit if they buy later. People can also type your code at checkout.</p>
+      <p><b>Courses paid by card:</b> card payments go through Payhip, so ask your followers to type your code in the <b>coupon box</b>. They get 10% off, and it's how we know the sale is yours.</p>
       <div class="links" id="links"></div>
     </section>
   </div>
@@ -244,13 +245,13 @@ footer{color:var(--muted);font-size:14px;text-align:center;padding:10px 0 40px}
   <div class="panel" data-panel="faq" hidden>
     <section>
       <h2>Questions</h2>
-      <details><summary>How do I get credit for a sale?</summary><p>When someone taps your link, your code is saved on their phone for 30 days. If they buy on that phone, you get the credit. They can also type your code at checkout.</p></details>
+      <details><summary>How do I get credit for a sale?</summary><p>When someone taps your link, your code is saved on their phone for 30 days. If they buy on that phone, you get the credit. They can also type your code at checkout. For courses paid by card, they need to type your code in the Payhip coupon box, so remind them in your posts.</p></details>
       <details><summary>When and how do I get paid?</summary><p>In the first week of each month, for the month before, by PayPal or FirstPay. Once you've earned at least BBD $<span data-n="min">20</span>. Anything under that carries over to next month.</p></details>
       <details><summary>Why does a sale say Pending?</summary><p>The order is in, but we're waiting for the payment, for example a FirstPay or bank transfer. It changes to Confirmed once the money arrives. Cancelled or refunded orders don't earn.</p></details>
       <details><summary>What do my followers get?</summary><p><span data-n="disc">10</span>% off courses, and from 10 Dec, 10% off their first Shop Bajan order. App prices aren't discounted.</p></details>
       <details><summary>Can I use my own code?</summary><p>No. Orders you place yourself, or for someone else, don't earn commission.</p></details>
       <details><summary>Do I have to post a certain amount?</summary><p>No. There's no minimum and no cost. Post when it fits your content.</p></details>
-      <details><summary>How do I bring a brand on board?</summary><p>WhatsApp us the brand's name before they sign up, or ask them to mention your code. You get BBD $<span data-n="brand">25</span> when they open their shop and make their first sale.</p></details>
+      <details><summary>How do I bring a small business on board?</summary><p>WhatsApp us the business's name before they sign up, or ask them to mention your code. You get BBD $<span data-n="brand">25</span> when they open their shop and make their first sale.</p></details>
       <details><summary>I lost my PIN</summary><p><a href="https://wa.me/12468504460?text=Hi%20Shop%20Bajan!%20I%20need%20my%20creator%20dashboard%20PIN." target="_blank" rel="noopener">WhatsApp us</a> and we'll send it again.</p></details>
     </section>
   </div>
@@ -320,7 +321,7 @@ function show(d){
 }
 var SAMPLE={ok:true,name:"Bree",code:"BREE10",payoutMin:20,appCheckouts:3,updated:"20 Nov 2026 10:30 AM",
   summary:{thisMonthSales:5,thisMonthEarned:65.44,confirmed:57.80,pending:17.64,paid:10,owed:47.80},
-  sales:[{date:"20 Nov 2026",what:"Course: Eyelash Extension",amount:88.2,commission:17.64,status:"Pending"},{date:"19 Nov 2026",what:"Course: Cluster Lash",amount:45,commission:9,status:"Confirmed"},{date:"18 Nov 2026",what:"Hustle Kit (card)",amount:24,commission:4.8,status:"Confirmed"},{date:"15 Nov 2026",what:"Course: Cluster Lash",amount:45,commission:9,status:"Confirmed"},{date:"12 Nov 2026",what:"Brand bonus: Island Glow",amount:"",commission:25,status:"Confirmed"}],
+  sales:[{date:"20 Nov 2026",what:"Course: Eyelash Extension",amount:88.2,commission:17.64,status:"Pending"},{date:"19 Nov 2026",what:"Course: Cluster Lash",amount:45,commission:9,status:"Confirmed"},{date:"18 Nov 2026",what:"Hustle Kit (card)",amount:24,commission:4.8,status:"Confirmed"},{date:"15 Nov 2026",what:"Course: Cluster Lash",amount:45,commission:9,status:"Confirmed"},{date:"12 Nov 2026",what:"Small business bonus: Island Glow",amount:"",commission:25,status:"Confirmed"}],
   payouts:[{month:"Oct 2026",amount:10,on:"2 Nov 2026",method:"PayPal"}]};
 
 $("#lf").addEventListener("submit",function(e){e.preventDefault();var c=$("#code").value.trim().toUpperCase(),p=$("#pin").value.trim();if(!c||!p){$("#err").textContent="Enter your code and PIN.";$("#err").hidden=false;return}load(c,p)});
