@@ -2,7 +2,7 @@
    A link like shopbajanbb.com/hustle-kit/?ref=BREE10 saves the creator's code on this device for 30 days
    (same storage the shop checkout uses). When someone then pays for an app, the code is recorded in the
    "TGC Vendor Sign-ups (Responses)" Google Sheet, tagged type = "shop-bajan-app-referral", so the
-   creator can be paid. Codes are checked against the list in admin (content/settings.json). */
+   creator can be paid. Codes are checked against the list in admin (content/settings.json) and the Creators tab of the payouts sheet. */
 (function(){
 "use strict";
 var KEY="sb-creator-code",DAYS=30;
@@ -12,9 +12,12 @@ function set(code){try{localStorage.setItem(KEY,JSON.stringify({code:code,at:Dat
 var m=/[?&](?:ref|code)=([A-Za-z0-9_-]{2,30})/i.exec(location.search);
 if(m){
   var want=m[1].toUpperCase();
+  var has=function(list,active){return Array.isArray(list)&&list.some(function(c){return c&&(!active||c.active!==false)&&String(c.code||"").trim().toUpperCase()===want})};
   fetch("/content/settings.json",{cache:"no-cache"}).then(function(r){return r.ok?r.json():null}).then(function(s){
-    var ok=s&&Array.isArray(s.creator_codes)&&s.creator_codes.some(function(c){return c&&c.active!==false&&String(c.code||"").trim().toUpperCase()===want});
-    if(ok)set(want);
+    if(s&&has(s.creator_codes,true))return set(want);
+    /* creators added in the Google Sheet ("Creators" tab) count too */
+    var api=s&&s.creator_dashboard_url||"";
+    if(/^https:\/\/script\.google\.com\//.test(api))return fetch(api+"?action=codes").then(function(r){return r.json()}).then(function(d){if(d&&has(d.codes))set(want)});
   }).catch(function(){});
 }
 function app(){var p=location.pathname.split("/").filter(Boolean);return p[0]||"home"}

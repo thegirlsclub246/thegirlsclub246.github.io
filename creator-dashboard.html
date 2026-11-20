@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="only light">
 <title>Creator dashboard · Shop Bajan</title>
-<meta name="description" content="Shop Bajan creators: see your sales, earnings and payouts.">
+<meta name="description" content="Shop Bajan creators: your links, your money, what you're selling and how the program works.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,48 +13,88 @@
 <style>
 :root{--bg:#FFF9EC;--card:#fff;--ink:#16213E;--muted:#4A5675;--blue:#00267F;--gold:#FFC72C;--coral:#FF6F59;--sun:#FFF3C7;--sky:#EEF3FF;--line:#DCE4F5;--ok:#1E7B4F;color-scheme:only light}
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"Quicksand",system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:500;font-size:16.5px;line-height:1.55}
-.wrap{max-width:820px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 header{background:#fff;border-bottom:2px solid var(--line)}
 header .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px}
 .logo{text-decoration:none}
+a{color:var(--blue)}
 .btn{display:inline-block;font:inherit;font-weight:700;color:var(--blue);text-decoration:none;border:2.5px solid var(--blue);border-radius:999px;padding:9px 18px;background:var(--gold);box-shadow:0 3px 0 var(--blue);cursor:pointer}
 .btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--blue)}
 .btn.small{padding:5px 12px;font-size:14px;box-shadow:0 2px 0 var(--blue)}
 .btn.ghost{background:#fff}
-.kicker{display:flex;align-items:center;gap:12px;color:var(--blue);font-weight:700;letter-spacing:.2em;font-size:13px;margin:28px 0 4px}
+.kicker{display:flex;align-items:center;gap:12px;color:var(--blue);font-weight:700;letter-spacing:.2em;font-size:13px;margin:26px 0 4px}
 .kicker::before,.kicker::after{content:"";flex:1;height:2px;background:var(--blue);opacity:.35}
 h1{font-family:"Fraunces",Georgia,serif;font-weight:800;color:var(--blue);font-size:clamp(30px,6vw,44px);margin:4px 0 14px;line-height:1.05;text-transform:uppercase;text-align:center}
-h2{font-family:"Fraunces",Georgia,serif;font-weight:800;font-size:22px;margin:0 0 10px;color:var(--blue)}
-section{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:18px 20px;margin:16px 0}
+h2{font-family:"Fraunces",Georgia,serif;font-weight:800;font-size:23px;margin:0 0 10px;color:var(--blue)}
+h3{font-size:17px;margin:0 0 4px;color:var(--ink)}
+p{margin:0 0 10px}
+section,.card{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:18px 20px;margin:16px 0}
 form{display:grid;gap:12px;max-width:420px;margin:0 auto}
 label{font-weight:700;font-size:15px;display:grid;gap:4px}
 input{font:inherit;color:var(--ink);background:#fff;border:2px solid var(--line);border-radius:14px;padding:10px 12px;width:100%}
 input:focus{outline:none;border-color:var(--blue)}
 .err{color:#B3261E;font-weight:700;font-size:15px;margin:0}
 .muted{color:var(--muted);font-size:14.5px}
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:16px 0}
+.banner{background:var(--coral);color:#fff;font-weight:700;text-align:center;padding:8px 14px;font-size:14.5px}
+.hello{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+/* tabs */
+.tabs{position:sticky;top:0;z-index:5;background:var(--bg);display:flex;gap:6px;overflow-x:auto;padding:10px 0;margin:6px 0 0;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:none;font:inherit;font-weight:700;font-size:14.5px;color:var(--blue);background:#fff;border:2px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer;white-space:nowrap}
+.tabs button[aria-selected="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+.panel[hidden]{display:none}
+/* start here */
+ol.steps{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+ol.steps li{display:flex;gap:12px;align-items:flex-start}
+ol.steps .n{flex:none;width:32px;height:32px;border-radius:50%;background:var(--coral);color:#fff;font-weight:700;display:grid;place-items:center}
+.earn{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:6px 0 4px}
+.earn div{background:var(--sky);border-radius:16px;padding:12px 14px}
+.earn b{display:block;font-family:"Fraunces",Georgia,serif;font-size:24px;color:var(--blue);line-height:1.1}
+/* money */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:4px 0 12px}
 .tile{background:var(--blue);color:#fff;border-radius:18px;padding:14px 16px}
 .tile b{display:block;font-family:"Fraunces",Georgia,serif;font-size:28px;color:var(--gold);line-height:1.1}
 .tile span{font-size:14px}
 .tile.alt{background:#fff;color:var(--ink);border:2px solid var(--line)}
 .tile.alt b{color:var(--blue)}
-.links{display:grid;gap:10px}
-.link{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--sky);border-radius:14px;padding:10px 12px}
-.link code{font-family:inherit;font-weight:700;word-break:break-all;color:var(--blue)}
 .tbl{width:100%;border-collapse:collapse;font-size:15px}
-.tbl th{text-align:left;font-size:13px;color:var(--muted);font-weight:700;border-bottom:2px solid var(--line);padding:6px 6px}
+.tbl th{text-align:left;font-size:13px;color:var(--muted);font-weight:700;border-bottom:2px solid var(--line);padding:6px}
 .tbl td{border-bottom:1px solid var(--line);padding:8px 6px;vertical-align:top}
-.tbl td.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tbl td.num,.tbl th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
 .pill{display:inline-block;font-size:12.5px;font-weight:700;border-radius:999px;padding:2px 9px;white-space:nowrap}
 .pill.ok{background:#E3F4EA;color:var(--ok)}
 .pill.wait{background:var(--sun);color:#7A5A00}
-.top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 @media (max-width:520px){.tbl .hide-sm{display:none}}
+/* links */
+.links{display:grid;gap:10px}
+.link{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--sky);border-radius:14px;padding:10px 12px}
+.link code{font-family:inherit;font-weight:700;word-break:break-all;color:var(--blue)}
+.codebox{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;background:var(--blue);color:#fff;border-radius:16px;padding:12px 16px;margin:0 0 12px}
+.codebox b{font-family:"Fraunces",Georgia,serif;font-size:28px;color:var(--gold);letter-spacing:.04em}
+/* products */
+.prod{display:grid;gap:12px}
+.prod .card{margin:0}
+.prod .top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline}
+.tag{display:inline-block;font-size:12.5px;font-weight:700;border-radius:999px;padding:2px 9px;background:var(--sun);color:#7A5A00;margin-right:6px}
+.tag.blue{background:var(--sky);color:var(--blue)}
+.price{font-weight:700;color:var(--blue)}
+ul{margin:0 0 10px;padding-left:20px}
+li{margin:4px 0}
+ul li::marker{color:var(--coral)}
+/* scripts */
+.script{background:var(--sky);border-radius:14px;padding:12px 14px;margin:0 0 10px;white-space:pre-line}
+.script-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:0 0 6px}
+details{border-bottom:1px solid var(--line);padding:10px 0}
+details summary{font-weight:700;cursor:pointer;color:var(--blue)}
+details p{margin:8px 0 0}
+.note{background:var(--sun);border-radius:14px;padding:10px 14px;font-size:15px}
 footer{color:var(--muted);font-size:14px;text-align:center;padding:10px 0 40px}
 </style>
 </head>
 <body>
+<div class="banner" id="demoBanner" hidden>Preview with sample numbers. Creators see their own numbers here.</div>
 <header><div class="wrap"><a class="logo" href="./"><span style="display:inline-flex;align-items:center;gap:10px"><img src="shop-bajan-mark.png" alt="" width="40" height="40" style="width:40px;height:40px;border-radius:10px;display:block"><span style="font-family:Fraunces,Georgia,serif;font-weight:800;font-size:22px;color:#00267F">Shop Bajan</span></span></a><a class="btn ghost small" href="creators.html">Creator program</a></div></header>
 <main class="wrap">
 <p class="kicker">SHOP BAJAN CREATORS</p>
@@ -65,88 +105,229 @@ footer{color:var(--muted);font-size:14px;text-align:center;padding:10px 0 40px}
     <label>Your creator code<input id="code" autocomplete="username" autocapitalize="characters" spellcheck="false" style="text-transform:uppercase" placeholder="e.g. BREE10" required></label>
     <label>PIN<input id="pin" type="password" inputmode="numeric" autocomplete="current-password" placeholder="6 digits" required></label>
     <p class="err" id="err" hidden></p>
-    <button class="btn" type="submit" id="go">See my sales</button>
-    <p class="muted" style="margin:0;text-align:center">We sent your PIN on WhatsApp when you joined. Lost it? <a href="https://wa.me/12468504460?text=Hi%20Shop%20Bajan!%20I%20need%20my%20creator%20dashboard%20PIN." target="_blank" rel="noopener">WhatsApp us</a>.</p>
+    <button class="btn" type="submit" id="go">Open my dashboard</button>
+    <p class="muted" style="margin:0;text-align:center">Your code and PIN were in your welcome message. Lost them? <a href="https://wa.me/12468504460?text=Hi%20Shop%20Bajan!%20I%20need%20my%20creator%20dashboard%20PIN." target="_blank" rel="noopener">WhatsApp us</a>. Not a creator yet? <a href="creators.html#apply">Apply here</a>.</p>
   </form>
 </section>
+<section id="soon" hidden><p style="margin:0">The creator dashboard opens soon. For now, WhatsApp us at 1 (246) 850-4460 and we'll send you your numbers.</p></section>
 
 <div id="dash" hidden>
-  <div class="top"><p style="margin:0">Hi <b id="who"></b> · code <b id="mycode"></b></p><button class="btn ghost small" id="out" type="button">Sign out</button></div>
-  <div class="tiles">
-    <div class="tile"><b id="tMonth">$0</b><span>earned this month (<span id="tMonthN">0</span> sales)</span></div>
-    <div class="tile"><b id="tOwed">$0</b><span>owed to you, paid in the first week of next month</span></div>
-    <div class="tile alt"><b id="tPending">$0</b><span>waiting for payment to be confirmed</span></div>
-    <div class="tile alt"><b id="tPaid">$0</b><span>paid to you so far</span></div>
+  <div class="hello"><p style="margin:0">Hi <b id="who"></b> 👋 Your code is <b id="mycode"></b></p><button class="btn ghost small" id="out" type="button">Sign out</button></div>
+
+  <nav class="tabs" role="tablist" aria-label="Dashboard sections">
+    <button role="tab" data-tab="start" aria-selected="true">Start here</button>
+    <button role="tab" data-tab="links" aria-selected="false">My links</button>
+    <button role="tab" data-tab="money" aria-selected="false">My money</button>
+    <button role="tab" data-tab="selling" aria-selected="false">What you're selling</button>
+    <button role="tab" data-tab="resources" aria-selected="false">Resources</button>
+    <button role="tab" data-tab="ideas" aria-selected="false">Post ideas</button>
+    <button role="tab" data-tab="faq" aria-selected="false">Questions</button>
+  </nav>
+
+  <!-- START HERE -->
+  <div class="panel" data-panel="start">
+    <section>
+      <h2>How it works, in 4 steps</h2>
+      <ol class="steps">
+        <li><span class="n">1</span><span><b>Pick what you'll share.</b> Choose the courses or apps that fit your followers. See <a href="#" data-go="selling">What you're selling</a>.</span></li>
+        <li><span class="n">2</span><span><b>Copy your link.</b> Every product has its own link with your code built in. Get them in <a href="#" data-go="links">My links</a>. Put the link in your bio, Stories (link sticker), WhatsApp status or DMs.</span></li>
+        <li><span class="n">3</span><span><b>Post it your way.</b> Show it, try it, tell your story. Say that you earn from your link, for example "I earn a little when you use my code". Need a nudge? See <a href="#" data-go="ideas">Post ideas</a>.</span></li>
+        <li><span class="n">4</span><span><b>Watch your money grow.</b> Every sale shows in <a href="#" data-go="money">My money</a>. We pay you in the first week of each month by PayPal or FirstPay.</span></li>
+      </ol>
+    </section>
+    <section>
+      <h2>What you earn</h2>
+      <div class="earn">
+        <div><b><span data-n="course">20</span>%</b>of what the shopper pays for a course. Your followers get <span data-n="disc">10</span>% off.</div>
+        <div><b><span data-n="app">20</span>%</b>of the first payment when someone pays for Hustle Kit or DepositProof.</div>
+        <div><b>BBD $<span data-n="brand">25</span></b>for each Bajan brand you bring to Shop Bajan, once they make their first sale.</div>
+        <div><b><span data-n="comm">5</span>%</b>on Bajan brands' products from Thu 10 Dec, when the marketplace opens.</div>
+      </div>
+      <p class="muted" style="margin:6px 0 0">Example: 10 people buy the Cluster Lash Course (US$25) with your code. They each pay US$22.50 and you earn US$45 (BBD $90).</p>
+    </section>
   </div>
-  <p class="muted" id="minNote"></p>
 
-  <section>
-    <h2>Your links</h2>
-    <div class="links" id="links"></div>
-    <p class="muted" style="margin:10px 0 0">Anyone who taps your link has your code saved for 30 days. Your code also works if they type it at checkout.</p>
-  </section>
+  <!-- LINKS -->
+  <div class="panel" data-panel="links" hidden>
+    <section>
+      <div class="codebox"><span>Your code<br><b id="code2"></b></span><button class="btn small" type="button" id="copyCode">Copy code</button></div>
+      <p>Share these links. Anyone who taps one has your code saved on their phone for 30 days, so you still get credit if they buy later. People can also type your code at checkout.</p>
+      <div class="links" id="links"></div>
+    </section>
+  </div>
 
-  <section>
-    <h2>Your sales</h2>
-    <div style="overflow-x:auto"><table class="tbl"><thead><tr><th>Date</th><th>What</th><th class="hide-sm" style="text-align:right">Paid (BBD)</th><th style="text-align:right">You earn</th><th>Status</th></tr></thead><tbody id="sales"></tbody></table></div>
-    <p class="muted" id="none" hidden>No sales yet. Share your links and they'll show up here.</p>
-    <p class="muted" style="margin:10px 0 0"><span class="pill ok">Confirmed</span> means the payment is in. Card payments through Dodo confirm within minutes. <span class="pill wait">Pending</span> means we're waiting for a FirstPay, bank or PayPal payment to come through. <span id="apps"></span></p>
-  </section>
+  <!-- MONEY -->
+  <div class="panel" data-panel="money" hidden>
+    <div class="tiles">
+      <div class="tile"><b id="tMonth">$0</b><span>earned this month (<span id="tMonthN">0</span> sales)</span></div>
+      <div class="tile"><b id="tOwed">$0</b><span>owed to you, paid in the first week of next month</span></div>
+      <div class="tile alt"><b id="tPending">$0</b><span>waiting for the payment to come in</span></div>
+      <div class="tile alt"><b id="tPaid">$0</b><span>paid to you so far</span></div>
+    </div>
+    <p class="muted">All amounts are in BBD (BBD $2 = US$1). <span id="minNote"></span></p>
+    <section>
+      <h2>Your sales</h2>
+      <div style="overflow-x:auto"><table class="tbl"><thead><tr><th>Date</th><th>What</th><th class="num hide-sm">They paid</th><th class="num">You earn</th><th>Status</th></tr></thead><tbody id="sales"></tbody></table></div>
+      <p class="muted" id="none" hidden>No sales yet. Share your links and they'll show up here.</p>
+      <p class="muted" style="margin:10px 0 0"><span class="pill ok">Confirmed</span> the payment is in. Card payments confirm within minutes. <span class="pill wait">Pending</span> we're waiting for a FirstPay, bank or PayPal payment to come through. <span id="apps"></span></p>
+    </section>
+    <section id="paysec" hidden>
+      <h2>Payouts</h2>
+      <table class="tbl"><thead><tr><th>For</th><th>Paid on</th><th>How</th><th class="num">Amount</th></tr></thead><tbody id="pays"></tbody></table>
+    </section>
+    <p class="muted" style="text-align:center">Updated <span id="upd"></span> · <a href="#" id="refresh">Refresh</a></p>
+  </div>
 
-  <section id="paysec" hidden>
-    <h2>Payouts</h2>
-    <table class="tbl"><thead><tr><th>For</th><th>Paid on</th><th>How</th><th style="text-align:right">Amount (BBD)</th></tr></thead><tbody id="pays"></tbody></table>
-  </section>
-  <p class="muted" style="text-align:center">Updated <span id="upd"></span> · <a href="#" id="refresh">Refresh</a></p>
+  <!-- SELLING -->
+  <div class="panel" data-panel="selling" hidden>
+    <p>Here's everything you can earn from right now, what it is, and who it's for. Read through each one so you can talk about it honestly.</p>
+    <div class="prod">
+      <div class="card"><div class="top"><h3>Cluster Lash Course</h3><span class="price">US$25 · followers pay US$22.50</span></div>
+        <p><span class="tag">Online course</span><span class="tag blue">You earn about US$4.50 a sale</span></p>
+        <p>Learn natural, hybrid and volume cluster lashes from home, at your own pace.</p>
+        <ul><li>20 video modules, from the basics to full sets on real clients</li><li>12 downloadable guides, including a lash map and consent form</li><li>Certificate of completion and lifetime access</li></ul>
+        <p class="muted"><b>Great for:</b> beauty lovers, beginners, lash techs adding a new service, people who want salon-looking lashes at home.</p></div>
+      <div class="card"><div class="top"><h3>Eyelash Extension Course</h3><span class="price">US$49 · followers pay US$44.10</span></div>
+        <p><span class="tag">Online course</span><span class="tag blue">You earn about US$8.82 a sale</span></p>
+        <p>Classic, hybrid and volume eyelash extensions, taught step by step by a certified esthetician.</p>
+        <ul><li>26 video modules: consultation, classic and volume sets, refills, removals, pricing and marketing</li><li>Training manual, practice sheets, homework with feedback and a quiz</li><li>Certificate of completion and lifetime access</li></ul>
+        <p class="muted"><b>Great for:</b> anyone who wants to start a lash business or earn from home.</p></div>
+      <div class="card"><div class="top"><h3>Hustle Kit booking app</h3><span class="price">US$12 a month</span></div>
+        <p><span class="tag">App</span><span class="tag blue">You earn 20% of the first payment</span></p>
+        <p>Clients book themselves from a link, pay the deposit up front and get reminded. Walk-ins, payments and regulars in one place. No commission, cancel any time.</p>
+        <p class="muted"><b>Great for:</b> lash and nail techs, barbers, braiders, makeup artists, tutors, anyone who takes bookings in their DMs.</p></div>
+      <div class="card"><div class="top"><h3>DepositProof</h3><span class="price">Free to start · from US$9 a move · landlords US$19 a month</span></div>
+        <p><span class="tag">App</span><span class="tag blue">You earn 20% of the first payment</span></p>
+        <p>Move-in and move-out condition reports with photos, notes and both signatures, so renters get their deposit back and landlords have proof.</p>
+        <p class="muted"><b>Great for:</b> renters, students, landlords, Airbnb and short-let hosts, realtors, property managers.</p></div>
+      <div class="card"><div class="top"><h3>Shop Bajan marketplace</h3><span class="price">Opens Thu 10 Dec</span></div>
+        <p><span class="tag">Coming soon</span><span class="tag blue">You earn 5%, followers get 10% off their first order</span></p>
+        <p>Barbados' small businesses in one place: one bag, one checkout, delivery or collection. Your code will work on it from opening day.</p></div>
+    </div>
+  </div>
+
+  <!-- RESOURCES -->
+  <div class="panel" data-panel="resources" hidden>
+    <section>
+      <h2>Resources</h2>
+      <ul>
+        <li><b>Try it first.</b> Open each product page from <a href="#" data-go="links">My links</a> and screen-record yourself scrolling through it or trying the app. Real screen recordings make the best posts.</li>
+        <li><b>Shop Bajan logo:</b> <a href="shop-bajan-mark.png" download>download the logo</a> if you want to show it in a post.</li>
+        <li><b>Course details:</b> the full course pages are on the <a href="https://academy.thegirlsclub246.com/#academy" target="_blank" rel="noopener">Academy site</a>.</li>
+        <li><b>Tag us</b> <a href="https://www.instagram.com/shopbajan/" target="_blank" rel="noopener">@shopbajan</a> on Instagram so we can reshare your posts.</li>
+        <li><b>The rules</b> are in the <a href="creators.html#terms">creator terms</a>. They're short.</li>
+        <li><b>Stuck or have an idea?</b> <a href="https://wa.me/12468504460?text=Hi%20Shop%20Bajan!%20I'm%20a%20creator%20and%20I%20have%20a%20question." target="_blank" rel="noopener">WhatsApp us</a> at 1 (246) 850-4460.</li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- IDEAS -->
+  <div class="panel" data-panel="ideas" hidden>
+    <p>Your own words work best. These are just starting points, so change them to sound like you. Always say that you earn from your code.</p>
+    <section>
+      <h2>Starter captions</h2>
+      <div id="scripts"></div>
+    </section>
+    <section>
+      <h2>Post ideas</h2>
+      <ul>
+        <li>"Things I wish I knew before…" (lashes, renting, starting a side hustle)</li>
+        <li>A day in your business, ending with how clients book you on Hustle Kit</li>
+        <li>"How I stopped chasing deposits" with Hustle Kit</li>
+        <li>Your honest first impressions while trying a lesson or app</li>
+        <li>A Story poll: "Would you learn lashes from home?" then share your link with the people who say yes</li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- FAQ -->
+  <div class="panel" data-panel="faq" hidden>
+    <section>
+      <h2>Questions</h2>
+      <details><summary>How do I get credit for a sale?</summary><p>When someone taps your link, your code is saved on their phone for 30 days. If they buy on that phone, you get the credit. They can also type your code at checkout.</p></details>
+      <details><summary>When and how do I get paid?</summary><p>In the first week of each month, for the month before, by PayPal or FirstPay. Once you've earned at least BBD $<span data-n="min">20</span>. Anything under that carries over to next month.</p></details>
+      <details><summary>Why does a sale say Pending?</summary><p>The order is in, but we're waiting for the payment, for example a FirstPay or bank transfer. It changes to Confirmed once the money arrives. Cancelled or refunded orders don't earn.</p></details>
+      <details><summary>What do my followers get?</summary><p><span data-n="disc">10</span>% off courses, and from 10 Dec, 10% off their first Shop Bajan order. App prices aren't discounted.</p></details>
+      <details><summary>Can I use my own code?</summary><p>No. Orders you place yourself, or for someone else, don't earn commission.</p></details>
+      <details><summary>Do I have to post a certain amount?</summary><p>No. There's no minimum and no cost. Post when it fits your content.</p></details>
+      <details><summary>How do I bring a brand on board?</summary><p>WhatsApp us the brand's name before they sign up, or ask them to mention your code. You get BBD $<span data-n="brand">25</span> when they open their shop and make their first sale.</p></details>
+      <details><summary>I lost my PIN</summary><p><a href="https://wa.me/12468504460?text=Hi%20Shop%20Bajan!%20I%20need%20my%20creator%20dashboard%20PIN." target="_blank" rel="noopener">WhatsApp us</a> and we'll send it again.</p></details>
+    </section>
+  </div>
 </div>
-
-<section id="soon" hidden><p style="margin:0">The creator dashboard opens soon. For now, WhatsApp us at 1 (246) 850-4460 and we'll send you your numbers.</p></section>
 </main>
 <footer>&copy; 2026 Shop Bajan · Barbados · <a href="creators.html#terms" style="color:inherit">Creator terms</a></footer>
 <script>
 (function(){
 "use strict";
-var $=function(s){return document.querySelector(s)};
-var API="",KEY="sb-creator-dash-code",last=null;
+var $=function(s){return document.querySelector(s)},$$=function(s){return [].slice.call(document.querySelectorAll(s))};
+var API="",KEY="sb-creator-dash-code",last=null,N={disc:10,comm:5,course:20,app:20,min:20,brand:25};
+var DEMO=/[?&]demo=1\b/.test(location.search);
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 function money(n){return "$"+(Number(n)||0).toFixed(2)}
 function store(v){try{if(v===undefined)return localStorage.getItem(KEY)||"";localStorage.setItem(KEY,v)}catch(e){}return ""}
-$("#code").value=store();
+function paintN(){$$("[data-n]").forEach(function(el){el.textContent=N[el.getAttribute("data-n")]})}
+$("#code").value=store();paintN();
+
+/* tabs */
+function tab(name){$$(".tabs button").forEach(function(b){b.setAttribute("aria-selected",b.dataset.tab===name?"true":"false")});$$(".panel").forEach(function(p){p.hidden=p.dataset.panel!==name});try{history.replaceState(null,"","#"+name)}catch(e){}}
+$$(".tabs button").forEach(function(b){b.onclick=function(){tab(b.dataset.tab);b.scrollIntoView({inline:"center",block:"nearest"})}});
+document.addEventListener("click",function(e){var g=e.target.closest("[data-go]");if(g){e.preventDefault();tab(g.dataset.go);$(".tabs").scrollIntoView({behavior:"smooth"})}});
 
 fetch("content/settings.json",{cache:"no-cache"}).then(function(r){return r.ok?r.json():{}}).then(function(s){
-  API=String((s&&s.creator_dashboard_url)||"").trim();
+  s=s||{};API=String(s.creator_dashboard_url||"").trim();
+  function n(v,d){v=parseFloat(v);return isFinite(v)?v:d}
+  N={disc:n(s.creator_discount_pct,10),comm:n(s.creator_commission_pct,5),course:n(s.creator_course_commission_pct,20),app:n(s.creator_app_commission_pct,20),min:n(s.creator_payout_min,20),brand:n(s.creator_brand_bonus,25)};paintN();
+  if(DEMO){show(SAMPLE);return}
   if(!API){$("#login").hidden=true;$("#soon").hidden=false}
-}).catch(function(){});
+}).catch(function(){if(DEMO)show(SAMPLE)});
 
 function load(code,pin){
   var err=$("#err");err.hidden=true;var b=$("#go");b.disabled=true;b.textContent="Loading…";
   fetch(API+(API.indexOf("?")>-1?"&":"?")+"code="+encodeURIComponent(code)+"&pin="+encodeURIComponent(pin)).then(function(r){return r.json()}).then(function(d){
-    b.disabled=false;b.textContent="See my sales";
+    b.disabled=false;b.textContent="Open my dashboard";
     if(!d||!d.ok){err.textContent=(d&&d.error)||"Something went wrong. Please try again.";err.hidden=false;return}
     last={code:code,pin:pin};store(d.code);show(d);
-  }).catch(function(){b.disabled=false;b.textContent="See my sales";err.textContent="We couldn't load your dashboard. Check your connection and try again.";err.hidden=false});
+  }).catch(function(){b.disabled=false;b.textContent="Open my dashboard";err.textContent="We couldn't load your dashboard. Check your connection and try again.";err.hidden=false});
 }
+
+var SCRIPTS=[
+  ["Courses","I've been wanting to learn [cluster lashes / lash extensions] and this course from The Girls Club Academy is so clear. You learn from home at your own pace and get a certificate. Use my code {CODE} for 10% off: {COURSE}\n(I earn a little when you use my code.)"],
+  ["Hustle Kit","If you take bookings in your DMs, try this. Clients book themselves, pay the deposit up front and get reminders, so no more no-shows. It's Hustle Kit: {HK}\n(I earn a little if you sign up through my link.)"],
+  ["DepositProof","Moving soon? Do your move-in check on DepositProof so you have proof of the condition and get your deposit back. Free to start: {DP}\n(I earn a little if you upgrade through my link.)"]
+];
+function linksFor(code){var c=encodeURIComponent(code);return{COURSE:"https://academy.thegirlsclub246.com/?ref="+c,HK:"https://shopbajanbb.com/hustle-kit/?ref="+c,DP:"https://shopbajanbb.com/depositproof/?ref="+c,HC:"https://shopbajanbb.com/hustle-cut/?ref="+c,BB:"https://shopbajanbb.com/journey/?ref="+c,SB:"https://shopbajanbb.com/?ref="+c}}
+
 function show(d){
-  $("#login").hidden=true;$("#dash").hidden=false;
-  $("#who").textContent=d.name||"there";$("#mycode").textContent=d.code;
+  $("#login").hidden=true;$("#soon").hidden=true;$("#dash").hidden=false;$("#demoBanner").hidden=!DEMO;
+  $("#who").textContent=d.name||"there";$("#mycode").textContent=d.code;$("#code2").textContent=d.code;
   var s=d.summary||{};
   $("#tMonth").textContent=money(s.thisMonthEarned);$("#tMonthN").textContent=s.thisMonthSales||0;
   $("#tOwed").textContent=money(s.owed);$("#tPending").textContent=money(s.pending);$("#tPaid").textContent=money(s.paid);
-  $("#minNote").textContent=(s.owed>0&&s.owed<d.payoutMin)?"Payouts start at BBD $"+d.payoutMin+". Anything under that carries over to next month.":"";
-  var c=encodeURIComponent(d.code),L=[["Academy courses","https://academy.thegirlsclub246.com/?ref="+c],["Hustle Book (booking app)","https://shopbajanbb.com/hustle-kit/?ref="+c],["DepositProof","https://shopbajanbb.com/depositproof/?ref="+c],["Hustle Cut (free)","https://shopbajanbb.com/hustle-cut/?ref="+c],["Shop Bajan (from 10 Dec)","https://shopbajanbb.com/?ref="+c]];
-  $("#links").innerHTML=L.map(function(l){return '<div class="link"><span><span class="muted">'+esc(l[0])+'</span><br><code>'+esc(l[1].replace(/^https:\/\//,""))+'</code></span><button class="btn small" type="button" data-copy="'+esc(l[1])+'">Copy</button></div>'}).join("");
-  var rows=d.sales||[];$("#none").hidden=rows.length>0;
-  $("#sales").innerHTML=rows.map(function(r){return "<tr><td>"+esc(r.date)+"</td><td>"+esc(r.what)+'</td><td class="num hide-sm">'+(r.amount===""?"":money(r.amount))+'</td><td class="num"><b>'+money(r.commission)+'</b></td><td><span class="pill '+(r.status==="Confirmed"?"ok":"wait")+'">'+esc(r.status)+"</span></td></tr>"}).join("");
-  $("#apps").textContent=d.appCheckouts?"People have gone to pay for an app through your links "+d.appCheckouts+" time"+(d.appCheckouts===1?"":"s")+". We add app sales here once we've matched the payment.":"";
+  $("#minNote").textContent=(s.owed>0&&s.owed<(d.payoutMin||N.min))?"Payouts start at BBD $"+(d.payoutMin||N.min)+". Anything under that carries over to next month.":"";
+  var L=linksFor(d.code);
+  var rows=[["Academy courses (Cluster Lash and Eyelash Extension)",L.COURSE],["Hustle Kit booking app",L.HK],["DepositProof",L.DP],["Shop Bajan marketplace (from 10 Dec)",L.SB]];
+  $("#links").innerHTML=rows.map(function(l){return '<div class="link"><span><span class="muted">'+esc(l[0])+'</span><br><code>'+esc(l[1].replace(/^https:\/\//,""))+'</code></span><button class="btn small" type="button" data-copy="'+esc(l[1])+'">Copy</button></div>'}).join("");
+  $("#copyCode").setAttribute("data-copy",d.code);
+  $("#scripts").innerHTML=SCRIPTS.map(function(x){var t=x[1].replace(/\{CODE\}/g,d.code).replace(/\{(\w+)\}/g,function(m,k){return L[k]||m});return '<div class="script-top"><b>'+esc(x[0])+'</b><button class="btn small" type="button" data-copy="'+esc(t)+'">Copy</button></div><div class="script">'+esc(t)+'</div>'}).join("");
+  var sales=d.sales||[];$("#none").hidden=sales.length>0;
+  $("#sales").innerHTML=sales.map(function(r){return "<tr><td>"+esc(r.date)+"</td><td>"+esc(r.what)+'</td><td class="num hide-sm">'+(r.amount===""?"":money(r.amount))+'</td><td class="num"><b>'+money(r.commission)+'</b></td><td><span class="pill '+(r.status==="Confirmed"?"ok":"wait")+'">'+esc(r.status)+"</span></td></tr>"}).join("");
+  $("#apps").textContent=d.appCheckouts?"People have gone to pay for an app through your links "+d.appCheckouts+" time"+(d.appCheckouts===1?"":"s")+". App sales show here once we've matched the payment.":"";
   var p=d.payouts||[];$("#paysec").hidden=!p.length;
   $("#pays").innerHTML=p.map(function(x){return "<tr><td>"+esc(x.month)+"</td><td>"+esc(x.on)+"</td><td>"+esc(x.method)+'</td><td class="num">'+money(x.amount)+"</td></tr>"}).join("");
   $("#upd").textContent=d.updated||"just now";
+  var h=(location.hash||"").slice(1);tab($('.tabs button[data-tab="'+h+'"]')?h:"start");
 }
+var SAMPLE={ok:true,name:"Bree",code:"BREE10",payoutMin:20,appCheckouts:3,updated:"20 Nov 2026 10:30 AM",
+  summary:{thisMonthSales:5,thisMonthEarned:65.44,confirmed:57.80,pending:17.64,paid:10,owed:47.80},
+  sales:[{date:"20 Nov 2026",what:"Course: Eyelash Extension",amount:88.2,commission:17.64,status:"Pending"},{date:"19 Nov 2026",what:"Course: Cluster Lash",amount:45,commission:9,status:"Confirmed"},{date:"18 Nov 2026",what:"Hustle Kit (card)",amount:24,commission:4.8,status:"Confirmed"},{date:"15 Nov 2026",what:"Course: Cluster Lash",amount:45,commission:9,status:"Confirmed"},{date:"12 Nov 2026",what:"Brand bonus: Island Glow",amount:"",commission:25,status:"Confirmed"}],
+  payouts:[{month:"Oct 2026",amount:10,on:"2 Nov 2026",method:"PayPal"}]};
+
 $("#lf").addEventListener("submit",function(e){e.preventDefault();var c=$("#code").value.trim().toUpperCase(),p=$("#pin").value.trim();if(!c||!p){$("#err").textContent="Enter your code and PIN.";$("#err").hidden=false;return}load(c,p)});
-$("#out").onclick=function(){last=null;$("#pin").value="";$("#dash").hidden=true;$("#login").hidden=false};
+$("#out").onclick=function(){last=null;$("#pin").value="";$("#dash").hidden=true;$("#login").hidden=!API;$("#soon").hidden=!!API;$("#demoBanner").hidden=true};
 $("#refresh").onclick=function(e){e.preventDefault();if(last)load(last.code,last.pin)};
-document.addEventListener("click",function(e){var b=e.target.closest("[data-copy]");if(!b)return;var t=b.getAttribute("data-copy");
-  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){b.textContent="Copied ✓";setTimeout(function(){b.textContent="Copy"},1500)}).catch(function(){window.prompt("Copy your link:",t)})});
+document.addEventListener("click",function(e){var b=e.target.closest("[data-copy]");if(!b)return;var t=b.getAttribute("data-copy"),old=b.textContent;
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){b.textContent="Copied ✓";setTimeout(function(){b.textContent=old},1500)}).catch(function(){window.prompt("Copy this:",t)})});
 })();
 </script>
 </body>
