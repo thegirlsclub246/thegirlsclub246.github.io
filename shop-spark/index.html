@@ -266,7 +266,8 @@ const FIND_QS = [
     {t:"Design and making things look nice", p:{templates:3, printables:2}, r:"you have an eye for design"},
     {t:"Writing", p:{ebook:3, checklist:1, workbook:1}, r:"you like to write"},
     {t:"A skill or trade, like lashes, baking or hair", p:{course:3, ebook:1, checklist:1}, r:"you have a skill people want to learn"},
-    {t:"Business or money", p:{app:2, templates:2, workbook:1}, r:"you know business and money"}]},
+    {t:"Business or money", p:{app:2, templates:2, workbook:1}, r:"you know business and money"},
+    {t:"Something else", other:true, p:{ebook:2, checklist:2, course:1, printables:1}, r:""}]},
   {id:"time", q:"How much time can you give this each week?", opts:[
     {t:"Under 2 hours", p:{checklist:3, printables:2, templates:1}, r:"it fits into under 2 hours a week"},
     {t:"2 to 5 hours", p:{printables:2, templates:2, ebook:1, checklist:1}, r:"it fits into a few hours a week"},
@@ -383,11 +384,28 @@ function quiz(){
     <div class="qcount"><span>Question ${step+1} of ${Q.length}</span><button id="back">Back</button></div>
     <h2>${esc(q.q)}</h2>
     <div class="opts">${q.opts.map((o,i)=>`<button class="opt${answers[q.id]===i?" picked":""}" data-i="${i}">${esc(o.t)}</button>`).join("")}</div>
+    <form id="otherBox" class="card" style="margin-top:12px" ${q.opts[answers[q.id]]?.other ? "" : "hidden"} novalidate>
+      <label for="otherIn">Tell me what you're good at</label>
+      <input type="text" id="otherIn" maxlength="60" placeholder="For example: gardening, nails, budgeting" value="${esc(answers[q.id+"_other"] || "")}">
+      <div class="err" id="otherErr" role="alert"></div>
+      <button class="btn">Continue</button>
+    </form>
     ${foot}</div>`);
+  const next = () => { step++; step < Q.length ? quiz() : emailGate(); };
+  const box = document.getElementById("otherBox");
   app.querySelectorAll(".opt").forEach(b => b.onclick = () => {
-    answers[q.id] = +b.dataset.i; b.classList.add("picked");
-    setTimeout(() => { step++; step < Q.length ? quiz() : emailGate(); }, 160);
+    answers[q.id] = +b.dataset.i;
+    app.querySelectorAll(".opt").forEach(x => x.classList.toggle("picked", x === b));
+    if (q.opts[answers[q.id]].other) { box.hidden = false; document.getElementById("otherIn").focus(); return; }
+    box.hidden = true; delete answers[q.id+"_other"];
+    setTimeout(next, 160);
   });
+  box.onsubmit = e => {
+    e.preventDefault();
+    const v = document.getElementById("otherIn").value.trim().replace(/\s+/g, " ");
+    if (v.length < 2) return document.getElementById("otherErr").textContent = "Type a word or two about what you're good at.";
+    answers[q.id+"_other"] = v; next();
+  };
   document.getElementById("back").onclick = () => { if (step) { step--; quiz(); } else home(); };
 }
 
@@ -543,12 +561,24 @@ function buildFind(name){
   Object.keys(PRODUCTS).forEach(k => { pts[k] = 0; why[k] = []; });
   FIND_QS.forEach(q => {
     const o = q.opts[answers[q.id] ?? 0];
-    Object.entries(o.p).forEach(([k,v]) => { pts[k] += v; if (v >= 2) why[k].push(o.r); });
+    const r = o.other ? `you know a lot about ${answers[q.id+"_other"] || "your topic"}` : o.r;
+    Object.entries(o.p).forEach(([k,v]) => { pts[k] += v; if (v >= 2) why[k].push(r); });
   });
   const ranked = Object.keys(PRODUCTS).sort((a,b) => pts[b] - pts[a]);
   const best = Math.max(pts[ranked[0]], 1);
   const top = ranked.slice(0,3).map(k => ({k, fit:Math.max(40, Math.min(98, Math.round(pts[k] / best * 95))), why:why[k].slice(0,3)}));
-  return {name, top};
+  return {name, top, skill:answers.skill_other || ""};
+}
+
+/* Product ideas made from the skill someone typed under "Something else". */
+function skillIdeas(skill){
+  const t = skill.replace(/^(i'?m good at|i am good at|good at)\s+/i, "");
+  const T = t.charAt(0).toUpperCase() + t.slice(1);
+  return [
+    ["Checklist", `"The ${T} Starter Checklist": the 10 to 15 steps you always follow, on one page.`, "US$3 to US$7"],
+    ["Guide", `"${T} for Beginners": a 15 to 25 page guide answering the questions people ask you about ${t}.`, "US$9 to US$19"],
+    ["Mini course", `"Learn ${T} in 5 Lessons": short phone-filmed videos showing how you do it.`, "US$29 to US$79"]
+  ];
 }
 
 function whyText(list){
@@ -570,6 +600,12 @@ function findResults(r){
         <div class="bar${i?"":" low"}"><div class="row"><span><strong>${i+1}. ${esc(PRODUCTS[t.k].name)}</strong>${i?"":" · best match"}</span><span>${t.fit}% fit</span></div>
         <div class="track"><div class="fill" style="width:${t.fit}%"></div></div></div>`).join("")}</div>
     </div>
+
+    ${r.skill ? `<div class="card">
+      <span class="tag">Made from your answer</span>
+      <h3 style="margin-top:10px">3 product ideas from your skill: ${esc(r.skill)}</h3>
+      <ol class="steps">${skillIdeas(r.skill).map(([k,d,pr]) => `<li><strong>${esc(k)}:</strong> ${esc(d)} <span class="muted">Starter price: ${esc(pr)}.</span></li>`).join("")}</ol>
+    </div>` : ""}
 
     ${r.top.map((t,i) => { const P = PRODUCTS[t.k]; return `<div class="card">
       <h3>${i+1}. ${esc(P.name)}</h3>
