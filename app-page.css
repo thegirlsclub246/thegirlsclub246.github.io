@@ -15,6 +15,7 @@ a{color:var(--blue)}
 .hero img{width:72px;height:72px;border-radius:18px;flex:none;box-shadow:4px 4px 0 var(--gold)}
 h1{font-family:var(--serif);font-weight:800;text-transform:uppercase;color:var(--blue);font-size:clamp(1.8rem,7.5vw,3rem);line-height:1.02;margin:0;min-width:0;overflow-wrap:anywhere}
 h1 span{color:var(--coral)}
+h1.long{font-size:clamp(1.35rem,7vw,3rem);overflow-wrap:normal}
 h2{font-family:var(--serif);font-weight:800;color:var(--blue);font-size:1.55rem;line-height:1.15;margin:0 0 8px}
 h3{font-family:var(--serif);font-weight:700;color:var(--blue);font-size:1.1rem;line-height:1.25;margin:0}
 p{margin:0 0 12px}
