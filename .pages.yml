@@ -1,0 +1,1012 @@
+# Pages CMS menu for shopbajanbb.com. Made by admin-tools/sb-make-editable.ps1, re-run it after page changes.
+media:
+  input: img
+  output: img
+content:
+  - name: home
+    label: "Home page (waitlist)"
+    type: file
+    path: content/pages/home.json
+    format: json
+    fields:
+      - name: s01
+        label: "Top of the page"
+        type: object
+        fields:
+          - name: i1
+            label: "Photo"
+            type: image
+          - name: t2
+            label: "Words: Shop Bajan"
+            type: string
+          - name: t3
+            label: "Words: Barbados"
+            type: string
+          - name: t4
+            label: "Link/button: Sell with us"
+            type: string
+          - name: t5
+            label: "Link/button: Join the waitlist"
+            type: string
+          - name: t6
+            label: "Words: Sell with us"
+            type: string
+      - name: s02
+        label: "Barbados’ small businesses. One bag."
+        type: object
+        fields:
+          - name: t7
+            label: "Words: One bag."
+            type: string
+          - name: t8
+            label: "Text: Your favourite Bajan brands, all in one place an..."
+            type: text
+          - name: t9
+            label: "Link/button: Join the waitlist"
+            type: string
+          - name: t10
+            label: "Link/button: See how it feels"
+            type: string
+          - name: t11
+            label: "Words: Waitlist-only launch gift: free delivery on your..."
+            type: string
+          - name: t12
+            label: "List item: Open 24/7"
+            type: string
+          - name: t13
+            label: "List item: One bag, one checkout"
+            type: string
+          - name: t14
+            label: "List item: Delivery or collection"
+            type: string
+          - name: t15
+            label: "List item: Handmade & imported"
+            type: string
+          - name: t16
+            label: "List item: Physical & digital"
+            type: string
+      - name: s03
+        label: "Own a small business? Launch with us."
+        type: object
+        fields:
+          - name: t17
+            label: "Text: For small businesses"
+            type: string
+          - name: t18
+            label: "Text: Shop Bajan is where Barbados finds you, 24/7. Ha..."
+            type: text
+          - name: t19
+            label: "List item: Your own storefront, designed for you"
+            type: string
+          - name: t20
+            label: "List item: We handle the keeping, hosting and selling"
+            type: string
+          - name: t21
+            label: "List item: We cover the card fees on every online sale"
+            type: string
+          - name: t22
+            label: "List item: Delivery, collection and meet-ups sorted"
+            type: string
+          - name: t23
+            label: "List item: Free to start. You only pay when you sell."
+            type: string
+          - name: t24
+            label: "Link/button: Become a founding brand"
+            type: string
+      - name: s04
+        label: "Shopping local, finally as easy as it sh..."
+        type: object
+        fields:
+          - name: t25
+            label: "Text: Picture this"
+            type: string
+          - name: t26
+            label: "Text: Here’s what your week looks like once Shop Bajan..."
+            type: string
+          - name: t27
+            label: "Price/number: 11:48 pm"
+            type: string
+          - name: t28
+            label: "Small heading: The birthday you forgot is tomorrow."
+            type: string
+          - name: t29
+            label: "Text: Shop Bajan never closes. Find something local an..."
+            type: text
+          - name: t30
+            label: "Price/number: 12:30 pm"
+            type: string
+          - name: t31
+            label: "Small heading: Lunch break. One thumb. Done."
+            type: string
+          - name: t32
+            label: "Text: Order from your desk between bites. Have it deli..."
+            type: string
+          - name: t33
+            label: "Words: Sunday, on the couch"
+            type: string
+          - name: t34
+            label: "Small heading: Five businesses. One bag."
+            type: string
+          - name: t35
+            label: "Text: Nails from one brand, a candle from another, ear..."
+            type: text
+          - name: t36
+            label: "Words: Any day"
+            type: string
+          - name: t37
+            label: "Small heading: “Is this still available?” Never typed again."
+            type: string
+          - name: t38
+            label: "Text: We check stock with every brand, so what you see..."
+            type: string
+          - name: t39
+            label: "Words: Saturday errands"
+            type: string
+          - name: t40
+            label: "Small heading: Pick it up on your route."
+            type: string
+          - name: t41
+            label: "Text: Choose collection or a meet-up that fits your da..."
+            type: string
+          - name: t42
+            label: "Words: This Christmas"
+            type: string
+          - name: t43
+            label: "Small heading: Everyone on your list, from Bajan hands."
+            type: string
+          - name: t44
+            label: "Text: Gifts with a story, in one bag, from small busin..."
+            type: text
+          - name: t45
+            label: "Link/button: I want in"
+            type: string
+      - name: s05
+        label: "From “I want that” to “it’s mine” in thr..."
+        type: object
+        fields:
+          - name: t46
+            label: "Text: How it works"
+            type: string
+          - name: t47
+            label: "Small heading: Browse local storefronts"
+            type: string
+          - name: t48
+            label: "Text: Every brand gets its own storefront. Handmade or..."
+            type: text
+          - name: t49
+            label: "Small heading: Fill one bag"
+            type: string
+          - name: t50
+            label: "Text: Add from as many brands as you like. One bag. On..."
+            type: string
+          - name: t51
+            label: "Small heading: Get it your way"
+            type: string
+          - name: t52
+            label: "Text: Have it delivered, or collect or meet up. We hol..."
+            type: text
+      - name: s06
+        label: "Be first through the door."
+        type: object
+        fields:
+          - name: t53
+            label: "Text: The waitlist"
+            type: string
+          - name: t54
+            label: "Text: Join free and you’ll hear the moment Shop Bajan..."
+            type: text
+          - name: t55
+            label: "Small heading: Join the waitlist"
+            type: string
+          - name: t56
+            label: "Text: Takes 20 seconds. Free to join."
+            type: string
+          - name: t57
+            label: "Form label: Your name"
+            type: string
+          - name: t58
+            label: "Form heading: How should we reach you?"
+            type: string
+          - name: t59
+            label: "Words: WhatsApp"
+            type: string
+          - name: t60
+            label: "Words: Email"
+            type: string
+          - name: t61
+            label: "Form heading: I’m here to…"
+            type: string
+          - name: t62
+            label: "Words: Shop local"
+            type: string
+          - name: t63
+            label: "Words: Sell my products"
+            type: string
+          - name: t64
+            label: "Words: (optional)"
+            type: string
+          - name: t65
+            label: "Link/button: shop policies"
+            type: string
+          - name: t66
+            label: "Text: Waitlist-only"
+            type: string
+          - name: t67
+            label: "Words: Free delivery on your first order"
+            type: string
+          - name: t68
+            label: "Words: A launch gift for people who are on the list whe..."
+            type: string
+          - name: t69
+            label: "Words: First to know"
+            type: string
+          - name: t70
+            label: "Words: The doors-open message goes to the waitlist firs..."
+            type: string
+      - name: s07
+        label: "Quick answers."
+        type: object
+        fields:
+          - name: t71
+            label: "Text: Good to know"
+            type: string
+          - name: t72
+            label: "Question: When does Shop Bajan open?"
+            type: string
+          - name: t73
+            label: "Text: Thursday 10 December 2026. People on the waitlis..."
+            type: string
+          - name: t74
+            label: "Question: Does it cost anything to join the waitlist?"
+            type: string
+          - name: t75
+            label: "Text: No. It’s free and there’s nothing to buy. We jus..."
+            type: string
+          - name: t76
+            label: "Question: What do I get for joining?"
+            type: string
+          - name: t77
+            label: "Text: A waitlist-only launch gift (free delivery on yo..."
+            type: text
+          - name: t78
+            label: "Question: How do delivery and collection work?"
+            type: string
+          - name: t79
+            label: "Text: At checkout you choose delivery, or collection o..."
+            type: text
+          - name: t80
+            label: "Question: I run a small business. Can I sell here?"
+            type: string
+          - name: t81
+            label: "Text: Yes. Handmade, imported, physical or digital, mo..."
+            type: text
+          - name: t82
+            label: "Question: What happens to my details?"
+            type: string
+          - name: t83
+            label: "Text: We only use them to tell you about Shop Bajan. O..."
+            type: text
+          - name: t84
+            label: "Words: Shop Bajan"
+            type: string
+          - name: t85
+            label: "Link/button: Sell with us"
+            type: string
+          - name: t86
+            label: "Link/button: Shop policies"
+            type: string
+          - name: t87
+            label: "Link/button: Instagram"
+            type: string
+          - name: t88
+            label: "Link/button: WhatsApp"
+            type: string
+          - name: t89
+            label: "Link/button: hello@shopbajanbb.com"
+            type: string
+  - name: brands
+    label: "Sell with us (brands page)"
+    type: file
+    path: content/pages/brands.json
+    format: json
+    fields:
+      - name: s01
+        label: "Top of the page"
+        type: object
+        fields:
+          - name: i1
+            label: "Photo"
+            type: image
+          - name: t2
+            label: "Words: Shop Bajan"
+            type: string
+          - name: t3
+            label: "Words: Barbados"
+            type: string
+          - name: t4
+            label: "Words: Founding brands wanted"
+            type: string
+          - name: t5
+            label: "Words: For Bajan small businesses"
+            type: string
+          - name: t6
+            label: "Words: all in one place."
+            type: string
+          - name: t7
+            label: "Text: We're building one website where women in Barbad..."
+            type: text
+          - name: t8
+            label: "Link/button: Sign up now"
+            type: string
+          - name: t9
+            label: "Link/button: WhatsApp us"
+            type: string
+      - name: s02
+        label: "One website. Every Bajan small business."
+        type: object
+        fields:
+          - name: t10
+            label: "Words: The picture"
+            type: string
+          - name: t11
+            label: "Heading: One website. Every Bajan small business."
+            type: string
+          - name: t12
+            label: "Text: She's getting ready for a fete, a wedding, or ju..."
+            type: text
+          - name: t13
+            label: "Text: On Shop Bajan she opens one site, finds trusted..."
+            type: text
+          - name: t14
+            label: "Small heading: On the shelf"
+            type: string
+          - name: t15
+            label: "Words: Beauty"
+            type: string
+          - name: t16
+            label: "Words: Hair"
+            type: string
+          - name: t17
+            label: "Words: Jewellery"
+            type: string
+          - name: t18
+            label: "Words: Fashion & swim"
+            type: string
+          - name: t19
+            label: "Words: Bags"
+            type: string
+          - name: t20
+            label: "Words: Home & candles"
+            type: string
+          - name: t21
+            label: "Words: Gifts & hampers"
+            type: string
+          - name: t22
+            label: "Words: Digital products"
+            type: string
+          - name: t23
+            label: "Text: Sold side by side with other trusted Bajan small..."
+            type: string
+      - name: s03
+        label: "Grow your brand, your way."
+        type: object
+        fields:
+          - name: t24
+            label: "Words: Pick your plan"
+            type: string
+          - name: t25
+            label: "Heading: Grow your brand, your way."
+            type: string
+          - name: t26
+            label: "Words: Start FREE"
+            type: string
+          - name: t27
+            label: "Words: Starter has no monthly fee, and every paid plan..."
+            type: string
+          - name: t28
+            label: "Words: Every plan: 15% per sale"
+            type: string
+          - name: t29
+            label: "Words: Sell a $50 item, you keep $42.50."
+            type: string
+          - name: t30
+            label: "Price/number: $0"
+            type: string
+          - name: t31
+            label: "Price/number: $75"
+            type: string
+          - name: t32
+            label: "Price/number: $125"
+            type: string
+          - name: t33
+            label: "Words: FREE"
+            type: string
+          - name: t34
+            label: "Small heading: Starter"
+            type: string
+          - name: t35
+            label: "Text: Start selling with no monthly fee."
+            type: string
+          - name: t36
+            label: "Words: Your own shop page"
+            type: string
+          - name: t37
+            label: "Words: We take the payment"
+            type: string
+          - name: t38
+            label: "Words: We store, pack and deliver"
+            type: string
+          - name: t39
+            label: "Words: Paid every Sunday"
+            type: string
+          - name: t40
+            label: "Price/number: $0"
+            type: string
+          - name: t41
+            label: "Link/button: Choose Starter"
+            type: string
+          - name: t42
+            label: "Words: MORE CUSTOMERS"
+            type: string
+          - name: t43
+            label: "Small heading: Spotlight"
+            type: string
+          - name: t44
+            label: "Text: We put your brand in front of more shoppers."
+            type: string
+          - name: t45
+            label: "List item: Everything in Starter, plus"
+            type: string
+          - name: t46
+            label: "Words: Featured Brands"
+            type: string
+          - name: t47
+            label: "Words: shown first"
+            type: string
+          - name: t48
+            label: "Words: Instagram and Facebook post"
+            type: string
+          - name: t49
+            label: "Words: holiday gift guides"
+            type: string
+          - name: t50
+            label: "Price/number: $75"
+            type: string
+          - name: t51
+            label: "Link/button: Choose Spotlight"
+            type: string
+          - name: t52
+            label: "Words: BIGGEST PUSH"
+            type: string
+          - name: t53
+            label: "Small heading: Signature"
+            type: string
+          - name: t54
+            label: "Text: Our biggest push for your brand."
+            type: string
+          - name: t55
+            label: "List item: Everything in Spotlight, plus"
+            type: string
+          - name: t56
+            label: "Words: homepage banner"
+            type: string
+          - name: t57
+            label: "Words: post and Reel"
+            type: string
+          - name: t58
+            label: "Words: First pick of tables"
+            type: string
+          - name: t59
+            label: "Words: monthly sales check-in"
+            type: string
+          - name: t60
+            label: "Price/number: $125"
+            type: string
+          - name: t61
+            label: "Link/button: Choose Signature"
+            type: string
+          - name: t62
+            label: "Words: No long contracts"
+            type: string
+          - name: t63
+            label: "Words: Switch plans anytime"
+            type: string
+          - name: t64
+            label: "Words: Prices in BBD"
+            type: string
+      - name: s04
+        label: "From your shelf to her door in four step..."
+        type: object
+        fields:
+          - name: t65
+            label: "Words: How it works"
+            type: string
+          - name: t66
+            label: "Heading: From your shelf to her door in four steps."
+            type: string
+          - name: t67
+            label: "Words: Create your account"
+            type: string
+          - name: t68
+            label: "Text: Make your free vendor login, pick your plan and..."
+            type: text
+          - name: t69
+            label: "Words: Add your products"
+            type: string
+          - name: t70
+            label: "Text: Upload your own photos, prices in BBD and stock..."
+            type: text
+          - name: t71
+            label: "Words: Drop off stock"
+            type: string
+          - name: t72
+            label: "Text: Bring a few pieces to St. Thomas. We log every p..."
+            type: string
+          - name: t73
+            label: "Words: We sell, you earn"
+            type: string
+          - name: t74
+            label: "Text: We take the payment, deliver island-wide and ans..."
+            type: string
+          - name: t75
+            label: "Words: Your own Vendor Portal"
+            type: string
+          - name: t76
+            label: "Words: We handle the hard parts"
+            type: string
+          - name: t77
+            label: "Words: Your brand, front and centre"
+            type: string
+          - name: t78
+            label: "Words: Launch promo"
+            type: string
+      - name: s05
+        label: "Brands we'd shop ourselves."
+        type: object
+        fields:
+          - name: t79
+            label: "Words: Who we're looking for"
+            type: string
+          - name: t80
+            label: "Heading: Brands we'd shop ourselves."
+            type: string
+          - name: t81
+            label: "List item: A small business based in Barbados (women-owned..."
+            type: string
+          - name: t82
+            label: "List item: Small businesses selling women-focused products:..."
+            type: text
+          - name: t83
+            label: "List item: Products that are legal, genuine and labelled wi..."
+            type: text
+          - name: t84
+            label: "List item: Clear photos and enough stock to keep a few piec..."
+            type: string
+          - name: t85
+            label: "Words: Opening soon"
+            type: string
+          - name: t86
+            label: "Words: Opens 10 Dec"
+            type: string
+          - name: t87
+            label: "Text: Founding brands are on the shelf from day one."
+            type: string
+      - name: s06
+        label: "Join Shop Bajan."
+        type: object
+        fields:
+          - name: t88
+            label: "Words: Sign up"
+            type: string
+          - name: t89
+            label: "Heading: Join Shop Bajan."
+            type: string
+          - name: t90
+            label: "Text: Create your vendor account on your phone in abou..."
+            type: text
+          - name: t91
+            label: "Words: Create your login"
+            type: string
+          - name: t92
+            label: "Words: Set up your shop:"
+            type: string
+          - name: t93
+            label: "Words: Add your products"
+            type: string
+          - name: t94
+            label: "Words: Get approved, start selling,"
+            type: string
+          - name: t95
+            label: "Link/button: Sign in to your Vendor Portal"
+            type: string
+          - name: t96
+            label: "Question: Read the vendor agreement (18 points)"
+            type: string
+      - name: s07
+        label: "Good to know."
+        type: object
+        fields:
+          - name: t97
+            label: "Words: Questions"
+            type: string
+          - name: t98
+            label: "Heading: Good to know."
+            type: string
+          - name: t99
+            label: "Question: Is there anything I can't sell?"
+            type: string
+          - name: t100
+            label: "Text: Yes: We don't sell food, liquor, wine or other a..."
+            type: text
+          - name: t101
+            label: "Question: Who sets my prices?"
+            type: string
+          - name: t102
+            label: "Text: You do. You set every price in BBD, and we never..."
+            type: string
+          - name: t103
+            label: "Question: Can I still sell on my own page and in my shop?"
+            type: string
+          - name: t104
+            label: "Text: Yes. Keep selling everywhere you do now. We only..."
+            type: text
+          - name: t105
+            label: "Question: How and when do I get paid?"
+            type: string
+          - name: t106
+            label: "Text: Every Sunday, for everything sold the week befor..."
+            type: text
+          - name: t107
+            label: "Question: What if something doesn't sell?"
+            type: string
+          - name: t108
+            label: "Text: Each batch stays with us for 60 days. Then you c..."
+            type: text
+          - name: t109
+            label: "Question: What exactly does Shop Bajan do for me?"
+            type: string
+          - name: t110
+            label: "Text: Think of us as your shop on the Bajan Amazon. Yo..."
+            type: text
+          - name: t111
+            label: "Question: What about returns and damaged items?"
+            type: string
+          - name: t112
+            label: "Text: We handle customer questions and returns. If an..."
+            type: text
+          - name: t113
+            label: "Question: Which plan should I pick?"
+            type: string
+          - name: t114
+            label: "Text: Starter is perfect to try us out. Every plan has..."
+            type: text
+          - name: t115
+            label: "Question: How does the free month work?"
+            type: string
+          - name: t116
+            label: "Text: Your first month on any paid plan is free. When..."
+            type: text
+          - name: t117
+            label: "Question: What is the per-sale fee for?"
+            type: string
+          - name: t118
+            label: "Text: It covers card fees, checkout, order handling an..."
+            type: text
+          - name: t119
+            label: "Question: Can I change my plan?"
+            type: string
+          - name: t120
+            label: "Text: Yes. Upgrade, downgrade or switch anytime. The n..."
+            type: text
+          - name: t121
+            label: "Question: What do I need to sign up?"
+            type: string
+          - name: t122
+            label: "Text: An email address and your phone. You create a fr..."
+            type: text
+          - name: t123
+            label: "Question: Can I update my products myself?"
+            type: string
+          - name: t124
+            label: "Text: Yes. In your Vendor Portal you can add products..."
+            type: text
+          - name: t125
+            label: "Question: Is there a contract?"
+            type: string
+          - name: t126
+            label: "Text: Yes, a short consignment agreement you read and..."
+            type: text
+      - name: s08
+        label: "Be one of our founding brands."
+        type: object
+        fields:
+          - name: t127
+            label: "Words: Shop Bajan. Sell Bajan. All in one place."
+            type: string
+          - name: t128
+            label: "Heading: Be one of our founding brands."
+            type: string
+          - name: t129
+            label: "Text: We're choosing a small group of founding brands..."
+            type: text
+          - name: t130
+            label: "Link/button: Sign up now"
+            type: string
+          - name: t131
+            label: "Link/button: 1 (246) 850-4460"
+            type: string
+          - name: t132
+            label: "Link/button: @shopbajan"
+            type: string
+      - name: s09
+        label: "Footer"
+        type: object
+        fields:
+          - name: t133
+            label: "Link/button: Home"
+            type: string
+          - name: t134
+            label: "Link/button: Policies"
+            type: string
+  - name: vendors
+    label: "Vendor Portal page"
+    type: file
+    path: content/pages/vendors.json
+    format: json
+    fields:
+      - name: s01
+        label: "Top of the page"
+        type: object
+        fields:
+          - name: i1
+            label: "Photo"
+            type: image
+          - name: t2
+            label: "Words: Shop Bajan"
+            type: string
+          - name: t3
+            label: "Words: Vendor Portal"
+            type: string
+          - name: t4
+            label: "Text: Loading your portal…"
+            type: string
+      - name: s02
+        label: "Footer"
+        type: object
+        fields:
+          - name: t5
+            label: "Link/button: For brands"
+            type: string
+          - name: t6
+            label: "Link/button: Policies"
+            type: string
+          - name: t7
+            label: "Link/button: WhatsApp help"
+            type: string
+  - name: policies
+    label: "Policies page"
+    type: file
+    path: content/pages/policies.json
+    format: json
+    fields:
+      - name: s01
+        label: "Top of the page"
+        type: object
+        fields:
+          - name: i1
+            label: "Photo"
+            type: image
+          - name: t2
+            label: "Words: Shop Bajan"
+            type: string
+          - name: t3
+            label: "Link/button: Back to the shop"
+            type: string
+          - name: t4
+            label: "Big heading: Shop policies"
+            type: string
+          - name: t5
+            label: "Text: Last updated 15 October 2026 · The Girls Club, S..."
+            type: string
+          - name: t6
+            label: "Link/button: Delivery"
+            type: string
+          - name: t7
+            label: "Link/button: Returns"
+            type: string
+          - name: t8
+            label: "Link/button: Appointments"
+            type: string
+          - name: t9
+            label: "Link/button: Courses"
+            type: string
+          - name: t10
+            label: "Link/button: Shop Bajan"
+            type: string
+          - name: t11
+            label: "Link/button: Privacy"
+            type: string
+          - name: t12
+            label: "Link/button: Terms"
+            type: string
+      - name: s02
+        label: "Delivery & collection"
+        type: object
+        fields:
+          - name: t13
+            label: "Heading: Delivery & collection"
+            type: string
+          - name: t14
+            label: "Words: Island-wide delivery:"
+            type: string
+          - name: t15
+            label: "Words: Collection:"
+            type: string
+          - name: t16
+            label: "List item: We arrange your delivery or collection day on Wh..."
+            type: string
+          - name: t17
+            label: "List item: Courses and gift vouchers are digital. We send t..."
+            type: text
+          - name: t18
+            label: "List item: Everything in one order, including Shop Bajan pr..."
+            type: text
+      - name: s03
+        label: "Returns & refunds"
+        type: object
+        fields:
+          - name: t19
+            label: "Heading: Returns & refunds"
+            type: string
+          - name: t20
+            label: "Text: We want you to love what you buy. Because lashes..."
+            type: text
+          - name: t21
+            label: "Words: Opened lash trays, lip products and other beauty..."
+            type: string
+          - name: t22
+            label: "Words: Unopened items"
+            type: string
+          - name: t23
+            label: "Words: Faulty, damaged or wrong items:"
+            type: string
+          - name: t24
+            label: "List item: Refunds go back the same way you paid (card, Fir..."
+            type: text
+          - name: t25
+            label: "List item: Delivery fees are only refunded if we made a mis..."
+            type: string
+      - name: s04
+        label: "Lash appointments"
+        type: object
+        fields:
+          - name: t26
+            label: "Heading: Lash appointments"
+            type: string
+          - name: t27
+            label: "List item: A BBD $30 deposit books your appointment. The re..."
+            type: string
+          - name: t28
+            label: "Words: The deposit is non-refundable"
+            type: string
+          - name: t29
+            label: "List item: Need to change your time? Tell us at least 24 ho..."
+            type: text
+          - name: t30
+            label: "List item: Please come with clean lashes and no mascara."
+            type: string
+      - name: s05
+        label: "Academy courses & gift vouchers"
+        type: object
+        fields:
+          - name: t31
+            label: "Heading: Academy courses & gift vouchers"
+            type: string
+          - name: t32
+            label: "List item: Our online courses are digital. Once your login..."
+            type: text
+          - name: t33
+            label: "List item: Can't get in or something isn't working? Message..."
+            type: string
+          - name: t34
+            label: "List item: Course materials are for your own learning. Plea..."
+            type: text
+          - name: t35
+            label: "List item: Gift vouchers can't be exchanged for cash. Lost..."
+            type: text
+      - name: s06
+        label: "The Shop Bajan marketplace"
+        type: object
+        fields:
+          - name: t36
+            label: "Heading: The Shop Bajan marketplace"
+            type: string
+          - name: t37
+            label: "Text: Shop Bajan brings together beauty products from..."
+            type: text
+          - name: t38
+            label: "List item: The Girls Club sells Shop Bajan products for tho..."
+            type: text
+          - name: t39
+            label: "List item: Questions, delivery and returns for Shop Bajan p..."
+            type: text
+          - name: t40
+            label: "List item: Each brand is responsible for its products' ingr..."
+            type: text
+      - name: s07
+        label: "Privacy"
+        type: object
+        fields:
+          - name: t41
+            label: "Heading: Privacy"
+            type: string
+          - name: t42
+            label: "Text: We only collect what we need to look after your..."
+            type: string
+          - name: t43
+            label: "Small heading: What we collect"
+            type: string
+          - name: t44
+            label: "List item: When you order: your name, phone (WhatsApp) numb..."
+            type: text
+          - name: t45
+            label: "List item: When you book: your appointment day and time."
+            type: string
+          - name: t46
+            label: "List item: When you message us: whatever you send us on Wha..."
+            type: string
+          - name: t47
+            label: "Small heading: How we use it"
+            type: string
+          - name: t48
+            label: "List item: To confirm and deliver your order, enrol you in..."
+            type: string
+          - name: t49
+            label: "List item: To contact you about your order. We'll only send..."
+            type: text
+          - name: t50
+            label: "Small heading: Who we share it with"
+            type: string
+          - name: t51
+            label: "List item: Our order records are kept in our own Google acc..."
+            type: text
+          - name: t52
+            label: "List item: For Shop Bajan orders, we only share with a bran..."
+            type: text
+          - name: t53
+            label: "List item: We count website visits with a privacy-friendly..."
+            type: text
+          - name: t54
+            label: "Small heading: Your rights"
+            type: string
+          - name: t55
+            label: "Text: Under the Barbados Data Protection Act, 2019, yo..."
+            type: text
+      - name: s08
+        label: "Terms of sale"
+        type: object
+        fields:
+          - name: t56
+            label: "Heading: Terms of sale"
+            type: string
+          - name: t57
+            label: "List item: Prices are in Barbados dollars (BBD). Card payme..."
+            type: text
+          - name: t58
+            label: "List item: Your order is confirmed once your payment comes..."
+            type: text
+          - name: t59
+            label: "List item: If something sells out after you order, we'll of..."
+            type: string
+          - name: t60
+            label: "List item: Results from our courses and products depend on..."
+            type: text
+          - name: t61
+            label: "List item: We may update these policies from time to time...."
+            type: text
+          - name: t62
+            label: "List item: These terms are governed by the laws of Barbados..."
+            type: string
+          - name: t63
+            label: "Link/button: @shopbajan"
+            type: string
