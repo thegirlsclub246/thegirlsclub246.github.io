@@ -60,7 +60,7 @@ async function checkSubscription(session){
   $("onboard").innerHTML=`<div class="card"><h2>${a.status?"Your subscription has ended":"Hustle Kit needs a subscription"}</h2>
     <p class="note full">Hustle Kit needs a subscription, and there isn't an active one for ${esc(session.user.email)}. Your bookings and clients are kept safe. Subscribe again and everything is here waiting for you.</p>
     <a class="btnlink primary full" style="text-align:center" href="${STORE_URL}">Subscribe on Shop Bajan</a>
-    <p class="note full">Already paid? Message us with your PayPal subscription ID (it starts with I-) and we'll sort it out.</p>
+    <p class="note full">Already paid? Email us at <a href="mailto:hello@shopbajanbb.com">hello@shopbajanbb.com</a> with your PayPal subscription ID (it starts with I-) and we'll sort it out.</p>
     <button type="button" class="full" id="lapsedOut">Sign out</button></div>`;
   $("lapsedOut").addEventListener("click",async()=>{await sb.auth.signOut();location.replace("index.html")});
   return false;
