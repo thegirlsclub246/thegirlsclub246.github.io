@@ -93,10 +93,18 @@ var GUIDES = {
             next:'Want guide 2, on getting paid in Barbados? <a href="?g=paid">Get it here</a>.'},
   paid:    {form:"0KfmOj", title:"Get paid in <span>Barbados</span>", lead:"Free guide 2 of 2: what works from Barbados, what doesn't, and how to set up step by step.",
             next:'Missed guide 1, on making your first digital product? <a href="?g=digital">Get it here</a>.'},
-  ready:   {form:"X4EwlU", title:"Your free <span>digital starter bundle</span>", lead:"Both Shop Bajan guides in one: make your first digital product, then get paid for it from Barbados.",
+  ready:   {form:"X4EwlU", title:"Your free <span>starter guides</span>", lead:"Both Shop Bajan guides in one: make your first digital product, then get paid for it from Barbados.",
             next:'Want to sell it on Shop Bajan? <a href="?g=founding">See our founding vendor spots</a>.'},
   journey: {form:"vbhLfX", title:"Your free <span>task tracker</span>", lead:"A simple tracker to help you get things out of your head and get them done.",
-            next:'Ready to make something to sell? <a href="?g=ready">Get our free starter bundle</a>.'},
+            next:'Ready to make something to sell? <a href="?g=ready">Get our free starter guides</a>.'},
+  start:   {form:"usKdtF", file:"Shop-Bajan-Free-Guide-START-Start-With-0.pdf", title:"Start with <span>$0</span>", lead:"The free tools list: every free tool you need to make, sell and track your first digital product.", next:'Next: make your first product. <a href="?g=digital">Get the DIGITAL guide</a>.'},
+  posts:   {form:"2UuBtA", file:"Shop-Bajan-Free-Guide-POSTS-The-Post-Kit.pdf", title:"The <span>Post Kit</span>", lead:"Free guide: what to post so people stop scrolling and start asking.", next:'Want more free guides? Scroll up to the shop.'},
+  sales:   {form:"NjDIp4", file:"Shop-Bajan-Free-Guide-SALES-Views-to-Sales-Checklist.pdf", title:"Views to <span>sales</span>", lead:"Free checklist: turn views and likes into people who actually buy.", next:'Want more free guides? Scroll up to the shop.'},
+  price:   {form:"oLt1q9", file:"Shop-Bajan-Free-Guide-PRICE-Pricing-Cheat-Sheet.pdf", title:"Pricing <span>cheat sheet</span>", lead:"Free guide: set a price that sells and still pays you.", next:'Want more free guides? Scroll up to the shop.'},
+  reel:    {form:"wMdEAE", file:"Shop-Bajan-Free-Guide-REEL-15-Minute-Reel-Kit.pdf", title:"15-minute <span>reel kit</span>", lead:"Free guide: plan, film and post a reel in 15 minutes.", next:'Want more free guides? Scroll up to the shop.'},
+  spark:   {form:"4BjXw7", file:"Shop-Bajan-Free-Guide-SPARK-Product-Idea-Finder.pdf", title:"Product <span>idea finder</span>", lead:"Free guide: find a product idea people already want.", next:'Got your idea? <a href="?g=digital">Get the DIGITAL guide</a> to make it.'},
+  track:   {form:"dseAOn", file:"Shop-Bajan-Free-Guide-TRACK-Sales-and-Money-Tracker.pdf", title:"Sales and <span>money tracker</span>", lead:"Free tracker: log every sale and know where your money goes.", next:'Want more free guides? Scroll up to the shop.'},
+  email:   {form:"OYahhp", file:"Shop-Bajan-Free-Guide-EMAIL-Email-Templates.pdf", title:"Email <span>templates</span>", lead:"Free templates: ready-to-send emails for your customers and your list.", next:'Want more free guides? Scroll up to the shop.'},
   founding:{form:"CNC8hq", title:"Founding <span>vendor spots</span>", lead:"The online marketplace for Barbados small businesses opens Thursday 10 December.",
             next:'Questions? Message us on Instagram <a href="https://instagram.com/shopbajan">@shopbajan</a>.'}
 };
@@ -104,12 +112,20 @@ var GUIDES = {
 /* Storefront. Free items link to their sign-up. Paid items show the animated pay button.
    To add a paid product: {key:"", tag:"Paid", name:"", text:"", price:"BBD $00", pay:"https://your-payment-link"} */
 var SHOP = [
-  {key:"ready",    tag:"Free bundle", name:"Digital starter bundle", text:"Both guides in one: make your first digital product and get paid for it."},
+  {key:"challenge5k", tag:"30-day challenge", name:"The 5K Month Bundle", text:"Both challenges in one: grow toward a 5,000 month with offers, content, Meta ads and emails. Results may vary. Not a promise of income.", price:"US$27 early price until Thu 10 Dec (then US$44)", pay:"https://checkout.dodopayments.com/buy/pdt_0NsMxcZqX88n9KeYzbKfc?quantity=1"},
+  {key:"challenge1k", tag:"30-day challenge", name:"The 1K Month Bundle", text:"Make your first 1,000 from one product, digital or physical. One action a day for 30 days, with exact Claude prompts and templates. Results may vary. Not a promise of income.", price:"US$17 early price until Thu 10 Dec (then US$27)", pay:"https://checkout.dodopayments.com/buy/pdt_0NsMwq32ORiteWbY8KrO4?quantity=1"},
+  {key:"ready",    tag:"Free guides", name:"Free starter guides", text:"Both guides in one: make your first digital product and get paid for it."},
   {key:"digital",  tag:"Free guide",  name:"Make your first digital product", text:"7 steps and copy-and-paste prompts. Read it in 15 minutes."},
   {key:"paid",     tag:"Free guide",  name:"Get paid in Barbados", text:"What works from Barbados, what doesn't, and how to set up."},
+  {key:"start", tag:"Free guide", name:"Start with $0: the free tools list", text:"Every free tool you need to make, sell and track your first product."},
+  {key:"spark", tag:"Free guide", name:"Product idea finder", text:"Find a product idea people already want."},
+  {key:"price", tag:"Free guide", name:"Pricing cheat sheet", text:"Set a price that sells and still pays you."},
+  {key:"posts", tag:"Free guide", name:"The Post Kit", text:"What to post so people stop scrolling and start asking."},
+  {key:"reel", tag:"Free guide", name:"15-minute reel kit", text:"Plan, film and post a reel in 15 minutes."},
+  {key:"sales", tag:"Free guide", name:"Views to sales checklist", text:"Turn views and likes into buyers."},
+  {key:"email", tag:"Free guide", name:"Email templates", text:"Ready-to-send emails for your customers and your list."},
+  {key:"track", tag:"Free guide", name:"Sales and money tracker", text:"Log every sale and know where your money goes."},
   {key:"journey",  tag:"Free tool",   name:"Task tracker", text:"Get it out of your head and onto one simple list."},
-  {key:"challenge1k", tag:"30-day challenge", name:"The 1K Month Bundle", text:"Make your first 1,000 from one product, digital or physical. One action a day for 30 days, with exact Claude prompts and templates. Results may vary. Not a promise of income.", price:"US$17 early price until Thu 10 Dec (then US$27)", pay:"https://checkout.dodopayments.com/buy/pdt_0NsMwq32ORiteWbY8KrO4?quantity=1"},
-  {key:"challenge5k", tag:"30-day challenge", name:"The 5K Month Bundle", text:"Both challenges in one: grow toward a 5,000 month with offers, content, Meta ads and emails. Results may vary. Not a promise of income.", price:"US$27 early price until Thu 10 Dec (then US$44)", pay:"https://checkout.dodopayments.com/buy/pdt_0NsMxcZqX88n9KeYzbKfc?quantity=1"},
   {key:"hustlekit", tag:"App", name:"Hustle Kit booking app", text:"Clients book themselves from your link, pay the deposit up front and get reminded. No commission, cancel any time.", price:"US$12 a month (about BBD $24)", pay:"https://shopbajanbb.com/hustle-kit/"},
   {key:"depositproof", tag:"App", name:"DepositProof", text:"Do your move-in check on your phone and keep proof of your rental's condition, so your deposit comes back.", price:"Free to start · from US$9 a move · landlords US$19/month", pay:"https://shopbajanbb.com/depositproof/"},
   {key:"hustlecut", tag:"App", name:"Hustle Cut", text:"Turn your clips into reels: it cuts the pauses and adds captions and zooms, right in your browser.", price:"Free to use", pay:"https://shopbajanbb.com/hustle-cut/"},
@@ -117,13 +133,37 @@ var SHOP = [
 ];
 var PAY_LABEL = "Leh we go!";
 
+/* Hide free guides whose sign-up form isn't set up yet. */
+SHOP = SHOP.filter(function(it){ return !GUIDES[it.key] || GUIDES[it.key].form; });
 var key = (new URLSearchParams(location.search).get("g") || "digital").toLowerCase();
-if (!GUIDES[key]) key = "digital";
+if (!GUIDES[key] || !GUIDES[key].form) key = "digital";
 var g = GUIDES[key];
 document.getElementById("title").innerHTML = g.title;
 document.getElementById("lead").textContent = g.lead;
 document.getElementById("next").innerHTML = g.next;
 document.getElementById("mlform").setAttribute("data-form", g.form);
+/* READY's MailerLite form still says "bundle"; reword it so the free guides aren't confused with the paid bundles. */
+if (key === "ready"){
+  new MutationObserver(function(){
+    var c = document.querySelector("#mlform .ml-form-embedBody .ml-form-embedContent");
+    if (!c || c.getAttribute("data-sb")) return;
+    c.setAttribute("data-sb","1");
+    var h = c.querySelector("h4"); if (h) h.textContent = "Get your free guides";
+    var p = c.querySelector("p"); if (p) p.textContent = "Pop in your name and email and both free guides open straight away. We'll send the occasional Shop Bajan update too. Unsubscribe any time.";
+    var b = document.querySelector("#mlform .ml-form-embedSubmit button[type=submit]"); if (b) b.textContent = "Get my guides";
+    var sp = document.querySelector("#mlform .ml-form-successContent p"); if (sp) sp.textContent = "Here are your free guides. Tap each one to open it.";
+  }).observe(document.getElementById("mlform"), {childList:true, subtree:true});
+}
+/* For guides with a file, write our own success message with the right download link. */
+if (g.file){
+  var fixSuccess = function(){
+    var s = document.querySelector("#mlform .ml-form-successContent");
+    if (!s || s.getAttribute("data-sb")) return;
+    s.setAttribute("data-sb","1");
+    s.innerHTML = '<h4>You\'re in!</h4><p>Here\'s your free guide. Tap below to open it.</p><p><a href="' + g.file + '" target="_blank" rel="noopener"><strong>Open my guide</strong></a></p>';
+  };
+  new MutationObserver(fixSuccess).observe(document.getElementById("mlform"), {childList:true, subtree:true});
+}
 
 var list = document.getElementById("items");
 var mine = SHOP.filter(function(it){ return it.key === key; })[0];
@@ -133,7 +173,7 @@ ordered.forEach(function(it){
   var isMine = it.key === key;
   var el = document.createElement("article");
   el.className = "item" + (isMine ? " mine" : "");
-  var paid = !!it.pay;
+  var paid = !!it.pay || !!it.soon;
   el.innerHTML = '<span class="tag' + (paid ? ' paid' : '') + '"></span><h3></h3><p></p>' +
     (paid ? '<p class="price"></p><a class="pay" target="_blank" rel="noopener"><span></span><span class="arrow" aria-hidden="true">→</span></a>'
           : '<a class="go">Grab it free →</a>');
@@ -142,7 +182,9 @@ ordered.forEach(function(it){
   el.querySelector("p").textContent = it.text;
   if (paid){
     el.querySelector(".price").textContent = it.price;
-    var a = el.querySelector(".pay"); a.href = it.pay; a.querySelector("span").textContent = PAY_LABEL;
+    var a = el.querySelector(".pay");
+    if (it.pay){ a.href = it.pay; a.querySelector("span").textContent = PAY_LABEL; }
+    else { a.removeAttribute("href"); a.style.animation = "none"; a.style.opacity = ".6"; a.querySelector("span").textContent = "Pay link coming soon"; a.querySelector(".arrow").textContent = ""; }
   } else {
     var go = el.querySelector(".go");
     if (isMine){ go.href = "#get"; go.textContent = "Get mine now ↓"; } else { go.href = "?g=" + it.key; }
