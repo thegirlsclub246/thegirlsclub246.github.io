@@ -1581,9 +1581,12 @@ const PAY={
   firstpay:{label:"FirstPay",how:"Send the total with FirstPay to:",rows:[["FirstPay number",String(S.firstpay_number||"[add in admin]")],["Name",String(S.firstpay_name||"")]]},
   bpwccul:{label:"BPWCCUL",how:"Transfer the total to our BPWCCUL account:",rows:[["Account name",String(S.bpwccul_name||"")],["Account number",String(S.bpwccul_number||"[add in admin]")],...(String(S.bpwccul_share||"").trim()?[["Share",String(S.bpwccul_share).trim()]]:[])]},
   cash:{label:"Cash on collection",how:`Pay in cash when you collect your order in ${esc(S.collection_area)}. Exact change is appreciated.`,rows:[]},
+  dodo:{label:"Dodo",how:"Tap the button to pay on Dodo's secure checkout page. Enter the amount shown above. Charged in US dollars (BBD $2 = USD $1).",rows:[]},
   paypal:{label:"card",how:"Tap the button to pay securely with your debit or credit card. Card payments are charged in US dollars (BBD $2 = USD $1).",rows:[]}
 };
 const PAYPAL_ME=String(S.paypal_link||"").trim();
+const DODO_LINK=String(S.dodo_link||"https://checkout.dodopayments.com/buy/pdt_0NsM938IZ3fGJuJhiPeAU?quantity=1").trim();
+const dodoOk=()=>!!DODO_LINK&&cart.length>0&&cart.every(c=>{if(c.course)return true;const p=products.find(x=>x.id===c.id);return !!p&&!!(p.digital||p.isCourse||p.cat==="vouchers"||p.cat==="guides")});
 const usd=v=>"USD $"+(v/2).toFixed(2);
 const PP_CLIENT="BAAZkLN-1YQuwpFsSdH3p0fEY99MCiUNLh5m1aoRJQGX5pHj3ZO1Ab1ENTLnLsQpp9sT-6m5dIF-yS810M";
 let ppLoad=null;
@@ -1965,7 +1968,7 @@ function renderDrawer(){
       <h3>${o.paid?"Thank you, gorgeous!":"Order placed, gorgeous!"}</h3>
       <p class="muted">Your order number</p><div class="order-id">${o.id}</div>
       <div class="wa-sent">${o.paid?"<b>Paid and confirmed.</b> We've got your order.":(o.method==="cash"?"<b>Order saved.</b> Pay in cash when you collect.":"<b>Order saved.</b> Now complete your payment below.")}</div>
-      <div class="pay-step"><span class="step-n">1</span><div><b>${o.method==="cash"?"Pay BBD "+money(o.total)+" in cash when you collect":"Pay "+(o.method==="paypal"?usd(o.total)+" (BBD "+money(o.total)+")":"BBD "+money(o.total))+" by "+P.label}</b><p>${P.how}</p>${o.method==="paypal"?(o.paid?`<div class="paid-ok"><b>Card payment received. Thank you!</b>${o.paidRef?`<br><small>Payment ref: ${esc(o.paidRef)}</small>`:""}</div>`:`<div id="cardPay" class="card-pay"><p class="muted">Loading secure card form…</p></div>`):""}
+      <div class="pay-step"><span class="step-n">1</span><div><b>${o.method==="cash"?"Pay BBD "+money(o.total)+" in cash when you collect":"Pay "+(o.method==="paypal"||o.method==="dodo"?usd(o.total)+" (BBD "+money(o.total)+")":"BBD "+money(o.total))+" by "+P.label}</b><p>${P.how}</p>${o.method==="dodo"&&!o.paid?`<a class="btn" href="${DODO_LINK}" target="_blank" rel="noopener" style="width:100%;margin:.4rem 0">Pay ${usd(o.total)} with Dodo</a>`:""}${o.method==="paypal"?(o.paid?`<div class="paid-ok"><b>Card payment received. Thank you!</b>${o.paidRef?`<br><small>Payment ref: ${esc(o.paidRef)}</small>`:""}</div>`:`<div id="cardPay" class="card-pay"><p class="muted">Loading secure card form…</p></div>`):""}
         ${P.rows.map(([k,v])=>`<div class="pay-row"><span>${k}</span><b class="${v.startsWith("[")?"todo":""}">${v}</b><button type="button" class="copy" data-copy="${v}">Copy</button></div>`).join("")}
         <div class="pay-row"><span>Reference</span><b>${o.id}</b><button type="button" class="copy" data-copy="${o.id}">Copy</button></div></div></div>
       <div class="pay-step"><span class="step-n">2</span><div><b>${s2.t}</b><p>${s2.p}</p>
@@ -1996,6 +1999,7 @@ function renderDrawer(){
       ${cart.some(c=>c.course)?`<div class="field"><label for="cemail">Email (we'll send your course here)</label><input id="cemail" type="email" required autocomplete="email" placeholder="you@example.com"></div>`:""}
       <fieldset><legend>How would you like to pay?</legend>
         ${PAYPAL_ME?`<label class="method"><input type="radio" name="pay" value="paypal" checked><span><b>Debit or credit card</b><small>Pay securely online by card · charged in USD (BBD $2 = US$1)</small></span></label>`:""}
+        ${dodoOk()?`<label class="method"><input type="radio" name="pay" value="dodo"${PAYPAL_ME?"":" checked"}><span><b>Card with Dodo</b><small>For digital products · charged in USD (BBD $2 = US$1)</small></span></label>`:""}
         <label class="method"><input type="radio" name="pay" value="firstpay"${PAYPAL_ME?"":" checked"}><span><b>FirstPay</b><small>Pay from your phone with FirstPay</small></span></label>
         ${PAY.bpwccul.rows.some(r=>r[1].startsWith("["))?"":`<label class="method"><input type="radio" name="pay" value="bpwccul"><span><b>BPWCCUL</b><small>Bank transfer to our credit union account</small></span></label>`}
         <label class="method" id="cashOpt" hidden><input type="radio" name="pay" value="cash"><span><b>Cash on collection</b><small>Pay in cash when you collect in ${esc(S.collection_area)}</small></span></label>
@@ -2016,7 +2020,7 @@ function renderDrawer(){
     if(window.tgcPrefPay){const pr=document.querySelector(`input[name="pay"][value="${window.tgcPrefPay}"]`);if(pr)pr.checked=true;window.tgcPrefPay=""}const d=document.getElementById("delivery");const CASH_ON_COLLECTION=!!S.cash_on_collection;const cashOk=()=>CASH_ON_COLLECTION&&!!d&&d.value==="pickup"&&!cart.some(c=>c.id==="deposit");const syncCash=()=>{const co=document.getElementById("cashOpt");co.hidden=!cashOk();if(co.hidden&&co.querySelector("input").checked)document.querySelector('input[name="pay"][value="firstpay"]').checked=true};syncCash();
     if(d)d.onchange=()=>{document.getElementById("parishField").hidden=d.value==="pickup";document.getElementById("pickupNote").hidden=d.value!=="pickup";syncCash();drawTot()};
     document.getElementById("back").onclick=()=>{stage="bag";renderDrawer()};
-    const placeLbl={paypal:"Continue to card payment",firstpay:"Continue to FirstPay payment",bpwccul:"Continue to BPWCCUL payment",cash:"Place order · pay cash on collection"};
+    const placeLbl={paypal:"Continue to card payment",dodo:"Continue to Dodo payment",firstpay:"Continue to FirstPay payment",bpwccul:"Continue to BPWCCUL payment",cash:"Place order · pay cash on collection"};
     const syncPlace=()=>{const r=document.querySelector('input[name="pay"]:checked'),pb=document.getElementById("placeBtn");if(r&&pb)pb.textContent=placeLbl[r.value]||"Continue to payment"};
     document.querySelectorAll('input[name="pay"]').forEach(r=>r.addEventListener("change",syncPlace));if(d)d.addEventListener("change",()=>setTimeout(syncPlace,0));syncPlace();
     document.getElementById("co").addEventListener("submit",e=>{e.preventDefault();
