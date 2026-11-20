@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Hustle Kit</title>
+<meta name="description" content="Bookings, payments, clients and invoices for small businesses and side hustles in Barbados.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&family=Quicksand:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="css/app.css">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#00267F">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Hustle Kit">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+</head>
+<body>
+<div class="wrap">
+  <header><h1>Hustle <span>Kit</span></h1></header>
+  <p class="lede">Bookings, payments, clients and invoices for small businesses in Barbados. Built for nail techs, barbers, braiders, detailers, mechanics, cake makers, DJs, tutors and anyone with a hustle.</p>
+
+  <section id="signin">
+    <form id="loginForm">
+      <h2 class="full">Sign in or create your book</h2>
+      <label class="full">Your email<input id="email" type="email" required autocomplete="email" placeholder="you@example.com"></label>
+      <button class="primary full" type="submit" id="loginBtn">Email me a sign-in link</button>
+      <p class="note full" id="loginNote">No password needed. We email you a link. Tap it on this phone to open your book.</p>
+      <p class="note full" id="subNote">New to Hustle Kit? It's US$12 a month. <a href="../">Subscribe here</a>, then sign in with the email you gave when you subscribed.</p>
+    </form>
+    <form id="codeForm" hidden>
+      <h2 class="full">Enter your code</h2>
+      <p class="note full">The email also has a 6-digit code. Type it here if the link opened somewhere else, for example when you use Hustle Kit from your home screen.</p>
+      <label class="full">6-digit code<input id="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" required></label>
+      <button class="primary full" type="submit" id="codeBtn">Sign in</button>
+      <p class="err full" id="codeErr" hidden></p>
+    </form>
+  </section>
+
+  <ul class="features">
+    <li><b>Your own booking link</b>Customers pick a service, day and time, pay the deposit, and can move or cancel without calling you.</li>
+    <li><b>Reminders in one tap</b>Tap a name and WhatsApp opens with the reminder already written.</li>
+    <li><b>Who owes you</b>Track deposits, balances and how people paid: cash, bank transfer, BiMPay, FirstPay or card.</li>
+    <li><b>Clients</b>Notes, photos of their usual style, loyalty stamps and come-back reminders.</li>
+    <li><b>Invoices</b>For one visit, a month or any dates. Save as PDF or send on WhatsApp.</li>
+    <li><b>No commission, ever</b>One flat monthly price. We never take a cut of your bookings or charge you for new clients.</li>
+  </ul>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.0/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/db.js"></script>
+<script>
+(async()=>{
+  if(!HB_READY){showNotReady(document.getElementById("signin"));return}
+  const {data:{session}}=await sb.auth.getSession();
+  if(session){location.replace("app.html");return}
+  const given=new URLSearchParams(location.search).get("email");
+  if(given)document.getElementById("email").value=given;
+  document.getElementById("loginForm").addEventListener("submit",async e=>{
+    e.preventDefault();
+    const btn=document.getElementById("loginBtn"),email=document.getElementById("email").value.trim();
+    btn.disabled=true;btn.textContent="Sending…";
+    const {error}=await sb.auth.signInWithOtp({email,options:{emailRedirectTo:new URL("app.html",location.href).href}});
+    btn.disabled=false;btn.textContent="Email me a sign-in link";
+    if(error){
+      // The database turns away emails that haven't subscribed; Supabase reports that as a "database error".
+      const notSub=/database error|subscriber/i.test(error.message||"");
+      document.getElementById("loginNote").innerHTML=notSub
+        ?`<b>${email.replace(/[&<>"]/g,"")} doesn't have a Hustle Kit subscription yet.</b> Hustle Kit is for subscribers. <a href="../">Subscribe here</a>, or if you've already subscribed, use the email you gave after paying.`
+        :"That didn't send: "+error.message.replace(/[&<>"]/g,"")+" Check the email address and try again.";
+      return}
+    document.getElementById("loginNote").textContent=`Check ${email} for an email from Hustle Kit. Tap the link, or type the code below. It can take a minute, and may land in spam.`;
+    document.getElementById("codeForm").hidden=false;
+  });
+  document.getElementById("codeForm").addEventListener("submit",async e=>{
+    e.preventDefault();
+    const email=document.getElementById("email").value.trim(),token=document.getElementById("code").value.trim(),err=document.getElementById("codeErr");
+    document.getElementById("codeBtn").disabled=true;
+    const {error}=await sb.auth.verifyOtp({email,token,type:"email"});
+    document.getElementById("codeBtn").disabled=false;
+    if(error){err.textContent="That code didn't work. Check it, or ask for a new email.";err.hidden=false;return}
+    location.replace("app.html");
+  });
+})();
+</script>
+<script src="js/guide.js"></script>
+</body>
+</html>
