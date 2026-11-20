@@ -1576,7 +1576,9 @@ const CC_LIST=list(S.creator_codes).filter(c=>c&&c.code&&c.active!==false).map(c
 const ccFind=v=>{v=String(v||"").trim().toUpperCase();return (v&&CC_LIST.find(c=>c.code===v))||null};
 const ccUsed=()=>!!ccStore(CC_USED);
 let creatorCode="";
-(()=>{const m=/[?&](?:ref|code)=([A-Za-z0-9_-]{2,30})/i.exec(location.search);if(m&&ccFind(m[1]))ccStore(CC_KEY,JSON.stringify({code:m[1].toUpperCase(),at:Date.now()}));try{const v=JSON.parse(ccStore(CC_KEY)||"null");if(v&&Date.now()-v.at<30*864e5&&ccFind(v.code))creatorCode=v.code}catch(e){}})();
+const ccCapture=()=>{const m=/[?&](?:ref|code)=([A-Za-z0-9_-]{2,30})/i.exec(location.search);if(m&&ccFind(m[1]))ccStore(CC_KEY,JSON.stringify({code:m[1].toUpperCase(),at:Date.now()}));try{const v=JSON.parse(ccStore(CC_KEY)||"null");if(v&&Date.now()-v.at<30*864e5&&ccFind(v.code))creatorCode=v.code}catch(e){}};ccCapture();
+/* Creators added in the Google Sheet ("Creators" tab) count too, so a new creator only needs adding in one place */
+if(/^https:\/\/script\.google\.com\//.test(S.creator_dashboard_url||""))fetch(S.creator_dashboard_url+"?action=codes").then(r=>r.json()).then(d=>{list(d&&d.codes).forEach(c=>{const code=String(c&&c.code||"").trim().toUpperCase();if(/^[A-Z0-9_-]{2,30}$/.test(code)&&!ccFind(code))CC_LIST.push({code,name:String(c.name||"").trim()})});ccCapture()}).catch(()=>{});
 
 /* Payment details shown to customers after they place an order */
 const PAY={
@@ -2202,6 +2204,6 @@ if(location.hash&&!/^#(shop|lashes|marketplace|products|digital|p-)/.test(locati
 </script>
 <script>(function(){if(window.TGC_SOON)return;var s=document.createElement("script");s.src=(window.TGC_DATA||"")+"academy-theme.js";document.body.appendChild(s)})();</script>
 <script src="popups.js?v=20261120" defer></script>
-<script src="/sb-content.js?v=1" data-page="home" defer></script><script src="/creator-ref.js?v=1" defer></script>
+<script src="/sb-content.js?v=1" data-page="home" defer></script><script src="/creator-ref.js?v=2" defer></script>
 </body>
 </html>
