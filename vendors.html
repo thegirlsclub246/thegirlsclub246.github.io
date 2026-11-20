@@ -99,6 +99,8 @@ h2.sec{font-size:20px;font-weight:700;margin:26px 0 10px}
 .pick span{font-size:14px;color:var(--muted)}
 .chk{display:flex;gap:12px;align-items:flex-start;margin-top:14px;font-weight:600}
 .chk input{width:24px;height:24px;flex:0 0 auto;accent-color:var(--pink);margin-top:1px}
+.rulesbox{background:#FFFDF2;border:2px solid var(--lemon);border-radius:14px;padding:4px 14px 12px;margin-top:14px}
+.rulesbox .fee{margin-top:10px;font-weight:600}
 .switch{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;border:2px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:14px;font-weight:700}
 .switch input{width:24px;height:24px;accent-color:var(--pink)}
 fieldset{border:0;padding:0;margin:22px 0 0}
@@ -205,7 +207,7 @@ h1,h2,h3,h1.page{font-family:var(--display);font-weight:800;color:var(--pink);le
 <div id="toast" class="toast" role="status" hidden></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.79.0/dist/umd/supabase.js"></script>
-<script src="vendor-agreement.js?v=20261111"></script>
+<script src="vendor-agreement.js?v=20261210"></script>
 <script>
 (function(){
 "use strict";
@@ -379,7 +381,7 @@ function setupShop(){
   ["Bank transfer","FirstPay","BPWCCUL"].map(function(m){return'<label><input type="radio" name="payout" value="'+m+'"><div><b>'+m+'</b></div></label>'}).join("")+
   '</div><p class="hint">Paid every Sunday for the week before. We ask for your account details privately on WhatsApp. Never type card or bank numbers here.</p></fieldset>'+
   '<fieldset><legend><i>4</i>Sign the agreement</legend><div class="note info" id="agSum">Pick a plan above to see your terms.</div>'+
-  '<details><summary>Read the full agreement (18 points)</summary><ol class="agree" id="agList"></ol></details>'+
+  '<details><summary>Read the full agreement ('+A.clauses('').length+' points)</summary><ol class="agree" id="agList"></ol></details>'+
   '<label class="f">Sign: type your full name<input name="sign" required maxlength="80" autocomplete="name"></label>'+
   '<label class="chk"><input type="checkbox" name="agree"><span>I have read and agree to the consignment agreement for my brand.</span></label></fieldset>'+
   '<p class="err" id="serr" role="alert"></p>'+
@@ -438,13 +440,49 @@ function statusNote(v){
   if(v.status==="paused")return'<div class="note warn">Your shop is paused, so your products are not showing on the website right now. WhatsApp us if you have questions.</div>';
   return'<div class="note ok">✅ Your shop is approved. Live products show on <a href="./#shop">Shop Bajan</a>.</div>';
 }
+/* vendors who signed before the marketplace rules: their current products and deal stay as they are; they accept once before adding new products */
+function needsRules(v){return !!(A.hasRules&&!A.hasRules((v&&v.contract)||{}))}
+function rulesNote(v){if(!needsRules(v))return"";
+  return'<div class="card pinkbox"><h2 style="font-size:19px">📋 Our updated seller agreement</h2><p class="muted" style="margin-top:6px">Shop Bajan now has marketplace rules to keep quality high for every brand. Your current products stay live, your per-sale fee doesn\'t change, and nothing you\'ve already listed is charged. Please accept the update before adding new products.</p><div class="btnrow"><button class="btn" type="button" data-accept>Read and accept</button></div></div>'}
+function ruleList(list){return'<ol class="agree">'+list.map(function(x){return"<li><b>"+esc(x[0])+".</b> "+esc(x[1])+"</li>"}).join("")+'</ol>'}
+function acceptSheet(then){
+  if(S.viewAs)return toast("You're viewing as this vendor.");
+  var v=S.vendor,old=v.contract||{},plan=old.plan||v.plan,fee=money2(A.LISTING_FEE);
+  var nc={version:A.VERSION,plan:plan,rateDeal:old.rateDeal||old.version,previous:old};
+  var d=document.createElement("div");d.className="sheet";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-label","Updated seller agreement");
+  d.innerHTML='<div class="panel"><div class="head"><h2>Updated seller agreement</h2><button class="x" type="button" aria-label="Close">×</button></div>'+
+  '<p class="muted">From Thu 10 Dec, every Shop Bajan brand follows the same rules. Here\'s what\'s new for you:</p>'+
+  '<div class="rows" style="margin-top:12px">'+
+  '<div class="r"><div class="l"><b>Your current products</b><span>Stay live. No listing fee on anything you\'ve already listed.</span></div></div>'+
+  '<div class="r"><div class="l"><b>Your per-sale fee</b><span>No change: '+esc(feeText(v))+'.</span></div></div>'+
+  '<div class="r"><div class="l"><b>New physical products</b><span>'+fee+' BBD each, once, when we approve it. Taken from your Sunday payout.</span></div></div>'+
+  '<div class="r"><div class="l"><b>New digital products</b><span>Free to list. Must be your own original work.</span></div></div></div>'+
+  '<details style="margin-top:14px"><summary>Marketplace rules (8)</summary>'+ruleList(A.RULES)+'</details>'+
+  '<details><summary>Extra rules for digital products (6)</summary>'+ruleList(A.DIGITAL_RULES)+'</details>'+
+  '<details><summary>Read the full updated agreement</summary><ol class="agree">'+A.clauses(plan,nc).map(function(x){return"<li><b>"+esc(x[0])+".</b> "+esc(x[1])+"</li>"}).join("")+'</ol></details>'+
+  '<form id="acf" novalidate><label class="f">Sign: type your full name<input name="sign" required maxlength="80" autocomplete="name"></label>'+
+  '<label class="chk"><input type="checkbox" name="agree"><span>I have read and accept the updated agreement and marketplace rules.</span></label>'+
+  '<p class="err" id="acerr" role="alert"></p><div class="btnrow"><button class="btn full" type="submit" id="acbtn">Accept and continue</button></div>'+
+  '<p class="small muted" style="text-align:center;margin-top:10px">Not ready? Your shop keeps running as it is. Questions? <a href="https://wa.me/'+WA+'" target="_blank" rel="noopener">WhatsApp us</a>.</p></form></div>';
+  document.body.appendChild(d);document.body.style.overflow="hidden";
+  function close(){d.remove();document.body.style.overflow=""}
+  q(".x",d).onclick=close;d.addEventListener("click",function(e){if(e.target===d)close()});
+  var f=q("#acf",d);f.onsubmit=function(e){e.preventDefault();var err=q("#acerr",d);setErr(err,"");
+    var nm=f.sign.value.trim();if(nm.length<3)return setErr(err,"Please sign by typing your full name.");
+    if(!f.agree.checked)return setErr(err,"Please tick the box to accept.");
+    nc.name=nm;nc.signedAt=new Date().toISOString();nc.rates=old.rates||null;
+    var btn=q("#acbtn",d);busy(btn,true);
+    sb.from("vendors").update({contract:nc}).eq("id",v.id).select().single().then(function(r){busy(btn,false);if(r.error)return setErr(err,friendly(r.error));
+      S.vendor=r.data;close();renderVendor();toast("Thank you. You're all set 💕");gc("vendor-portal-rules-accept","Vendor accepted marketplace rules");if(then)then()}).catch(function(x){busy(btn,false);setErr(err,friendly(x))});
+  };
+}
 function vHome(v){
   var m=money_owed(S.sales,S.payouts),pl=PLANS[v.plan]||{};
   var live=S.products.filter(function(p){return p.status==="live"}).length,pend=S.products.filter(function(p){return p.status==="pending"}).length;
   var low=S.products.filter(function(p){return !p.digital&&p.status==="live"&&Number(p.stock)<=2});
   var ch=S.products.filter(function(p){return p.status==="changes"});
   var wk=S.sales.filter(function(s){return s.sale_date>=iso(weekStart())});
-  var h='<h1 class="page">Hi '+esc(String(v.owner_name||"").split(" ")[0])+' 💕</h1><p class="lead">'+esc(v.business)+' · '+esc(pl.name||"")+' plan</p>'+statusNote(v);
+  var h='<h1 class="page">Hi '+esc(String(v.owner_name||"").split(" ")[0])+' 💕</h1><p class="lead">'+esc(v.business)+' · '+esc(pl.name||"")+' plan</p>'+statusNote(v)+rulesNote(v);
   h+='<div class="stats"><div class="stat big"><span>Coming to you on '+esc(fmtDate(iso(nextSunday())))+'</span><b>'+money2(m.dueSunday)+'</b></div>'+
      '<div class="stat"><b>'+wk.reduce(function(a,s){return a+(Number(s.qty)||0)},0)+'</b><span>sold this week</span></div>'+
      '<div class="stat"><b>'+money2(m.earned)+'</b><span>earned in total</span></div>'+
@@ -514,7 +552,8 @@ function vBusiness(v){
   return h;
 }
 function wireVendor(){
-  qa("[data-add]").forEach(function(b){b.onclick=function(){productSheet(null)}});
+  qa("[data-add]").forEach(function(b){b.onclick=function(){needsRules(S.vendor)?acceptSheet(function(){productSheet(null)}):productSheet(null)}});
+  qa("[data-accept]").forEach(function(b){b.onclick=function(){acceptSheet()}});
   qa("[data-edit]").forEach(function(b){b.onclick=function(){productSheet(S.products.find(function(p){return p.id===b.getAttribute("data-edit")}))}});
   qa("[data-t2]").forEach(function(b){b.onclick=function(){S.tab=b.getAttribute("data-t2");renderVendor()}});
   qa("[data-hidev]").forEach(function(b){b.onclick=function(){setStatusVendor(b.getAttribute("data-hidev"),"hidden")}});
@@ -568,6 +607,11 @@ function productSheet(p){
   '<label class="f">Category<select name="category">'+CATS.map(function(c){return'<option'+(c===p.category?" selected":"")+'>'+esc(c)+'</option>'}).join("")+'</select></label>'+
   '<label class="f">Options <span class="hint">optional · sizes, colours or scents, separated by commas</span><input name="variants" maxlength="300" value="'+esc((p.variants||[]).join(", "))+'" placeholder="e.g. Vanilla, Coconut, Shea"></label>'+
   '<label class="f">Description<textarea name="description" maxlength="1200" placeholder="What it is, size, how to use, ingredients">'+esc(p.description)+'</textarea></label>'+
+  (isNew?'<div class="rulesbox" id="rbox"><p class="fee" id="feeL"></p>'+
+    '<label class="chk"><input type="checkbox" name="r1"><span>It follows the <a href="#" id="rshow">Shop Bajan marketplace rules</a>.</span></label>'+
+    '<div id="rlist" hidden>'+ruleList(A.RULES||[])+'</div>'+
+    '<div id="dRules"><label class="chk"><input type="checkbox" name="r2"><span>It\'s my own original work. Not PLR, resell rights or AI filler.</span></label>'+
+    '<label class="chk"><input type="checkbox" name="r3"><span>If it\'s about money, business or income, it shows <b>"Results may vary. Not a promise of income."</b></span></label></div></div>':"")+
   '<p class="err" id="perr" role="alert"></p>'+
   '<div class="btnrow"><button class="btn" type="submit" id="pbtn">'+(isNew?"Send for approval":"Save")+'</button>'+(isNew?"":'<button class="btn red" type="button" id="pdel">Delete</button>')+'</div></form></div>';
   document.body.appendChild(d);document.body.style.overflow="hidden";
@@ -592,8 +636,10 @@ function productSheet(p){
   function drawKeep(){var pr=Number(f.price.value)||0,dig=f.digital.checked;drawPick();
     q("#keep",d).innerHTML=pr?("You keep <b>"+money2(pr*(1-rate))+"</b> of each sale ("+Math.round((1-rate)*100)+"%).")+(rate>=.15?"":""):"Type your price to see what you keep.";
     q("#dlF",d).hidden=!dig;q("#stockF",d).style.opacity=dig?".45":"1";f.stock.disabled=dig;
-    if(dig&&f.category.value!=="Digital")f.category.value="Digital";}
+    if(dig&&f.category.value!=="Digital")f.category.value="Digital";
+    if(isNew){q("#dRules",d).hidden=!dig;q("#feeL",d).innerHTML=dig?"Digital products are <b>free to list</b>.":"Listing fee: <b>"+money2(A.LISTING_FEE)+" BBD</b>, once, when we approve it. Taken from your Sunday payout."}}
   f.addEventListener("input",drawKeep);f.addEventListener("change",drawKeep);drawPhotos();drawKeep();
+  if(isNew)q("#rshow",d).onclick=function(e){e.preventDefault();var l=q("#rlist",d);l.hidden=!l.hidden};
   if(!isNew)q("#pdel",d).onclick=function(){if(!confirmInline(q("#pdel",d)))return;
     sb.from("products").delete().eq("id",p.id).then(function(r){if(r.error)return setErr(q("#perr",d),friendly(r.error));
       (p.photos||[]).length&&sb.storage.from(BUCKET).remove(p.photos).catch(function(){});
@@ -604,6 +650,8 @@ function productSheet(p){
     if(!(price>0))return setErr(err,"Please add the price in BBD.");
     if(!photos.length&&!newFiles.length)return setErr(err,"Please add at least one photo.");
     if(dig&&!/^https?:\/\/\S+\.\S+/.test(link))return setErr(err,"Please add the download link (it starts with https://).");
+    if(isNew&&!f.r1.checked)return setErr(err,"Please tick the box to confirm it follows the marketplace rules.");
+    if(isNew&&dig&&!(f.r2.checked&&f.r3.checked))return setErr(err,"Please tick both digital product boxes.");
     var btn=q("#pbtn",d);busy(btn,true,newFiles.length?"Uploading photos…":"Saving…");
     var uid=S.user.id,uploaded=[];
     var chain=Promise.resolve();
