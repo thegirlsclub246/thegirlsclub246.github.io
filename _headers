@@ -5,3 +5,6 @@
 /brain-basket/sw.js
   Cache-Control: no-cache
   Service-Worker-Allowed: /brain-basket/
+/shop-spark/sw.js
+  Cache-Control: no-cache
+  Service-Worker-Allowed: /shop-spark/
