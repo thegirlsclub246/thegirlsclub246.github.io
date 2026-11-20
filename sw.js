@@ -19,7 +19,7 @@ self.addEventListener("fetch", function (e) {
   if (req.method !== "GET" || url.origin !== self.location.origin) return; /* payments, sign-ins, data: untouched */
   if (url.pathname.indexOf("/brain-basket/") === 0 || url.pathname.indexOf("/admin") === 0) return;
   e.respondWith(
-    fetch(req, { cache: "no-store" }).then(function (res) {
+    fetch(req, { cache: url.pathname.indexOf("/vendor/") > -1 ? "default" : "no-store" }).then(function (res) {
       if (res && res.ok && res.type === "basic") {
         var copy = res.clone();
         caches.open(CACHE).then(function (c) { c.put(req, copy); });
