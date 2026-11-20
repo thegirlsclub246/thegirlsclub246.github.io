@@ -59,6 +59,17 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue)}
 #done h2{font-size:28px}
 .err{color:#B3261E;font-weight:700;font-size:15px}
 footer{color:var(--muted);font-size:14px;text-align:center;padding:10px 0 40px}
+.prods{display:grid;gap:10px;margin-top:12px}
+.prod{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:0 16px}
+.prod summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0}
+.prod summary::-webkit-details-marker{display:none}
+.prod summary::after{content:"+";font-weight:800;font-size:1.4rem;color:var(--blue);flex:none}
+.prod[open] summary::after{content:"−"}
+.prod summary b{display:block;color:var(--blue);font-size:1.05rem}
+.prod summary small{display:block;color:var(--muted);font-size:.9rem;margin-top:2px}
+.prod[open]{padding-bottom:6px}
+.prod .for{color:var(--muted)}
+.prod a{color:var(--blue);font-weight:700}
 </style>
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.webmanifest">
@@ -75,7 +86,7 @@ footer{color:var(--muted);font-size:14px;text-align:center;padding:10px 0 40px}
 <div class="band">
   <div><b><span data-n="disc">10</span>% off</b><span>for your followers' first order</span></div>
   <div><b><span data-n="course">20</span>%</b><span>to you on every course sale with your code</span></div>
-  <div data-brand><b>BBD $<span data-n="brand">25</span></b><span>for each brand you bring on board</span></div>
+  <div data-brand><b>BBD $<span data-n="brand">25</span></b><span>for each small business you bring on board</span></div>
 </div>
 
 <section>
@@ -83,7 +94,7 @@ footer{color:var(--muted);font-size:14px;text-align:center;padding:10px 0 40px}
 <ol class="steps">
 <li><span class="n">1</span><span><b>Apply below.</b> It takes two minutes. We reply on WhatsApp within a few days.</span></li>
 <li><span class="n">2</span><span><b>Get your code and link.</b> Your code is something like <b>YOURNAME10</b>, and we give you a link for each thing you share, like <b>academy.thegirlsclub246.com/?ref=YOURNAME10</b> for the courses. Anyone who taps your link has the code saved for them.</span></li>
-<li><span class="n">3</span><span><b>Share Shop Bajan your way.</b> Stories, reels, TikToks, your WhatsApp status. Show the brands and products you actually like.</span></li>
+<li><span class="n">3</span><span><b>Share Shop Bajan your way.</b> Stories, reels, TikToks, your WhatsApp status. Show the small businesses and products you actually like.</span></li>
 <li><span class="n">4</span><span><b>Watch your sales and get paid every month.</b> Your <a href="creator-dashboard.html">creator dashboard</a> shows every sale and what you've earned. We pay you in the first week of the next month, by PayPal or FirstPay.</span></li>
 </ol>
 <p class="note" id="example" style="margin-top:14px">Example: if 10 followers buy the Cluster Lash Course (BBD $50) with your code, they each save $5 and you earn <b>BBD $90</b>.</p>
@@ -91,17 +102,38 @@ footer{color:var(--muted);font-size:14px;text-align:center;padding:10px 0 40px}
 
 <section id="works-on">
 <h2>What your code works on</h2>
-<ul>
-<li><b>Now:</b> The Girls Club Academy online courses (Cluster Lash Course and Eyelash Extension Course) and our digital products.</li>
-<li><b>Tiny apps, now:</b> when someone pays for <b>Hustle Kit</b> or <b>DepositProof</b> within 30 days of tapping your link, you get <b><span data-n="app">20</span>% of their first payment</b>. App prices aren't discounted.</li>
-<li><b>From Thu 10 Dec:</b> physical products from Bajan brands, when the Shop Bajan marketplace opens.</li>
-</ul>
+<p>Tap any product to see what it is, what it costs and what you earn.</p>
+<div class="prods">
+<details class="prod"><summary><span><b>Cluster Lash Course</b><small>Online course · US$25 · you earn 20% of what they pay</small></span></summary>
+<p>Learn natural, hybrid and volume cluster lashes from home, at your own pace. Your followers get 10% off (they pay US$22.50), and you earn about US$4.50 a sale.</p>
+<ul><li>20 video modules, from the basics to full sets on real clients</li><li>12 downloadable guides, including a lash map and consent form</li><li>Certificate of completion and lifetime access</li></ul>
+<p class="for"><b>Great for:</b> beauty lovers, beginners, lash techs adding a new service.</p>
+<p><a href="https://academy.thegirlsclub246.com/#academy" target="_blank" rel="noopener">See the course</a></p></details>
+<details class="prod"><summary><span><b>Eyelash Extension Course</b><small>Online course · US$49 · you earn 20% of what they pay</small></span></summary>
+<p>Classic, hybrid and volume eyelash extensions, taught step by step by a certified esthetician. Your followers get 10% off (they pay US$44.10), and you earn about US$8.82 a sale.</p>
+<ul><li>26 video modules: consultation, classic and volume sets, refills, removals, pricing and marketing</li><li>Training manual, practice sheets, homework with feedback and a quiz</li><li>Certificate of completion and lifetime access</li></ul>
+<p class="for"><b>Great for:</b> anyone who wants to start a lash business or earn from home.</p>
+<p><a href="https://academy.thegirlsclub246.com/#academy" target="_blank" rel="noopener">See the course</a></p></details>
+<details class="prod"><summary><span><b>Hustle Kit</b><small>Booking app · US$12 a month · you earn 20% of the first payment</small></span></summary>
+<p>Clients book themselves from one link, pay the deposit up front and get reminders, so there are fewer no-shows. Walk-ins, payments and regulars are all in one place. No commission, and they can cancel any time.</p>
+<p class="for"><b>Great for:</b> lash and nail techs, barbers, braiders, makeup artists, tutors, anyone who takes bookings in their DMs.</p>
+<p>You get the credit when someone pays within 30 days of tapping your link. App prices aren't discounted.</p>
+<p><a href="/hustle-kit/" target="_blank" rel="noopener">See Hustle Kit</a></p></details>
+<details class="prod"><summary><span><b>DepositProof</b><small>Rental app · free to start, from US$9 a move · you earn 20% of the first payment</small></span></summary>
+<p>Move-in and move-out condition reports with photos, notes and both signatures, so renters can get their deposit back and landlords have proof. Landlords can manage all their units for US$19 a month.</p>
+<p class="for"><b>Great for:</b> renters, students, landlords, Airbnb and short-let hosts, realtors, property managers.</p>
+<p>You get the credit when someone pays within 30 days of tapping your link. App prices aren't discounted.</p>
+<p><a href="/depositproof/" target="_blank" rel="noopener">See DepositProof</a></p></details>
+<details class="prod"><summary><span><b>Shop Bajan marketplace</b><small>Opens Thu 10 Dec · you earn 5%, followers get 10% off their first order</small></span></summary>
+<p>Barbados' small businesses in one place: one bag, one checkout, delivery or collection. Your code works on it from opening day.</p>
+<p>You also get BBD $<span data-n="bonus">25</span> for each Bajan small business you bring to Shop Bajan, once they make their first sale.</p></details>
+</div>
 </section>
 
 <section data-brand>
 <h2>Bring a brand, earn BBD $<span data-n="brand">25</span></h2>
-<p>Know a Bajan small business that should be on Shop Bajan? Send them our way. When a brand you introduce opens its shop and makes its first sale, you get <b>BBD $<span data-n="brand">25</span></b>.</p>
-<p>Just WhatsApp us the brand's name before they sign up, or ask them to mention your code when they join.</p>
+<p>Know a Bajan small business that should be on Shop Bajan? Send them our way. When a small business you introduce opens its shop and makes its first sale, you get <b>BBD $<span data-n="brand">25</span></b>.</p>
+<p>Just WhatsApp us the business's name before they sign up, or ask them to mention your code when they join.</p>
 </section>
 
 <section id="terms">
@@ -116,7 +148,7 @@ footer{color:var(--muted);font-size:14px;text-align:center;padding:10px 0 40px}
 <li>We pay in the first week of each month for the month before, once you've earned at least BBD $<span data-n="min">20</span>. Anything under that carries over to the next month.</li>
 <li>Be honest with your followers. Say that you earn from your code, for example "I earn a little when you use my code" or #ad.</li>
 <li>Don't post your code on coupon or discount-code websites, run paid ads using the Shop Bajan name, send spam, or make claims about products that aren't true.</li>
-<li>The brand bonus is paid when a brand you introduce opens its shop and makes its first sale within 60 days of signing up. It doesn't apply to brands that were already talking to us.</li>
+<li>The small business bonus is paid when a business you introduce opens its shop and makes its first sale within 60 days of signing up. It doesn't apply to businesses that were already talking to us.</li>
 <li>You're an independent creator, not a Shop Bajan employee, and you're responsible for any tax on what you earn.</li>
 <li>We can switch off a code that's being misused. We'll give you 14 days' notice before changing these rates or ending the program. You can stop at any time, and we'll still pay what you've earned.</li>
 </ul>
@@ -141,7 +173,7 @@ footer{color:var(--muted);font-size:14px;text-align:center;padding:10px 0 40px}
     <div class="f"><label for="code">Code you'd like</label><input id="code" name="code" maxlength="20" placeholder="e.g. BREE10" autocapitalize="characters" spellcheck="false" style="text-transform:uppercase"><small>Letters and numbers only. We'll pick one if it's taken.</small></div>
     <div class="f"><label for="pay">How should we pay you?</label><select id="pay" name="payout" required><option value="">Choose one</option><option>PayPal</option><option>FirstPay</option></select></div>
   </div>
-  <div class="f"><label for="why">What would you share about Shop Bajan? (optional)</label><textarea id="why" name="about" rows="3" placeholder="The kind of content you make, brands you love, anything you'd like us to know"></textarea></div>
+  <div class="f"><label for="why">What would you share about Shop Bajan? (optional)</label><textarea id="why" name="about" rows="3" placeholder="The kind of content you make, small businesses you love, anything you'd like us to know"></textarea></div>
   <label class="check"><input type="checkbox" id="agree" required><span>I've read the <a href="#terms">creator terms</a> and agree to them.</span></label>
   <p class="err" id="err" hidden></p>
   <p><button class="btn big" type="submit" id="send">Send my application</button></p>

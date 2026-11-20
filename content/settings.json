@@ -17,7 +17,7 @@
   "creator_app_commission_pct": 20,
   "creator_payout_min": 20,
   "creator_brand_bonus": 25,
-  "creator_codes_payhip": false,
+  "creator_codes_payhip": true,
   "creator_dashboard_url": "https://script.google.com/macros/s/AKfycbzYBo5dyJy3Sek-FN4Xdx1fQWO9w0WOJjemvMm1K06fDgvDdu3n1j-j3tuSNDwhn_-1/exec",
   "creator_codes": []
 }
