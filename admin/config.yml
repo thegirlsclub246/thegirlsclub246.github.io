@@ -192,3 +192,18 @@ collections:
           - {name: bpwccul_number, label: "BPWCCUL account number (empty hides BPWCCUL)", widget: string, required: false}
           - {name: bpwccul_share, label: "BPWCCUL share number (shown to customers)", widget: string, required: false}
           - {name: paypal_link, label: "PayPal.Me link (empty hides PayPal)", widget: string, required: false}
+          - {name: creator_discount_pct, label: "Creator codes: shopper's % off their first order (0 turns codes off)", widget: number, value_type: int, min: 0, max: 50, default: 10, required: false}
+          - {name: creator_commission_pct, label: "Creator codes: creator's % commission (shown on the Creators page)", widget: number, value_type: int, min: 0, max: 50, default: 5, required: false}
+          - {name: creator_payout_min, label: "Creator codes: minimum payout (BBD)", widget: number, value_type: int, min: 0, default: 20, required: false}
+          - {name: creator_brand_bonus, label: "Creator codes: bonus for referring a brand (BBD, 0 hides it)", widget: number, value_type: int, min: 0, default: 25, required: false}
+          - name: creator_codes
+            label: "Creator codes"
+            label_singular: "creator code"
+            widget: list
+            required: false
+            summary: "{{fields.code}} · {{fields.name}}"
+            fields:
+              - {name: code, label: "Code (letters and numbers only, e.g. BREE10)", widget: string, pattern: ["^[A-Za-z0-9_-]{2,30}$", "Letters and numbers only, no spaces"]}
+              - {name: name, label: "Creator's name", widget: string}
+              - {name: instagram, label: "Instagram username (no @)", widget: string, required: false}
+              - {name: active, label: "Code works (untick to switch it off)", widget: boolean, default: true}
