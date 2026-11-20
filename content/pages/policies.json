@@ -1,0 +1,81 @@
+{
+    "s01":  {
+                "i1":  "shop-bajan-mark.png",
+                "t2":  "Shop Bajan",
+                "t3":  "Back to the shop",
+                "t4":  "Shop policies",
+                "t5":  "Last updated 15 October 2026 · The Girls Club, St. Thomas, Barbados",
+                "t6":  "Delivery",
+                "t7":  "Returns",
+                "t8":  "Appointments",
+                "t9":  "Courses",
+                "t10":  "Shop Bajan",
+                "t11":  "Privacy",
+                "t12":  "Terms"
+            },
+    "s02":  {
+                "t13":  "Delivery \u0026 collection",
+                "t14":  "Island-wide delivery:",
+                "t15":  "Collection:",
+                "t16":  "We arrange your delivery or collection day on WhatsApp after your payment comes through.",
+                "t17":  "Courses and gift vouchers are digital. We send them by email or WhatsApp, so there is no delivery fee.",
+                "t18":  "Everything in one order, including Shop Bajan products from other brands, comes to you together."
+            },
+    "s03":  {
+                "t19":  "Returns \u0026 refunds",
+                "t20":  "We want you to love what you buy. Because lashes and lip products touch your eyes and lips, we have to be careful about hygiene.",
+                "t21":  "Opened lash trays, lip products and other beauty items",
+                "t22":  "Unopened items",
+                "t23":  "Faulty, damaged or wrong items:",
+                "t24":  "Refunds go back the same way you paid (card, FirstPay or BPWCCUL), usually within 7 working days.",
+                "t25":  "Delivery fees are only refunded if we made a mistake with your order."
+            },
+    "s04":  {
+                "t26":  "Lash appointments",
+                "t27":  "A BBD $30 deposit books your appointment. The rest is paid on the day.",
+                "t28":  "The deposit is non-refundable",
+                "t29":  "Need to change your time? Tell us at least 24 hours before and we\u0027ll move your booking, with your deposit going towards the new time.",
+                "t30":  "Please come with clean lashes and no mascara."
+            },
+    "s05":  {
+                "t31":  "Academy courses \u0026 gift vouchers",
+                "t32":  "Our online courses are digital. Once your login or course link has been sent, the course can\u0027t be refunded.",
+                "t33":  "Can\u0027t get in or something isn\u0027t working? Message us and we\u0027ll sort it out.",
+                "t34":  "Course materials are for your own learning. Please don\u0027t share your login or copy the lessons.",
+                "t35":  "Gift vouchers can\u0027t be exchanged for cash. Lost a voucher? Message us with the buyer\u0027s name and we\u0027ll look it up."
+            },
+    "s06":  {
+                "t36":  "The Shop Bajan marketplace",
+                "t37":  "Shop Bajan brings together beauty products from independent small businesses in Barbados, most of them women-owned. Each product shows the brand that makes it.",
+                "t38":  "The Girls Club sells Shop Bajan products for those brands and takes your payment, so you check out once for everything in your bag.",
+                "t39":  "Questions, delivery and returns for Shop Bajan products all go through us, under the same rules as on this page.",
+                "t40":  "Each brand is responsible for its products\u0027 ingredients and labels. Always check the label, and patch test skincare, hair and body products if you have sensitive skin."
+            },
+    "s07":  {
+                "t41":  "Privacy",
+                "t42":  "We only collect what we need to look after your order, and we never sell your information.",
+                "t43":  "What we collect",
+                "t44":  "When you order: your name, phone (WhatsApp) number, email (for courses), your parish for delivery, and what you ordered.",
+                "t45":  "When you book: your appointment day and time.",
+                "t46":  "When you message us: whatever you send us on WhatsApp or Instagram.",
+                "t47":  "How we use it",
+                "t48":  "To confirm and deliver your order, enrol you in a course, or book your appointment.",
+                "t49":  "To contact you about your order. We\u0027ll only send you offers if you\u0027ve joined our list or asked us to.",
+                "t50":  "Who we share it with",
+                "t51":  "Our order records are kept in our own Google account. Card payments are handled by our secure card payment provider, and courses by our course platform. We never see or store your full card number.",
+                "t52":  "For Shop Bajan orders, we only share with a brand what it needs to make your order (for example, a name for a personalised item).",
+                "t53":  "We count website visits with a privacy-friendly counter that uses no cookies and doesn\u0027t identify you.",
+                "t54":  "Your rights",
+                "t55":  "Under the Barbados Data Protection Act, 2019, you can ask to see, correct or delete the information we hold about you. Message us on WhatsApp at 1 (246) 850-4460 or email hello@shopbajanbb.com."
+            },
+    "s08":  {
+                "t56":  "Terms of sale",
+                "t57":  "Prices are in Barbados dollars (BBD). Card payments are charged in US dollars at BBD $2 = USD $1.",
+                "t58":  "Your order is confirmed once your payment comes through. We hold unpaid orders for 24 hours.",
+                "t59":  "If something sells out after you order, we\u0027ll offer you a swap or a full refund.",
+                "t60":  "Results from our courses and products depend on you. Any earning examples we share are examples only.",
+                "t61":  "We may update these policies from time to time. The version on this page is the one that applies.",
+                "t62":  "These terms are governed by the laws of Barbados.",
+                "t63":  "@shopbajan"
+            }
+}
