@@ -15,5 +15,6 @@
   "creator_commission_pct": 5,
   "creator_payout_min": 20,
   "creator_brand_bonus": 25,
+  "creator_codes_payhip": false,
   "creator_codes": []
 }
