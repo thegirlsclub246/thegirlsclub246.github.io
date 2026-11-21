@@ -384,7 +384,7 @@
         {
           "code": "/got",
           "when": "First reply to every website order",
-          "text": "Hi love, thank you for your order! I've got it. To complete it, pay with your order number as the reference: debit or credit card on the website (instant), FirstPay to 246-850-4460, or BPWCCUL (Marishka Greenidge, account 127207, Share 04).\n\nThen send me your payment screenshot here with your order number so I can confirm it. Card payments are on the website: https://thegirlsclub246.com/#shop 💕",
+          "text": "Hi love, thank you for your order! I've got it. To complete it, pay by debit or credit card on the website with PayPal or Dodo. It's instant, and Bajan cards work too: https://thegirlsclub246.com/#shop\n\nOnce it's paid I'll confirm your order here 💕",
           "id": "w001"
         },
         {
@@ -396,7 +396,7 @@
         {
           "code": "/notyet",
           "when": "Order came in but the money hasn't",
-          "text": "Hi love, I got your order but I don't see the payment yet. Please pay BBD [total] with your order number as the reference: debit or credit card on the website (instant), FirstPay to 246-850-4460, or BPWCCUL (Marishka Greenidge, account 127207, Share 04).\n\nThen send me the screenshot here with your order number. I'll hold your order for 24 hours. Card payments are on the website: https://thegirlsclub246.com/#shop 💕",
+          "text": "Hi love, I got your order but I don't see the payment yet. Please pay BBD [total] by debit or credit card on the website with PayPal or Dodo: https://thegirlsclub246.com/#shop\n\nI'll hold your order for 24 hours 💕",
           "id": "w003"
         },
         {
@@ -419,14 +419,14 @@
         },
         {
           "code": "/enrolled",
-          "when": "Course paid by FirstPay / BPWCCUL",
+          "when": "Course voucher used",
           "text": "Hi love, you're in! Welcome to The Girls Club Academy. I'm sending your enrolment code next. Enter it at your course page to get your login for free: Cluster https://thegirlsclub246.com/#cluster or Eyelash https://thegirlsclub246.com/#eyelash\n\nAny problems getting in, message me here and I'll sort it out 💕",
           "id": "w007"
         },
         {
           "code": "/cash",
           "when": "Asked about cash or PayPal (not offered)",
-          "text": "Hi love, we take three ways to pay: debit or credit card on the website (instant), FirstPay to 246-850-4460, or BPWCCUL (Marishka Greenidge, account 127207, Share 04).\n\nWe don't take cash or PayPal. Place your order and pay by card if that's easiest: https://thegirlsclub246.com/#shop 💕",
+          "text": "Hi love, we take debit and credit cards on the website through PayPal or Dodo. It's instant, and Bajan cards work too. Place your order here: https://thegirlsclub246.com/#shop 💕",
           "id": "w008"
         }
       ],
@@ -650,11 +650,11 @@
     },
     {
       "big": "Enrolment Desk",
-      "html": "Free enrolment codes for FirstPay / BPWCCUL buyers and course vouchers. <a href=\"https://claude.ai/artifact/WMJEaNreenhaz9QdGxXEcC\" rel=\"noopener\" target=\"_blank\">Open the desk</a>"
+      "html": "Free enrolment codes for course vouchers. <a href=\"https://claude.ai/artifact/WMJEaNreenhaz9QdGxXEcC\" rel=\"noopener\" target=\"_blank\">Open the desk</a>"
     },
     {
       "big": "Get paid",
-      "html": "FirstPay 246-850-4460 · Marishka Gittens<br/>BPWCCUL account 127207 · Share 04 · Marishka Greenidge<br/>Card on the website (instant)"
+      "html": "Card on the website through PayPal or Dodo (instant)"
     }
   ],
   "prices": [
@@ -921,7 +921,7 @@
         },
         {
           "t": "Academy Enrolment Desk",
-          "d": "Give a free enrolment code to FirstPay / BPWCCUL / voucher buyers",
+          "d": "Give a free enrolment code to voucher buyers",
           "href": "https://claude.ai/artifact/WMJEaNreenhaz9QdGxXEcC"
         }
       ]
@@ -1095,7 +1095,7 @@
       "date": "Wed 14 Oct",
       "time": "19:00",
       "reel": true,
-      "cap": "Want to earn from lashes? 💗\n\nOur Cluster Lash Course teaches you step by step, from your phone: 20 video modules, 12 resource guides and a certificate when you finish.\n\nLaunch price: BBD $30. Enrol at the link in our bio or thegirlsclub246.com\n\nPay by PayPal or card for instant access, or pay locally by FirstPay or BPWCCUL.\n\n#TheGirlsClubAcademy #LashCourse #TheGirlsClub246 #Barbados #BajanBeauty #ClusterLashes #LashesBarbados",
+      "cap": "Want to earn from lashes? 💗\n\nOur Cluster Lash Course teaches you step by step, from your phone: 20 video modules, 12 resource guides and a certificate when you finish.\n\nLaunch price: BBD $30. Enrol at the link in our bio or thegirlsclub246.com\n\nPay by card for instant access.\n\n#TheGirlsClubAcademy #LashCourse #TheGirlsClub246 #Barbados #BajanBeauty #ClusterLashes #LashesBarbados",
       "title": "Want to earn from lashes? 💗"
     },
     {
@@ -1186,7 +1186,7 @@
       "date": "Tue 27 Oct",
       "time": "19:00",
       "reel": false,
-      "cap": "Ordering is easy 💗\n\n1. Add your look to the bag at thegirlsclub246.com\n2. Pick delivery (BBD $12) or free collection in St. Thomas\n3. Pay by FirstPay, BPWCCUL, PayPal or cash on collection\n4. We confirm your order on WhatsApp\n\nShop 24/7 at the link in our bio.\n\n#TheGirlsClub246 #Barbados #BajanBeauty #ClusterLashes #LashesBarbados",
+      "cap": "Ordering is easy 💗\n\n1. Add your look to the bag at thegirlsclub246.com\n2. Pick delivery (BBD $12) or free collection in St. Thomas\n3. Pay by card with PayPal or Dodo\n4. We confirm your order on WhatsApp\n\nShop 24/7 at the link in our bio.\n\n#TheGirlsClub246 #Barbados #BajanBeauty #ClusterLashes #LashesBarbados",
       "title": "Ordering is easy 💗"
     }
   ],
