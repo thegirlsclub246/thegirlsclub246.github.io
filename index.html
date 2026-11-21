@@ -1894,7 +1894,7 @@ function pdHTML(p){const o=offPct(p),out=isOut(p),dig=isDig(p);
     <div class="pd-price"><span class="price">${p.usd?"":"<small>BBD</small> "}${priceHTML(p)}</span>${o?`<span class="pd-save">You save ${money(p.was-p.price)}</span>`:""}</div>
     ${p.desc?`<p class="pd-desc">${esc(p.desc)}</p>`:""}
     ${(p.points||[]).length?`<ul class="pd-points">${p.points.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}
-    ${p.isCourse?`<p class="pd-rmv" style="font-size:.85em;opacity:.75;margin:6px 0 0">Results may vary.</p>`:""}
+    ${p.isCourse?`<p class="pd-rmv" style="font-size:.85em;opacity:.75;margin:6px 0 0">Results may vary. Not a promise of income.</p>`:""}
     ${p.opts.length?`<p class="pd-lbl" id="pdOptL">Choose one</p><div class="pd-opts" role="radiogroup" aria-labelledby="pdOptL">${p.opts.map((x,i)=>`<button type="button" role="radio" aria-checked="${i===0}" data-pd-opt="${esc(x)}">${esc(x)}</button>`).join("")}</div>`:""}
     <div class="pd-buy">${out?`<button class="add" type="button" disabled>Sold out</button>`:p.isCourse?`<button class="add" type="button" data-pd-add>Enrol · ${p.usd?"BBD ":""}${money(p.price)}</button>`:`<div class="qty"><button type="button" data-pd-q="-1" aria-label="One less">−</button><output aria-live="polite" id="pdQty">1</output><button type="button" data-pd-q="1" aria-label="One more">+</button></div><button class="add" type="button" data-pd-add>Add to bag · ${money(p.price)}</button>`}</div>
     ${p.isCourse&&!ACAD?`<a class="pd-wa" href="${esc(window.TGC_ACAD+"#course-"+slug(p.course))}">See the full course on the Academy site</a>`:""}
