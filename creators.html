@@ -70,6 +70,9 @@ footer{color:var(--muted);font-size:14px;text-align:center;padding:10px 0 40px}
 .prod[open]{padding-bottom:6px}
 .prod .for{color:var(--muted)}
 .prod a{color:var(--blue);font-weight:700}
+.sticky{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 14px);z-index:60;transform:translate(-50%,140%);opacity:0;pointer-events:none;transition:transform .28s,opacity .28s;white-space:nowrap;font-size:17px;padding:12px 24px;box-shadow:0 4px 0 var(--blue),0 12px 26px rgba(0,38,127,.28)}
+.sticky.on{transform:translate(-50%,0);opacity:1;pointer-events:auto}
+@media (prefers-reduced-motion:reduce){.sticky{transition:none}}
 </style>
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.webmanifest">
@@ -81,7 +84,7 @@ footer{color:var(--muted);font-size:14px;text-align:center;padding:10px 0 40px}
 <p class="kicker">SHOP BAJAN AFFILIATE PROGRAM</p>
 <h1>Share local. Get paid.</h1>
 <p class="lede">Get your own Shop Bajan code. Your followers get <b><span data-n="disc">10</span>% off</b> their first order, and you earn <b><span data-n="course">20</span>%</b> on every course sale made with it.</p>
-<p class="cta"><a class="btn big" href="#apply">Apply to be an affiliate</a></p>
+<p class="cta"><a class="btn big" id="heroCta" href="#apply">Apply to be an affiliate</a></p>
 
 <div class="band">
   <div><b><span data-n="disc">10</span>% off</b><span>for your followers' first order</span></div>
@@ -228,5 +231,13 @@ f.addEventListener("submit",function(e){
 })();
 </script>
 <script data-goatcounter="https://thegirlsclub246.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<a class="btn sticky" id="sticky" href="#apply" tabindex="-1" aria-hidden="true">Apply to be an affiliate</a>
+<script>
+(function(){var st=document.getElementById("sticky"),hero=document.getElementById("heroCta"),ap=document.getElementById("apply"),done=document.getElementById("done");
+if(!st||!hero||!ap||!("IntersectionObserver" in window))return;var v={hero:true,ap:false};
+function sync(){var on=!v.hero&&!v.ap&&!(done&&!done.hidden);st.classList.toggle("on",on);st.setAttribute("aria-hidden",on?"false":"true");st.tabIndex=on?0:-1}
+new IntersectionObserver(function(es){es.forEach(function(e){v[e.target===hero?"hero":"ap"]=e.isIntersecting});sync()}).observe(hero);
+new IntersectionObserver(function(es){es.forEach(function(e){v.ap=e.isIntersecting});sync()}).observe(ap);})();
+</script>
 </body>
 </html>
