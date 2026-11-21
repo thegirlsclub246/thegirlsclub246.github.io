@@ -95,7 +95,7 @@ footer{color:var(--muted);font-size:14px;text-align:center;padding:10px 0 40px}
 <li><span class="n">1</span><span><b>Apply below.</b> It takes two minutes. We reply on WhatsApp within a few days.</span></li>
 <li><span class="n">2</span><span><b>Get your code and link.</b> Your code is something like <b>YOURNAME10</b>, and we give you a link for each thing you share, like <b>academy.thegirlsclub246.com/?ref=YOURNAME10</b> for the courses. Anyone who taps your link has the code saved for them.</span></li>
 <li><span class="n">3</span><span><b>Share Shop Bajan your way.</b> Stories, reels, TikToks, your WhatsApp status. Show the small businesses and products you actually like.</span></li>
-<li><span class="n">4</span><span><b>Watch your sales and get paid every month.</b> Your <a href="creator-dashboard.html">affiliate dashboard</a> shows every sale and what you've earned. We pay you in the first week of the next month, by PayPal or FirstPay.</span></li>
+<li><span class="n">4</span><span><b>Watch your sales and get paid every month.</b> Your <a href="creator-dashboard.html">affiliate dashboard</a> shows every sale and what you've earned. We pay you monthly.</span></li>
 </ol>
 <p class="note" id="example" style="margin-top:14px">Example: if 10 followers buy the Cluster Lash Course (BBD $50) with your code, they each save $5 and you earn <b>BBD $90</b>.</p>
 </section>
@@ -171,7 +171,6 @@ footer{color:var(--muted);font-size:14px;text-align:center;padding:10px 0 40px}
   </div>
   <div class="two">
     <div class="f"><label for="code">Code you'd like</label><input id="code" name="code" maxlength="20" placeholder="e.g. BREE10" autocapitalize="characters" spellcheck="false" style="text-transform:uppercase"><small>Letters and numbers only. We'll pick one if it's taken.</small></div>
-    <div class="f"><label for="pay">How should we pay you?</label><select id="pay" name="payout" required><option value="">Choose one</option><option>PayPal</option><option>FirstPay</option></select></div>
   </div>
   <div class="f"><label for="why">What would you share about Shop Bajan? (optional)</label><textarea id="why" name="about" rows="3" placeholder="The kind of content you make, small businesses you love, anything you'd like us to know"></textarea></div>
   <label class="check"><input type="checkbox" id="agree" required><span>I've read the <a href="#terms">affiliate terms</a> and agree to them.</span></label>
@@ -216,7 +215,7 @@ f.addEventListener("submit",function(e){
   var bad=[].slice.call(f.querySelectorAll("[required]")).filter(function(el){return el.type==="checkbox"?!el.checked:!el.value.trim()||(el.type==="email"&&!/^\S+@\S+\.\S+$/.test(el.value.trim()))});
   if(bad.length){err.textContent=bad[0].id==="agree"?"Please tick the box to agree to the affiliate terms.":"Please fill in every box marked above (TikTok, code and the last question are optional).";err.hidden=false;bad[0].focus();return}
   var v=function(id){return $("#"+id).value.trim()};
-  var data={type:"shop-bajan-creator",submittedAt:new Date().toISOString(),name:v("name"),whatsapp:v("wa"),instagram:v("ig").replace(/^@/,""),tiktok:v("tt").replace(/^@/,""),followers:v("fol"),email:v("em"),code:v("code").toUpperCase().replace(/[^A-Z0-9_-]/g,""),payout:v("pay"),about:v("why"),agreedTerms:true};
+  var data={type:"shop-bajan-creator",submittedAt:new Date().toISOString(),name:v("name"),whatsapp:v("wa"),instagram:v("ig").replace(/^@/,""),tiktok:v("tt").replace(/^@/,""),followers:v("fol"),email:v("em"),code:v("code").toUpperCase().replace(/[^A-Z0-9_-]/g,""),about:v("why"),agreedTerms:true};
   var b=$("#send");b.disabled=true;b.textContent="Sending…";
   var fd=new FormData();fd.append(FIELD,JSON.stringify(data));
   fetch(FORM,{method:"POST",mode:"no-cors",body:fd}).then(function(){
