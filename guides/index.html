@@ -32,17 +32,25 @@ p.lead{color:var(--muted);margin:0 0 22px}
 .band a{color:var(--gold)}
 .shop{margin-top:40px}
 .shop>p{color:var(--muted);margin:0 0 16px}
-.items{display:grid;gap:14px}
-.item{background:#fff;border:2px solid var(--line);border-radius:18px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
-.item .tag{align-self:flex-start;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border-radius:999px;padding:3px 10px;background:var(--sun);color:var(--blue)}
+.items{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.item.wide{grid-column:1/-1}
+.group{margin:22px 0 10px;font-family:var(--serif);font-weight:800;color:var(--blue);font-size:1.15rem}
+.group small{display:block;font-family:var(--body);font-weight:600;font-size:.8rem;color:var(--muted)}
+.item{background:#fff;border:2px solid var(--line);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:5px;min-width:0}
+.item .tag{align-self:flex-start;font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border-radius:999px;padding:3px 10px;background:var(--sun);color:var(--blue)}
 .item .tag.paid{background:var(--coral);color:#fff}
-.item h3{font-family:var(--serif);font-weight:800;color:var(--blue);font-size:1.2rem;margin:0;line-height:1.2}
-.item p{margin:0;color:var(--muted);font-size:.95rem}
-.item .price{font-weight:700;color:var(--ink)}
+.item h3{font-family:var(--serif);font-weight:800;color:var(--blue);font-size:1rem;margin:0;line-height:1.2}
+.item p{margin:0;color:var(--muted);font-size:.8rem;line-height:1.4}
+.item p.txt{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.item .spacer{flex:1}
+.item .price{font-weight:700;color:var(--ink);font-size:.8rem;line-height:1.3}
+.item .price b{display:block;font-family:var(--serif);font-weight:800;font-size:1.25rem;color:var(--blue)}
 .go{display:inline-flex;align-self:flex-start;align-items:center;gap:8px;margin-top:6px;min-height:46px;padding:0 20px;border-radius:999px;background:#fff;color:var(--blue);font:700 1rem var(--body);border:2.5px solid var(--blue);text-decoration:none}
 .pay{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px;min-height:56px;border-radius:999px;background:var(--gold);color:var(--blue);font:800 1.1rem var(--body);border:2.5px solid var(--blue);box-shadow:0 4px 0 var(--blue);text-decoration:none;animation:bounce 2.4s ease-in-out infinite}
 .pay::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.75),transparent);animation:shine 2.4s ease-in-out infinite}
-.item .rmv{font-size:.82rem;color:var(--muted);margin:8px 0 0;text-align:center}
+.item .rmv{font-size:.66rem;line-height:1.3;color:var(--muted);margin:2px 0 0;text-align:center}
+.item .pay{min-height:42px;font-size:.92rem;gap:6px;margin-top:4px;animation:none}
+.item .go{align-self:stretch;justify-content:center;min-height:40px;padding:0 10px;font-size:.88rem;margin-top:4px}
 .pay .arrow{display:inline-block;animation:nudge 1.2s ease-in-out infinite}
 .pay:hover{animation-play-state:paused;transform:translateY(-2px) scale(1.02)}
 .pay:active{transform:translateY(3px);box-shadow:0 1px 0 var(--blue)}
@@ -51,7 +59,7 @@ p.lead{color:var(--muted);margin:0 0 22px}
 @keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
 @media (prefers-reduced-motion:reduce){.pay,.pay::after,.pay .arrow{animation:none}}
 .item.mine{border-color:var(--blue);box-shadow:4px 4px 0 var(--gold)}
-.getit{margin-top:44px;scroll-margin-top:16px}
+.getit{margin-top:8px;scroll-margin-top:16px}
 .getit .small{color:var(--muted);margin:0 0 14px}
 html{scroll-behavior:smooth}
 footer{text-align:center;font-size:.85rem;color:var(--muted);margin-top:32px}
@@ -65,14 +73,7 @@ footer{text-align:center;font-size:.85rem;color:var(--muted);margin-top:32px}
 <h1 id="title">Your free guide</h1>
 <p class="lead" id="lead"></p>
 
-<a class="pay" href="#get"><span>Take me to my freebie</span><span class="arrow" aria-hidden="true">↓</span></a>
 
-<section class="shop" aria-labelledby="shopTitle">
-  <div class="label">THE SHOP</div>
-  <h2 id="shopTitle">Everything we've got for you</h2>
-  <p>Free tools to help you build, and ways to grow with Shop Bajan.</p>
-  <div class="items" id="items"></div>
-</section>
 
 <section id="get" class="getit">
   <div class="label">YOUR FREEBIE</div>
@@ -81,6 +82,13 @@ footer{text-align:center;font-size:.85rem;color:var(--muted);margin-top:32px}
     <div class="ml-embedded" id="mlform"></div>
   </div>
   <div class="band" id="next"></div>
+</section>
+
+<section class="shop" aria-labelledby="shopTitle">
+  <div class="label">THE SHOP</div>
+  <h2 id="shopTitle">Everything we've got for you</h2>
+  <p>Free tools to help you build, and ways to grow with Shop Bajan.</p>
+  <div id="groups"></div>
 </section>
 
 <footer>shopbajanbb.com · @shopbajan</footer>
@@ -99,13 +107,13 @@ var GUIDES = {
   journey: {form:"vbhLfX", title:"Your free <span>task tracker</span>", lead:"A simple tracker to help you get things out of your head and get them done.",
             next:'Ready to make something to sell? <a href="?g=ready">Get our free starter guides</a>.'},
   start:   {form:"usKdtF", file:"Shop-Bajan-Free-Guide-START-Start-With-0.pdf", title:"Start with <span>$0</span>", lead:"The free tools list: every free tool you need to make, sell and track your first digital product.", next:'Next: make your first product. <a href="?g=digital">Get the DIGITAL guide</a>.'},
-  posts:   {form:"2UuBtA", file:"Shop-Bajan-Free-Guide-POSTS-The-Post-Kit.pdf", title:"The <span>Post Kit</span>", lead:"Free guide: what to post so people stop scrolling and start asking.", next:'Want more free guides? Scroll up to the shop.'},
-  sales:   {form:"NjDIp4", file:"Shop-Bajan-Free-Guide-SALES-Views-to-Sales-Checklist.pdf", title:"Views to <span>sales</span>", lead:"Free checklist: turn views and likes into people who actually buy.", next:'Want more free guides? Scroll up to the shop.'},
-  price:   {form:"oLt1q9", file:"Shop-Bajan-Free-Guide-PRICE-Pricing-Cheat-Sheet.pdf", title:"Pricing <span>cheat sheet</span>", lead:"Free guide: set a price that sells and still pays you.", next:'Want more free guides? Scroll up to the shop.'},
-  reel:    {form:"wMdEAE", file:"Shop-Bajan-Free-Guide-REEL-15-Minute-Reel-Kit.pdf", title:"15-minute <span>reel kit</span>", lead:"Free guide: plan, film and post a reel in 15 minutes.", next:'Want more free guides? Scroll up to the shop.'},
+  posts:   {form:"2UuBtA", file:"Shop-Bajan-Free-Guide-POSTS-The-Post-Kit.pdf", title:"The <span>Post Kit</span>", lead:"Free guide: what to post so people stop scrolling and start asking.", next:'Want more free guides? Scroll down to the shop.'},
+  sales:   {form:"NjDIp4", file:"Shop-Bajan-Free-Guide-SALES-Views-to-Sales-Checklist.pdf", title:"Views to <span>sales</span>", lead:"Free checklist: turn views and likes into people who actually buy.", next:'Want more free guides? Scroll down to the shop.'},
+  price:   {form:"oLt1q9", file:"Shop-Bajan-Free-Guide-PRICE-Pricing-Cheat-Sheet.pdf", title:"Pricing <span>cheat sheet</span>", lead:"Free guide: set a price that sells and still pays you.", next:'Want more free guides? Scroll down to the shop.'},
+  reel:    {form:"wMdEAE", file:"Shop-Bajan-Free-Guide-REEL-15-Minute-Reel-Kit.pdf", title:"15-minute <span>reel kit</span>", lead:"Free guide: plan, film and post a reel in 15 minutes.", next:'Want more free guides? Scroll down to the shop.'},
   spark:   {form:"4BjXw7", file:"Shop-Bajan-Free-Guide-SPARK-Product-Idea-Finder.pdf", title:"Product <span>idea finder</span>", lead:"Free guide: find a product idea people already want.", next:'Got your idea? <a href="?g=digital">Get the DIGITAL guide</a> to make it.'},
-  track:   {form:"dseAOn", file:"Shop-Bajan-Free-Guide-TRACK-Sales-and-Money-Tracker.pdf", title:"Sales and <span>money tracker</span>", lead:"Free tracker: log every sale and know where your money goes.", next:'Want more free guides? Scroll up to the shop.'},
-  email:   {form:"OYahhp", file:"Shop-Bajan-Free-Guide-EMAIL-Email-Templates.pdf", title:"Email <span>templates</span>", lead:"Free templates: ready-to-send emails for your customers and your list.", next:'Want more free guides? Scroll up to the shop.'},
+  track:   {form:"dseAOn", file:"Shop-Bajan-Free-Guide-TRACK-Sales-and-Money-Tracker.pdf", title:"Sales and <span>money tracker</span>", lead:"Free tracker: log every sale and know where your money goes.", next:'Want more free guides? Scroll down to the shop.'},
+  email:   {form:"OYahhp", file:"Shop-Bajan-Free-Guide-EMAIL-Email-Templates.pdf", title:"Email <span>templates</span>", lead:"Free templates: ready-to-send emails for your customers and your list.", next:'Want more free guides? Scroll down to the shop.'},
   founding:{form:"CNC8hq", title:"Founding <span>vendor spots</span>", lead:"The online marketplace for Barbados small businesses opens Thursday 10 December.",
             next:'Questions? Message us on Instagram <a href="https://instagram.com/shopbajan">@shopbajan</a>.'}
 };
@@ -169,32 +177,53 @@ if (g.file){
   new MutationObserver(fixSuccess).observe(document.getElementById("mlform"), {childList:true, subtree:true});
 }
 
-var list = document.getElementById("items");
 var mine = SHOP.filter(function(it){ return it.key === key; })[0];
 document.getElementById("getTitle").textContent = mine ? mine.name : "Your freebie";
-var ordered = (mine ? [mine] : []).concat(SHOP.filter(function(it){ return it.key !== key; }));
-ordered.forEach(function(it){
-  var isMine = it.key === key;
-  var el = document.createElement("article");
-  el.className = "item" + (isMine ? " mine" : "");
-  var paid = !!it.pay || !!it.soon;
-  el.innerHTML = '<span class="tag' + (paid ? ' paid' : '') + '"></span><h3></h3><p></p>' +
-    (paid ? '<p class="price"></p><a class="pay" target="_blank" rel="noopener"><span></span><span class="arrow" aria-hidden="true">→</span></a>'
-          : '<a class="go">Grab it free →</a>');
-  el.querySelector(".tag").textContent = isMine ? "Yours, free" : it.tag;
-  el.querySelector("h3").textContent = it.name;
-  el.querySelector("p").textContent = it.text;
-  if (paid){
-    el.querySelector(".price").textContent = it.price;
-    var a = el.querySelector(".pay");
-    if (it.rmv){ var r = document.createElement("p"); r.className = "rmv"; r.textContent = "Results may vary. Not a promise of income."; a.insertAdjacentElement("afterend", r); }
-    if (it.pay){ a.href = it.pay; a.querySelector("span").textContent = PAY_LABEL; }
-    else { a.removeAttribute("href"); a.style.animation = "none"; a.style.opacity = ".6"; a.querySelector("span").textContent = "Pay link coming soon"; a.querySelector(".arrow").textContent = ""; }
-  } else {
-    var go = el.querySelector(".go");
-    if (isMine){ go.href = "#get"; go.textContent = "Get mine now ↓"; } else { go.href = "?g=" + it.key; }
-  }
-  list.appendChild(el);
+/* The kit that matches this free guide goes first. */
+var RELATED = {reel:"reelkit", email:"emailkit", track:"trackkit"};
+var GROUPS = [
+  {name:"Done for you", sub:"Skip the work: it's already written for you.", test:function(it){ return it.tag === "Done for you"; }},
+  {name:"30-day challenges", sub:"One action a day, with prompts and templates.", test:function(it){ return it.tag === "30-day challenge"; }},
+  {name:"More free guides", sub:"Tap one to get it free.", test:function(it){ return /^Free/.test(it.tag); }},
+  {name:"Apps", sub:"Tools we built for Bajan small businesses.", test:function(it){ return it.tag === "App"; }},
+  {name:"Sell with us", sub:"", test:function(it){ return true; }}
+];
+var rest = SHOP.filter(function(it){ return it.key !== key; });
+var rel = RELATED[key];
+rest.sort(function(x, y){ return (y.key === rel) - (x.key === rel); });
+var holder = document.getElementById("groups");
+GROUPS.forEach(function(gr){
+  var items = rest.filter(function(it){ return !it._done && gr.test(it); });
+  if (!items.length) return;
+  var h = document.createElement("h3"); h.className = "group"; h.textContent = gr.name;
+  if (gr.sub){ var sm = document.createElement("small"); sm.textContent = gr.sub; h.appendChild(sm); }
+  holder.appendChild(h);
+  var list = document.createElement("div"); list.className = "items"; holder.appendChild(list);
+  items.forEach(function(it){
+    it._done = true;
+    var el = document.createElement("article");
+    el.className = "item" + (items.length % 2 && it === items[0] ? " wide" : "");
+    var paid = !!it.pay || !!it.soon;
+    el.innerHTML = '<span class="tag' + (paid ? ' paid' : '') + '"></span><h3></h3><p class="txt"></p><span class="spacer"></span>' +
+      (paid ? '<p class="price"></p><a class="pay" target="_blank" rel="noopener"><span></span><span class="arrow" aria-hidden="true">→</span></a>'
+            : '<a class="go">Get it free →</a>');
+    el.querySelector(".tag").textContent = it.key === rel ? "Matches your guide" : it.tag;
+    el.querySelector("h3").textContent = it.name;
+    el.querySelector(".txt").textContent = it.text;
+    if (paid){
+      var pr = el.querySelector(".price");
+      var m = /^(US\$\d+) early price until (.+?) \(then (US\$\d+)\)$/.exec(it.price || "");
+      if (m){ var bb = document.createElement("b"); bb.textContent = m[1]; pr.appendChild(bb); pr.appendChild(document.createTextNode("Until " + m[2] + ", then " + m[3])); }
+      else pr.textContent = it.price;
+      var a = el.querySelector(".pay");
+      if (it.rmv){ var r = document.createElement("p"); r.className = "rmv"; r.textContent = "Results may vary. Not a promise of income."; a.insertAdjacentElement("afterend", r); }
+      if (it.pay){ a.href = it.pay; a.querySelector("span").textContent = PAY_LABEL; }
+      else { a.removeAttribute("href"); a.style.opacity = ".6"; a.querySelector("span").textContent = "Coming soon"; a.querySelector(".arrow").textContent = ""; }
+    } else {
+      el.querySelector(".go").href = "?g=" + it.key;
+    }
+    list.appendChild(el);
+  });
 });
 </script>
 <script>
