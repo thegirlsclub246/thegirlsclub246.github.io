@@ -427,7 +427,7 @@ const lc = s => /^(I[ ']|Canva|Google|CapCut)/.test(s) ? s : s.charAt(0).toLower
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const LOGO = `<svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--accent)"/><path d="M17.5 5 9 18h6l-1.5 9L23 13.5h-6.2z" fill="var(--spark)"/></svg>`;
 const brand = `<div class="brand">${LOGO}${esc(CONFIG.appName)}</div>`;
-const foot = `<footer>${esc(CONFIG.madeBy)}<br>Results may vary.</footer>`;
+const foot = `<footer>${esc(CONFIG.madeBy)}</footer>`;
 const taskHTML = (k, done, t, d, pr) => `<div class="taskwrap"><label class="task${done[k]?" done":""}">
           <input type="checkbox" data-k="${k}"${done[k]?" checked":""}><span>${esc(t)}<em>${esc(d)}</em></span></label>
           ${pr ? `<details class="pr"><summary>Your Claude prompt</summary><div class="prbox">${esc(pr)}</div><button class="copy" type="button">Copy prompt</button></details>` : ""}</div>`;
@@ -455,7 +455,6 @@ const lessonsCard = m => `<div class="card">
       <p class="muted small" style="margin:0">Everything in your plan comes from what we did ourselves, selling video courses and kits from Barbados, Oct 5 to Nov 3.</p>
       <div class="stats"><div><b>121</b><span>sales in 30 days</span></div><div><b>$5,826</b><span>net in 30 days</span></div><div><b>~US$1</b><span>per WhatsApp chat on our best ad</span></div></div>
       <ol class="steps">${LESSONS[m].map(l => `<li>${esc(l)}</li>`).join("")}</ol>
-      <p class="small muted" style="margin:6px 0 0">Results vary. This is what we learned, not a promise of income.</p>
     </div>`;
 function wireCopy(){
   app.querySelectorAll(".copy").forEach(b => b.onclick = async () => {
