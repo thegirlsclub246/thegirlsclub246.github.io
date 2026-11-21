@@ -1793,6 +1793,10 @@ const courseItems=A.show===false?[]:list(A.courses).filter(c=>c&&c.show!==false&
   return{id:"course-"+slug(c.title),isCourse:true,digital:true,course:String(c.title),img:U(c.image),alt:"",name:String(c.title),type:"Online course",cat:"courses",price:pr,usd,was:w>pr?w:0,desc:String(c.description||c.subtitle||""),tag:String(c.badge||""),opts:[],points:list(c.points).map(String),payhip:String(c.payhip_id||""),usdNote:String(c.usd_note||""),stock:null}});
 const shopItems=products.concat(courseItems);
 const isDig=p=>!!(p.digital||p.isCourse||p.cat==="vouchers"||p.cat==="guides");
+/* Anything that talks about earning (courses, and bundles or vouchers that include a course) shows the income disclaimer at checkout. */
+const isMoney=p=>!!p&&(p.isCourse||/\bcourse\b/i.test((p.name||"")+" "+(p.desc||"")));
+const cartMoney=()=>cart.some(c=>c.course||isMoney(products.find(x=>c.id===x.id||String(c.id).indexOf(x.id+"-")===0)));
+const RMV_HTML=`<p class="rmv-co" style="font-size:.85em;opacity:.8;margin:8px 0 0;text-align:center">Results may vary. Not a promise of income.</p>`;
 const dCat=p=>p.isCourse?"courses":isDig(p)&&(p.cat==="gifts"||p.cat==="vouchers")?"vouchers":p.cat;
 const CAT_NAME={lashes:"Lashes",kits:"Kits & tools",tools:"Tools",lips:"Lips",bundles:"Bundles",gifts:"Gifts",courses:"Courses",vouchers:"Gift vouchers",guides:"Guides & templates"};
 const catName=c=>CAT_NAME[c]||String(c).replace(/^v:/,"");
@@ -1896,7 +1900,7 @@ function pdHTML(p){const o=offPct(p),out=isOut(p),dig=isDig(p);
     <div class="pd-price"><span class="price">${p.usd?"":"<small>BBD</small> "}${priceHTML(p)}</span>${o?`<span class="pd-save">You save ${money(p.was-p.price)}</span>`:""}</div>
     ${p.desc?`<p class="pd-desc">${esc(p.desc)}</p>`:""}
     ${(p.points||[]).length?`<ul class="pd-points">${p.points.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}
-    ${p.isCourse?`<p class="pd-rmv" style="font-size:.85em;opacity:.75;margin:6px 0 0">Results may vary. Not a promise of income.</p>`:""}
+    ${isMoney(p)?`<p class="pd-rmv" style="font-size:.85em;opacity:.75;margin:6px 0 0">Results may vary. Not a promise of income.</p>`:""}
     ${p.opts.length?`<p class="pd-lbl" id="pdOptL">Choose one</p><div class="pd-opts" role="radiogroup" aria-labelledby="pdOptL">${p.opts.map((x,i)=>`<button type="button" role="radio" aria-checked="${i===0}" data-pd-opt="${esc(x)}">${esc(x)}</button>`).join("")}</div>`:""}
     <div class="pd-buy">${out?`<button class="add" type="button" disabled>Sold out</button>`:p.isCourse?`<button class="add" type="button" data-pd-add>Enrol · ${p.usd?"BBD ":""}${money(p.price)}</button>`:`<div class="qty"><button type="button" data-pd-q="-1" aria-label="One less">−</button><output aria-live="polite" id="pdQty">1</output><button type="button" data-pd-q="1" aria-label="One more">+</button></div><button class="add" type="button" data-pd-add>Add to bag · ${money(p.price)}</button>`}</div>
     ${p.isCourse&&!ACAD?`<a class="pd-wa" href="${esc(window.TGC_ACAD+"#course-"+slug(p.course))}">See the full course on the Academy site</a>`:""}
@@ -1994,7 +1998,7 @@ function renderDrawer(){
     <button class="muted" data-rm="${i}" style="border:0;background:none;text-decoration:underline;justify-self:end">Remove</button></div>`).join("");
   const t=totals();
   if(stage==="bag"){
-    body.innerHTML=lines+giftLine()+kitUp()+lipsUp()+`<div class="totals"><div><span>Subtotal</span><span>BBD ${money(t.sub)}</span></div>${t.hasShip?`<div class="muted"><span>Delivery chosen at checkout</span></div>`:""}</div><button class="btn" id="toCheckout" style="width:100%">Checkout</button>`;
+    body.innerHTML=lines+giftLine()+kitUp()+lipsUp()+`<div class="totals"><div><span>Subtotal</span><span>BBD ${money(t.sub)}</span></div>${t.hasShip?`<div class="muted"><span>Delivery chosen at checkout</span></div>`:""}</div><button class="btn" id="toCheckout" style="width:100%">Checkout</button>${cartMoney()?RMV_HTML:""}`;
     document.getElementById("toCheckout").onclick=()=>{window.tgcTrack&&tgcTrack("InitiateCheckout",{value:totals().total,currency:"BBD"});stage="checkout";renderDrawer()};
     const kb=body.querySelector("[data-kit]");if(kb)kb.onclick=()=>{const K=products.find(p=>p.cat==="kits");addItem({id:K.id,name:K.name+" · "+K.type,price:K.price})};
     body.querySelectorAll("[data-up]").forEach(b=>b.onclick=()=>{const p=products.find(x=>x.id===b.dataset.up),s=body.querySelector(`[data-uopt="${p.id}"]`),o=s?s.value:"";addItem({id:p.id+(o?"-"+o:""),name:p.name+" · "+(o||p.type),price:p.price})});
@@ -2012,7 +2016,7 @@ function renderDrawer(){
       </fieldset>
       ${CC_PCT&&CC_LIST.length?`<div class="field"><label for="ccode">Affiliate code (optional)</label><div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center"><input id="ccode" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="e.g. BREE10" value="${esc(creatorCode)}" style="width:100%;min-width:0;text-transform:uppercase"><button type="button" class="btn" id="ccApply" style="width:auto;margin:0;padding:.55rem 1.1rem">Apply</button></div><p id="ccMsg" class="muted" style="margin:.35rem 0 0;font-size:.88rem" aria-live="polite"></p></div>`:""}
       <div class="totals" id="tot"></div>
-      <button class="btn" id="placeBtn" type="submit" style="width:100%">Continue to payment</button>
+      <button class="btn" id="placeBtn" type="submit" style="width:100%">Continue to payment</button>${cartMoney()?RMV_HTML:""}
       <p class="secure">Your order is saved when you continue. Next, you'll go straight to payment.</p>
       <button type="button" class="muted" id="back" style="border:0;background:none;text-decoration:underline;display:block;margin:4px auto">Back to bag</button></form>`;
     const drawTot=()=>{const t=totals();document.getElementById("tot").innerHTML=`<div><span>Subtotal</span><span>BBD ${money(t.sub)}</span></div><div><span>Delivery</span><span>${money(t.ship)}</span></div>${t.disc?`<div style="color:#1E7B4F;font-weight:700"><span>Code ${esc(t.code)} · ${CC_PCT}% off</span><span>−${money(t.disc)}</span></div>`:""}${giftOn()?`<div><span>Free surprise tray</span><span>$0.00</span></div>`:""}<div class="grand"><span>Total</span><span>BBD ${money(t.total)}</span></div>`};
