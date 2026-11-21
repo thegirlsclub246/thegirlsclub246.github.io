@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="only light">
+<meta name="supported-color-schemes" content="light">
+<style>:root{color-scheme:only light}</style>
 <title>Hustle Cut</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -27,14 +30,6 @@
   --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
   --body:"Inter",ui-sans-serif,system-ui,-apple-system,sans-serif;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0c1513; --surface:#14201d; --ink:#e6eeea; --muted:#9aaba5; --line:#23332f;
-  --sea:#5cc6b3; --sea-ink:#06201b; --sea-soft:#14302a; --sun:#f4c25a; --sun-ink:#2a1e00; --coral:#f08c76;
-  --cut:#f08c76; --cut-soft:#3a201a; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#0c1513; --surface:#14201d; --ink:#e6eeea; --muted:#9aaba5; --line:#23332f;
-  --sea:#5cc6b3; --sea-ink:#06201b; --sea-soft:#14302a; --sun:#f4c25a; --sun-ink:#2a1e00; --coral:#f08c76;
-  --cut:#f08c76; --cut-soft:#3a201a; color-scheme:dark}
 *{box-sizing:border-box}
 html,body{margin:0}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.5;-webkit-text-size-adjust:100%;overflow-x:hidden}
@@ -185,7 +180,7 @@ details summary{cursor:pointer;font-weight:600;color:var(--sea)}
   --cut:#FF6F59; --cut-soft:#FFE6E1; --navy:#00267F;
   --display:"Fraunces",Georgia,serif;
   --body:"Quicksand","Segoe UI",system-ui,sans-serif;
-  color-scheme:light}
+  color-scheme:only light}
 body{font-weight:500}
 </style>
 </head>

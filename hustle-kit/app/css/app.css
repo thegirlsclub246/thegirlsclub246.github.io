@@ -6,14 +6,6 @@
   --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
   --body:"Inter",ui-sans-serif,system-ui,-apple-system,sans-serif;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0b1220; --surface:#131c2e; --ink:#e8ecf4; --muted:#9aa5ba; --line:#243049;
-  --sea:#7fa6ff; --sea-ink:#0b1220; --gold:#f5c63a; --gold-ink:#2a1f00;
-  --ok:#6fd39a; --ok-bg:#16301f; --warn:#f2bb5c; --warn-bg:#33270f; --bad:#ff8a80; --bad-bg:#3a1a18; --info-bg:#1a2744; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#0b1220; --surface:#131c2e; --ink:#e8ecf4; --muted:#9aa5ba; --line:#243049;
-  --sea:#7fa6ff; --sea-ink:#0b1220; --gold:#f5c63a; --gold-ink:#2a1f00;
-  --ok:#6fd39a; --ok-bg:#16301f; --warn:#f2bb5c; --warn-bg:#33270f; --bad:#ff8a80; --bad-bg:#3a1a18; --info-bg:#1a2744; color-scheme:dark}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45}
@@ -224,7 +216,7 @@ button.wa{width:100%;padding:12px;border-radius:10px;font-size:15px;background:v
   --ok:#1e7a46; --ok-bg:#e3f4ea; --warn:#9a5b00; --warn-bg:#FFF3C7; --bad:#C2412D; --bad-bg:#FFE6E1; --info-bg:#E6ECFA;
   --display:"Fraunces",Georgia,serif;
   --body:"Quicksand","Segoe UI",system-ui,sans-serif;
-  color-scheme:light}
+  color-scheme:only light}
 body{font-weight:500}
 h1 span{color:#FF6F59}
 h2{font-weight:700}

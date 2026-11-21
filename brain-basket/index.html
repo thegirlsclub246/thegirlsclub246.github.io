@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="only light">
+<meta name="supported-color-schemes" content="light">
+<style>:root{color-scheme:only light}</style>
 <meta name="theme-color" content="#2F7D6D">
 <meta name="description" content="Brain Basket: a calm planner for the ADHD brain.">
 <link rel="manifest" href="manifest.webmanifest">
@@ -25,23 +28,13 @@
   --body:"Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
   --r:14px;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#101615; --surface:#19211F; --ink:#E6EEEB; --muted:#9AA9A4; --line:#2A3532;
-  --accent:#5FC1AC; --accent-soft:#1F3631; --on-accent:#0D1513;
-  --pop:#F2C063; --pop-soft:#3A3120; --warn:#E5806B;
-  --m1:#E5806B; --m2:#EBA06B; --m3:#D8C460; --m4:#86C590; --m5:#5FC1AC; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#101615; --surface:#19211F; --ink:#E6EEEB; --muted:#9AA9A4; --line:#2A3532;
-  --accent:#5FC1AC; --accent-soft:#1F3631; --on-accent:#0D1513;
-  --pop:#F2C063; --pop-soft:#3A3120; --warn:#E5806B;
-  --m1:#E5806B; --m2:#EBA06B; --m3:#D8C460; --m4:#86C590; --m5:#5FC1AC; color-scheme:dark}
-:root.skin-sunrise{--bg:#FFF6EE;--surface:#FFFFFF;--ink:#2B1B17;--muted:#7A6058;--line:#F3DFD2;--accent:#E0603F;--accent-soft:#FBE1D8;--on-accent:#FFFFFF;--pop:#E9A21F;--pop-soft:#FDEBC8;color-scheme:light}
-:root.skin-lavender{--bg:#F4F1FA;--surface:#FFFFFF;--ink:#241F33;--muted:#665F7A;--line:#E2DCF0;--accent:#6A57C2;--accent-soft:#E7E2F7;--on-accent:#FFFFFF;--pop:#3FA57A;--pop-soft:#DDF1E7;color-scheme:light}
-:root.skin-ocean{--bg:#0E1A26;--surface:#162636;--ink:#E5EEF6;--muted:#9FB2C4;--line:#223649;--accent:#3FC1C9;--accent-soft:#173B45;--on-accent:#06222A;--pop:#FFC857;--pop-soft:#3A3322;color-scheme:dark}
-:root.skin-seaglass{--bg:#F3F7F2;--surface:#FFFFFF;--ink:#1F2A26;--muted:#5E6D66;--line:#DCE6DE;--accent:#4F9A86;--accent-soft:#E0EFE9;--on-accent:#FFFFFF;--pop:#C89B4E;--pop-soft:#F6EBD6;color-scheme:light}
-:root.skin-rose{--bg:#FBF3F4;--surface:#FFFFFF;--ink:#2A1A20;--muted:#76616A;--line:#F0DDE2;--accent:#C2577A;--accent-soft:#F7E0E8;--on-accent:#FFFFFF;--pop:#E3A04A;--pop-soft:#FCEBD5;color-scheme:light}
-:root.skin-navy{--bg:#F1F4F7;--surface:#FFFFFF;--ink:#16202B;--muted:#5C6977;--line:#DCE3EA;--accent:#2E5E8C;--accent-soft:#DEE8F2;--on-accent:#FFFFFF;--pop:#E59A3A;--pop-soft:#FBE8CF;color-scheme:light}
-:root.skin-violet{--bg:#F6F3FA;--surface:#FFFFFF;--ink:#221C2E;--muted:#675F78;--line:#E4DDEF;--accent:#7A5BC0;--accent-soft:#EAE3F7;--on-accent:#FFFFFF;--pop:#E57A58;--pop-soft:#FCE3DA;color-scheme:light}
+:root.skin-sunrise{--bg:#FFF6EE;--surface:#FFFFFF;--ink:#2B1B17;--muted:#7A6058;--line:#F3DFD2;--accent:#E0603F;--accent-soft:#FBE1D8;--on-accent:#FFFFFF;--pop:#E9A21F;--pop-soft:#FDEBC8;color-scheme:only light}
+:root.skin-lavender{--bg:#F4F1FA;--surface:#FFFFFF;--ink:#241F33;--muted:#665F7A;--line:#E2DCF0;--accent:#6A57C2;--accent-soft:#E7E2F7;--on-accent:#FFFFFF;--pop:#3FA57A;--pop-soft:#DDF1E7;color-scheme:only light}
+:root.skin-ocean{--bg:#0E1A26;--surface:#162636;--ink:#E5EEF6;--muted:#9FB2C4;--line:#223649;--accent:#3FC1C9;--accent-soft:#173B45;--on-accent:#06222A;--pop:#FFC857;--pop-soft:#3A3322;color-scheme:only light}
+:root.skin-seaglass{--bg:#F3F7F2;--surface:#FFFFFF;--ink:#1F2A26;--muted:#5E6D66;--line:#DCE6DE;--accent:#4F9A86;--accent-soft:#E0EFE9;--on-accent:#FFFFFF;--pop:#C89B4E;--pop-soft:#F6EBD6;color-scheme:only light}
+:root.skin-rose{--bg:#FBF3F4;--surface:#FFFFFF;--ink:#2A1A20;--muted:#76616A;--line:#F0DDE2;--accent:#C2577A;--accent-soft:#F7E0E8;--on-accent:#FFFFFF;--pop:#E3A04A;--pop-soft:#FCEBD5;color-scheme:only light}
+:root.skin-navy{--bg:#F1F4F7;--surface:#FFFFFF;--ink:#16202B;--muted:#5C6977;--line:#DCE3EA;--accent:#2E5E8C;--accent-soft:#DEE8F2;--on-accent:#FFFFFF;--pop:#E59A3A;--pop-soft:#FBE8CF;color-scheme:only light}
+:root.skin-violet{--bg:#F6F3FA;--surface:#FFFFFF;--ink:#221C2E;--muted:#675F78;--line:#E4DDEF;--accent:#7A5BC0;--accent-soft:#EAE3F7;--on-accent:#FFFFFF;--pop:#E57A58;--pop-soft:#FCE3DA;color-scheme:only light}
 .skins{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 .skin{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:8px;align-items:flex-start;font-weight:700;font-size:.85rem;text-align:left}
 .skin[aria-pressed="true"]{border-color:var(--ink)}

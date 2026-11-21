@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:only light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>DepositProof</title>
 <meta name="theme-color" content="#00267F">
 <link rel="icon" href="icons/favicon-32.png" sizes="32x32">
@@ -23,18 +23,6 @@
   --f-body:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0A111D; --surface:#111A2A; --ink:#E6EBF3; --muted:#98A3B5; --line:#22304A;
-  --accent:#9DBBEE; --accent-ink:#0A1730; --accent-soft:#18263F;
-  --brand:#1C3866; --brand-ink:#FFFFFF; --gold:#E2B45C; --gold-soft:#2A2414;
-  --good:#5CC489; --fair:#E3A84E; --poor:#F07B6F; --na:#8F9AAD;
-  --pad:#FFFFFF; --shadow:none; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#0A111D; --surface:#111A2A; --ink:#E6EBF3; --muted:#98A3B5; --line:#22304A;
-  --accent:#9DBBEE; --accent-ink:#0A1730; --accent-soft:#18263F;
-  --brand:#1C3866; --brand-ink:#FFFFFF; --gold:#E2B45C; --gold-soft:#2A2414;
-  --good:#5CC489; --fair:#E3A84E; --poor:#F07B6F; --na:#8F9AAD;
-  --pad:#FFFFFF; --shadow:none; color-scheme:dark}
 *{box-sizing:border-box}
 html,body{background:var(--bg)}
 body{color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%}
@@ -187,7 +175,7 @@ select{width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--
   --pad:#FFFFFF; --shadow:0 1px 2px rgba(0,38,127,.06),0 6px 18px rgba(0,38,127,.06);
   --f-display:"Fraunces",Georgia,serif;
   --f-body:"Quicksand","Segoe UI",system-ui,sans-serif;
-  color-scheme:light}
+  color-scheme:only light}
 body{font-weight:500}
 .spark,.tile .ic{color:#FF6F59}
 .top{box-shadow:4px 4px 0 var(--gold)}
@@ -1468,7 +1456,11 @@ async function walkExportHtml(p){
   const data = { stops: out };
   const json = JSON.stringify(data).replace(/</g, '\\u003c');
   const title = esc(p.name || 'Your new home');
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#10233F"><title>${title} · 360° walk-through</title>
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="only light">
+<meta name="supported-color-schemes" content="light">
+<style>:root{color-scheme:only light}</style>
+<meta name="theme-color" content="#10233F"><title>${title} · 360° walk-through</title>
 <style>*{box-sizing:border-box}body{margin:0;background:#F3F5F9;color:#0F1B2D;font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}body.lock{overflow:hidden}
 main{max-width:760px;margin:0 auto;padding:12px 16px 96px;display:flex;flex-direction:column;gap:14px}
 header{background:#10233F;color:#fff;border-radius:14px;padding:14px 16px;border-bottom:4px solid #B8862B}header h1{margin:0;font-size:1.25rem}header p{margin:2px 0 0;opacity:.8;font-size:.9rem}
@@ -1479,7 +1471,7 @@ header{background:#10233F;color:#fff;border-radius:14px;padding:14px 16px;border
 .nav{position:fixed;left:0;right:0;bottom:0;background:rgba(243,245,249,.95);border-top:1px solid #DCE2EB;padding:10px 16px calc(10px + env(safe-area-inset-bottom))}.nav div{max-width:760px;margin:0 auto;display:flex;gap:10px}.nav button{flex:1;justify-content:center}.nav #next{background:#10233F;color:#fff;border-color:#10233F}.nav button:disabled{opacity:.45}
 footer{font-size:.75rem;color:#5A6678;text-align:center}
 ${PANO_CSS}
-@media (prefers-color-scheme:dark){body{background:#0A111D;color:#E6EBF3}#narr,#chips button,.nav button,.scan{background:#111A2A;color:#E6EBF3;border-color:#22304A}.nav{background:rgba(10,17,29,.95);border-color:#22304A}.meta,footer,#narr ul{color:#98A3B5}header{background:#1C3866}}</style></head>
+</style></head>
 <body><main><header><h1>${title}</h1><p>${esc(p.address || '')}${B ? ' · ' + esc(B.name) : ''}</p></header>
 <div class="meta"><span>360° walk-through</span><span id="cnt"></span></div>
 <div class="pano-wrap" id="wrap"></div>
