@@ -808,6 +808,10 @@ async function boot(){
   try { Object.assign(state, await store.loadAll()); }
   catch(e){ showOnly("loading"); $("#v-loading").innerHTML = `<p class="empty">Couldn't load your admin. Check your connection, then <a href="">reload</a>.</p>`; return; }
   ready = true; $("#nav").hidden = false; renderAll(); route(); loadMedia();
+  // for Claude working in this signed-in page: add or change items, e.g. SBA.save("wins", {id, date, kind, title, note})
+  window.SBA = { save: async (c, item) => { await store.save(c, item); Object.assign(state, await store.loadAll()); renderAll(); return "saved"; },
+                 remove: async (c, id) => { await store.remove(c, id); Object.assign(state, await store.loadAll()); renderAll(); return "removed"; },
+                 list: async () => store.loadAll() };
 }
 drawClock(); renderHeader();
 if (sb) sb.auth.onAuthStateChange(ev => { if (ev==="PASSWORD_RECOVERY") gate("newpass"); });
