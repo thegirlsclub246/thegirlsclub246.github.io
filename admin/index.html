@@ -742,12 +742,22 @@ $("#editLinksBtn").onclick = async () => {
 if (/[?&]import=1/.test(location.search)) $("#importBox").hidden = false;
 $("#mediaUp").onchange = async e => {
   const files = [...e.target.files], note = $("#mediaNote"); e.target.value = ""; let ok = 0, bad = 0;
-  for (const f of files){
+  const dataFile = files.find(f => f.name === "hq-data.json");
+  if (dataFile){
+    note.textContent = "Moving your tasks, posts, wins and links…";
+    try {
+      const d = JSON.parse(await dataFile.text()), rows = [];
+      for (const c of ["tasks","posts","wins","links"]) (d[c]||[]).forEach(x => { const {id, ...data} = x; rows.push({coll:c, id, data}); });
+      for (let i = 0; i < rows.length; i += 100){ const r = await sb.from(TABLE).upsert(rows.slice(i, i+100)); if (r.error) throw r.error; }
+      Object.assign(state, await store.loadAll()); renderAll();
+    } catch(err){ note.textContent = "Couldn't move your tasks and posts. Try again."; return; }
+  }
+  for (const f of files.filter(f => f !== dataFile)){
     const path = (/\.mp4$/i.test(f.name) ? "vid/" : /^story-/.test(f.name) ? "stories/" : "img/") + f.name;
     note.textContent = `Uploading ${ok+bad+1} of ${files.length}…`;
     try { const r = await sb.storage.from(BUCKET).upload(path, f, {upsert:true, contentType:f.type||undefined}); if (r.error) throw r.error; ok++; } catch { bad++; }
   }
-  note.textContent = `Done: ${ok} uploaded${bad?`, ${bad} failed (choose them again)`:""}.`;
+  note.textContent = `Done: ${dataFile?"tasks and posts moved, ":""}${ok} files uploaded${bad?`, ${bad} failed (choose them again)`:""}.`;
   loadMedia();
 };
 $("#signOut").onclick = async () => { await store.signOut(); location.hash = ""; location.reload(); };
