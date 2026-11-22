@@ -280,9 +280,16 @@ textarea{resize:vertical;min-height:96px}
       <button class="chip" data-f="ig" aria-pressed="false">Instagram</button>
       <button class="chip" data-f="fb" aria-pressed="false">Facebook</button>
       <button class="chip" data-f="reel" aria-pressed="false">Reels</button>
+      <button class="chip" data-f="story" aria-pressed="false">Stories</button>
       <button class="chip" data-f="nodate" aria-pressed="false">No date yet</button>
     </div>
     <div class="panel"><div id="calList"></div></div>
+    <div class="panel">
+      <div class="panel-head"><h3>Add a week of stories</h3></div>
+      <p class="note" style="margin:0">Pick the week's <b>stories.json</b> and its story pictures together. Each day's story lands on its date.</p>
+      <label class="btn gold" style="text-align:center">Choose files<input type="file" id="storyUp" accept=".json,image/*" multiple hidden></label>
+      <p class="note" id="storyNote" style="margin:0"></p>
+    </div>
   </section>
 
   <!-- FEED -->
@@ -329,6 +336,12 @@ textarea{resize:vertical;min-height:96px}
     </div>
     <div id="linkList" style="display:grid;gap:14px"></div>
     <p class="note">Links only open the sites. You sign in on each site yourself; nothing here stores passwords.</p>
+    <div class="panel" id="importBox" hidden>
+      <h3>Bring over your pictures and videos</h3>
+      <p class="note" style="margin:0">Choose every file in the <b>shop-bajan-admin-media</b> folder in your Pictures.</p>
+      <label class="btn gold" style="text-align:center">Choose files<input type="file" id="mediaUp" multiple hidden></label>
+      <p class="note" id="mediaNote" style="margin:0"></p>
+    </div>
     <button class="btn" id="signOut">Sign out</button>
   </section>
 </main>
@@ -559,7 +572,7 @@ function calPost(p){
 }
 function renderCalendar(){
   const t0 = todayStr(), f = state.calF;
-  const show = p => f==="all" || (f==="reel" ? p.type==="reel" : f==="nodate" ? !p.date : (p.platforms||[]).includes(f));
+  const show = p => f==="all" || (f==="reel" ? p.type==="reel" : f==="story" ? p.type==="story" : f==="nodate" ? !p.date : (p.platforms||[]).includes(f));
   if (f==="nodate"){
     const list = state.posts.filter(p=>!p.date);
     $("#calList").innerHTML = list.length ? `<div class="items">${list.map(calPost).join("")}</div>` : `<p class="empty">Every post has a date.</p>`;
@@ -678,6 +691,26 @@ function openPost(p){
 }
 document.addEventListener("keydown", e => { if (e.key==="Escape" && !$("#sheet").hidden) $("#sheet").hidden = true; });
 
+$("#storyUp").onchange = async e => {
+  const files = [...e.target.files], note = $("#storyNote"); e.target.value = "";
+  const jf = files.find(f => /\.json$/i.test(f.name));
+  if (!jf){ note.textContent = "Include the stories.json file too."; return; }
+  let list; try { list = JSON.parse(await jf.text()); } catch { note.textContent = "That stories.json couldn't be read."; return; }
+  let n = 0;
+  for (const st of list){
+    if (!st.date) continue;
+    note.textContent = `Adding ${st.day || st.date}…`;
+    const pic = files.find(f => f.name === `story-${st.date}.png`) || files.find(f => f.name.includes(st.date) && /^image\//.test(f.type));
+    const id = "st-" + st.date, old = state.posts.find(p => p.id === id);
+    const post = Object.assign({}, old || {}, {id, title:"Story · "+(st.headline||""), date:st.date, time:(old&&old.time)||"09:00", type:"story", status:(old&&old.status)||"ready", platforms:["ig"],
+      caption:[st.headline, st.text, st.cta].filter(Boolean).join("\n\n"), series:"FOUNDING stories", note:"Story text: tap Copy caption, then post the picture as your Instagram story."});
+    if (pic){ try { const path = await store.upload(pic); post.images = [path]; } catch { post.images = (old&&old.images)||[]; } }
+    const i = state.posts.findIndex(p => p.id === id); if (i>=0) state.posts[i] = post; else state.posts.push(post);
+    await save("posts", post); n++;
+  }
+  renderAll(); loadMedia(); note.textContent = `Added ${n} stories to the calendar.`;
+};
+
 /* ---------- links ---------- */
 function renderLinks(){
   const groups = {};
@@ -705,6 +738,17 @@ $("#editLinksBtn").onclick = async () => {
     for (const l of changed) await save("links", l);
     if (changed.length) toast("Links saved.");
   } else { state.editLinks = true; $("#editLinksBtn").textContent = "Save links"; renderLinks(); }
+};
+if (/[?&]import=1/.test(location.search)) $("#importBox").hidden = false;
+$("#mediaUp").onchange = async e => {
+  const files = [...e.target.files], note = $("#mediaNote"); e.target.value = ""; let ok = 0, bad = 0;
+  for (const f of files){
+    const path = (/\.mp4$/i.test(f.name) ? "vid/" : /^story-/.test(f.name) ? "stories/" : "img/") + f.name;
+    note.textContent = `Uploading ${ok+bad+1} of ${files.length}…`;
+    try { const r = await sb.storage.from(BUCKET).upload(path, f, {upsert:true, contentType:f.type||undefined}); if (r.error) throw r.error; ok++; } catch { bad++; }
+  }
+  note.textContent = `Done: ${ok} uploaded${bad?`, ${bad} failed (choose them again)`:""}.`;
+  loadMedia();
 };
 $("#signOut").onclick = async () => { await store.signOut(); location.hash = ""; location.reload(); };
 
