@@ -192,6 +192,11 @@ textarea{resize:vertical;min-height:96px}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .preview-imgs{display:flex;gap:6px;overflow-x:auto}
 .preview-imgs img{height:110px;aspect-ratio:4/5;object-fit:cover;border-radius:8px}
+.view-media{display:grid;gap:8px}
+.view-media img,.view-media video{width:100%;max-height:70vh;object-fit:contain;border-radius:12px;background:var(--soft);display:block}
+.view-cap{white-space:pre-line;overflow-wrap:anywhere;background:var(--soft);border-radius:12px;padding:12px 14px;font-size:.95rem}
+.view-head{display:flex;align-items:flex-start;gap:10px}.view-head h2{flex:1;font-size:1.1rem;min-width:0}.view-acts .btn{white-space:nowrap;padding:9px 10px;font-size:.92rem}
+.view-acts{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:8px;position:sticky;bottom:0;background:#fff;padding-top:8px}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(90px + env(safe-area-inset-bottom));background:var(--ink);color:#fff;padding:9px 18px;border-radius:999px;font-weight:700;z-index:40;max-width:90vw;text-align:center}
 @media (min-width:700px){.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}}
 .grid2{display:grid;gap:18px}
@@ -605,7 +610,7 @@ function renderCalendar(){
   $("#calList").innerHTML = html;
 }
 $("#calFilter").onclick = e => { const c=e.target.closest("[data-f]"); if (!c) return; state.calF=c.dataset.f; document.querySelectorAll("#calFilter .chip").forEach(b=>b.setAttribute("aria-pressed", b===c)); renderCalendar(); };
-document.addEventListener("click", e => { const b = e.target.closest("[data-post]"); if (b) openPost(state.posts.find(p=>p.id===b.dataset.post)); });
+document.addEventListener("click", e => { const b = e.target.closest("[data-post]"); if (b) viewPost(state.posts.find(p=>p.id===b.dataset.post)); });
 $("#addPostBtn").onclick = () => openPost(null);
 
 function renderFeed(){
@@ -630,6 +635,40 @@ function renderFeed(){
 document.querySelectorAll("#v-feed [data-p]").forEach(b => b.onclick = () => { state.plat=b.dataset.p; document.querySelectorAll("#v-feed [data-p]").forEach(x=>x.setAttribute("aria-pressed", x===b)); renderFeed(); });
 $("#asOf").onchange = e => { state.asOf = e.target.value; renderFeed(); };
 
+async function viewPost(p){
+  if (!p) return;
+  const card = $("#sheetCard");
+  card.innerHTML = `
+    <div class="view-head"><h2>${esc(p.title)}</h2><button class="icon" id="vClose" aria-label="Close">✕</button></div>
+    <div class="pm">${p.date?fmtDay(p.date):"No date"}${p.time?" · "+fmtTime(p.time):""} ${platPills(p)} <span class="pill ${esc(p.status)}">${esc(p.status)}</span> ${p.type&&p.type!=="post"?`<span>${esc(TYPES[p.type]||p.type)}</span>`:""}</div>
+    <div class="view-media" id="vMedia">${p.video?`<p class="note">Loading video…</p>`:""}${(p.images||[]).map((s,i)=>`<img src="${esc(mediaSrc(s))}" alt="Image ${i+1}">`).join("")}</div>
+    ${p.note?`<p class="note" style="margin:0">${esc(p.note)}</p>`:""}
+    <div class="view-cap">${p.caption?esc(p.caption):`<span class="note">No caption yet.</span>`}</div>
+    <div class="view-acts">
+      <button class="btn gold" id="vCopy">Copy caption</button>
+      ${p.video?`<button class="btn primary" id="vDl">Save video</button>`:""}
+      <button class="btn" id="vEdit">Edit</button>
+    </div>`;
+  const close = () => { $("#sheet").hidden = true; const v = card.querySelector("video"); if (v) v.pause(); };
+  $("#vClose").onclick = close;
+  $("#sheet").onclick = e => { if (e.target.id==="sheet") close(); };
+  $("#vEdit").onclick = () => { close(); openPost(p); };
+  $("#vCopy").onclick = async () => { try{ await navigator.clipboard.writeText(p.caption||""); toast("Caption copied."); }catch{ toast("Couldn't copy. Open Edit and copy from there."); } };
+  $("#sheet").hidden = false;
+  if (p.video){
+    let u = ""; try { u = (await store.urls([p.video]))[p.video] || ""; } catch {}
+    const box = $("#vMedia"); if (!box) return;
+    box.querySelector("p.note")?.remove();
+    if (u){ box.querySelectorAll("img").forEach(i => i.remove()); }
+    if (u) box.insertAdjacentHTML("afterbegin", `<video src="${esc(u)}" controls playsinline preload="metadata"${(p.images||[])[0]?` poster="${esc(mediaSrc(p.images[0]))}"`:""}></video>`);
+    const dl = $("#vDl"); if (dl) dl.onclick = async () => {
+      dl.disabled = true; dl.textContent = "Saving…";
+      try { const r = await fetch(u); if (!r.ok) throw 0; const blob = await r.blob(); const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = p.video.split("/").pop(); document.body.appendChild(a); a.click(); a.remove(); toast("Video saved."); }
+      catch { toast("Couldn't save the video. Try again."); }
+      dl.disabled = false; dl.textContent = "Save video";
+    };
+  }
+}
 function openPost(p){
   const isNew = !p;
   p = p ? JSON.parse(JSON.stringify(p)) : {id:newId("p"), title:"", date:todayStr(), time:"12:30", platforms:["ig"], type:"post", status:"draft", caption:"", images:[], series:""};
