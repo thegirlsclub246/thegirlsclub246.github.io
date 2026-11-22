@@ -1,0 +1,20 @@
+{
+  "name": "The Girls Club Hub",
+  "short_name": "TGC Hub",
+  "id": "/admin/tgc/",
+  "start_url": "/admin/tgc/#today",
+  "scope": "/admin/tgc/",
+  "display": "standalone",
+  "background_color": "#FFF6FA",
+  "theme_color": "#4A143D",
+  "icons": [
+    {"src": "/img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "/img/apple-touch-icon.png", "sizes": "180x180", "type": "image/png"}
+  ],
+  "shortcuts": [
+    {"name": "WhatsApp replies", "short_name": "Replies", "url": "/admin/tgc/#replies", "icons": [{"src": "/img/icon-512.png", "sizes": "512x512"}]},
+    {"name": "Posts & reels", "short_name": "Posts", "url": "/admin/tgc/#posts", "icons": [{"src": "/img/icon-512.png", "sizes": "512x512"}]},
+    {"name": "Marketplace & vendors", "short_name": "Vendors", "url": "/admin/tgc/#vendors", "icons": [{"src": "/img/icon-512.png", "sizes": "512x512"}]},
+    {"name": "Money & orders", "short_name": "Money", "url": "/admin/tgc/#money", "icons": [{"src": "/img/icon-512.png", "sizes": "512x512"}]}
+  ]
+}
