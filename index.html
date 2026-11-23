@@ -1393,7 +1393,7 @@ html.shop-mode main>*:not(#shop){display:none!important}
     <div class="wrap">
       <div class="academy-intro">
         <span class="eyebrow" data-c="academy.eyebrow">Learn from home</span>
-        <h2 data-c="academy.title">The Girls Club Academy</h2>
+        <h2 data-c="academy.title">Shop Bajan Academy</h2>
         <div class="creds" id="academyCreds"></div>
         <p data-c="academy.intro"></p>
       </div>
@@ -1555,7 +1555,7 @@ if(window.TGC_SOON)return;
 /* ==TGC DATA== Everything you can change lives in the /content folder and is edited at /admin */
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const SITE=window.TGC_SITE||"shop",ACAD=SITE==="academy",DATA=window.TGC_DATA||"";
-const WHO=ACAD?"The Girls Club":"Shop Bajan"; /* name used in WhatsApp greetings: Shop Bajan on the marketplace, The Girls Club on the Academy */
+const WHO=ACAD?"Shop Bajan Academy":"Shop Bajan"; /* name used in WhatsApp greetings: Shop Bajan on the marketplace, The Girls Club on the Academy */
 const U=p=>{p=String(p||"");return !p||!DATA||/^(https?:|data:|blob:|\/\/)/i.test(p)?p:DATA+p.replace(/^\//,"")};
 if(DATA)document.querySelectorAll("[src],[href]").forEach(el=>{const a=el.hasAttribute("src")?"src":"href",v=el.getAttribute(a)||"";if(v&&!/^(#|https?:|data:|mailto:|tel:|\/\/|javascript:)/i.test(v))el.setAttribute(a,U(v))});
 const load=n=>fetch(DATA+"content/"+n+".json",{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error(n);return r.json()});
@@ -1695,10 +1695,11 @@ list(MK.products).filter(p=>p&&p.id&&p.name&&brandName(p.brand)).forEach(p=>prod
   const hero=document.querySelector(".hero"),perks=document.querySelectorAll(".perks-row .perk");
   const perk=(i,t,p)=>{const k=perks[i];if(k){k.querySelector("h3").textContent=t;k.querySelector("p").textContent=p}};
   if(ACAD){
-    document.title="The Girls Club Academy · Online lash courses in Barbados";
+    document.title="Shop Bajan Academy · Online lash courses in Barbados";
     setHTML("header nav",`<a href="#academy">Courses</a>${BOOK?ext(BOOK,"Book"):""}<a href="#results">Results</a><a href="#about">About</a><a href="${HOME}">Shop Bajan</a>`);
     setHTML(".side-links",`<a href="#search" data-open-search>Search</a><a href="#top">Home</a><a href="#academy">Online courses</a>${BOOK?ext(BOOK,"Book an appointment"):""}<a href="#results">The glow up</a><a href="#about">About Us</a><a href="${HOME}">Shop Bajan</a>`);
     document.querySelectorAll(".logo small,.side-tag").forEach(e=>e.textContent="Academy · Barbados");
+    document.querySelectorAll(".logo-text,.side-logo,.foot-logo").forEach(e=>e.textContent="Shop Bajan");document.querySelectorAll(".logo").forEach(e=>e.setAttribute("aria-label","Shop Bajan Academy home"));
     if(hero){hero.querySelector(".eyebrow").textContent=A.eyebrow||"Learn from home";
       hero.querySelector("h1").innerHTML=`Learn lashes <span>from home</span>`;
       hero.querySelector(".lead-hero").textContent=A.hero_text||"Online lash courses with a certified esthetician and trained teacher in Barbados. Learn at your own pace on your phone and get certified when you finish.";
@@ -1711,7 +1712,7 @@ list(MK.products).filter(p=>p&&p.id&&p.name&&brandName(p.brand)).forEach(p=>prod
     const fb=document.querySelector("footer .brand p:not(.foot-logo)");if(fb)fb.textContent="Online lash courses with a certified esthetician and trained teacher in Barbados.";
     setHTML("footer .cols>div:nth-child(2) ul",`<li><a href="#academy">Online courses</a></li>${BOOK?`<li>${ext(BOOK,"Book an appointment")}</li>`:""}<li><a href="#results">The glow up</a></li><li><a href="#about">About Us</a></li><li><a href="${HOME}">Shop Bajan</a></li><li><a href="${HOME}policies.html">Policies &amp; privacy</a></li>`);
     document.querySelectorAll('a[href="#book"]').forEach(a=>{if(BOOK){a.href=BOOK;a.target="_blank";a.rel="noopener"}else(a.closest("li")||a).hidden=true});
-    const lgl=document.querySelector("footer .legal");if(lgl)lgl.innerHTML=`&copy; 2026 The Girls Club Academy · Online courses, learn any time · Prices in BBD (Barbados dollars) · <a href="${HOME}policies.html" style="color:inherit">Policies</a>`;
+    const lgl=document.querySelector("footer .legal");if(lgl)lgl.innerHTML=`&copy; 2026 Shop Bajan Academy · Online courses, learn any time · Prices in BBD (Barbados dollars) · <a href="${HOME}policies.html" style="color:inherit">Policies</a>`;
   }else{
     setHTML("header nav",`<a href="#shop">Shop Bajan</a><a href="#shop/products">Products</a><a href="#shop/digital">Digital</a><a href="brands.html">Sell with us</a><a href="#about">About</a>`);
     setHTML(".side-links",`<a href="#search" data-open-search>Search</a><a href="#top">Home</a><a href="#shop">Shop Bajan</a><a href="#shop/products">Products</a><a href="#shop/digital">Digital products</a><a href="brands.html">Sell with us</a><a href="#about">About Us</a><a href="#soon">Coming soon</a><a class="join-link" href="${esc(S.join_link||"#")}" target="_blank" rel="noopener">Join the club</a>`);
@@ -1729,7 +1730,7 @@ function renderAcademy(){
   const cs=list(A.courses).filter(c=>c.show!==false&&c.title);
   if(!cs.length){if(A.show!==false){document.getElementById("academy").hidden=true}return}
   el.innerHTML=cs.map((c,i)=>{const pr=num(c.price),was=num(c.was_price),usd=num(c.usd_price);return `<div class="course-card" id="course-${slug(c.title)}">
-    <div class="course-cover">${c.badge?`<span class="seal">${esc(c.badge)}</span>`:""}<div><small>The Girls Club</small><strong>Academy</strong><svg viewBox="0 0 300 110" aria-hidden="true"><path d="M30 40 Q150 120 270 40" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><g transform="translate(0,-48)">${lashSvg(9,150,100,120,"#fff")}</g></svg><small>${esc(c.subtitle||"Online course")}</small></div></div>
+    <div class="course-cover">${c.badge?`<span class="seal">${esc(c.badge)}</span>`:""}<div><small>Shop Bajan</small><strong>Academy</strong><svg viewBox="0 0 300 110" aria-hidden="true"><path d="M30 40 Q150 120 270 40" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><g transform="translate(0,-48)">${lashSvg(9,150,100,120,"#fff")}</g></svg><small>${esc(c.subtitle||"Online course")}</small></div></div>
     <div class="course-meta"><div><span class="ptype">Online course</span><h3>${esc(c.title)}</h3></div><span class="price">${usd?`<small>US</small>$${usd}`:`<small>BBD</small> ${was>pr?`<s class="was" aria-label="Was ${money(was)}">${money(was)}</s> `:""}${money(pr)}`}</span></div>
     ${c.description?`<p class="desc">${esc(c.description)}</p>`:""}
     ${list(c.points).length?`<ul class="perks">${list(c.points).map(p=>`<li>${esc(p)}</li>`).join("")}</ul>`:""}
@@ -1738,13 +1739,13 @@ function renderAcademy(){
     <p class="paywith">Choose how to pay</p>
     ${creatorCode&&CC_PCT&&!ccUsed()?`<p class="muted paynote" style="color:#1E7B4F;font-weight:700">Affiliate code ${esc(creatorCode)}: ${CC_PCT}% off${S.creator_codes_payhip?`. Paying by card? Type ${esc(creatorCode)} in the coupon box`:""}.</p>`:""}
     ${c.payhip_id?`<a class="btn payhip-buy-button" href="https://payhip.com/b/${encodeURIComponent(c.payhip_id)}" data-theme="none" data-product="${esc(c.payhip_id)}" style="display:flex;width:100%;text-align:center">Pay by card</a>${c.usd_note?`<p class="muted paynote">${esc(c.usd_note)}</p>`:""}`:""}
-        <a class="ask-wa" data-ask="${esc(c.title)}" href="${waLink("Hi The Girls Club! I'm interested in the "+c.title+" ("+(usd?"US$"+usd:"BBD "+money(pr))+"). Can you help me enrol?")}" target="_blank" rel="noopener">Questions? Enrol on WhatsApp</a>
+        <a class="ask-wa" data-ask="${esc(c.title)}" href="${waLink("Hi Shop Bajan Academy! I'm interested in the "+c.title+" ("+(usd?"US$"+usd:"BBD "+money(pr))+"). Can you help me enrol?")}" target="_blank" rel="noopener">Questions? Enrol on WhatsApp</a>
   </div>`}).join("");
   const pf=document.getElementById("academyProof");if(pf&&A.proof){pf.textContent=A.proof;pf.hidden=false}
   el.addEventListener("click",e=>{const f=e.target.closest("[data-free]");if(f){try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/course-free-lesson/"+slug(f.dataset.free),event:true});window.fbq&&fbq("track","Lead",{content_name:f.dataset.free})}catch(x){}}});
   el.addEventListener("click",e=>{const a=e.target.closest("[data-ask]");if(a){try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/course-wa-ask/"+slug(a.dataset.ask),event:true})}catch(x){}}});
   el.onclick=e=>{const b=e.target.closest("[data-course]");if(!b)return;e.preventDefault();const c=cs[+b.dataset.course];window.tgcPrefPay=b.dataset.pay||"";
-    addItem({id:"course-"+slug(c.title),course:c.title,name:"The Girls Club Academy · "+c.title,price:num(c.price),single:true,note:"Digital · sent after payment"});if(window.tgcPrefPay){stage="checkout";renderDrawer()}};
+    addItem({id:"course-"+slug(c.title),course:c.title,name:"Shop Bajan Academy · "+c.title,price:num(c.price),single:true,note:"Digital · sent after payment"});if(window.tgcPrefPay){stage="checkout";renderDrawer()}};
   if(cs.some(c=>c.payhip_id)){const s=document.createElement("script");s.src="https://payhip.com/payhip.js";s.async=true;document.head.appendChild(s)}
 }
 function giftLine(){if(FREE_TRAYS_LEFT<=0)return "";
@@ -1804,7 +1805,7 @@ const CAT_ORDER=["lashes","kits","tools","lips","bundles","gifts","courses","vou
 const inSec=(p,sec)=>sec==="all"||(sec==="digital")===isDig(p);
 function catsOf(sec){const s=[];shopItems.filter(p=>inSec(p,sec)).forEach(p=>{const c=dCat(p);if(!s.includes(c))s.push(c)});
   return s.sort((a,b)=>{const i=CAT_ORDER.indexOf(a),j=CAT_ORDER.indexOf(b);return(i<0?99:i)-(j<0?99:j)})}
-function bagItem(p,o){if(p.isCourse)return{id:p.id,course:p.course,name:"The Girls Club Academy · "+p.name,price:p.price,single:true,note:"Digital · sent after payment"};
+function bagItem(p,o){if(p.isCourse)return{id:p.id,course:p.course,name:"Shop Bajan Academy · "+p.name,price:p.price,single:true,note:"Digital · sent after payment"};
   return{id:p.id+(o?"-"+o:""),name:p.name+" · "+(o||p.type)+(p.brand?" · "+p.brand:""),price:p.price,...(p.vendor?{vendor:p.vendor,pid:p.pid,opt:o||""}:{}),...(isDig(p)?{noShip:true,note:"Digital · sent on WhatsApp"}:{}),...(p.course?{course:p.course}:{})}}
 const findItem=id=>shopItems.find(x=>x.id===id);
 function pcard(p){const o=offPct(p);
@@ -1905,7 +1906,7 @@ function pdHTML(p){const o=offPct(p),out=isOut(p),dig=isDig(p);
     <div class="pd-buy">${out?`<button class="add" type="button" disabled>Sold out</button>`:p.isCourse?`<button class="add" type="button" data-pd-add>Enrol · ${p.usd?"BBD ":""}${money(p.price)}</button>`:`<div class="qty"><button type="button" data-pd-q="-1" aria-label="One less">−</button><output aria-live="polite" id="pdQty">1</output><button type="button" data-pd-q="1" aria-label="One more">+</button></div><button class="add" type="button" data-pd-add>Add to bag · ${money(p.price)}</button>`}</div>
     ${p.isCourse&&!ACAD?`<a class="pd-wa" href="${esc(window.TGC_ACAD+"#course-"+slug(p.course))}">See the full course on the Academy site</a>`:""}
     ${p.isCourse&&p.payhip?`<a class="pd-card" href="https://payhip.com/b/${encodeURIComponent(p.payhip)}" target="_blank" rel="noopener">Pay by card · instant access</a>${p.usdNote?`<p class="pd-note">${esc(p.usdNote)}</p>`:""}`:""}
-    <a class="pd-wa" data-pd-wa href="${esc(waLink(`Hi ${p.isCourse?"The Girls Club":WHO}! I have a question about ${p.name}${p.type?" ("+p.type+")":""}, BBD ${money(p.price)}.`))}" target="_blank" rel="noopener">Ask about this on WhatsApp</a>
+    <a class="pd-wa" data-pd-wa href="${esc(waLink(`Hi ${p.isCourse?"Shop Bajan Academy":WHO}! I have a question about ${p.name}${p.type?" ("+p.type+")":""}, BBD ${money(p.price)}.`))}" target="_blank" rel="noopener">Ask about this on WhatsApp</a>
     <ul class="pd-facts">${facts.map(f=>`<li>${f}</li>`).join("")}</ul>
    </div></div>
    <div class="pd-sec"><h3>Related searches</h3><div class="pd-tags">${searches(p).map(t=>`<button type="button" data-pd-search="${esc(t)}">${esc(t)}</button>`).join("")}</div></div>
@@ -2139,8 +2140,8 @@ document.querySelectorAll(".wa-num").forEach(el=>el.textContent=WHATSAPP?("+"+WH
   {title:"Delivery & collection",sub:"Island-wide delivery $"+num(S.delivery_fee)+" BBD · free collection in "+(S.collection_area||"St. Thomas"),href:"policies.html",icon:"🚚",words:"delivery collection",body:"deliver delivery shipping ship collect collection pickup pick up st thomas parish island wide how long"},
   {title:"Returns, exchanges & shop policies",sub:"Exchanges, faulty items, deposits and courses",href:"policies.html",icon:"📄",words:"policies returns",body:"return returns refund refunds exchange faulty broken policy policies terms cancel cancellation deposit"},
   {title:"How to pay",sub:"Debit or credit card with PayPal or Dodo",target:"accepts",icon:"💳",words:"pay payment",body:"pay payment card debit credit visa mastercard paypal dodo"},
-  {show:ACAD,title:"The glow up · client results",sub:"Real lash sets by The Girls Club",target:"results",icon:"✨",words:"results gallery",body:"photos pictures before after glow up results gallery reviews work"},
-  {title:"About The Girls Club",sub:"Certified esthetician in Barbados",target:"about",icon:"💕",words:"about story",body:"about owner esthetician who certified story barbados"},
+  {show:ACAD,title:"The glow up · client results",sub:"Real lash sets",target:"results",icon:"✨",words:"results gallery",body:"photos pictures before after glow up results gallery reviews work"},
+  {title:"About us",sub:"Certified esthetician in Barbados",target:"about",icon:"💕",words:"about story",body:"about owner esthetician who certified story barbados"},
   {title:"Shop Bajan",sub:"Shop all · Products · Digital products",href:ACAD?window.TGC_HOME:"#shop",icon:"🛍️",words:"shop bajan marketplace store",body:"marketplace shop store buy products digital all browse"},
   {show:!ACAD,title:"Sell your brand with us",sub:"Join Shop Bajan",href:"brands.html",icon:"🛍️",words:"sell vendor",body:"sell vendor vendors brand brands partner marketplace join business seller stock"},
   {title:"Coming soon",sub:"New things on the way",target:"soon",icon:"⏳",words:"coming soon new",body:"coming soon new launch next",show:SO.show!==false&&!ACAD},
