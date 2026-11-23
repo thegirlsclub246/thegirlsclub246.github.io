@@ -313,6 +313,11 @@ footer .legal{border-top:1px solid rgba(255,255,255,.3);margin-top:2rem;padding-
 .side-small{color:#85506b;font-size:.85rem;margin-top:.2rem}
 .side-cta{display:grid;gap:.7rem;margin-top:auto}
 .side-cta .btn{text-align:center;padding:.7rem 1rem;font-size:.95rem}
+.side-cta .btn.vendor-login{background:#fff;color:#4a1636;border-color:#4a1636;box-shadow:0 4px 0 #4a1636}
+.head-login{display:inline-flex;align-items:center;min-height:42px;padding:0 .9rem;border-radius:999px;border:2px solid #4a1636;background:#fff;color:#4a1636;font-weight:700;font-size:.9rem;text-decoration:none;white-space:nowrap}
+.head-login:hover{background:#ffe3ef}
+@media (max-width:520px){.head-login{display:none}}
+html[data-site=academy] .vendor-login{display:none!important}
 .side-menu .x{color:#4a1636;background:#fff;border-color:#ff4d94}
 @media (max-width:700px){header nav{display:none}}
 /* bag drawer */
@@ -674,11 +679,16 @@ html.soon body>*:not(#soonPage){display:none!important}
 .sb-link{font-weight:700;font-size:.92rem;text-decoration:none;color:var(--blue);padding:10px 4px}
 .sb-link:hover{text-decoration:underline}
 @media(max-width:519px){.sb-link{display:none}}
+.sb-login{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;border:2px solid var(--blue);background:#fff;color:var(--blue);font:700 .92rem/1 var(--sans);text-decoration:none;white-space:nowrap}
+.sb-login:hover{background:var(--sky)}
+@media(max-width:519px){.sb-head{padding:12px 14px;gap:8px}.sb-head-r{gap:8px}.sb-brand{gap:8px}.sb-brand img{width:34px!important;height:34px!important}.sb-word b{font-size:1.2rem;white-space:nowrap}.sb-word small{font-size:.56rem;letter-spacing:.08em}.sb-login{padding:0 12px;font-size:.86rem}.sb-btn-sm{padding-left:13px;padding-right:13px;font-size:.86rem;white-space:nowrap}}
 .sb-sell-strip{display:flex;align-items:center;justify-content:center;gap:6px;min-height:46px;padding:8px 16px;background:var(--sky);color:var(--blue);font-size:.95rem;text-decoration:none;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .sb-sell-strip b{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:2px}
 .sb-sell-strip:active{background:var(--sun)}
 @media(min-width:520px){.sb-sell-strip{display:none}}
 @media(max-width:380px){.sb-head{padding:12px 14px;gap:8px}.sb-brand{gap:8px}.sb-brand svg{width:30px;height:30px}.sb-word b{font-size:1.2rem;white-space:nowrap}.sb-word small{font-size:.56rem;letter-spacing:.08em;white-space:nowrap}.sb-btn-sm{padding-left:14px;padding-right:14px;font-size:.88rem;white-space:nowrap}}
+@media(max-width:374px){.sb-head{padding:12px 10px;gap:6px}.sb-head-r{gap:6px}.sb-brand{gap:6px}.sb-word small{display:none}.sb-brand img{width:28px!important;height:28px!important}.sb-word b{font-size:1.05rem}.sb-login{min-height:40px;padding:0 10px;font-size:.8rem}.sb-btn-sm{min-height:40px;padding-left:10px;padding-right:10px;font-size:.8rem}}
+@media(max-width:340px){.sb-word{display:none}}
 
 
 /* hero */
@@ -827,6 +837,7 @@ textarea.sb-in{min-height:88px;resize:vertical}
     </a>
     <div class="sb-head-r">
       <a class="sb-link" href="brands.html" data-sb="t4:4d9c23b9">Sell with us</a>
+      <a class="sb-login" href="vendors.html" aria-label="Vendor log in">Log in</a>
       <a class="sb-btn sb-btn-sm" href="#sbJoin" data-sb-join data-sb="t5:fa721387">Join the waitlist</a>
     </div>
   </div>
@@ -1118,6 +1129,7 @@ try{var s=JSON.parse(store()||"null");if(s&&s.name)showDone(s.name,s.role,s.via)
     </nav>
     <div class="tools">
       <a class="ig" href="https://www.instagram.com/shopbajan/" target="_blank" rel="noopener">Instagram</a>
+      <a class="head-login vendor-login" href="vendors.html" aria-label="Vendor log in">Log in</a>
       <button class="search-btn" id="openSearch" type="button" aria-label="Search the website" aria-controls="searchPanel" aria-expanded="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></svg></button>
       <button class="btn cart-btn" id="openCart" aria-label="Open bag"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Bag <b id="count">0</b></button>
     </div>
@@ -1556,6 +1568,7 @@ html.shop-mode main>*:not(#shop){display:none!important}
     <span class="side-small">Shop online 24/7</span>
   </div>
   <div class="side-cta">
+    <a class="btn vendor-login" href="vendors.html">Vendor log in</a>
     <a class="btn wa-link" href="#" target="_blank" rel="noopener">WhatsApp us</a>
     <a class="btn alt" href="https://www.instagram.com/shopbajan/" target="_blank" rel="noopener">@shopbajan</a>
   </div>
