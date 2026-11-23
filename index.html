@@ -8,7 +8,7 @@
    Bookings live in Hustle Book. Old links (#academy, #eyelash, #cluster, #book…) are forwarded. */
 (function(){var W=window,h=location.hostname,q=location.search;
 var ac=W.TGC_SITE_FORCE==="academy"||/^academy\./i.test(h)||/[?&]site=academy(&|$)/.test(q);
-W.TGC_SITE=ac?"academy":"shop";W.TGC_HOME="https://shopbajanbb.com/";W.TGC_ACAD="https://academy.thegirlsclub246.com/";
+W.TGC_SITE=ac?"academy":"shop";W.TGC_HOME="https://shopbajanbb.com/";W.TGC_ACAD="https://shopbajanbb.com/?site=academy";
 W.TGC_BOOK=""; /* appointments ended 14 Nov 2026. Leave "" so no Book buttons show. */
 W.TGC_DATA=/^academy\.thegirlsclub246\.com$/i.test(h)?W.TGC_HOME:"";
 document.documentElement.setAttribute("data-site",W.TGC_SITE);
@@ -968,6 +968,7 @@ textarea.sb-in{min-height:88px;resize:vertical}
     <div class="sb-links">
       <a href="brands.html" data-sb="t85:4d9c23b9">Sell with us</a>
       <a href="creators.html">Affiliate Program: earn with us</a>
+      <a href="/?site=academy">Online lash courses</a>
       <a href="policies.html" data-sb="t86:396a1301">Shop policies</a>
       <a href="https://www.instagram.com/shopbajan/" target="_blank" rel="noopener" data-sb="t87:0f95701b">Instagram</a>
       <a href="https://wa.me/12468504460" target="_blank" rel="noopener" data-sb="t88:b1332787">WhatsApp</a>
@@ -1100,7 +1101,7 @@ try{var s=JSON.parse(store()||"null");if(s&&s.name)showDone(s.name,s.role,s.via)
       <a href="#soon">Coming soon</a>
     </nav>
     <div class="tools">
-      <a class="ig" href="https://www.instagram.com/thegirlsclub246/" target="_blank" rel="noopener">Instagram</a>
+      <a class="ig" href="https://www.instagram.com/shopbajan/" target="_blank" rel="noopener">Instagram</a>
       <button class="search-btn" id="openSearch" type="button" aria-label="Search the website" aria-controls="searchPanel" aria-expanded="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></svg></button>
       <button class="btn cart-btn" id="openCart" aria-label="Open bag"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Bag <b id="count">0</b></button>
     </div>
@@ -1460,8 +1461,8 @@ html.shop-mode main>*:not(#shop){display:none!important}
   <div class="wrap">
     <div class="cols">
       <div class="brand"><p class="foot-logo">The Girls Club</p><p>Shop Bajan by The Girls Club. Bajan small businesses, all in one place.</p></div>
-      <div><h4>Explore</h4><ul><li><a href="#shop">Shop Bajan</a></li><li><a href="#book">Book an appointment</a></li><li><a href="#academy">Academy</a></li><li><a href="#about">About Us</a></li><li><a href="#soon">Coming soon</a></li><li><a href="policies.html">Delivery, returns &amp; privacy</a></li><li><a href="creators.html">Affiliate Program: earn with us</a></li><li><a href="https://www.instagram.com/thegirlsclub246/" target="_blank" rel="noopener">@thegirlsclub246</a></li></ul></div>
-      <div><h4>Contact us</h4><ul><li><a class="wa-link" href="#" target="_blank" rel="noopener">WhatsApp us</a></li><li><a href="https://ig.me/m/thegirlsclub246" target="_blank" rel="noopener">DM on Instagram</a></li><li><span class="wa-num"></span></li><li>Collection: <span class="collect-area">St. Thomas</span>, Barbados</li></ul></div>
+      <div><h4>Explore</h4><ul><li><a href="#shop">Shop Bajan</a></li><li><a href="#book">Book an appointment</a></li><li><a href="#academy">Academy</a></li><li><a href="#about">About Us</a></li><li><a href="#soon">Coming soon</a></li><li><a href="policies.html">Delivery, returns &amp; privacy</a></li><li><a href="creators.html">Affiliate Program: earn with us</a></li><li><a href="https://www.instagram.com/shopbajan/" target="_blank" rel="noopener">@shopbajan</a></li></ul></div>
+      <div><h4>Contact us</h4><ul><li><a class="wa-link" href="#" target="_blank" rel="noopener">WhatsApp us</a></li><li><a href="https://ig.me/m/shopbajan" target="_blank" rel="noopener">DM on Instagram</a></li><li><span class="wa-num"></span></li><li>Collection: <span class="collect-area">St. Thomas</span>, Barbados</li></ul></div>
       <div><h4>We accept</h4><ul id="accepts"><li>Debit &amp; credit cards</li><li>PayPal</li><li>Dodo</li></ul></div>
     </div>
     <p class="legal">&copy; 2026 The Girls Club · Shop online 24/7 · Island-wide delivery &amp; collection in St. Thomas · Prices in BBD (Barbados dollars) · <a href="policies.html" style="color:inherit">Shop policies</a></p>
@@ -1540,7 +1541,7 @@ html.shop-mode main>*:not(#shop){display:none!important}
   </div>
   <div class="side-cta">
     <a class="btn wa-link" href="#" target="_blank" rel="noopener">WhatsApp us</a>
-    <a class="btn alt" href="https://www.instagram.com/thegirlsclub246/" target="_blank" rel="noopener">@thegirlsclub246</a>
+    <a class="btn alt" href="https://www.instagram.com/shopbajan/" target="_blank" rel="noopener">@shopbajan</a>
   </div>
 </aside>
 
@@ -1610,7 +1611,7 @@ function mountCardPay(o){
     box.innerHTML="";btn.render("#cardPay")
   }).catch(()=>backup("The card form didn't load. Check your connection and reopen your bag, or pay another way."))
 }
-const IG_DM="https://ig.me/m/"+(S.instagram||"thegirlsclub246");
+const IG_DM="https://ig.me/m/"+(S.instagram||"shopbajan");
 const WHATSAPP=String(S.whatsapp||"").replace(/\D/g,"");
 const FREE_TRAYS_LEFT=num(H.giveaway_trays_left);
 const hasTray=()=>cart.some(c=>products.some(p=>p.cat==="lashes"&&p.id===c.id));
