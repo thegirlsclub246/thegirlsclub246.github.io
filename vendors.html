@@ -638,11 +638,13 @@ function loadAdmin(){
     sb.from("products").select("*").order("updated_at",{ascending:false}),
     sb.from("sales").select("*").order("sale_date",{ascending:false}),
     sb.from("payouts").select("*").order("paid_on",{ascending:false})
-  ]).then(function(r){S.all={vendors:must(r[0])||[],products:must(r[1])||[],sales:must(r[2])||[],payouts:must(r[3])||[]}});
+  ]).then(function(r){S.all={vendors:must(r[0])||[],products:must(r[1])||[],sales:must(r[2])||[],payouts:must(r[3])||[],reviews:[]};
+    /* reviews load on their own, so the portal still works before the reviews table is set up */
+    return sb.from("product_reviews").select("*").order("created_at",{ascending:false}).limit(300).then(function(x){S.all.reviews=(x&&x.data)||[]},function(){})});
 }
 function vById(id){return S.all.vendors.find(function(v){return v.id===id})}
 function adminTabs(){
-  var pend=S.all.products.filter(function(p){return p.status==="pending"}).length+S.all.vendors.filter(function(v){return v.status==="pending"}).length;
+  var pend=S.all.products.filter(function(p){return p.status==="pending"}).length+S.all.vendors.filter(function(v){return v.status==="pending"}).length+(S.all.reviews||[]).filter(function(x){return x.status==="pending"}).length;
   var t=[["approve","To approve"+(pend?'<span class="count">'+pend+'</span>':"")],["vendors","Vendors"],["products","All products"],["money","Sales & payouts"]];
   tabsEl.innerHTML=t.map(function(x){return'<button type="button" role="tab" data-at="'+x[0]+'" aria-selected="'+(S.adminTab===x[0])+'">'+x[1]+'</button>'}).join("");tabsEl.hidden=false;
   qa("[data-at]",tabsEl).forEach(function(b){b.onclick=function(){S.adminTab=b.getAttribute("data-at");renderAdmin();window.scrollTo(0,0)}});
@@ -672,6 +674,8 @@ function aApprove(){
   h+='<h2 class="sec">New shops ('+pv.length+')</h2>'+(pv.length?pv.map(vendorCard).join(""):'<div class="empty">No new shops waiting.</div>');
   h+='<h2 class="sec">Products ('+pp.length+')</h2>'+(pp.length?'<div class="plist">'+pp.map(function(p){return prodCard(p,true,vById(p.vendor_id))}).join("")+'</div>':'<div class="empty">No products waiting. 🎉</div>');
   if(pp.some(function(p){var v=vById(p.vendor_id);return v&&v.status!=="approved"}))h+='<p class="small muted" style="margin-top:12px">Products from shops that aren\'t approved yet stay off the website until you approve the shop too.</p>';
+  var rv=(S.all.reviews||[]).filter(function(x){return x.status==="pending"});
+  h+='<h2 class="sec">Reviews ('+rv.length+')</h2>'+(rv.length?rv.map(function(x){return'<div class="card"><div style="display:flex;justify-content:space-between;gap:10px"><b>'+esc(x.product_name||"Product")+'</b><span>'+"★★★★★".slice(0,x.rating)+'<span style="opacity:.3">'+"★★★★★".slice(x.rating)+'</span></span></div><p style="margin:8px 0">'+esc(x.body)+'</p><div class="muted small">'+esc(x.name)+' · order '+esc(x.order_ref||"none")+' · '+esc(fmtDate(x.created_at))+'</div><p class="small muted" style="margin-top:6px">Check the order number is real and for this product before you approve.</p><div class="btnrow"><button class="btn sm green" data-rvok="'+x.id+'">Approve review</button><button class="btn sm ghost" data-rvhide="'+x.id+'">Hide</button></div></div>'}).join(""):'<div class="empty">No reviews waiting.</div>');
   return h;
 }
 function aVendors(){return'<h1 class="page">Vendors</h1><p class="lead">'+S.all.vendors.length+' small business'+(S.all.vendors.length===1?"":"es")+' signed up.</p>'+(S.all.vendors.length?S.all.vendors.map(vendorCard).join(""):'<div class="empty">No vendors yet. Share <b>shopbajanbb.com/vendors</b> or the Sell with us page.</div>')}
@@ -706,6 +710,9 @@ function wireAdmin(){
   qa("[data-viewas]").forEach(function(b){b.onclick=function(){var id=b.getAttribute("data-viewas");S.viewAs=id;S.vendor=vById(id);
     S.products=S.all.products.filter(function(p){return p.vendor_id===id});S.sales=S.all.sales.filter(function(s){return s.vendor_id===id});S.payouts=S.all.payouts.filter(function(p){return p.vendor_id===id});S.tab="home";renderVendor();window.scrollTo(0,0)}});
   qa("[data-pay]").forEach(function(b){b.onclick=function(){payoutSheet(vById(b.getAttribute("data-pay")))}});
+  function updRev(id,st,msg){sb.from("product_reviews").update({status:st}).eq("id",id).select().single().then(function(r){if(r.error)return toast(friendly(r.error));var i=S.all.reviews.findIndex(function(x){return x.id===id});S.all.reviews[i]=r.data;renderAdmin();toast(msg)})}
+  qa("[data-rvok]").forEach(function(b){b.onclick=function(){updRev(b.getAttribute("data-rvok"),"live","Review is live 💕")}});
+  qa("[data-rvhide]").forEach(function(b){b.onclick=function(){updRev(b.getAttribute("data-rvhide"),"hidden","Review hidden")}});
   qa("[data-delv]").forEach(function(b){b.onclick=function(){deleteShopSheet(vById(b.getAttribute("data-delv")))}});
   var pf=q("#pfilt");if(pf){pf.value=S.pfilt||"";pf.onchange=function(){S.pfilt=pf.value;renderAdmin()}}
   var as=q("#addSale");if(as)as.onclick=saleSheet;
