@@ -1454,7 +1454,7 @@ html.shop-mode main>*:not(#shop){display:none!important}
 
   <section id="about" class="about">
     <div class="wrap">
-      <div class="about-photo"><img id="aboutPhoto" src="img/logo-tgc.png" alt="The Girls Club" style="object-fit:contain;background:#fff" loading="lazy" width="700" height="875"></div>
+      <div class="about-photo"><img id="aboutPhoto" src="img/logo-tgc.png" alt="Shop Bajan" style="object-fit:contain;background:#fff" loading="lazy" width="700" height="875"></div>
       <div class="about-text">
         <span class="eyebrow" data-c="about.eyebrow">Our story</span>
         <h2 data-c="about.title">Hi, we're The Girls Club</h2>
@@ -1633,7 +1633,7 @@ function mountCardPay(o){
   const backup=msg=>{box.innerHTML=`<p class="muted">${msg}</p>${PAYPAL_ME?`<a class="btn paypal" href="${PAYPAL_ME.replace(/\/$/,"")}/${amt}USD" target="_blank" rel="noopener">Pay ${usd(o.total)} by card</a>`:""}`};
   loadPP().then(pp=>{
     const btn=pp.Buttons({fundingSource:pp.FUNDING.CARD,style:{layout:"vertical",shape:"pill",label:"pay",height:50},
-      createOrder:(d,a)=>a.order.create({intent:"CAPTURE",purchase_units:[{custom_id:o.id,description:"Shop Bajan order "+o.id,amount:{currency_code:"USD",value:amt}}],application_context:{shipping_preference:"NO_SHIPPING",brand_name:"The Girls Club"}}),
+      createOrder:(d,a)=>a.order.create({intent:"CAPTURE",purchase_units:[{custom_id:o.id,description:"Shop Bajan order "+o.id,amount:{currency_code:"USD",value:amt}}],application_context:{shipping_preference:"NO_SHIPPING",brand_name:"Shop Bajan"}}),
       onApprove:(d,a)=>a.order.capture().then(r=>{o.paid=true;o.paidRef=r.id||"";try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/card-paid",event:true})}catch(x){}renderDrawer()}),
       onError:()=>backup("Something went wrong with the card payment. If you were charged, message us on WhatsApp with your order number and we'll sort it out.")});
     if(!btn.isEligible()){backup("Card checkout isn't available on this device. Please use another way to pay.");return}
@@ -1695,7 +1695,7 @@ list(MK.products).filter(p=>p&&p.id&&p.name&&brandName(p.brand)).forEach(p=>prod
   /* gallery */
   const ph=list(G.photos).filter(p=>p.image);
   if(G.show===false||!ph.length)hide("results");
-  document.getElementById("gallery").innerHTML=ph.map(p=>`<img src="${esc(U(p.image))}" alt="${esc(p.alt||"Girls Club lash set")}" loading="lazy" width="600" height="750">`).join("");
+  document.getElementById("gallery").innerHTML=ph.map(p=>`<img src="${esc(U(p.image))}" alt="${esc(p.alt||"Lash set")}" loading="lazy" width="600" height="750">`).join("");
   /* about */
   if(AB.photo)document.getElementById("aboutPhoto").src=U(AB.photo);
   document.getElementById("aboutBadges").innerHTML=list(AB.badges).map(t=>`<span>${esc(t)}</span>`).join("");
@@ -1855,7 +1855,7 @@ function bagItem(p,o){if(p.isCourse)return{id:p.id,course:p.course,name:"Shop Ba
 const findItem=id=>shopItems.find(x=>x.id===id);
 function pcard(p){const o=offPct(p);
   const act=isOut(p)?`<button class="add" type="button" disabled>Sold out</button>`:(p.opts.length||p.isCourse)?`<a class="add choose" href="${pHref(p)}">${p.isCourse?"Enrol":"Choose"}</a>`:`<button class="add" type="button" data-add="${esc(p.id)}" aria-label="Add ${esc(p.name)} to bag">Add<span class="xl">&nbsp;to bag</span></button>`;
-  return `<article class="pcard${isDig(p)?" dig":""}" data-card="${esc(p.id)}"><a class="card-link" href="${pHref(p)}"><div class="thumb">${thumb(p)}${p.tag?`<span class="tag">${esc(p.tag)}</span>`:""}${o?`<span class="off">-${o}%</span>`:""}</div><span class="mk-sold">By ${esc(p.brand||"The Girls Club")}</span><h3>${esc(p.name)}</h3><span class="ptype">${esc(p.type)}</span></a><div class="row"><span class="price"><small>BBD</small> ${priceHTML(p)}</span>${act}</div></article>`}
+  return `<article class="pcard${isDig(p)?" dig":""}" data-card="${esc(p.id)}"><a class="card-link" href="${pHref(p)}"><div class="thumb">${thumb(p)}${p.tag?`<span class="tag">${esc(p.tag)}</span>`:""}${o?`<span class="off">-${o}%</span>`:""}</div><span class="mk-sold">By ${esc(p.brand||"Shop Bajan")}</span><h3>${esc(p.name)}</h3><span class="ptype">${esc(p.type)}</span></a><div class="row"><span class="price"><small>BBD</small> ${priceHTML(p)}</span>${act}</div></article>`}
 function miniCard(p){const o=offPct(p);return `<a class="mini" href="${pHref(p)}"><div class="thumb">${thumb(p)}${p.tag?`<span class="tag">${esc(p.tag)}</span>`:""}${o?`<span class="off">-${o}%</span>`:""}</div><b>${esc(p.name)}</b><span class="price">${priceHTML(p)}</span></a>`}
 document.addEventListener("click",e=>{const b=e.target.closest("[data-add]");if(!b||!b.closest("#shop,#market"))return;const p=findItem(b.dataset.add);if(p)addItem(bagItem(p,""))});
 
@@ -1872,7 +1872,7 @@ const view={tab:"all",cat:"",q:""};
 const mkNorm=t=>String(t||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/&/g," and ").replace(/[^a-z0-9]+/g," ").trim();
 const mkStem=w=>w.length>3&&/s$/.test(w)&&!/ss$/.test(w)?w.slice(0,-1):w;
 const SYN={lashe:"lash",class:"course",classe:"course",training:"course",voucher:"voucher gift",present:"gift",xmas:"christmas",download:"digital",ebook:"guide",template:"guide"};
-function mkHay(p){if(!p._hay)p._hay=" "+mkNorm([p.name,p.type,p.brand||"The Girls Club",p.desc,catName(dCat(p)),dCat(p),isDig(p)?"digital online download":"product",(p.opts||[]).join(" "),(p.points||[]).join(" "),p.tag,p.cat==="lashes"?"lash cluster tray":""].join(" ")).split(" ").map(mkStem).join(" ")+" ";return p._hay}
+function mkHay(p){if(!p._hay)p._hay=" "+mkNorm([p.name,p.type,p.brand||"Shop Bajan",p.desc,catName(dCat(p)),dCat(p),isDig(p)?"digital online download":"product",(p.opts||[]).join(" "),(p.points||[]).join(" "),p.tag,p.cat==="lashes"?"lash cluster tray":""].join(" ")).split(" ").map(mkStem).join(" ")+" ";return p._hay}
 function mkMatch(p,q){const toks=mkNorm(q).split(" ").filter(t=>t&&!["the","a","an","and","for","of","to","my","i","me"].includes(t)).map(mkStem);if(!toks.length)return true;const h=mkHay(p);
   return toks.every(t=>{const alts=(SYN[t]||t).split(" ");return alts.some(a=>a.length>=3?h.includes(a):h.includes(" "+a))})}
 function mkHash(){return "#shop"+(view.tab!=="all"?"/"+view.tab:"")+(view.cat?"/"+encodeURIComponent(view.cat):"")}
@@ -1935,13 +1935,13 @@ function related(p){return shopItems.filter(x=>x.id!==p.id&&!isOut(x)).map(x=>[(
 function searches(p){const s=[];const add=t=>{t=String(t||"").trim();if(t&&!s.some(x=>x.toLowerCase()===t.toLowerCase()))s.push(t)};
   if(!p.isCourse)add(p.type);(RS[dCat(p)]||[catName(dCat(p))]).forEach(add);if(p.brand)add(p.brand);if(p.was>p.price)add("On sale");return s.slice(0,6)}
 function pdHTML(p){const o=offPct(p),out=isOut(p),dig=isDig(p);
-  const facts=[p.isCourse?"Online course · learn from your phone at your own pace":dig?"Digital · sent to you on WhatsApp after payment":`Island-wide delivery $${num(S.delivery_fee)||12} BBD, or free collection in ${esc(S.collection_area||"St. Thomas")}`,`Pay by ${esc(payList())}`,p.vendor?`Sold by ${esc(p.brand)}, a Bajan business on Shop Bajan`:"By The Girls Club, Barbados"];
+  const facts=[p.isCourse?"Online course · learn from your phone at your own pace":dig?"Digital · sent to you on WhatsApp after payment":`Island-wide delivery $${num(S.delivery_fee)||12} BBD, or free collection in ${esc(S.collection_area||"St. Thomas")}`,`Pay by ${esc(payList())}`,p.vendor?`Sold by ${esc(p.brand)}, a Bajan business on Shop Bajan`:"By Shop Bajan, Barbados"];
   const rel=related(p),more=p.vendor?shopItems.filter(x=>x.vendor===p.vendor&&x.id!==p.id):[];
   return `<div class="pd-bar"><button type="button" class="pd-back" data-pd-close>‹ Back</button><button type="button" data-pd-share aria-label="Share this">↗ Share</button><button type="button" class="pd-bag" data-pd-bag aria-label="Open bag">Bag ${cart.reduce((a,c)=>a+c.qty,0)}</button></div>
   <div class="pd-in"><div class="pd-main">
    <div class="pd-img"><div class="thumb">${thumb(p)}${p.tag?`<span class="tag">${esc(p.tag)}</span>`:""}${o?`<span class="off">-${o}%</span>`:""}</div></div>
    <div class="pd-info">
-    <span class="mk-sold">${dig?"Digital · ":""}By ${esc(p.brand||"The Girls Club")}</span>
+    <span class="mk-sold">${dig?"Digital · ":""}By ${esc(p.brand||"Shop Bajan")}</span>
     <h2 id="pdName" tabindex="-1">${esc(p.name)}</h2>${p.type?`<p class="pd-type">${esc(p.type)}</p>`:""}
     <div class="pd-price"><span class="price">${p.usd?"":"<small>BBD</small> "}${priceHTML(p)}</span>${o?`<span class="pd-save">You save ${money(p.was-p.price)}</span>`:""}</div>
     ${p.desc?`<p class="pd-desc">${esc(p.desc)}</p>`:""}
@@ -2203,7 +2203,7 @@ document.querySelectorAll(".wa-num").forEach(el=>el.textContent=WHATSAPP?("+"+WH
  const soldOut=p=>p.stock!==null&&p.stock!==undefined&&p.stock<=0;
  function row(e,i){
   if(e.k==="product"){const p=e.p;const act=soldOut(p)?`<button class="sr-add" type="button" disabled>Sold out</button>`:p.opts.length?`<button class="sr-add view" type="button" data-sr-go="${i}">Choose</button>`:`<button class="sr-add" type="button" data-sr-add="${i}">Add</button>`;
-   return `<div class="sr-item" role="button" tabindex="0" data-sr-go="${i}"><div class="sr-thumb">${thumb(p)}</div><div class="sr-text"><b>${esc(p.name)}</b><small>By ${esc(p.brand||"The Girls Club")}${p.type?" · "+esc(p.type):""}</small><span class="sr-price">BBD ${money(p.price)}</span></div>${act}</div>`}
+   return `<div class="sr-item" role="button" tabindex="0" data-sr-go="${i}"><div class="sr-thumb">${thumb(p)}</div><div class="sr-text"><b>${esc(p.name)}</b><small>By ${esc(p.brand||"Shop Bajan")}${p.type?" · "+esc(p.type):""}</small><span class="sr-price">BBD ${money(p.price)}</span></div>${act}</div>`}
   const link=e.href?`href="${esc(e.href)}"${e.ext?' target="_blank" rel="noopener"':""}`:`href="#${esc(e.target)}"`;
   return `<a class="sr-item" ${link} data-sr-go="${i}"><div class="sr-thumb"><span class="sr-ico" aria-hidden="true">♥</span></div><div class="sr-text"><b>${esc(e.title)}</b>${e.sub?`<small>${esc(e.sub)}</small>`:""}</div></a>`}
  let shown=[],lastQ="",tracked=new Set();
