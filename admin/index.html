@@ -197,6 +197,25 @@ textarea{resize:vertical;min-height:96px}
 .view-cap{white-space:pre-line;overflow-wrap:anywhere;background:var(--soft);border-radius:12px;padding:12px 14px;font-size:.95rem}
 .view-head{display:flex;align-items:flex-start;gap:10px}.view-head h2{flex:1;font-size:1.1rem;min-width:0}.view-acts .btn{white-space:nowrap;padding:9px 10px;font-size:.92rem}
 .view-acts{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:8px;position:sticky;bottom:0;background:#fff;padding-top:8px}
+.sheet-bar{position:sticky;top:-18px;z-index:2;background:#fff;margin:-18px 0 0;padding:12px 0 8px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line)}
+.sheet-bar h2{flex:1;min-width:0;font-size:1.05rem;margin:0}
+.backbtn{flex:none;display:inline-flex;align-items:center;gap:4px;font:700 .95rem var(--body);color:var(--blue);background:var(--soft);border:0;border-radius:999px;padding:9px 14px 9px 10px;cursor:pointer}
+.backbtn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.script{display:grid;gap:8px;padding:12px 0;border-top:1px solid var(--line)}
+.script:first-of-type{border-top:0}
+.script .s-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.script .s-txt{margin:0;white-space:pre-line;overflow-wrap:anywhere;background:var(--soft);border-radius:12px;padding:10px 12px;font-size:.93rem}
+.top-r{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.searchbtn{display:inline-flex;align-items:center;gap:6px;background:#fff;color:var(--blue);border:0;border-radius:999px;padding:8px 14px;font:700 .9rem var(--body);min-height:38px;cursor:pointer}
+.searchbtn svg,.s-ico{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round}
+.s-input{width:100%;font-size:1rem;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line)}
+.s-res{list-style:none;margin:0;padding:0;display:grid}
+.s-res li{display:flex;align-items:center;gap:10px;padding:11px 0;border-top:1px solid var(--line);min-width:0}
+.s-res li:first-child{border-top:0}
+.s-res .t{flex:1;min-width:0}.s-res b{display:block;overflow-wrap:anywhere}
+.s-res span{display:block;font-size:.83rem;color:var(--muted);overflow-wrap:anywhere}
+.s-kind{font:700 .7rem var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:10px 0 0}
+.flash{animation:flash 2s ease}@keyframes flash{0%,40%{background:#FFE9A8}100%{background:transparent}}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(90px + env(safe-area-inset-bottom));background:var(--ink);color:#fff;padding:9px 18px;border-radius:999px;font-weight:700;z-index:40;max-width:90vw;text-align:center}
 @media (min-width:700px){.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}}
 .grid2{display:grid;gap:18px}
@@ -208,6 +227,8 @@ textarea{resize:vertical;min-height:96px}
   <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
   <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="m8 12 3 3 5-6"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></symbol>
 </svg>
 
@@ -217,7 +238,7 @@ textarea{resize:vertical;min-height:96px}
     <h1>Admin</h1>
     <small id="todayLabel"></small>
   </div>
-  <div class="count" id="countdown" hidden></div>
+  <div class="top-r"><div class="count" id="countdown" hidden></div><button class="searchbtn" id="searchBtn" hidden><svg><use href="#i-search"/></svg>Search</button></div>
 </div></header>
 
 <main class="wrap">
@@ -336,6 +357,15 @@ textarea{resize:vertical;min-height:96px}
 
   <!-- LINKS -->
   <section class="view" id="v-links" hidden>
+    <div class="panel" id="scripts">
+      <h3>Outreach scripts</h3>
+      <p class="note" style="margin:0">Tap Copy, then paste. Change a word or an emoji now and then so Instagram doesn't flag the same comment as spam.</p>
+      <div class="script"><div class="s-head"><b>1. Comment on their post</b><button class="go-b" data-script>Copy</button></div><p class="s-txt">Bajan talent right here 🇧🇧 We'd love to feature you on Shop Bajan! Check your DMs 💛</p></div>
+      <div class="script"><div class="s-head"><b>2. Invite DM (send right after)</b><button class="go-b" data-script>Copy</button></div><p class="s-txt">Hi! Loved featuring you 💛 We'd love to have you selling on Shop Bajan when we open 10 Dec. shopbajanbb.com</p></div>
+      <div class="script"><div class="s-head"><b>3. Email subject</b><button class="go-b" data-script>Copy</button></div><p class="s-txt">We'd love to feature you on Shop Bajan</p></div>
+      <div class="script"><div class="s-head"><b>4. Email message</b><button class="go-b" data-script>Copy</button></div><p class="s-txt">Hi [name],
+we love what you're doing and would like to feature you on Shop Bajan, a new online marketplace for Bajan businesses. We'd also love to have you selling with us when we open on 10 Dec. Interested? shopbajanbb.com</p><p class="note" style="margin:0">Swap [name] for their name before you send.</p></div>
+    </div>
     <div class="panel-head"><h2>Links and resources</h2><button class="btn sm" id="editLinksBtn">Edit links</button></div>
     <div class="panel">
       <h3>Run the business</h3>
@@ -639,7 +669,7 @@ async function viewPost(p){
   if (!p) return;
   const card = $("#sheetCard");
   card.innerHTML = `
-    <div class="view-head"><h2>${esc(p.title)}</h2><button class="icon" id="vClose" aria-label="Close">✕</button></div>
+    <div class="sheet-bar"><button class="backbtn" id="vClose" aria-label="Back"><svg><use href="#i-back"/></svg>Back</button><h2>${esc(p.title)}</h2></div>
     <div class="pm">${p.date?fmtDay(p.date):"No date"}${p.time?" · "+fmtTime(p.time):""} ${platPills(p)} <span class="pill ${esc(p.status)}">${esc(p.status)}</span> ${p.type&&p.type!=="post"?`<span>${esc(TYPES[p.type]||p.type)}</span>`:""}</div>
     <div class="view-media" id="vMedia">${p.video?`<p class="note">Loading video…</p>`:""}${(p.images||[]).map((s,i)=>`<img src="${esc(mediaSrc(s))}" alt="Image ${i+1}">`).join("")}</div>
     ${p.note?`<p class="note" style="margin:0">${esc(p.note)}</p>`:""}
@@ -649,12 +679,10 @@ async function viewPost(p){
       ${p.video?`<button class="btn primary" id="vDl">Save video</button>`:""}
       <button class="btn" id="vEdit">Edit</button>
     </div>`;
-  const close = () => { $("#sheet").hidden = true; const v = card.querySelector("video"); if (v) v.pause(); };
-  $("#vClose").onclick = close;
-  $("#sheet").onclick = e => { if (e.target.id==="sheet") close(); };
-  $("#vEdit").onclick = () => { close(); openPost(p); };
+  $("#vClose").onclick = closeSheet;
+  $("#vEdit").onclick = () => { const v = card.querySelector("video"); if (v) v.pause(); openPost(p); };
   $("#vCopy").onclick = async () => { try{ await navigator.clipboard.writeText(p.caption||""); toast("Caption copied."); }catch{ toast("Couldn't copy. Open Edit and copy from there."); } };
-  $("#sheet").hidden = false;
+  openSheet();
   if (p.video){
     let u = ""; try { u = (await store.urls([p.video]))[p.video] || ""; } catch {}
     const box = $("#vMedia"); if (!box) return;
@@ -674,7 +702,7 @@ function openPost(p){
   p = p ? JSON.parse(JSON.stringify(p)) : {id:newId("p"), title:"", date:todayStr(), time:"12:30", platforms:["ig"], type:"post", status:"draft", caption:"", images:[], series:""};
   const card = $("#sheetCard");
   card.innerHTML = `
-    <div class="panel-head"><h2>${isNew?"Add a post":"Edit post"}</h2><button class="icon" id="pClose" aria-label="Close">✕</button></div>
+    <div class="sheet-bar"><button class="backbtn" id="pClose" aria-label="Back"><svg><use href="#i-back"/></svg>Back</button><h2>${isNew?"Add a post":"Edit post"}</h2></div>
     <div class="preview-imgs" id="pImgs"></div>
     <div class="form">
       <label>Name<input type="text" id="pTitle" value="${esc(p.title)}" placeholder="e.g. Tag a small business"></label>
@@ -719,9 +747,8 @@ function openPost(p){
     }
     e.target.value = "";
   };
-  const close = () => { $("#sheet").hidden = true; };
+  const close = closeSheet;
   $("#pClose").onclick = $("#pCancel").onclick = close;
-  $("#sheet").onclick = e => { if (e.target.id==="sheet") close(); };
   if (!isNew) $("#pDel").onclick = async () => {
     if ($("#pDel").dataset.sure!=="1"){ $("#pDel").dataset.sure="1"; $("#pDel").textContent="Tap again to delete"; return; }
     state.posts = state.posts.filter(x=>x.id!==p.id); close(); renderAll(); await remove("posts", p.id); toast("Post deleted.");
@@ -733,9 +760,63 @@ function openPost(p){
     const i = state.posts.findIndex(x=>x.id===p.id); if (i>=0) state.posts[i]=p; else state.posts.push(p);
     close(); renderAll(); await save("posts", p); toast("Saved.");
   };
-  $("#sheet").hidden = false;
+  openSheet();
 }
-document.addEventListener("keydown", e => { if (e.key==="Escape" && !$("#sheet").hidden) $("#sheet").hidden = true; });
+
+/* ---------- search ---------- */
+function openSearch(q=""){
+  const card = $("#sheetCard");
+  card.innerHTML = `<div class="sheet-bar"><button class="backbtn" id="sClose" aria-label="Back"><svg><use href="#i-back"/></svg>Back</button><h2>Search</h2></div>
+    <input type="search" class="s-input" id="sIn" placeholder="Search posts, tasks, links, scripts" value="${esc(q)}" autocomplete="off" enterkeyhint="search">
+    <div id="sOut"></div>`;
+  $("#sClose").onclick = closeSheet;
+  $("#sIn").oninput = () => drawSearch($("#sIn").value);
+  drawSearch(q); openSheet();
+  setTimeout(() => $("#sIn")?.focus(), 50);
+}
+function drawSearch(q){
+  const out = $("#sOut"); q = q.trim().toLowerCase();
+  if (q.length < 2){ out.innerHTML = `<p class="note">Type at least 2 letters.</p>`; return; }
+  const has = (...xs) => xs.some(x => (x||"").toLowerCase().includes(q));
+  const posts = state.posts.filter(p => has(p.title, p.caption, p.note)).sort((a,b)=>(a.date||"").localeCompare(b.date||"")).slice(0,25);
+  const tasks = state.tasks.filter(t => has(t.title, t.note)).sort((a,b)=>(a.done-b.done)).slice(0,25);
+  const links = [...document.querySelectorAll("#v-links .links li")].filter(li => has(li.textContent)).slice(0,15);
+  const scripts = [...document.querySelectorAll("#scripts .script")].filter(d => has(d.textContent));
+  let h = "";
+  if (posts.length) h += `<p class="s-kind">Posts and stories</p><ul class="s-res">${posts.map(p=>`<li><div class="t"><b>${esc(p.title)}</b><span>${p.date?fmtDay(p.date):"No date"} · ${esc(p.status||"")}</span></div><button class="go-b" data-sp="${esc(p.id)}">Open</button></li>`).join("")}</ul>`;
+  if (tasks.length) h += `<p class="s-kind">Tasks</p><ul class="s-res">${tasks.map(t=>`<li><div class="t"><b>${esc(t.title)}</b><span>${t.done?"Done":esc(AREAS[t.area]||t.area||"")}${t.due?" · "+fmtDay(t.due):""}</span></div><button class="go-b" data-st="${esc(t.id)}">Show</button></li>`).join("")}</ul>`;
+  if (scripts.length) h += `<p class="s-kind">Outreach scripts</p><ul class="s-res">${scripts.map(d=>`<li><div class="t"><b>${esc(d.querySelector("b").textContent)}</b><span>${esc(d.querySelector(".s-txt").textContent)}</span></div><button class="go-b" data-sc="${esc(d.querySelector(".s-txt").textContent)}">Copy</button></li>`).join("")}</ul>`;
+  if (links.length) h += `<p class="s-kind">Links</p><ul class="s-res">${links.map(li=>li.outerHTML.replace(/<li>/,"<li>")).join("")}</ul>`;
+  out.innerHTML = h || `<p class="note">Nothing found for “${esc(q)}”.</p>`;
+}
+$("#searchBtn").onclick = () => openSearch();
+$("#sheetCard").addEventListener("click", async e => {
+  if (!$("#sOut")) return;
+  const sp = e.target.closest("[data-sp]"), st = e.target.closest("[data-st]"), sc = e.target.closest("[data-sc],[data-copy]");
+  if (sp) viewPost(state.posts.find(p=>p.id===sp.dataset.sp));
+  else if (st){
+    hideSheet(); sheetHist = false; history.replaceState(null, "", "#tasks"); route();
+    const t = state.tasks.find(x=>x.id===st.dataset.st);
+    if (t && t.done) document.querySelector("#v-tasks details").open = true;
+    if (t && t.area && state.areaF!=="all" && state.areaF!==t.area){ state.areaF = "all"; renderTasks(); }
+    const li = document.querySelector(`#v-tasks [data-id="${CSS.escape(st.dataset.st)}"]`);
+    if (li){ li.scrollIntoView({block:"center"}); li.classList.add("flash"); setTimeout(()=>li.classList.remove("flash"), 2100); }
+  } else if (sc){
+    try { await navigator.clipboard.writeText(sc.dataset.sc || sc.dataset.copy); toast("Copied."); } catch { toast("Couldn't copy."); }
+  }
+});
+
+/* ---------- sheet: Back button, tap outside, Escape and the phone's back gesture all close it ---------- */
+let sheetHist = false;
+function hideSheet(){ const v = $("#sheetCard").querySelector("video"); if (v) v.pause(); $("#sheet").hidden = true; }
+function openSheet(){
+  $("#sheet").hidden = false; $("#sheetCard").scrollTop = 0;
+  if (!sheetHist){ history.pushState({sheet:1}, ""); sheetHist = true; }
+}
+function closeSheet(){ if ($("#sheet").hidden) return; hideSheet(); if (sheetHist){ sheetHist = false; history.back(); } }
+window.addEventListener("popstate", () => { if (sheetHist){ sheetHist = false; hideSheet(); } });
+$("#sheet").addEventListener("click", e => { if (e.target.id==="sheet") closeSheet(); });
+document.addEventListener("keydown", e => { if (e.key==="Escape") closeSheet(); });
 
 $("#storyUp").onchange = async e => {
   const files = [...e.target.files], note = $("#storyNote"); e.target.value = "";
@@ -770,6 +851,12 @@ function renderLinks(){
 $("#linkList").addEventListener("click", async e => {
   const b = e.target.closest("[data-copy]"); if (!b) return;
   try { await navigator.clipboard.writeText(b.dataset.copy); b.textContent = "Copied"; } catch { b.textContent = "Copy failed"; }
+  setTimeout(()=>b.textContent="Copy", 1500);
+});
+$("#scripts").addEventListener("click", async e => {
+  const b = e.target.closest("[data-script]"); if (!b) return;
+  const t = b.closest(".script").querySelector(".s-txt").textContent;
+  try { await navigator.clipboard.writeText(t); b.textContent = "Copied"; toast("Copied. Paste it in."); } catch { b.textContent = "Copy failed"; }
   setTimeout(()=>b.textContent="Copy", 1500);
 });
 $("#editLinksBtn").onclick = async () => {
@@ -853,7 +940,7 @@ async function boot(){
   if (!(await store.isAdmin(user.id).catch(()=>false))){ await store.signOut(); return gate("signin", "That account isn't a Shop Bajan admin."); }
   try { Object.assign(state, await store.loadAll()); }
   catch(e){ showOnly("loading"); $("#v-loading").innerHTML = `<p class="empty">Couldn't load your admin. Check your connection, then <a href="">reload</a>.</p>`; return; }
-  ready = true; $("#nav").hidden = false; renderAll(); route(); loadMedia();
+  ready = true; $("#nav").hidden = false; $("#searchBtn").hidden = false; renderAll(); route(); loadMedia();
   // for Claude working in this signed-in page: add or change items, e.g. SBA.save("wins", {id, date, kind, title, note})
   window.SBA = { save: async (c, item) => { await store.save(c, item); Object.assign(state, await store.loadAll()); renderAll(); return "saved"; },
                  remove: async (c, id) => { await store.remove(c, id); Object.assign(state, await store.loadAll()); renderAll(); return "removed"; },
