@@ -7,7 +7,7 @@
 <meta name="supported-color-schemes" content="light">
 <style>:root{color-scheme:only light}</style>
 <title>Vendor Portal · Shop Bajan</title>
-<meta name="description" content="Sign in to manage your brand on Shop Bajan: add products and photos, see your sales and Sunday payouts.">
+<meta name="description" content="Sign in to manage your shop on Shop Bajan: add products and photos, see your sales and Sunday payouts.">
 <meta name="robots" content="noindex,follow">
 <link rel="canonical" href="https://shopbajanbb.com/vendors">
 <meta name="theme-color" content="#00267F">
@@ -204,7 +204,7 @@ h1,h2,h3,h1.page{font-family:var(--display);font-weight:800;color:var(--pink);le
 </div></header>
 <nav class="tabs" id="tabs" role="tablist" hidden></nav>
 <main class="wrap" id="app"><p class="loading" data-sb="t4:8985170e">Loading your portal…</p></main>
-<footer>Shop Bajan · St. Thomas, Barbados · <a href="brands.html" data-sb="t5:f8aac1fa">For brands</a> · <a href="policies.html" data-sb="t6:62629617">Policies</a> · <a href="https://wa.me/12468504460" target="_blank" rel="noopener" data-sb="t7:19679e1a">WhatsApp help</a></footer>
+<footer>Shop Bajan · St. Thomas, Barbados · <a href="brands.html" data-sb="t5:8d82b8bb">For small businesses</a> · <a href="policies.html" data-sb="t6:62629617">Policies</a> · <a href="https://wa.me/12468504460" target="_blank" rel="noopener" data-sb="t7:19679e1a">WhatsApp help</a></footer>
 <div id="toast" class="toast" role="status" hidden></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.79.0/dist/umd/supabase.js"></script>
@@ -273,7 +273,7 @@ function authScreen(mode,msg){
   mode=mode||"signin";
   var titles={signin:"Welcome back",signup:"Create your vendor account",forgot:"Reset your password",newpass:"Choose a new password",check:"Check your email"};
   var h='<div class="auth"><h1 class="page">'+titles[mode]+'</h1>';
-  if(mode==="signup")h+='<p class="lead">For brands joining Shop Bajan. Takes about 5 minutes: create your login, then set up your shop and sign the agreement.</p>';
+  if(mode==="signup")h+='<p class="lead">For small businesses joining Shop Bajan. Takes about 5 minutes: create your login, then set up your shop and sign the agreement.</p>';
   if(mode==="signin")h+='<p class="lead">Sign in to add your products and photos, and see your sales and Sunday payouts.</p>';
   if(msg)h+='<div class="note info">'+msg+'</div>';
   h+='<form class="card pinkbox" id="af" novalidate>';
@@ -285,11 +285,11 @@ function authScreen(mode,msg){
     h+='<p class="err" id="aerr" role="alert"></p>';
     var lbl={signin:"Sign in",signup:"Create my account",forgot:"Send me a reset link",newpass:"Save my new password"}[mode];
     h+='<div class="btnrow"><button class="btn full" type="submit" id="abtn">'+lbl+'</button></div>';
-    if(mode==="signin")h+='<p style="margin-top:14px;text-align:center"><button class="linkbtn" type="button" data-go="forgot">Forgot password?</button></p><p style="text-align:center">New brand? <button class="linkbtn" type="button" data-go="signup">Create your vendor account</button></p>';
+    if(mode==="signin")h+='<p style="margin-top:14px;text-align:center"><button class="linkbtn" type="button" data-go="forgot">Forgot password?</button></p><p style="text-align:center">New to Shop Bajan? <button class="linkbtn" type="button" data-go="signup">Create your vendor account</button></p>';
     if(mode==="signup"||mode==="forgot")h+='<p style="margin-top:14px;text-align:center">Already have an account? <button class="linkbtn" type="button" data-go="signin">Sign in</button></p>';
   }
   h+='</form>';
-  if(mode==="signup")h+='<p class="small muted" style="margin-top:14px">Not sure yet? Read about the plans on <a href="brands.html">our For Brands page</a> or WhatsApp us on <a href="https://wa.me/'+WA+'" target="_blank" rel="noopener">1 (246) 850-4460</a>.</p>';
+  if(mode==="signup")h+='<p class="small muted" style="margin-top:14px">Not sure yet? Read about the plans on <a href="brands.html">our Sell with us page</a> or WhatsApp us on <a href="https://wa.me/'+WA+'" target="_blank" rel="noopener">1 (246) 850-4460</a>.</p>';
   h+='</div>';
   app.innerHTML=h;
   qa("[data-go]").forEach(function(b){b.onclick=function(){authScreen(b.getAttribute("data-go"))}});
@@ -366,15 +366,15 @@ function money_owed(sales,payouts){
 function setupShop(){
   tabsEl.hidden=true;
   var plan=PLANS[wantPlan]&&!PLANS[wantPlan].hidden?wantPlan:"";
-  var h='<h1 class="page">Set up your shop</h1><p class="lead">Tell shoppers about your brand, pick your plan and sign the agreement. Then you can add your products and photos.</p>';
+  var h='<h1 class="page">Set up your shop</h1><p class="lead">Tell shoppers about your business, pick your plan and sign the agreement. Then you can add your products and photos.</p>';
   h+='<form id="sf" novalidate>'+
-  '<fieldset><legend><i>1</i>Your brand</legend>'+
-  '<label class="f">Brand or business name<input name="business" required maxlength="80" autocomplete="organization"></label>'+
+  '<fieldset><legend><i>1</i>Your business</legend>'+
+  '<label class="f">Business name<input name="business" required maxlength="80" autocomplete="organization"></label>'+
   '<label class="f">Your full name<input name="owner_name" required maxlength="80" autocomplete="name"></label>'+
   '<div class="two"><label class="f">WhatsApp number<input type="tel" name="phone" required maxlength="30" autocomplete="tel" inputmode="tel" placeholder="246 ..."></label>'+
   '<label class="f">Instagram <span class="hint">optional</span><input name="instagram" maxlength="60" placeholder="@yourbrand"></label></div>'+
   '<label class="f">What you sell<select name="category" required><option value="">Choose one</option>'+CATS.filter(function(c){return c!=="Digital"}).map(function(c){return'<option>'+esc(c)+'</option>'}).join("")+'</select></label>'+
-  '<label class="f">About your brand <span class="hint">optional · a few lines shoppers will see</span><textarea name="bio" maxlength="600"></textarea></label></fieldset>'+
+  '<label class="f">About your business <span class="hint">optional · a few lines shoppers will see</span><textarea name="bio" maxlength="600"></textarea></label></fieldset>'+
   '<fieldset><legend><i>2</i>Your plan</legend><div class="pick">'+
   Object.keys(PLANS).filter(function(k){return!PLANS[k].hidden}).map(function(k){var p=PLANS[k];return'<label><input type="radio" name="plan" value="'+k+'"'+(k===plan?" checked":"")+'><div><b>'+p.name+' · '+(p.fee?"$"+p.fee+"/month":"FREE")+'</b><span>'+(p.fee?"+ "+A.RATE.first+"% per sale (20% from year two). First month free.":"$0 a month + "+A.RATE.first+"% per sale (20% from year two). No card needed.")+'</span></div></label>'}).join("")+
   '</div><p class="hint">Prices in BBD. You can change your plan anytime.</p></fieldset>'+
@@ -384,7 +384,7 @@ function setupShop(){
   '<fieldset><legend><i>4</i>Sign the agreement</legend><div class="note info" id="agSum">Pick a plan above to see your terms.</div>'+
   '<details><summary>Read the full agreement (18 points)</summary><ol class="agree" id="agList"></ol></details>'+
   '<label class="f">Sign: type your full name<input name="sign" required maxlength="80" autocomplete="name"></label>'+
-  '<label class="chk"><input type="checkbox" name="agree"><span>I have read and agree to the consignment agreement for my brand.</span></label></fieldset>'+
+  '<label class="chk"><input type="checkbox" name="agree"><span>I have read and agree to the consignment agreement for my business.</span></label></fieldset>'+
   '<p class="err" id="serr" role="alert"></p>'+
   '<div class="btnrow"><button class="btn full" type="submit" id="sbtn">Open my shop</button></div>'+
   '<p style="text-align:center;margin-top:10px"><button class="linkbtn" type="button" id="sout">Sign out</button></p></form>';
@@ -396,7 +396,7 @@ function setupShop(){
   f.addEventListener("change",function(e){if(e.target.name==="plan")draw()});draw();
   f.onsubmit=function(e){e.preventDefault();var err=q("#serr");setErr(err,"");
     var v=function(n){return(f.elements[n]&&f.elements[n].value||"").trim()};
-    var need=[["business","your brand name"],["owner_name","your full name"],["phone","your WhatsApp number"],["category","what you sell"]];
+    var need=[["business","your business name"],["owner_name","your full name"],["phone","your WhatsApp number"],["category","what you sell"]];
     for(var i=0;i<need.length;i++)if(!v(need[i][0])){f.elements[need[i][0]].focus();return setErr(err,"Please add "+need[i][1]+".")}
     if(v("phone").replace(/\D/g,"").length<7)return setErr(err,"Please check your WhatsApp number.");
     var pr=f.querySelector("input[name=plan]:checked");if(!pr)return setErr(err,"Please pick a plan.");
@@ -502,11 +502,11 @@ function vMoney(v){
 function vBusiness(v){
   var pl=PLANS[v.plan]||{};
   var h='<h1 class="page">My business</h1>'+statusNote(v)+'<form class="card" id="bf" novalidate>'+
-  '<label class="f">Brand or business name<input name="business" maxlength="80" value="'+esc(v.business)+'"></label>'+
+  '<label class="f">Business name<input name="business" maxlength="80" value="'+esc(v.business)+'"></label>'+
   '<label class="f">Your full name<input name="owner_name" maxlength="80" value="'+esc(v.owner_name)+'"></label>'+
   '<div class="two"><label class="f">WhatsApp number<input type="tel" name="phone" maxlength="30" value="'+esc(v.phone)+'"></label>'+
   '<label class="f">Instagram<input name="instagram" maxlength="60" value="'+esc(v.instagram)+'"></label></div>'+
-  '<label class="f">About your brand<textarea name="bio" maxlength="600">'+esc(v.bio)+'</textarea></label>'+
+  '<label class="f">About your business<textarea name="bio" maxlength="600">'+esc(v.bio)+'</textarea></label>'+
   '<label class="f">How you get paid<select name="payout_method">'+["Bank transfer","FirstPay","BPWCCUL"].map(function(m){return'<option'+(m===v.payout_method?" selected":"")+'>'+m+'</option>'}).join("")+'</select></label>'+
   '<p class="err" id="berr" role="alert"></p><div class="btnrow"><button class="btn" type="submit" id="bbtn">Save changes</button></div></form>';
   h+='<div class="card"><h2 style="font-size:19px">Your plan: '+esc(pl.name||v.plan)+'</h2><p class="muted" style="margin-top:6px">'+(pl.fee?"$"+pl.fee+" a month + ":"Free, ")+esc(feeText(v))+'. To change your plan, WhatsApp us.</p><div class="btnrow"><a class="btn sm ghost" href="https://wa.me/'+WA+'?text='+encodeURIComponent("Hi Shop Bajan! I'd like to change my plan for "+v.business+".")+'" target="_blank" rel="noopener">Change my plan</a></div></div>';
@@ -525,7 +525,7 @@ function wireVendor(){
   var so=q("#sout");if(so)so.onclick=signOut;
   var bf=q("#bf");if(bf)bf.onsubmit=function(e){e.preventDefault();
     var upd={};["business","owner_name","phone","instagram","bio","payout_method"].forEach(function(k){upd[k]=bf.elements[k].value.trim()});
-    if(!upd.business||!upd.owner_name)return setErr(q("#berr"),"Please keep your brand name and your name filled in.");
+    if(!upd.business||!upd.owner_name)return setErr(q("#berr"),"Please keep your business name and your name filled in.");
     var btn=q("#bbtn");busy(btn,true);
     sb.from("vendors").update(upd).eq("id",S.vendor.id).select().single().then(function(r){busy(btn,false);if(r.error)return setErr(q("#berr"),friendly(r.error));S.vendor=r.data;toast("Saved 💕")});
   };
@@ -674,7 +674,7 @@ function aApprove(){
   if(pp.some(function(p){var v=vById(p.vendor_id);return v&&v.status!=="approved"}))h+='<p class="small muted" style="margin-top:12px">Products from shops that aren\'t approved yet stay off the website until you approve the shop too.</p>';
   return h;
 }
-function aVendors(){return'<h1 class="page">Vendors</h1><p class="lead">'+S.all.vendors.length+' brand'+(S.all.vendors.length===1?"":"s")+' signed up.</p>'+(S.all.vendors.length?S.all.vendors.map(vendorCard).join(""):'<div class="empty">No vendors yet. Share <b>shopbajanbb.com/vendors</b> or the For Brands page.</div>')}
+function aVendors(){return'<h1 class="page">Vendors</h1><p class="lead">'+S.all.vendors.length+' small business'+(S.all.vendors.length===1?"":"es")+' signed up.</p>'+(S.all.vendors.length?S.all.vendors.map(vendorCard).join(""):'<div class="empty">No vendors yet. Share <b>shopbajanbb.com/vendors</b> or the Sell with us page.</div>')}
 function aProducts(){
   var h='<h1 class="page">All products</h1><label class="f vpick">Show<select id="pfilt"><option value="">All</option><option value="live">Live</option><option value="pending">Waiting</option><option value="changes">Changes asked</option><option value="hidden">Hidden</option></select></label>';
   var list=S.all.products.filter(function(p){return!S.pfilt||p.status===S.pfilt});
