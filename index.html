@@ -606,6 +606,23 @@ footer .legal{border-top:2px solid rgba(255,255,255,.25);text-align:left}
 @media (max-width:600px){.hero .row .btn{height:52px}}
 @media (max-width:700px){.bar{flex-wrap:nowrap;gap:.6rem}.tools{gap:.5rem}.cart-btn{min-height:42px;padding:0 .8rem;font-size:.9rem}.logo-text{font-size:1.3rem}.logo small{font-size:.5rem}}
 </style>
+<script>
+/* ==ACADEMY BRAND COLOURS== on the Academy (?site=academy) swap the old pink palette for Shop Bajan's:
+   ultramarine #00267F, gold #FFC72C, yellow #FFE45C, white and black. The launch shop is untouched. */
+(function(){if(document.documentElement.getAttribute("data-site")!=="academy")return;
+var M=[[/#ff4d94|#ff5fa0|#f2408a|#e8418a|#f06292/gi,"#00267F"],[/#c4256b/gi,"#001a5c"],[/#ffc9df|#ffc2dc/gi,"#d6e0ff"],[/#ffe3ef/gi,"#eef2ff"],[/#fff4f8/gi,"#f5f7ff"],
+[/#4a1636|#4a143d|#5a1236|#7a1f4a/gi,"#0b1533"],[/#85506b|#7a4a6a/gi,"#4a5578"],[/#240820/gi,"#000a26"],[/#fff27a/gi,"#FFE45C"],[/#fffbd1|#fff8c9|#fff4b0/gi,"#fff6cc"],
+[/#fff6fa/gi,"#f5f7ff"],[/#ffe6f0/gi,"#eef2ff"],[/#6b3a5c/gi,"#4a5578"],[/#fff9d9/gi,"#fff6cc"],
+[/rgb\(255,\s*77,\s*148\)/gi,"rgb(0, 38, 127)"],[/rgb\(255,\s*95,\s*160\)/gi,"rgb(0, 38, 127)"],[/rgb\(196,\s*37,\s*107\)/gi,"rgb(0, 26, 92)"],[/rgb\(122,\s*31,\s*74\)/gi,"rgb(0, 26, 92)"],[/rgb\(90,\s*18,\s*54\)/gi,"rgb(11, 21, 51)"],[/rgb\(255,\s*201,\s*223\)/gi,"rgb(214, 224, 255)"],
+[/rgba\(232,\s*65,\s*138,/gi,"rgba(0,38,127,"],[/rgba\(150,\s*20,\s*80,/gi,"rgba(0,26,92,"],[/rgba\(74,\s*22,\s*54,/gi,"rgba(11,21,51,"],[/rgba\(255,\s*111,\s*89,/gi,"rgba(255,199,44,"]];
+function sw(t){for(var i=0;i<M.length;i++)t=t.replace(M[i][0],M[i][1]);return t}
+window.sbAcadColours=sw;
+document.querySelectorAll("style:not(#sb-css)").forEach(function(st){st.textContent=sw(st.textContent)});
+function fix(root){if(!root||root.nodeType!==1)return;[root].concat([].slice.call(root.querySelectorAll("[style],[fill],[stroke],[stop-color]"))).forEach(function(e){["style","fill","stroke","stop-color"].forEach(function(a){var v=e.getAttribute&&e.getAttribute(a);if(v){var n=sw(v);if(n!==v)e.setAttribute(a,n)}})})}
+function go(){fix(document.body);new MutationObserver(function(ms){ms.forEach(function(m){m.addedNodes.forEach(fix);if(m.type==="attributes")fix(m.target)})}).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:["style","fill","stroke"]})}
+if(document.body)go();else document.addEventListener("DOMContentLoaded",go);
+})();
+</script>
 <!-- Meta Pixel: paste your Pixel ID between the quotes below (numbers only). Leave empty to switch tracking off. -->
 <script>
 window.TGC_PIXEL_ID="990883537366488";
