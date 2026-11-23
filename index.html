@@ -313,6 +313,11 @@ footer .legal{border-top:1px solid rgba(255,255,255,.3);margin-top:2rem;padding-
 .side-small{color:#85506b;font-size:.85rem;margin-top:.2rem}
 .side-cta{display:grid;gap:.7rem;margin-top:auto}
 .side-cta .btn{text-align:center;padding:.7rem 1rem;font-size:.95rem}
+.side-cta .btn.vendor-login{background:#fff;color:#4a1636;border-color:#4a1636;box-shadow:0 4px 0 #4a1636}
+.head-login{display:inline-flex;align-items:center;min-height:42px;padding:0 .9rem;border-radius:999px;border:2px solid #4a1636;background:#fff;color:#4a1636;font-weight:700;font-size:.9rem;text-decoration:none;white-space:nowrap}
+.head-login:hover{background:#ffe3ef}
+@media (max-width:520px){.head-login{display:none}}
+html[data-site=academy] .vendor-login{display:none!important}
 .side-menu .x{color:#4a1636;background:#fff;border-color:#ff4d94}
 @media (max-width:700px){header nav{display:none}}
 /* bag drawer */
@@ -674,11 +679,16 @@ html.soon body>*:not(#soonPage){display:none!important}
 .sb-link{font-weight:700;font-size:.92rem;text-decoration:none;color:var(--blue);padding:10px 4px}
 .sb-link:hover{text-decoration:underline}
 @media(max-width:519px){.sb-link{display:none}}
+.sb-login{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;border:2px solid var(--blue);background:#fff;color:var(--blue);font:700 .92rem/1 var(--sans);text-decoration:none;white-space:nowrap}
+.sb-login:hover{background:var(--sky)}
+@media(max-width:519px){.sb-head{padding:12px 14px;gap:8px}.sb-head-r{gap:8px}.sb-brand{gap:8px}.sb-brand img{width:34px!important;height:34px!important}.sb-word b{font-size:1.2rem;white-space:nowrap}.sb-word small{font-size:.56rem;letter-spacing:.08em}.sb-login{padding:0 12px;font-size:.86rem}.sb-btn-sm{padding-left:13px;padding-right:13px;font-size:.86rem;white-space:nowrap}}
 .sb-sell-strip{display:flex;align-items:center;justify-content:center;gap:6px;min-height:46px;padding:8px 16px;background:var(--sky);color:var(--blue);font-size:.95rem;text-decoration:none;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .sb-sell-strip b{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:2px}
 .sb-sell-strip:active{background:var(--sun)}
 @media(min-width:520px){.sb-sell-strip{display:none}}
 @media(max-width:380px){.sb-head{padding:12px 14px;gap:8px}.sb-brand{gap:8px}.sb-brand svg{width:30px;height:30px}.sb-word b{font-size:1.2rem;white-space:nowrap}.sb-word small{font-size:.56rem;letter-spacing:.08em;white-space:nowrap}.sb-btn-sm{padding-left:14px;padding-right:14px;font-size:.88rem;white-space:nowrap}}
+@media(max-width:374px){.sb-head{padding:12px 10px;gap:6px}.sb-head-r{gap:6px}.sb-brand{gap:6px}.sb-word small{display:none}.sb-brand img{width:28px!important;height:28px!important}.sb-word b{font-size:1.05rem}.sb-login{min-height:40px;padding:0 10px;font-size:.8rem}.sb-btn-sm{min-height:40px;padding-left:10px;padding-right:10px;font-size:.8rem}}
+@media(max-width:340px){.sb-word{display:none}}
 
 
 /* hero */
@@ -827,6 +837,7 @@ textarea.sb-in{min-height:88px;resize:vertical}
     </a>
     <div class="sb-head-r">
       <a class="sb-link" href="brands.html" data-sb="t4:4d9c23b9">Sell with us</a>
+      <a class="sb-login" href="vendors.html" aria-label="Vendor log in">Log in</a>
       <a class="sb-btn sb-btn-sm" href="#sbJoin" data-sb-join data-sb="t5:fa721387">Join the waitlist</a>
     </div>
   </div>
@@ -839,7 +850,7 @@ textarea.sb-in{min-height:88px;resize:vertical}
         <div class="sb-hero-copy">
           <p class="sb-pill"><span class="sb-dot" aria-hidden="true"></span>Opening Thursday 10 December</p>
           <h1 id="sbH1">Barbados&rsquo; small businesses. <span class="sb-hl" data-sb="t7:927d0415">One bag.</span></h1>
-          <p class="sb-lead" data-sb="t8:618d0a72">Your favourite Bajan brands, all in one place and open 24/7. One checkout. Delivered to your door or ready to collect. No more screenshots, no more DMs, no more &ldquo;is this still available?&rdquo;</p>
+          <p class="sb-lead" data-sb="t8:fafe47de">Your favourite Bajan businesses, all in one place and open 24/7. One checkout. Delivered to your door or ready to collect. No more screenshots, no more DMs, no more &ldquo;is this still available?&rdquo;</p>
           <div class="sb-cta" id="sbHeroCta">
             <a class="sb-btn" href="#sbJoin" data-sb-join data-sb="t9:fa721387">Join the waitlist</a>
             <a class="sb-btn sb-btn-ghost" href="#sbPicture" data-sb="t10:71907362">See how it feels</a>
@@ -860,7 +871,7 @@ textarea.sb-in{min-height:88px;resize:vertical}
           <p class="sb-eyebrow" data-sb="t17:8d82b8bb">For small businesses</p>
           <h2 class="sb-h2" id="sbBrandsH">Own a small business? Launch with us.</h2>
           <p class="sb-sub" data-sb="t18:9927eef0">Shop Bajan is where Barbados finds you, 24/7. Handmade or imported, physical or digital, every category is welcome. No website to build and no checkout to set up. DM us and we&rsquo;ll design your storefront for you.</p>
-          <div class="sb-spots">We&rsquo;re offering a limited number of small businesses the chance to be founding brands. You get a lower rate locked in for as long as you stay, 3 months of our Spotlight promotion free, a Founding Brand label and a launch-week feature.</div>
+          <div class="sb-spots">We&rsquo;re offering a limited number of small businesses the chance to be founding businesses. You get a lower rate locked in for as long as you stay, 3 months of our Spotlight promotion free, a Founding Business label and a launch-week feature.</div>
         </div>
         <div>
           <ul class="sb-list">
@@ -871,7 +882,7 @@ textarea.sb-in{min-height:88px;resize:vertical}
             <li data-sb="t23:a89a845c">Free to start. You only pay when you sell.</li>
           </ul>
           <div class="sb-cta">
-            <a class="sb-btn" href="brands.html" data-sb="t24:6d15d0f0">Become a founding brand</a>
+            <a class="sb-btn" href="brands.html" data-sb="t24:d1d179c1">Become a founding business</a>
             <a class="sb-btn sb-btn-line" id="sbWaBrand" href="https://wa.me/12468504460" target="_blank" rel="noopener">Ask us on WhatsApp</a>
           </div>
         </div>
@@ -886,8 +897,8 @@ textarea.sb-in{min-height:88px;resize:vertical}
         <div class="sb-scenes">
           <article class="sb-scene"><div class="sb-scene-top"><span class="sb-time" data-sb="t27:59aad3c2">11:48 pm</span></div><h3 data-sb="t28:d44a1b20">The birthday you forgot is tomorrow.</h3><p data-sb="t29:6965c788">Shop Bajan never closes. Find something local and lovely, check out in minutes, and wake up like you planned it all week.</p></article>
           <article class="sb-scene"><div class="sb-scene-top"><span class="sb-time" data-sb="t30:8943ed7a">12:30 pm</span></div><h3 data-sb="t31:4500f626">Lunch break. One thumb. Done.</h3><p data-sb="t32:99bb26d5">Order from your desk between bites. Have it delivered, or collect it on your way home.</p></article>
-          <article class="sb-scene"><div class="sb-scene-top"><span class="sb-time" data-sb="t33:7d4bdf41">Sunday, on the couch</span></div><h3 data-sb="t34:3d0b9b47">Five businesses. One bag.</h3><p data-sb="t35:eede6e83">Nails from one brand, a candle from another, earrings from a third. One checkout instead of five DMs, five transfers and five waits.</p></article>
-          <article class="sb-scene"><div class="sb-scene-top"><span class="sb-time" data-sb="t36:3a7452f3">Any day</span></div><h3 data-sb="t37:0deec984">&ldquo;Is this still available?&rdquo; Never typed again.</h3><p data-sb="t38:0df07058">We check stock with every brand, so what you see on the shelf is what you can order.</p></article>
+          <article class="sb-scene"><div class="sb-scene-top"><span class="sb-time" data-sb="t33:7d4bdf41">Sunday, on the couch</span></div><h3 data-sb="t34:3d0b9b47">Five businesses. One bag.</h3><p data-sb="t35:834a5d0d">Nails from one small business, a candle from another, earrings from a third. One checkout instead of five DMs, five transfers and five waits.</p></article>
+          <article class="sb-scene"><div class="sb-scene-top"><span class="sb-time" data-sb="t36:3a7452f3">Any day</span></div><h3 data-sb="t37:0deec984">&ldquo;Is this still available?&rdquo; Never typed again.</h3><p data-sb="t38:e76b4e2a">We check stock with every small business, so what you see on the shelf is what you can order.</p></article>
           <article class="sb-scene"><div class="sb-scene-top"><span class="sb-time" data-sb="t39:2a40392f">Saturday errands</span></div><h3 data-sb="t40:9311962b">Pick it up on your route.</h3><p data-sb="t41:f07bdbb2">Choose collection or a meet-up that fits your day, instead of waiting around for a reply.</p></article>
           <article class="sb-scene"><div class="sb-scene-top"><span class="sb-time" data-sb="t42:aa5b39c5">This Christmas</span></div><h3 data-sb="t43:7fe32402">Everyone on your list, from Bajan hands.</h3><p data-sb="t44:fe439f81">Gifts with a story, in one bag, from small businesses right here at home. Every order backs a Bajan small business.</p></article>
         </div>
@@ -900,8 +911,8 @@ textarea.sb-in{min-height:88px;resize:vertical}
         <p class="sb-eyebrow" data-sb="t46:d03ba450">How it works</p>
         <h2 class="sb-h2" id="sbHowH">From &ldquo;I want that&rdquo; to &ldquo;it&rsquo;s mine&rdquo; in three steps.</h2>
         <ol class="sb-steps">
-          <li class="sb-step"><span class="sb-num" aria-hidden="true">1</span><div><h3 data-sb="t47:96e5a3f5">Browse local storefronts</h3><p data-sb="t48:0f817776">Every brand gets its own storefront. Handmade or imported, physical or digital, every category is welcome.</p></div></li>
-          <li class="sb-step"><span class="sb-num" aria-hidden="true">2</span><div><h3 data-sb="t49:bef2a4ea">Fill one bag</h3><p data-sb="t50:482b71d7">Add from as many brands as you like. One bag. One checkout. Done.</p></div></li>
+          <li class="sb-step"><span class="sb-num" aria-hidden="true">1</span><div><h3 data-sb="t47:96e5a3f5">Browse local storefronts</h3><p data-sb="t48:4c1a4bcc">Every small business gets its own storefront. Handmade or imported, physical or digital, every category is welcome.</p></div></li>
+          <li class="sb-step"><span class="sb-num" aria-hidden="true">2</span><div><h3 data-sb="t49:bef2a4ea">Fill one bag</h3><p data-sb="t50:7dd2541e">Add from as many small businesses as you like. One bag. One checkout. Done.</p></div></li>
           <li class="sb-step"><span class="sb-num" aria-hidden="true">3</span><div><h3 data-sb="t51:0e15f700">Get it your way</h3><p data-sb="t52:317582a3">Have it delivered, or collect or meet up. We hold the stock and handle the handover, so you&rsquo;re never chasing anyone.</p></div></li>
         </ol>
       </div>
@@ -973,7 +984,7 @@ textarea.sb-in{min-height:88px;resize:vertical}
           <details><summary data-sb="t74:ab9e1dae">Does it cost anything to join the waitlist?</summary><p data-sb="t75:95fba046">No. It&rsquo;s free and there&rsquo;s nothing to buy. We just need your name and a way to reach you.</p></details>
           <details><summary data-sb="t76:837a2e85">What do I get for joining?</summary><p data-sb="t77:9000c683">A waitlist-only launch gift (free delivery on your first order) and the first message when the doors open.</p></details>
           <details><summary data-sb="t78:07aed227">How do delivery and collection work?</summary><p data-sb="t79:e3218c7a">At checkout you choose delivery, or collection or a meet-up. We handle both, so you&rsquo;re not chasing sellers.</p></details>
-          <details><summary data-sb="t80:06f1c3cb">I run a small business. Can I sell here?</summary><p data-sb="t81:32e38c0c">Yes. Handmade, imported, physical or digital, most categories are welcome. The one rule: We don&rsquo;t sell food, liquor, wine or other alcohol. See the founding brand details above, or message us and we&rsquo;ll walk you through it.</p></details>
+          <details><summary data-sb="t80:06f1c3cb">I run a small business. Can I sell here?</summary><p data-sb="t81:32e38c0c">Yes. Handmade, imported, physical or digital, most categories are welcome. The one rule: We don&rsquo;t sell food, liquor, wine or other alcohol. See the founding business details above, or message us and we&rsquo;ll walk you through it.</p></details>
           <details><summary data-sb="t82:ddd1eb52">What happens to my details?</summary><p data-sb="t83:06110585">We only use them to tell you about Shop Bajan. Our shop policies page has the full privacy details.</p></details>
         </div>
       </div>
@@ -1032,7 +1043,7 @@ Array.prototype.forEach.call(document.querySelectorAll('#soonPage a[href^="#sb"]
   e.preventDefault();try{t.scrollIntoView({behavior:"smooth",block:"start"})}catch(x){t.scrollIntoView()}})});
 
 /* WhatsApp link for brands */
-var wb=$("#sbWaBrand");if(wb)wb.href="https://wa.me/"+WA+"?text="+encodeURIComponent("Hi Shop Bajan! I'd love to join as a founding brand.");
+var wb=$("#sbWaBrand");if(wb)wb.href="https://wa.me/"+WA+"?text="+encodeURIComponent("Hi Shop Bajan! I'd love to join as a founding business.");
 
 /* form */
 var f=$("#sbForm"),nameEl=$("#sbName"),contactEl=$("#sbContact"),contactL=$("#sbContactL"),wishEl=$("#sbWish"),wishL=$("#sbWishL"),err=$("#sbErr"),btn=$("#sbSubmit"),done=$("#sbDone");
@@ -1062,7 +1073,7 @@ function showDone(name,role,via){
   var first=String(name||"").trim().split(/\s+/)[0]||"love",brand=role==="brand";
   var share="https://wa.me/?text="+encodeURIComponent("Shop Bajan opens Thursday 10 December: Barbados' small businesses, one bag, one checkout, open 24/7. Join the waitlist and get a launch gift: "+SITE+"?utm_source=waitlist-share");
   var h='<div class="sb-tick" aria-hidden="true">✓</div><h3>You’re on the list, '+esc(first)+'!</h3>';
-  if(brand)h+='<p>Thank you! We’ll be in touch about founding brand spots. You can start your sign-up right now.</p><a class="sb-btn" href="brands.html">Start my founding brand sign-up</a>';
+  if(brand)h+='<p>Thank you! We’ll be in touch about founding business spots. You can start your sign-up right now.</p><a class="sb-btn" href="brands.html">Start my founding business sign-up</a>';
   else h+='<p>We’ll message you '+(via==="email"?'by email':'on WhatsApp')+' the moment Shop Bajan opens on <b>Thursday 10 December</b>.</p><p class="sb-gift">🎁 Your waitlist-only gift is saved: free delivery on your first order.</p>';
   h+='<a class="sb-btn'+(brand?' sb-btn-ghost':'')+'" href="'+share+'" target="_blank" rel="noopener">Tell a friend on WhatsApp</a>';
   h+='<a class="sb-btn sb-btn-ghost" href="https://www.instagram.com/shopbajan/" target="_blank" rel="noopener">Follow @shopbajan</a>';
@@ -1108,7 +1119,7 @@ try{var s=JSON.parse(store()||"null");if(s&&s.name)showDone(s.name,s.role,s.via)
 <header>
   <div class="bar">
     <button class="menu-btn" id="openMenu" aria-label="Open menu" aria-controls="sideMenu" aria-expanded="false"><span></span><span></span><span></span></button>
-    <a class="logo" href="#top" aria-label="The Girls Club home"><span class="logo-text">The Girls Club</span><small>DIY beauty · Barbados</small></a>
+    <a class="logo" href="#top" aria-label="Shop Bajan home"><span class="logo-text">Shop Bajan</span><small>Barbados</small></a>
     <nav aria-label="Main">
       <a href="#shop">Shop Bajan</a>
       <a href="#book">Book</a>
@@ -1118,6 +1129,7 @@ try{var s=JSON.parse(store()||"null");if(s&&s.name)showDone(s.name,s.role,s.via)
     </nav>
     <div class="tools">
       <a class="ig" href="https://www.instagram.com/shopbajan/" target="_blank" rel="noopener">Instagram</a>
+      <a class="head-login vendor-login" href="vendors.html" aria-label="Vendor log in">Log in</a>
       <button class="search-btn" id="openSearch" type="button" aria-label="Search the website" aria-controls="searchPanel" aria-expanded="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></svg></button>
       <button class="btn cart-btn" id="openCart" aria-label="Open bag"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Bag <b id="count">0</b></button>
     </div>
@@ -1176,7 +1188,7 @@ try{var s=JSON.parse(store()||"null");if(s&&s.name)showDone(s.name,s.role,s.via)
       <div class="shop-show" id="shopShow" hidden></div>
       <form class="mk-search" role="search" action="#shop" onsubmit="return false">
         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <input id="mkQ" type="search" placeholder="Search products and brands" aria-label="Search products and brands" autocomplete="off" enterkeyhint="search">
+        <input id="mkQ" type="search" placeholder="Search products and small businesses" aria-label="Search products and small businesses" autocomplete="off" enterkeyhint="search">
         <button type="button" class="x" id="mkQx" aria-label="Clear search" hidden>×</button>
       </form>
       <div class="mk-tabs" role="tablist" aria-label="Shop Bajan sections">
@@ -1442,7 +1454,7 @@ html.shop-mode main>*:not(#shop){display:none!important}
 
   <section id="about" class="about">
     <div class="wrap">
-      <div class="about-photo"><img id="aboutPhoto" src="img/logo-tgc.png" alt="The Girls Club" style="object-fit:contain;background:#fff" loading="lazy" width="700" height="875"></div>
+      <div class="about-photo"><img id="aboutPhoto" src="img/logo-tgc.png" alt="Shop Bajan" style="object-fit:contain;background:#fff" loading="lazy" width="700" height="875"></div>
       <div class="about-text">
         <span class="eyebrow" data-c="about.eyebrow">Our story</span>
         <h2 data-c="about.title">Hi, we're The Girls Club</h2>
@@ -1476,12 +1488,12 @@ html.shop-mode main>*:not(#shop){display:none!important}
 <footer>
   <div class="wrap">
     <div class="cols">
-      <div class="brand"><p class="foot-logo">The Girls Club</p><p>Shop Bajan by The Girls Club. Bajan small businesses, all in one place.</p></div>
+      <div class="brand"><p class="foot-logo">Shop Bajan</p><p>Bajan small businesses, all in one place.</p></div>
       <div><h4>Explore</h4><ul><li><a href="#shop">Shop Bajan</a></li><li><a href="#book">Book an appointment</a></li><li><a href="#academy">Academy</a></li><li><a href="#about">About Us</a></li><li><a href="#soon">Coming soon</a></li><li><a href="policies.html">Delivery, returns &amp; privacy</a></li><li><a href="creators.html">Affiliate Program: earn with us</a></li><li><a href="https://www.instagram.com/shopbajan/" target="_blank" rel="noopener">@shopbajan</a></li></ul></div>
       <div><h4>Contact us</h4><ul><li><a class="wa-link" href="#" target="_blank" rel="noopener">WhatsApp us</a></li><li><a href="https://ig.me/m/shopbajan" target="_blank" rel="noopener">DM on Instagram</a></li><li><span class="wa-num"></span></li><li>Collection: <span class="collect-area">St. Thomas</span>, Barbados</li></ul></div>
       <div><h4>We accept</h4><ul id="accepts"><li>Debit &amp; credit cards</li><li>PayPal</li><li>Dodo</li></ul></div>
     </div>
-    <p class="legal">&copy; 2026 The Girls Club · Shop online 24/7 · Island-wide delivery &amp; collection in St. Thomas · Prices in BBD (Barbados dollars) · <a href="policies.html" style="color:inherit">Shop policies</a></p>
+    <p class="legal">&copy; 2026 Shop Bajan · Shop online 24/7 · Island-wide delivery &amp; collection in St. Thomas · Prices in BBD (Barbados dollars) · <a href="policies.html" style="color:inherit">Shop policies</a></p>
   </div>
 </footer>
 
@@ -1536,10 +1548,10 @@ html.shop-mode main>*:not(#shop){display:none!important}
 <div class="menu-scrim" id="menuScrim" hidden></div>
 <aside class="side-menu" id="sideMenu" hidden aria-label="Menu">
   <div class="side-top">
-    <span class="side-logo">The Girls Club</span>
+    <span class="side-logo">Shop Bajan</span>
     <button class="x" id="closeMenu" aria-label="Close menu">×</button>
   </div>
-  <p class="side-tag">DIY beauty · Barbados</p>
+  <p class="side-tag">Barbados</p>
   <nav class="side-links" aria-label="Menu links">
     <a href="#search" data-open-search>Search</a>
     <a href="#top">Home</a>
@@ -1556,6 +1568,7 @@ html.shop-mode main>*:not(#shop){display:none!important}
     <span class="side-small">Shop online 24/7</span>
   </div>
   <div class="side-cta">
+    <a class="btn vendor-login" href="vendors.html">Vendor log in</a>
     <a class="btn wa-link" href="#" target="_blank" rel="noopener">WhatsApp us</a>
     <a class="btn alt" href="https://www.instagram.com/shopbajan/" target="_blank" rel="noopener">@shopbajan</a>
   </div>
@@ -1620,7 +1633,7 @@ function mountCardPay(o){
   const backup=msg=>{box.innerHTML=`<p class="muted">${msg}</p>${PAYPAL_ME?`<a class="btn paypal" href="${PAYPAL_ME.replace(/\/$/,"")}/${amt}USD" target="_blank" rel="noopener">Pay ${usd(o.total)} by card</a>`:""}`};
   loadPP().then(pp=>{
     const btn=pp.Buttons({fundingSource:pp.FUNDING.CARD,style:{layout:"vertical",shape:"pill",label:"pay",height:50},
-      createOrder:(d,a)=>a.order.create({intent:"CAPTURE",purchase_units:[{custom_id:o.id,description:"The Girls Club order "+o.id,amount:{currency_code:"USD",value:amt}}],application_context:{shipping_preference:"NO_SHIPPING",brand_name:"The Girls Club"}}),
+      createOrder:(d,a)=>a.order.create({intent:"CAPTURE",purchase_units:[{custom_id:o.id,description:"Shop Bajan order "+o.id,amount:{currency_code:"USD",value:amt}}],application_context:{shipping_preference:"NO_SHIPPING",brand_name:"Shop Bajan"}}),
       onApprove:(d,a)=>a.order.capture().then(r=>{o.paid=true;o.paidRef=r.id||"";try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/card-paid",event:true})}catch(x){}renderDrawer()}),
       onError:()=>backup("Something went wrong with the card payment. If you were charged, message us on WhatsApp with your order number and we'll sort it out.")});
     if(!btn.isEligible()){backup("Card checkout isn't available on this device. Please use another way to pay.");return}
@@ -1682,7 +1695,7 @@ list(MK.products).filter(p=>p&&p.id&&p.name&&brandName(p.brand)).forEach(p=>prod
   /* gallery */
   const ph=list(G.photos).filter(p=>p.image);
   if(G.show===false||!ph.length)hide("results");
-  document.getElementById("gallery").innerHTML=ph.map(p=>`<img src="${esc(U(p.image))}" alt="${esc(p.alt||"Girls Club lash set")}" loading="lazy" width="600" height="750">`).join("");
+  document.getElementById("gallery").innerHTML=ph.map(p=>`<img src="${esc(U(p.image))}" alt="${esc(p.alt||"Lash set")}" loading="lazy" width="600" height="750">`).join("");
   /* about */
   if(AB.photo)document.getElementById("aboutPhoto").src=U(AB.photo);
   document.getElementById("aboutBadges").innerHTML=list(AB.badges).map(t=>`<span>${esc(t)}</span>`).join("");
@@ -1737,7 +1750,22 @@ list(MK.products).filter(p=>p&&p.id&&p.name&&brandName(p.brand)).forEach(p=>prod
       const lh=hero.querySelector(".lead-hero");if(lh&&/course|enrol|book/i.test(lh.textContent))lh.textContent="Lashes, lip treats, gift vouchers, online courses and more from Bajan small businesses, most of them women-owned. One bag, one checkout, delivered island-wide.";
       hero.querySelector(".row").innerHTML=`<a class="btn white" href="brands.html">Sell with us</a>`}
     perk(1,"Shop open 24/7","Order any time, day or night.");
-    const fb=document.querySelector("footer .brand p:not(.foot-logo)");if(fb)fb.textContent="Shop Bajan by The Girls Club. Bajan small businesses, all in one place.";
+    const fb=document.querySelector("footer .brand p:not(.foot-logo)");if(fb)fb.textContent="Bajan small businesses, all in one place.";
+    /* Shop Bajan name and logo everywhere on the marketplace */
+    const mark=`<img src="${U("shop-bajan-mark.png")}" alt="" width="36" height="36" class="sb-mark">`;
+    document.querySelectorAll(".logo-text").forEach(e=>{e.textContent="Shop Bajan";if(!e.parentNode.querySelector(".sb-mark"))e.insertAdjacentHTML("beforebegin",mark)});
+    document.querySelectorAll(".side-logo,.foot-logo").forEach(e=>e.textContent="Shop Bajan");
+    document.querySelectorAll(".logo small,.side-tag").forEach(e=>e.textContent="Barbados");
+    document.querySelectorAll(".logo").forEach(e=>e.setAttribute("aria-label","Shop Bajan home"));
+    perk(3,"Bajan small businesses","Shop local, most of them women-owned.");
+    {const ic=perks[3]&&perks[3].querySelector(".ico");if(ic)ic.innerHTML=`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00267F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>`}
+    {const ab=$("about");if(ab){const t=ab.querySelector("h2"),sg=ab.querySelector(".sign");if(t)t.textContent="Hi, we're Shop Bajan";if(sg)sg.hidden=true;
+      $("aboutBadges").innerHTML=["Bajan small businesses","Delivered island-wide"].map(x=>`<span>${x}</span>`).join("");
+      $("aboutText").innerHTML=["Shop Bajan is one website for Barbados' small businesses, most of them women-owned. Beauty, fashion, jewellery, home, gifts and digital products, side by side.","Add from as many small businesses as you like. One bag, one checkout, delivered to your door or ready to collect in St. Thomas."].map(x=>`<p>${x}</p>`).join("");
+      const ph=$("aboutPhoto");if(ph){ph.alt="Shop Bajan"}}}
+    {const so=$("soon");if(so){const t=so.querySelector("h2");if(t)t.textContent="New on the shelf soon";const l=so.querySelector(".lead");if(l)l.textContent="Here's what's on the way.";const j=so.querySelector(".signup h3");if(j)j.textContent="New drops and sales"}}
+    document.querySelectorAll(".side-links .join-link").forEach(a=>a.textContent="New drops and sales");
+    const lg=document.querySelector("footer .legal");if(lg)lg.innerHTML=lg.innerHTML.replace("The Girls Club","Shop Bajan");
     setHTML("footer .cols>div:nth-child(2) ul",`<li><a href="#shop">Shop Bajan</a></li><li><a href="#shop/products">Products</a></li><li><a href="#shop/digital">Digital products</a></li><li><a href="brands.html">Sell with us</a></li><li><a href="#about">About Us</a></li><li><a href="#soon">Coming soon</a></li><li><a href="policies.html">Delivery, returns &amp; privacy</a></li><li><a href="creators.html">Affiliate Program: earn with us</a></li>`);
   }
 }
@@ -1827,7 +1855,7 @@ function bagItem(p,o){if(p.isCourse)return{id:p.id,course:p.course,name:"Shop Ba
 const findItem=id=>shopItems.find(x=>x.id===id);
 function pcard(p){const o=offPct(p);
   const act=isOut(p)?`<button class="add" type="button" disabled>Sold out</button>`:(p.opts.length||p.isCourse)?`<a class="add choose" href="${pHref(p)}">${p.isCourse?"Enrol":"Choose"}</a>`:`<button class="add" type="button" data-add="${esc(p.id)}" aria-label="Add ${esc(p.name)} to bag">Add<span class="xl">&nbsp;to bag</span></button>`;
-  return `<article class="pcard${isDig(p)?" dig":""}" data-card="${esc(p.id)}"><a class="card-link" href="${pHref(p)}"><div class="thumb">${thumb(p)}${p.tag?`<span class="tag">${esc(p.tag)}</span>`:""}${o?`<span class="off">-${o}%</span>`:""}</div><span class="mk-sold">By ${esc(p.brand||"The Girls Club")}</span><h3>${esc(p.name)}</h3><span class="ptype">${esc(p.type)}</span></a><div class="row"><span class="price"><small>BBD</small> ${priceHTML(p)}</span>${act}</div></article>`}
+  return `<article class="pcard${isDig(p)?" dig":""}" data-card="${esc(p.id)}"><a class="card-link" href="${pHref(p)}"><div class="thumb">${thumb(p)}${p.tag?`<span class="tag">${esc(p.tag)}</span>`:""}${o?`<span class="off">-${o}%</span>`:""}</div><span class="mk-sold">By ${esc(p.brand||"Shop Bajan")}</span><h3>${esc(p.name)}</h3><span class="ptype">${esc(p.type)}</span></a><div class="row"><span class="price"><small>BBD</small> ${priceHTML(p)}</span>${act}</div></article>`}
 function miniCard(p){const o=offPct(p);return `<a class="mini" href="${pHref(p)}"><div class="thumb">${thumb(p)}${p.tag?`<span class="tag">${esc(p.tag)}</span>`:""}${o?`<span class="off">-${o}%</span>`:""}</div><b>${esc(p.name)}</b><span class="price">${priceHTML(p)}</span></a>`}
 document.addEventListener("click",e=>{const b=e.target.closest("[data-add]");if(!b||!b.closest("#shop,#market"))return;const p=findItem(b.dataset.add);if(p)addItem(bagItem(p,""))});
 
@@ -1844,7 +1872,7 @@ const view={tab:"all",cat:"",q:""};
 const mkNorm=t=>String(t||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/&/g," and ").replace(/[^a-z0-9]+/g," ").trim();
 const mkStem=w=>w.length>3&&/s$/.test(w)&&!/ss$/.test(w)?w.slice(0,-1):w;
 const SYN={lashe:"lash",class:"course",classe:"course",training:"course",voucher:"voucher gift",present:"gift",xmas:"christmas",download:"digital",ebook:"guide",template:"guide"};
-function mkHay(p){if(!p._hay)p._hay=" "+mkNorm([p.name,p.type,p.brand||"The Girls Club",p.desc,catName(dCat(p)),dCat(p),isDig(p)?"digital online download":"product",(p.opts||[]).join(" "),(p.points||[]).join(" "),p.tag,p.cat==="lashes"?"lash cluster tray":""].join(" ")).split(" ").map(mkStem).join(" ")+" ";return p._hay}
+function mkHay(p){if(!p._hay)p._hay=" "+mkNorm([p.name,p.type,p.brand||"Shop Bajan",p.desc,catName(dCat(p)),dCat(p),isDig(p)?"digital online download":"product",(p.opts||[]).join(" "),(p.points||[]).join(" "),p.tag,p.cat==="lashes"?"lash cluster tray":""].join(" ")).split(" ").map(mkStem).join(" ")+" ";return p._hay}
 function mkMatch(p,q){const toks=mkNorm(q).split(" ").filter(t=>t&&!["the","a","an","and","for","of","to","my","i","me"].includes(t)).map(mkStem);if(!toks.length)return true;const h=mkHay(p);
   return toks.every(t=>{const alts=(SYN[t]||t).split(" ");return alts.some(a=>a.length>=3?h.includes(a):h.includes(" "+a))})}
 function mkHash(){return "#shop"+(view.tab!=="all"?"/"+view.tab:"")+(view.cat?"/"+encodeURIComponent(view.cat):"")}
@@ -1907,13 +1935,13 @@ function related(p){return shopItems.filter(x=>x.id!==p.id&&!isOut(x)).map(x=>[(
 function searches(p){const s=[];const add=t=>{t=String(t||"").trim();if(t&&!s.some(x=>x.toLowerCase()===t.toLowerCase()))s.push(t)};
   if(!p.isCourse)add(p.type);(RS[dCat(p)]||[catName(dCat(p))]).forEach(add);if(p.brand)add(p.brand);if(p.was>p.price)add("On sale");return s.slice(0,6)}
 function pdHTML(p){const o=offPct(p),out=isOut(p),dig=isDig(p);
-  const facts=[p.isCourse?"Online course · learn from your phone at your own pace":dig?"Digital · sent to you on WhatsApp after payment":`Island-wide delivery $${num(S.delivery_fee)||12} BBD, or free collection in ${esc(S.collection_area||"St. Thomas")}`,`Pay by ${esc(payList())}`,p.vendor?`Sold by ${esc(p.brand)}, a local brand on Shop Bajan`:"By The Girls Club, Barbados"];
+  const facts=[p.isCourse?"Online course · learn from your phone at your own pace":dig?"Digital · sent to you on WhatsApp after payment":`Island-wide delivery $${num(S.delivery_fee)||12} BBD, or free collection in ${esc(S.collection_area||"St. Thomas")}`,`Pay by ${esc(payList())}`,p.vendor?`Sold by ${esc(p.brand)}, a Bajan business on Shop Bajan`:"By Shop Bajan, Barbados"];
   const rel=related(p),more=p.vendor?shopItems.filter(x=>x.vendor===p.vendor&&x.id!==p.id):[];
   return `<div class="pd-bar"><button type="button" class="pd-back" data-pd-close>‹ Back</button><button type="button" data-pd-share aria-label="Share this">↗ Share</button><button type="button" class="pd-bag" data-pd-bag aria-label="Open bag">Bag ${cart.reduce((a,c)=>a+c.qty,0)}</button></div>
   <div class="pd-in"><div class="pd-main">
    <div class="pd-img"><div class="thumb">${thumb(p)}${p.tag?`<span class="tag">${esc(p.tag)}</span>`:""}${o?`<span class="off">-${o}%</span>`:""}</div></div>
    <div class="pd-info">
-    <span class="mk-sold">${dig?"Digital · ":""}By ${esc(p.brand||"The Girls Club")}</span>
+    <span class="mk-sold">${dig?"Digital · ":""}By ${esc(p.brand||"Shop Bajan")}</span>
     <h2 id="pdName" tabindex="-1">${esc(p.name)}</h2>${p.type?`<p class="pd-type">${esc(p.type)}</p>`:""}
     <div class="pd-price"><span class="price">${p.usd?"":"<small>BBD</small> "}${priceHTML(p)}</span>${o?`<span class="pd-save">You save ${money(p.was-p.price)}</span>`:""}</div>
     ${p.desc?`<p class="pd-desc">${esc(p.desc)}</p>`:""}
@@ -1932,10 +1960,10 @@ function pdHTML(p){const o=offPct(p),out=isOut(p),dig=isDig(p);
   </div>`}
 const baseTitle=document.title;
 function pdShow(p){if(pd.hidden)lastFocus=document.activeElement;cur=p;qty=1;opt=p.opts[0]||"";pd.innerHTML=pdHTML(p);pd.hidden=false;pd.scrollTop=0;document.documentElement.style.overflow="hidden";
-  document.title=p.name+" · The Girls Club";const h=pd.querySelector("#pdName");h&&h.focus({preventScroll:true});
+  document.title=p.name+" · Shop Bajan";const h=pd.querySelector("#pdName");h&&h.focus({preventScroll:true});
   try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/product-view/"+slug(p.id),title:"View: "+p.name,event:true})}catch(x){}
   window.tgcTrack&&tgcTrack("ViewContent",{content_name:p.name,value:p.price,currency:"BBD"})}
-function pdHide(){if(pd.hidden)return;pd.hidden=true;pd.innerHTML="";cur=null;document.documentElement.style.overflow="";document.title=mode==="shop"?"Shop Bajan · The Girls Club":baseTitle;
+function pdHide(){if(pd.hidden)return;pd.hidden=true;pd.innerHTML="";cur=null;document.documentElement.style.overflow="";document.title=mode==="shop"?"Shop Bajan · Barbados":baseTitle;
   if(lastFocus&&document.contains(lastFocus))try{lastFocus.focus({preventScroll:true})}catch(x){}}
 function pdClose(){if(pdFromSite&&pushOK){pdFromSite=false;pushOK=false;history.back();return}pdFromSite=false;setH(mode==="shop"?mkHash():"#market");pdHide()}
 window.tgcOpenProduct=id=>{pdFromSite=true;const h="#p-"+encodeURIComponent(id);if(curHash===h)route();else nav(h)};
@@ -1947,7 +1975,7 @@ pd.addEventListener("click",e=>{const t=e.target;if(!cur)return;
   const q=t.closest("[data-pd-q]");if(q){qty=Math.max(1,Math.min(20,qty+ +q.dataset.pdQ));pd.querySelector("#pdQty").textContent=qty;pd.querySelector("[data-pd-add]").textContent="Add to bag · "+money(cur.price*qty);return}
   if(t.closest("[data-pd-add]")){const p=cur;if(p.isCourse)window.tgcPrefPay="";const item=bagItem(p,opt);addItem(item);const c=cart.find(x=>x.id===item.id);if(c&&qty>1&&!item.single){c.qty+=qty-1;update()}return}
   if(t.closest("[data-pd-wa]")){try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/product-wa-ask/"+slug(cur.id),event:true})}catch(x){}return}
-  if(t.closest("[data-pd-share]")){const url=location.origin+location.pathname+"#p-"+encodeURIComponent(cur.id),title=cur.name+" · The Girls Club";
+  if(t.closest("[data-pd-share]")){const url=location.origin+location.pathname+"#p-"+encodeURIComponent(cur.id),title=cur.name+" · Shop Bajan";
    if(navigator.share){navigator.share({title,text:cur.name+" BBD "+money(cur.price),url}).catch(()=>{});return}
    const done=()=>{const d=document.createElement("div");d.className="pd-toast";d.textContent="Link copied";pd.appendChild(d);setTimeout(()=>d.remove(),1800)};
    (navigator.clipboard?navigator.clipboard.writeText(url):Promise.reject()).then(done,()=>prompt("Copy this link:",url));return}
@@ -1955,7 +1983,7 @@ pd.addEventListener("click",e=>{const t=e.target;if(!cur)return;
 
 /* page switching: #shop… = Marketplace page, #p-… = product page, anything else = homepage */
 let mode="home",homeY=0,routed=false;
-function enterShop(){if(mode==="shop")return;homeY=window.scrollY;mode="shop";document.documentElement.classList.add("shop-mode");shopSec.hidden=false;window.scrollTo(0,0);document.title="Shop Bajan · The Girls Club";
+function enterShop(){if(mode==="shop")return;homeY=window.scrollY;mode="shop";document.documentElement.classList.add("shop-mode");shopSec.hidden=false;window.scrollTo(0,0);document.title="Shop Bajan · Barbados";
   try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"/shop",title:"Shop Bajan"})}catch(x){}window.tgcShowPlay&&tgcShowPlay()}
 function leaveShop(){if(mode!=="shop")return false;mode="home";document.documentElement.classList.remove("shop-mode");shopSec.hidden=true;document.title=baseTitle;return true}
 function route(fromClick){const h=curHash;
@@ -2160,7 +2188,7 @@ document.querySelectorAll(".wa-num").forEach(el=>el.textContent=WHATSAPP?("+"+WH
   {show:ACAD,title:"The glow up · client results",sub:"Real lash sets",target:"results",icon:"✨",words:"results gallery",body:"photos pictures before after glow up results gallery reviews work"},
   {title:"About us",sub:"Certified esthetician in Barbados",target:"about",icon:"💕",words:"about story",body:"about owner esthetician who certified story barbados"},
   {title:"Shop Bajan",sub:"Shop all · Products · Digital products",href:ACAD?window.TGC_HOME:"#shop",icon:"🛍️",words:"shop bajan marketplace store",body:"marketplace shop store buy products digital all browse"},
-  {show:!ACAD,title:"Sell your brand with us",sub:"Join Shop Bajan",href:"brands.html",icon:"🛍️",words:"sell vendor",body:"sell vendor vendors brand brands partner marketplace join business seller stock"},
+  {show:!ACAD,title:"Sell your products with us",sub:"Join Shop Bajan",href:"brands.html",icon:"🛍️",words:"sell vendor",body:"sell vendor vendors brand brands partner marketplace join business seller stock"},
   {title:"Coming soon",sub:"New things on the way",target:"soon",icon:"⏳",words:"coming soon new",body:"coming soon new launch next",show:SO.show!==false&&!ACAD},
   {title:"Message us on WhatsApp",sub:"Questions, custom orders, help",href:waLink("Hi "+WHO+"! I have a question."),ext:true,icon:"💬",words:"whatsapp contact",body:"contact message chat whatsapp phone call help question instagram dm talk"}
  ];
@@ -2175,7 +2203,7 @@ document.querySelectorAll(".wa-num").forEach(el=>el.textContent=WHATSAPP?("+"+WH
  const soldOut=p=>p.stock!==null&&p.stock!==undefined&&p.stock<=0;
  function row(e,i){
   if(e.k==="product"){const p=e.p;const act=soldOut(p)?`<button class="sr-add" type="button" disabled>Sold out</button>`:p.opts.length?`<button class="sr-add view" type="button" data-sr-go="${i}">Choose</button>`:`<button class="sr-add" type="button" data-sr-add="${i}">Add</button>`;
-   return `<div class="sr-item" role="button" tabindex="0" data-sr-go="${i}"><div class="sr-thumb">${thumb(p)}</div><div class="sr-text"><b>${esc(p.name)}</b><small>By ${esc(p.brand||"The Girls Club")}${p.type?" · "+esc(p.type):""}</small><span class="sr-price">BBD ${money(p.price)}</span></div>${act}</div>`}
+   return `<div class="sr-item" role="button" tabindex="0" data-sr-go="${i}"><div class="sr-thumb">${thumb(p)}</div><div class="sr-text"><b>${esc(p.name)}</b><small>By ${esc(p.brand||"Shop Bajan")}${p.type?" · "+esc(p.type):""}</small><span class="sr-price">BBD ${money(p.price)}</span></div>${act}</div>`}
   const link=e.href?`href="${esc(e.href)}"${e.ext?' target="_blank" rel="noopener"':""}`:`href="#${esc(e.target)}"`;
   return `<a class="sr-item" ${link} data-sr-go="${i}"><div class="sr-thumb"><span class="sr-ico" aria-hidden="true">♥</span></div><div class="sr-text"><b>${esc(e.title)}</b>${e.sub?`<small>${esc(e.sub)}</small>`:""}</div></a>`}
  let shown=[],lastQ="",tracked=new Set();
@@ -2226,5 +2254,118 @@ if(location.hash&&!/^#(shop|lashes|marketplace|products|digital|p-)/.test(locati
 <script>(function(){if(window.TGC_SOON)return;var s=document.createElement("script");s.src=(window.TGC_DATA||"")+"academy-theme.js";document.body.appendChild(s)})();</script>
 <script src="popups.js?v=20261120" defer></script>
 <script src="/sb-content.js?v=1" data-page="home" defer></script><script src="/creator-ref.js?v=2" defer></script>
+<style id="sb-shop-theme">
+/* Shop Bajan look for the full shop (shown after launch). The rules below the first block are made by
+   tools/gen_theme.py from the older pink styles above: they swap each pink colour and the script font
+   for Shop Bajan blue, gold, cream and Fraunces. */
+html[data-site=shop]{--bg:#FFF9EC;--card:#fff;--ink:#16213E;--muted:#4A5675;--pink:#00267F;--pink-soft:#DCE4F5;--blush:#EEF3FF;--yellow:#FFC72C;--yellow-soft:#FFF3C7;--line:#00267F;--edge:#00267F;--shade:#001447;--plum:#00267F;--on-pink:#fff;--rose:#00267F;--coral:#FF6F59}
+html[data-site=shop] [stroke="#ff4d94"],html[data-site=shop] [stroke="#c4256b"]{stroke:#00267F}
+html[data-site=shop] [fill="#ff4d94"],html[data-site=shop] [fill="#c4256b"]{fill:#00267F}
+html[data-site=shop] [stroke="#fff27a"]{stroke:#FFC72C}html[data-site=shop] [fill="#fff27a"]{fill:#FFC72C}
+html[data-site=shop] [fill="#4a1636"]{fill:#00267F}html[data-site=shop] [fill="#ffc9df"]{fill:#DCE4F5}
+html[data-site=shop] [style*="color:#4a1636"],html[data-site=shop] [style*="color:#ff4d94"],html[data-site=shop] [style*="color:#c4256b"]{color:#00267F!important}
+html[data-site=shop] [style*="color:#85506b"]{color:#4A5675!important}
+html[data-site=shop] [style*="background:#fff8c9"]{background:#FFF3C7!important}
+:where(html[data-site=shop]) .course-card .free-lesson{background:#EEF3FF}
+:where(html[data-site=shop]) .course-card .localpay .btn{background:var(--plum,#00267F);border-color:var(--plum,#00267F)}
+:where(html[data-site=shop]) .loading-note{color:#4A5675}
+:where(html[data-site=shop]) h1,:where(html[data-site=shop]) h2,:where(html[data-site=shop]) h3{font-family:"Fraunces",Georgia,serif;font-weight:800;letter-spacing:-.01em}
+:where(html[data-site=shop]) .demo-bar{color:#001447}
+:where(html[data-site=shop]) header{box-shadow:0 6px 18px rgba(0,38,127,.12)}
+:where(html[data-site=shop]) .logo small{color:#001447}
+:where(html[data-site=shop]) nav a:hover{color:#001447}
+:where(html[data-site=shop]) .tools .ig:hover{color:#001447}
+@media (max-width:700px){:where(html[data-site=shop]) nav{border-top:1px dashed rgba(0,38,127,.45)}}
+:where(html[data-site=shop]) .hero{background:var(--blush)}
+:where(html[data-site=shop]) .hero h1{text-shadow:4px 4px 0 #001447}
+:where(html[data-site=shop]) .hero .btn{box-shadow:0 6px 0 #001447}
+:where(html[data-site=shop]) .hero .btn:hover{box-shadow:0 3px 0 #001447}
+:where(html[data-site=shop]) .hero-art .frame{color:#00267F;box-shadow:0 24px 50px rgba(0,20,71,.25)}
+:where(html[data-site=shop]) .hero-art svg{stroke:#00267F}
+:where(html[data-site=shop]) .hero-art .frame strong{font-family:"Fraunces",Georgia,serif;font-weight:800;letter-spacing:-.01em}
+:where(html[data-site=shop]) .hero-art .frame small{color:#4A5675}
+:where(html[data-site=shop]) .sticker{color:#00267F;box-shadow:0 6px 0 #001447}
+:where(html[data-site=shop]) .pays span{color:#001447}
+:where(html[data-site=shop]) .card{box-shadow:0 10px 30px rgba(0,38,127,.10)}
+:where(html[data-site=shop]) .card:hover{box-shadow:0 18px 40px rgba(0,38,127,.18)}
+:where(html[data-site=shop]) .thumb{background:linear-gradient(160deg,var(--pink-soft),#EEF3FF)}
+:where(html[data-site=shop]) .card:nth-child(even) .thumb{background:linear-gradient(160deg,var(--yellow-soft),#FFC72C)}
+:where(html[data-site=shop]) .tag{box-shadow:0 3px 10px rgba(0,38,127,.18)}
+:where(html[data-site=shop]) .card h3{font-family:"Fraunces",Georgia,serif;font-weight:800;letter-spacing:-.01em}
+:where(html[data-site=shop]) .promo{color:#00267F}
+:where(html[data-site=shop]) .gift{background:#FFF3C7;border:2px solid #DCE4F5;color:#00267F}
+:where(html[data-site=shop]) .gift small{color:#4A5675}
+:where(html[data-site=shop]) .planner{box-shadow:0 18px 44px rgba(0,38,127,.14)}
+:where(html[data-site=shop]) .slot[aria-pressed="true"]{color:#00267F}
+:where(html[data-site=shop]) .creds span{color:#00267F;border:1.5px solid #DCE4F5}
+:where(html[data-site=shop]) .course-card{box-shadow:0 18px 44px rgba(0,38,127,.16)}
+:where(html[data-site=shop]) .course-cover{background:var(--blush)}
+:where(html[data-site=shop]) .course-cover strong{font-family:"Fraunces",Georgia,serif;text-shadow:3px 3px 0 #001447;font-weight:800;letter-spacing:-.01em}
+:where(html[data-site=shop]) .course-cover .seal{color:#00267F;box-shadow:0 5px 0 #001447}
+:where(html[data-site=shop]) .course-meta h3{font-family:"Fraunces",Georgia,serif;font-weight:800;letter-spacing:-.01em}
+:where(html[data-site=shop]) .gallery img{box-shadow:0 10px 28px rgba(0,38,127,.15)}
+:where(html[data-site=shop]) .about-photo img{box-shadow:0 20px 44px rgba(0,20,71,.2)}
+:where(html[data-site=shop]) .about-text .sign{font-family:"Fraunces",Georgia,serif;font-weight:800;letter-spacing:-.01em}
+:where(html[data-site=shop]) .signup{background-image:none}
+:where(html[data-site=shop]) .notify input{color:#00267F}
+:where(html[data-site=shop]) .notify .btn{box-shadow:0 6px 0 #001447}
+:where(html[data-site=shop]) footer{background:#001447;color:#EEF3FF}
+:where(html[data-site=shop]) .menu-scrim{background:rgba(0,20,71,.45)}
+:where(html[data-site=shop]) .side-menu{background:linear-gradient(180deg,#fff 0%,var(--blush,#EEF3FF) 100%);box-shadow:10px 0 40px rgba(0,20,71,.2);color:#00267F}
+:where(html[data-site=shop]) .side-tag{color:#001447}
+:where(html[data-site=shop]) .side-links a{border-bottom:1px dashed #DCE4F5;color:#00267F}
+:where(html[data-site=shop]) .side-links a::before{color:#00267F}
+:where(html[data-site=shop]) .side-links a:hover{color:#001447}
+:where(html[data-site=shop]) .side-box{border:1.5px solid #DCE4F5}
+:where(html[data-site=shop]) .side-box b{color:#001447}
+:where(html[data-site=shop]) .side-small{color:#4A5675}
+:where(html[data-site=shop]) .side-cta .btn.vendor-login{color:#00267F;border-color:#00267F;box-shadow:0 4px 0 #00267F}
+:where(html[data-site=shop]) .head-login{border:2px solid #00267F;color:#00267F}
+:where(html[data-site=shop]) .head-login:hover{background:#EEF3FF}
+:where(html[data-site=shop]) .side-menu .x{color:#00267F;border-color:#00267F}
+:where(html[data-site=shop]) .scrim{background:rgba(0,20,71,.5)}
+:where(html[data-site=shop]) .wa-lock{background:#FFF3C7;border:2px solid #DCE4F5}
+:where(html[data-site=shop]) .todo{color:#00267F}
+:where(html[data-site=shop]) .logo-text{font-family:"Fraunces",Georgia,serif;font-weight:800;letter-spacing:-.01em}
+:where(html[data-site=shop]) .btn.academy{box-shadow:0 5px 0 #001447}
+:where(html[data-site=shop]) .btn.academy:hover{box-shadow:0 3px 0 #001447}
+:where(html[data-site=shop]) .hero{background-color:#DCE4F5;background-image:none}
+:where(html[data-site=shop]) .hero .btn.academy{box-shadow:0 5px 0 #001447}
+:where(html[data-site=shop]) .hero-art .sticker{font-family:"Fraunces",Georgia,serif;font-weight:800;letter-spacing:-.01em}
+:where(html[data-site=shop]) .sec-head .eyebrow,:where(html[data-site=shop]) .academy-intro .eyebrow,:where(html[data-site=shop]) .book .eyebrow,:where(html[data-site=shop]) .about-text .eyebrow{font-family:"Fraunces",Georgia,serif;font-weight:800;letter-spacing:-.01em}
+:where(html[data-site=shop]) .thumb,:where(html[data-site=shop]) .card:nth-child(even) .thumb{background-image:none}
+:where(html[data-site=shop]) .price small{color:#4A5675}
+:where(html[data-site=shop]) .was{color:#4A5675}
+:where(html[data-site=shop]) .day:disabled{color:#9AA6C2}
+:where(html[data-site=shop]) .foot-logo{font-family:"Fraunces",Georgia,serif;font-weight:800;letter-spacing:-.01em}
+:where(html[data-site=shop]) .side-logo{font-family:"Fraunces",Georgia,serif;font-weight:800;letter-spacing:-.01em}
+:where(html[data-site=shop]) .hero-art svg.bob.h1s{fill:#00267F}
+:where(html[data-site=shop]) .hero-art svg.bob.h2s{fill:#00267F}
+:where(html[data-site=shop]) .hero-art svg.bob.st{fill:#FFC72C;stroke:#00267F}
+:where(html[data-site=shop]) .market .mk-sold{background:var(--blush,#EEF3FF)}
+:where(html[data-site=shop]) .market .mk-box{border:3px solid var(--rose,#00267F)}
+:where(html[data-site=shop]) .market .mk-box h3{font-family:"Fraunces",Georgia,serif;font-weight:800;letter-spacing:-.01em}
+:where(html[data-site=shop]) .market .mk-cats span{background:var(--yellow-soft,#FFF3C7);border:2px solid var(--yellow,#FFC72C)}
+:where(html[data-site=shop]) .shop-show{background:#FFF9EC}
+:where(html[data-site=shop]) .hs-slide .hs-fg{box-shadow:0 6px 18px rgba(0,20,71,.18)}
+@media (min-width:600px){:where(html[data-site=shop]) .shop-show{background:var(--blush)}}
+:where(html[data-site=shop]) .pcard.dig{border-color:#DCE4F5;box-shadow:3px 3px 0 #DCE4F5}
+:where(html[data-site=shop]) .pcard:nth-child(even) .thumb{background:linear-gradient(160deg,var(--yellow-soft),#FFC72C)}
+:where(html[data-site=shop]) .pd-info .mk-sold{background:#EEF3FF}
+:where(html[data-site=shop]) .search-btn{border:2px solid var(--rose,#00267F)}
+:where(html[data-site=shop]) .search-scrim{background:rgba(0,20,71,.45)}
+:where(html[data-site=shop]) .search-panel{background:var(--bg,#FFF9EC)}
+@media (min-width:700px){:where(html[data-site=shop]) .search-panel{box-shadow:0 18px 50px rgba(0,20,71,.25)}}
+:where(html[data-site=shop]) .search-top{background:var(--bg,#FFF9EC)}
+
+:where(html[data-site=shop]) header{background:#fff;border-bottom:1px solid #DCE4F5;box-shadow:none}
+:where(html[data-site=shop]) .hero h1{text-shadow:none}
+:where(html[data-site=shop]) .logo{display:grid;grid-template-columns:auto auto;column-gap:8px;align-items:center}
+:where(html[data-site=shop]) .logo .sb-mark{grid-row:1/3;width:36px;height:36px;border-radius:9px;display:block}
+:where(html[data-site=shop]) [style*="background:#ff4d94"]{background:#00267F!important}
+:where(html[data-site=shop]) .demo-bar{background:#FFC72C;color:#00267F}
+html[data-site=shop] .side-links a::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#FFC72C;margin-right:.55rem;vertical-align:middle}
+@media (max-width:420px){:where(html[data-site=shop]) .logo .sb-mark{width:30px;height:30px}:where(html[data-site=shop]) .logo{column-gap:6px}html[data-site=shop] .logo-text{font-size:1.15rem}}
+</style>
 </body>
 </html>
