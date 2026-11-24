@@ -127,6 +127,10 @@ details summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;alig
 .chip.changes{background:#FFE0E6;color:#A3123F}
 .chip.hidden,.chip.paused{background:#EEE;color:#555}
 .chip.approved{background:var(--okbg);color:var(--ok)}
+.plink{flex:1 1 100%;background:#FFF8EC;border:2px dashed #FFC72C;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px}
+.plink b{color:#00267F}.plink span{font-size:14px;color:#555}
+.plink code{font-size:13px;word-break:break-all;background:#fff;border-radius:8px;padding:6px 8px;color:#00267F}
+.plink .acts{display:flex;gap:8px;flex-wrap:wrap}.plink .acts .btn{flex:1 1 120px}
 .fromher{background:#FFE0E6;color:#7A0F33;border-radius:12px;padding:8px 12px;font-size:14px;font-weight:600;margin-top:8px}
 
 /* photos */
@@ -466,6 +470,7 @@ function salesRows(list){
   return'<div class="rows">'+list.map(function(s){return'<div class="r"><div class="l"><b>'+esc(s.product_name)+(Number(s.qty)>1?" × "+s.qty:"")+'</b><span>'+esc(fmtDate(s.sale_date))+' · '+(s.source==="in-person"?"In person":"Website")+' · sold for '+money2(s.total)+'</span></div><div class="v">'+money2(s.vendor_share)+'<span>yours</span></div></div>'}).join("")+'</div>';
 }
 function chip(st){var t={pending:"Waiting for approval",live:"Live on website",changes:"Changes needed",hidden:"Hidden",approved:"Approved",paused:"Paused"}[st]||st;return'<span class="chip '+esc(st)+'">'+esc(t)+'</span>'}
+function prodLink(p){return"https://shopbajanbb.com/#p-mp-"+encodeURIComponent(p.id)}
 function prodCard(p,admin,vend){
   var ph=(p.photos||[])[0];
   var h='<div class="prod"><div class="ph" style="'+(ph?"background-image:url('"+esc(photoUrl(ph))+"')":"")+'">'+(ph?"":(p.digital?"💻":"🛍️"))+'</div><div>';
@@ -480,6 +485,7 @@ function prodCard(p,admin,vend){
     h+='<button class="btn sm" data-edit="'+p.id+'">Edit</button>';
     h+=p.status==="hidden"?'<button class="btn sm ghost" data-unhide="'+p.id+'">Show again</button>':'<button class="btn sm ghost" data-hidev="'+p.id+'">Hide</button>';
   }
+  if(p.digital&&p.status==="live"){var lk=prodLink(p);h+='<div class="plink"><b>Your product link</b><span>Send this to customers. It opens your product so they can pay straight away.</span><code>'+esc(lk)+'</code><div class="acts"><button class="btn sm" data-copylink="'+esc(lk)+'">Copy link</button>'+(navigator.share?'<button class="btn sm ghost" data-sharelink="'+esc(lk)+'" data-sharename="'+esc(p.name)+'">Share</button>':"")+'</div></div>';}
   return h+'</div></div>';
 }
 function vProducts(v){
@@ -520,6 +526,8 @@ function wireVendor(){
   qa("[data-add]").forEach(function(b){b.onclick=function(){productSheet(null)}});
   qa("[data-edit]").forEach(function(b){b.onclick=function(){productSheet(S.products.find(function(p){return p.id===b.getAttribute("data-edit")}))}});
   qa("[data-t2]").forEach(function(b){b.onclick=function(){S.tab=b.getAttribute("data-t2");renderVendor()}});
+  qa("[data-copylink]").forEach(function(b){b.onclick=function(){var u=b.getAttribute("data-copylink");function ok(){toast("Link copied. Paste it to your customer 💕")}function fb(){var t=document.createElement("textarea");t.value=u;t.setAttribute("readonly","");t.style.position="fixed";t.style.opacity="0";document.body.appendChild(t);t.select();try{document.execCommand("copy");ok()}catch(x){toast(u)}document.body.removeChild(t)}if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(u).then(ok,fb);else fb()}});
+  qa("[data-sharelink]").forEach(function(b){b.onclick=function(){navigator.share({title:b.getAttribute("data-sharename")+" · Shop Bajan",url:b.getAttribute("data-sharelink")}).catch(function(){})}});
   qa("[data-hidev]").forEach(function(b){b.onclick=function(){setStatusVendor(b.getAttribute("data-hidev"),"hidden")}});
   qa("[data-unhide]").forEach(function(b){b.onclick=function(){setStatusVendor(b.getAttribute("data-unhide"),"pending")}});
   var so=q("#sout");if(so)so.onclick=signOut;
