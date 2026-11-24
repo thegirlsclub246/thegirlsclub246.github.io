@@ -15,6 +15,8 @@ document.documentElement.setAttribute("data-site",W.TGC_SITE);
 /* ==SHOP BAJAN WAITLIST MODE== true = shopbajanbb.com shows ONLY the Shop Bajan waitlist page (opens Thu 10 Dec 2026).
    To open the real shop on launch day set it to false (also swap the <title>, description and share tags below). The shop code is untouched. */
 W.TGC_SOON=(W.TGC_SITE==="shop")&&true;
+/* ==PRODUCT LINKS== a shared product link (#p-...) opens that one digital product with checkout, even before launch */
+W.TGC_LINK=W.TGC_SOON&&/^#p-/.test(location.hash);if(W.TGC_LINK){W.TGC_SOON=false;document.documentElement.classList.add("link-mode")}
 if(W.TGC_SOON)document.documentElement.classList.add("soon");
 var x="";try{x=decodeURIComponent(location.hash.slice(1))}catch(e){}
 if(W.TGC_SITE_FORCE)return;
@@ -642,6 +644,9 @@ try{if(window.goatcounter&&window.goatcounter.count){var n=(data&&data.content_n
 /* ==SHOP BAJAN WAITLIST PAGE== everything is namespaced (#soonPage, .sb-*) so none of the old site styles leak in.
    Turn it on/off with window.TGC_SOON in the first <script> in <head>. */
 html.soon body{background:#fff}
+html.link-mode body>*:not(#pd):not(#scrim):not(#drawer):not(script):not(style){display:none!important}
+html.link-mode .pd-sec,html.link-mode .pd-back{display:none!important}
+html.link-mode body{background:#FFF8EC}
 html.soon{scroll-padding-top:0!important}
 html:not(.soon) #soonPage{display:none!important}
 html.soon body>*:not(#soonPage){display:none!important}
@@ -1948,7 +1953,7 @@ function pdHTML(p){const o=offPct(p),out=isOut(p),dig=isDig(p);
     ${(p.points||[]).length?`<ul class="pd-points">${p.points.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}
     ${isMoney(p)?`<p class="pd-rmv" style="font-size:.85em;opacity:.75;margin:6px 0 0">Results may vary. Not a promise of income.</p>`:""}
     ${p.opts.length?`<p class="pd-lbl" id="pdOptL">Choose one</p><div class="pd-opts" role="radiogroup" aria-labelledby="pdOptL">${p.opts.map((x,i)=>`<button type="button" role="radio" aria-checked="${i===0}" data-pd-opt="${esc(x)}">${esc(x)}</button>`).join("")}</div>`:""}
-    <div class="pd-buy">${out?`<button class="add" type="button" disabled>Sold out</button>`:p.isCourse?`<button class="add" type="button" data-pd-add>Enrol · ${p.usd?"BBD ":""}${money(p.price)}</button>`:`<div class="qty"><button type="button" data-pd-q="-1" aria-label="One less">−</button><output aria-live="polite" id="pdQty">1</output><button type="button" data-pd-q="1" aria-label="One more">+</button></div><button class="add" type="button" data-pd-add>Add to bag · ${money(p.price)}</button>`}</div>
+    <div class="pd-buy">${out?`<button class="add" type="button" disabled>Sold out</button>`:dig&&!p.isCourse?`<button class="add" type="button" data-pd-buynow style="flex:1 1 100%;width:100%">Buy now · ${money(p.price)}</button><button type="button" data-pd-add style="flex:1 1 100%;background:none;border:0;color:#00267F;font:inherit;font-weight:700;text-decoration:underline;min-height:44px;cursor:pointer">Add to bag</button>`:p.isCourse?`<button class="add" type="button" data-pd-add>Enrol · ${p.usd?"BBD ":""}${money(p.price)}</button>`:`<div class="qty"><button type="button" data-pd-q="-1" aria-label="One less">−</button><output aria-live="polite" id="pdQty">1</output><button type="button" data-pd-q="1" aria-label="One more">+</button></div><button class="add" type="button" data-pd-add>Add to bag · ${money(p.price)}</button>`}</div>
     ${p.isCourse&&!ACAD?`<a class="pd-wa" href="${esc(window.TGC_ACAD+"#course-"+slug(p.course))}">See the full course on the Academy site</a>`:""}
     ${p.isCourse&&p.payhip?`<a class="pd-card" href="https://payhip.com/b/${encodeURIComponent(p.payhip)}" target="_blank" rel="noopener">Pay by card · instant access</a>${p.usdNote?`<p class="pd-note">${esc(p.usdNote)}</p>`:""}`:""}
     <a class="pd-wa" data-pd-wa href="${esc(waLink(`Hi ${p.isCourse?"Shop Bajan Academy":WHO}! I have a question about ${p.name}${p.type?" ("+p.type+")":""}, BBD ${money(p.price)}.`))}" target="_blank" rel="noopener">Ask about this on WhatsApp</a>
@@ -1965,7 +1970,7 @@ function pdShow(p){if(pd.hidden)lastFocus=document.activeElement;cur=p;qty=1;opt
   window.tgcTrack&&tgcTrack("ViewContent",{content_name:p.name,value:p.price,currency:"BBD"})}
 function pdHide(){if(pd.hidden)return;pd.hidden=true;pd.innerHTML="";cur=null;document.documentElement.style.overflow="";document.title=mode==="shop"?"Shop Bajan · Barbados":baseTitle;
   if(lastFocus&&document.contains(lastFocus))try{lastFocus.focus({preventScroll:true})}catch(x){}}
-function pdClose(){if(pdFromSite&&pushOK){pdFromSite=false;pushOK=false;history.back();return}pdFromSite=false;setH(mode==="shop"?mkHash():"#market");pdHide()}
+function pdClose(){if(window.TGC_LINK){location.replace(location.pathname+location.search);return}if(pdFromSite&&pushOK){pdFromSite=false;pushOK=false;history.back();return}pdFromSite=false;setH(mode==="shop"?mkHash():"#market");pdHide()}
 window.tgcOpenProduct=id=>{pdFromSite=true;const h="#p-"+encodeURIComponent(id);if(curHash===h)route();else nav(h)};
 pd.addEventListener("click",e=>{const t=e.target;if(!cur)return;
   if(t.closest("[data-pd-close]"))return pdClose();
@@ -1973,6 +1978,7 @@ pd.addEventListener("click",e=>{const t=e.target;if(!cur)return;
   const s=t.closest("[data-pd-search]");if(s){mkQ.value=s.dataset.pdSearch;view.q=mkQ.value;view.tab="all";view.cat="";pdFromSite=false;setH("#shop");route();mkTrack();return}
   const op=t.closest("[data-pd-opt]");if(op){opt=op.dataset.pdOpt;pd.querySelectorAll("[data-pd-opt]").forEach(b=>b.setAttribute("aria-checked",b===op));return}
   const q=t.closest("[data-pd-q]");if(q){qty=Math.max(1,Math.min(20,qty+ +q.dataset.pdQ));pd.querySelector("#pdQty").textContent=qty;pd.querySelector("[data-pd-add]").textContent="Add to bag · "+money(cur.price*qty);return}
+  if(t.closest("[data-pd-buynow]")){const p=cur;addItem(bagItem(p,opt));stage="checkout";renderDrawer();return}
   if(t.closest("[data-pd-add]")){const p=cur;if(p.isCourse)window.tgcPrefPay="";const item=bagItem(p,opt);addItem(item);const c=cart.find(x=>x.id===item.id);if(c&&qty>1&&!item.single){c.qty+=qty-1;update()}return}
   if(t.closest("[data-pd-wa]")){try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/product-wa-ask/"+slug(cur.id),event:true})}catch(x){}return}
   if(t.closest("[data-pd-share]")){const url=location.origin+location.pathname+"#p-"+encodeURIComponent(cur.id),title=cur.name+" · Shop Bajan";
@@ -1987,8 +1993,9 @@ function enterShop(){if(mode==="shop")return;homeY=window.scrollY;mode="shop";do
   try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"/shop",title:"Shop Bajan"})}catch(x){}window.tgcShowPlay&&tgcShowPlay()}
 function leaveShop(){if(mode!=="shop")return false;mode="home";document.documentElement.classList.remove("shop-mode");shopSec.hidden=true;document.title=baseTitle;return true}
 function route(fromClick){const h=curHash;
+  if(window.TGC_LINK&&!/^#p-/.test(h)){location.replace(location.pathname+location.search);return}
   if(ACAD&&/^#(shop|lashes|marketplace|products|digital)(\/|$)/.test(h)){location.href=window.TGC_HOME+h;return}
-  const m=h.match(/^#p-(.+)$/);if(m){let id="";try{id=decodeURIComponent(m[1])}catch(x){}const p=findItem(id);if(p){if(!pdFromSite&&!routed)enterShop();routed=true;return pdShow(p)}}
+  const m=h.match(/^#p-(.+)$/);if(m){let id="";try{id=decodeURIComponent(m[1])}catch(x){}const p=findItem(id);if(window.TGC_LINK&&!(p&&isDig(p))){location.replace(location.pathname+location.search);return}if(p){if(!pdFromSite&&!routed)enterShop();routed=true;return pdShow(p)}}
   routed=true;pdFromSite=false;pdHide();
   const s=h.match(/^#(shop|lashes|marketplace|products|digital)(?:\/([a-z]+))?(?:\/(.+))?$/);
   if(s){let tab=s[2]||(s[1]==="products"||s[1]==="digital"?s[1]:"all");if(!["all","products","digital"].includes(tab))tab="all";let cat="";try{cat=s[3]?decodeURIComponent(s[3]):""}catch(x){}
