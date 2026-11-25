@@ -333,5 +333,6 @@ document.addEventListener("click",function(e){var b=e.target.closest("[data-copy
   (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){b.textContent="Copied ✓";setTimeout(function(){b.textContent=old},1500)}).catch(function(){window.prompt("Copy this:",t)})});
 })();
 </script>
+<script src="/chat.js?v=1" defer></script>
 </body>
 </html>

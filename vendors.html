@@ -114,7 +114,17 @@ legend i{font-style:normal;display:inline-grid;place-items:center;width:32px;hei
 details summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center}
 
 /* products */
-.plist{display:grid;gap:12px;margin-top:14px}
+.plist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}
+@media(min-width:760px){.plist{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.plist .prod{grid-template-columns:1fr;gap:8px;padding:10px;border-radius:16px;align-content:start}
+.plist .prod .ph{width:100%;height:auto;aspect-ratio:4/3}
+.plist .prod h3{font-size:15px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.plist .prod .meta{font-size:13px}
+.plist .prod .acts{flex-direction:column;gap:6px;margin-top:auto}.plist .prod .acts .btn{flex:none;width:100%}
+.plist .prod .plink{padding:8px;gap:4px}.plist .prod .plink span,.plist .prod .plink code{display:none}.plist .prod .plink .acts .btn{width:100%}
+.plist .prod .fromher{font-size:13px}
+.psearch{width:100%;box-sizing:border-box;margin-top:14px;min-height:46px;padding:10px 14px;border:2px solid var(--line);border-radius:999px;font:inherit;font-size:16px;background:#fff}
+.prod[hidden]{display:none}
 .prod{display:grid;grid-template-columns:84px 1fr;gap:12px;background:#fff;border:2px solid var(--line);border-radius:18px;padding:12px;align-items:start}
 .prod .ph{width:84px;height:84px;border-radius:12px;background:var(--blush) center/cover no-repeat;display:grid;place-items:center;font-size:30px}
 .prod h3{font-size:17px;line-height:1.3}
@@ -127,6 +137,10 @@ details summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;alig
 .chip.changes{background:#FFE0E6;color:#A3123F}
 .chip.hidden,.chip.paused{background:#EEE;color:#555}
 .chip.approved{background:var(--okbg);color:var(--ok)}
+.plink{flex:1 1 100%;background:#FFF8EC;border:2px dashed #FFC72C;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px}
+.plink b{color:#00267F}.plink span{font-size:14px;color:#555}
+.plink code{font-size:13px;word-break:break-all;background:#fff;border-radius:8px;padding:6px 8px;color:#00267F}
+.plink .acts{display:flex;gap:8px;flex-wrap:wrap}.plink .acts .btn{flex:1 1 120px}
 .fromher{background:#FFE0E6;color:#7A0F33;border-radius:12px;padding:8px 12px;font-size:14px;font-weight:600;margin-top:8px}
 
 /* photos */
@@ -439,6 +453,10 @@ function renderVendor(){
 function statusNote(v){
   if(v.status==="pending")return'<div class="note warn">⏳ We are checking your shop. You can add products now: they go live on the website once we approve your shop and each product (normally within 2 working days).</div>';
   if(v.status==="paused")return'<div class="note warn">Your shop is paused, so your products are not showing on the website right now. WhatsApp us if you have questions.</div>';
+  /* show the approved note for 3 hours from when it was approved (or first seen on this phone), then hide it */
+  var k="sb_ok_"+v.id,t=Date.parse(v.approved_at||"")||0;
+  if(!t){try{t=Number(localStorage.getItem(k))||0;if(!t){t=Date.now();localStorage.setItem(k,String(t))}}catch(e){t=Date.now()}}
+  if(Date.now()-t>3*3600000)return"";
   return'<div class="note ok">✅ Your shop is approved. Live products show on <a href="./#shop">Shop Bajan</a>.</div>';
 }
 function vHome(v){
@@ -447,7 +465,10 @@ function vHome(v){
   var low=S.products.filter(function(p){return !p.digital&&p.status==="live"&&Number(p.stock)<=2});
   var ch=S.products.filter(function(p){return p.status==="changes"});
   var wk=S.sales.filter(function(s){return s.sale_date>=iso(weekStart())});
-  var h='<h1 class="page">Hi '+esc(String(v.owner_name||"").split(" ")[0])+' 💕</h1><p class="lead">'+esc(v.business)+' · '+esc(pl.name||"")+' plan</p>'+statusNote(v);
+  var nm=String(v.owner_name||"").trim().split(/\s+/)[0];
+  var h='<h1 class="page">'+greet()+(nm?', '+esc(nm):'')+'</h1><p class="lead">'+esc(v.business)+' · '+esc(pl.name||"")+' plan</p>'+statusNote(v);
+  if(v.status!=="pending"&&v.status!=="paused"){var sl=shopLink(v);
+    h+=live?'<div class="plink" style="margin-top:14px"><b>Your shop link</b><span>Send this to customers. It opens your shop page with all your live products.</span><code>'+esc(sl)+'</code><div class="acts"><button class="btn sm" data-copylink="'+esc(sl)+'">Copy link</button>'+(navigator.share?'<button class="btn sm ghost" data-sharelink="'+esc(sl)+'" data-sharename="'+esc(v.business)+'">Share</button>':"")+'</div></div>':'<div class="note">Your shop link appears here once your first product is live.</div>';}
   h+='<div class="stats"><div class="stat big"><span>Coming to you on '+esc(fmtDate(iso(nextSunday())))+'</span><b>'+money2(m.dueSunday)+'</b></div>'+
      '<div class="stat"><b>'+wk.reduce(function(a,s){return a+(Number(s.qty)||0)},0)+'</b><span>sold this week</span></div>'+
      '<div class="stat"><b>'+money2(m.earned)+'</b><span>earned in total</span></div>'+
@@ -466,11 +487,16 @@ function salesRows(list){
   return'<div class="rows">'+list.map(function(s){return'<div class="r"><div class="l"><b>'+esc(s.product_name)+(Number(s.qty)>1?" × "+s.qty:"")+'</b><span>'+esc(fmtDate(s.sale_date))+' · '+(s.source==="in-person"?"In person":"Website")+' · sold for '+money2(s.total)+'</span></div><div class="v">'+money2(s.vendor_share)+'<span>yours</span></div></div>'}).join("")+'</div>';
 }
 function chip(st){var t={pending:"Waiting for approval",live:"Live on website",changes:"Changes needed",hidden:"Hidden",approved:"Approved",paused:"Paused"}[st]||st;return'<span class="chip '+esc(st)+'">'+esc(t)+'</span>'}
+/* Barbados is UTC-4 all year (no daylight saving) */
+function greet(){var hr=(new Date(Date.now()-4*3600000)).getUTCHours();return hr>=5&&hr<12?"Good morning":hr>=12&&hr<17?"Good afternoon":hr>=17&&hr<21?"Good evening":"Good night"}
+function shopLink(v){var k=String(v.business||"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");return"https://shopbajanbb.com/#s-"+encodeURIComponent(k)}
+function prodLink(p){return"https://shopbajanbb.com/#p-mp-"+encodeURIComponent(p.id)}
+var SRCH='<input type="search" class="psearch" placeholder="Search products" aria-label="Search products" autocomplete="off"><p class="empty psnone" hidden>No products match that search.</p>';
 function prodCard(p,admin,vend){
   var ph=(p.photos||[])[0];
-  var h='<div class="prod"><div class="ph" style="'+(ph?"background-image:url('"+esc(photoUrl(ph))+"')":"")+'">'+(ph?"":(p.digital?"💻":"🛍️"))+'</div><div>';
+  var h='<div class="prod" data-q="'+esc((p.name+" "+(p.category||"")+" "+(vend?vend.business:"")).toLowerCase())+'"><div class="ph" style="'+(ph?"background-image:url('"+esc(photoUrl(ph))+"')":"")+'">'+(ph?"":(p.digital?"💻":"🛍️"))+'</div><div>';
   if(admin&&vend)h+='<div class="small muted" style="font-weight:700">'+esc(vend.business)+'</div>';
-  h+='<h3>'+esc(p.name)+'</h3><div class="meta">'+money2(p.price)+' · '+(p.digital?"Digital":(Number(p.stock)||0)+" in stock")+(p.category?" · "+esc(p.category):"")+'</div>'+chip(p.status);
+  h+='<h3>'+esc(p.name)+'</h3><div class="meta">'+money2(p.price)+' · '+(p.digital?"Digital":(Number(p.stock)||0)+" in stock")+(p.category&&!(p.digital&&p.category==="Digital")?" · "+esc(p.category):"")+'</div>'+chip(p.status);
   if(p.note&&(p.status==="changes"||admin))h+='<div class="fromher">'+(admin?"Your note: ":"From Shop Bajan: ")+esc(p.note)+'</div>';
   h+='</div><div class="acts">';
   if(admin){
@@ -480,13 +506,14 @@ function prodCard(p,admin,vend){
     h+='<button class="btn sm" data-edit="'+p.id+'">Edit</button>';
     h+=p.status==="hidden"?'<button class="btn sm ghost" data-unhide="'+p.id+'">Show again</button>':'<button class="btn sm ghost" data-hidev="'+p.id+'">Hide</button>';
   }
+  if(p.digital&&p.status==="live"){var lk=prodLink(p);h+='<div class="plink"><b>Product link</b><span>Send this to customers. It opens your product so they can pay straight away.</span><code>'+esc(lk)+'</code><div class="acts"><button class="btn sm" data-copylink="'+esc(lk)+'">Copy link</button>'+(navigator.share?'<button class="btn sm ghost" data-sharelink="'+esc(lk)+'" data-sharename="'+esc(p.name)+'">Share</button>':"")+'</div></div>';}
   return h+'</div></div>';
 }
 function vProducts(v){
   var h='<h1 class="page">My products</h1><p class="lead">Add photos, prices and stock. We approve each new product or change before it shows on the website.</p>';
   h+='<div class="btnrow"><button class="btn full" data-add>+ Add a product</button></div>';
   if(!S.products.length)h+='<div class="empty">No products yet. Tap "Add a product" to list your first one 💕</div>';
-  else h+='<div class="plist">'+S.products.map(function(p){return prodCard(p,false)}).join("")+'</div>';
+  else h+=(S.products.length>1?SRCH:"")+'<div class="plist">'+S.products.map(function(p){return prodCard(p,false)}).join("")+'</div>';
   h+='<p class="small muted" style="margin-top:16px">Changing only the stock keeps a live product live. Changing the name, price, photos or description sends it back to us to approve.</p>';
   return h;
 }
@@ -520,6 +547,9 @@ function wireVendor(){
   qa("[data-add]").forEach(function(b){b.onclick=function(){productSheet(null)}});
   qa("[data-edit]").forEach(function(b){b.onclick=function(){productSheet(S.products.find(function(p){return p.id===b.getAttribute("data-edit")}))}});
   qa("[data-t2]").forEach(function(b){b.onclick=function(){S.tab=b.getAttribute("data-t2");renderVendor()}});
+  qa(".psearch").forEach(function(i){i.oninput=function(){var t=i.value.trim().toLowerCase(),w=t?t.split(/\s+/):[],n=0,l=i.parentNode.querySelectorAll(".plist .prod");Array.prototype.forEach.call(l,function(c){var q=c.getAttribute("data-q")||"",ok=w.every(function(x){return q.indexOf(x)>-1});c.hidden=!ok;if(ok)n++});var e=i.parentNode.querySelector(".psnone");if(e)e.hidden=n>0}});
+  qa("[data-copylink]").forEach(function(b){b.onclick=function(){var u=b.getAttribute("data-copylink");function ok(){toast("Link copied. Paste it to your customer 💕")}function fb(){var t=document.createElement("textarea");t.value=u;t.setAttribute("readonly","");t.style.position="fixed";t.style.opacity="0";document.body.appendChild(t);t.select();try{document.execCommand("copy");ok()}catch(x){toast(u)}document.body.removeChild(t)}if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(u).then(ok,fb);else fb()}});
+  qa("[data-sharelink]").forEach(function(b){b.onclick=function(){navigator.share({title:b.getAttribute("data-sharename")+" · Shop Bajan",url:b.getAttribute("data-sharelink")}).catch(function(){})}});
   qa("[data-hidev]").forEach(function(b){b.onclick=function(){setStatusVendor(b.getAttribute("data-hidev"),"hidden")}});
   qa("[data-unhide]").forEach(function(b){b.onclick=function(){setStatusVendor(b.getAttribute("data-unhide"),"pending")}});
   var so=q("#sout");if(so)so.onclick=signOut;
@@ -672,7 +702,7 @@ function aApprove(){
   var pv=S.all.vendors.filter(function(v){return v.status==="pending"}),pp=S.all.products.filter(function(p){return p.status==="pending"});
   var h='<h1 class="page">To approve</h1><p class="lead">New shops and products wait here until you check them. Approved products show on Shop Bajan straight away.</p>';
   h+='<h2 class="sec">New shops ('+pv.length+')</h2>'+(pv.length?pv.map(vendorCard).join(""):'<div class="empty">No new shops waiting.</div>');
-  h+='<h2 class="sec">Products ('+pp.length+')</h2>'+(pp.length?'<div class="plist">'+pp.map(function(p){return prodCard(p,true,vById(p.vendor_id))}).join("")+'</div>':'<div class="empty">No products waiting. 🎉</div>');
+  h+='<h2 class="sec">Products ('+pp.length+')</h2>'+(pp.length?(pp.length>1?SRCH:"")+'<div class="plist">'+pp.map(function(p){return prodCard(p,true,vById(p.vendor_id))}).join("")+'</div>':'<div class="empty">No products waiting. 🎉</div>');
   if(pp.some(function(p){var v=vById(p.vendor_id);return v&&v.status!=="approved"}))h+='<p class="small muted" style="margin-top:12px">Products from shops that aren\'t approved yet stay off the website until you approve the shop too.</p>';
   var rv=(S.all.reviews||[]).filter(function(x){return x.status==="pending"});
   h+='<h2 class="sec">Reviews ('+rv.length+')</h2>'+(rv.length?rv.map(function(x){return'<div class="card"><div style="display:flex;justify-content:space-between;gap:10px"><b>'+esc(x.product_name||"Product")+'</b><span>'+"★★★★★".slice(0,x.rating)+'<span style="opacity:.3">'+"★★★★★".slice(x.rating)+'</span></span></div><p style="margin:8px 0">'+esc(x.body)+'</p><div class="muted small">'+esc(x.name)+' · order '+esc(x.order_ref||"none")+' · '+esc(fmtDate(x.created_at))+'</div><p class="small muted" style="margin-top:6px">Check the order number is real and for this product before you approve.</p><div class="btnrow"><button class="btn sm green" data-rvok="'+x.id+'">Approve review</button><button class="btn sm ghost" data-rvhide="'+x.id+'">Hide</button></div></div>'}).join(""):'<div class="empty">No reviews waiting.</div>');
@@ -682,7 +712,7 @@ function aVendors(){return'<h1 class="page">Vendors</h1><p class="lead">'+S.all.
 function aProducts(){
   var h='<h1 class="page">All products</h1><label class="f vpick">Show<select id="pfilt"><option value="">All</option><option value="live">Live</option><option value="pending">Waiting</option><option value="changes">Changes asked</option><option value="hidden">Hidden</option></select></label>';
   var list=S.all.products.filter(function(p){return!S.pfilt||p.status===S.pfilt});
-  h+=list.length?'<div class="plist">'+list.map(function(p){return prodCard(p,true,vById(p.vendor_id))}).join("")+'</div>':'<div class="empty">Nothing here.</div>';
+  h+=list.length?(list.length>1?SRCH:"")+'<div class="plist">'+list.map(function(p){return prodCard(p,true,vById(p.vendor_id))}).join("")+'</div>':'<div class="empty">Nothing here.</div>';
   return h;
 }
 function aMoney(){
@@ -788,5 +818,6 @@ boot();
 })();
 </script>
 <script data-goatcounter="https://thegirlsclub246.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-<script src="/sb-content.js?v=1" data-page="vendors" defer></script></body>
+<script src="/sb-content.js?v=1" data-page="vendors" defer></script><script src="/chat.js?v=1" defer></script>
+</body>
 </html>
