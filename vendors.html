@@ -175,6 +175,9 @@ details summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;alig
 .dz-opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
 .dz-o{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:6px 14px;border-radius:999px;border:2px solid #D5DBEA;background:#fff;color:#16213E;font:inherit;font-weight:700;font-size:14px;cursor:pointer}
 .dz-o[aria-pressed=true]{border-color:#00267F;background:#EEF3FF;color:#00267F}
+.dz-chattel{background:linear-gradient(90deg,#5CC6C0 33%,#F7A1B5 33% 66%,#FFD66B 66%)}.dz-sea{background:radial-gradient(circle at 30% 30%,#fff 10%,#7EDBD6 40%,#3FB8C4)}
+.dz-tip{background:#FFF3C7;border-radius:12px;padding:10px 12px;font-size:14px;color:#16213E;margin:0 0 12px}.dz-h{font-size:18px;margin:18px 0 8px}
+.dz-cap{background:#fff;border:1px solid #E3E6EE;border-radius:14px;padding:12px;margin-bottom:10px}.dz-cap p{margin:0 0 8px;font-size:14px;line-height:1.45;color:#16213E;word-break:break-word}
 .dz-sw{width:22px;height:22px;border-radius:50%;flex:none}.dz-beach{background:linear-gradient(#7DDCE0 50%,#F0D6A8 50%)}.dz-hibiscus{background:radial-gradient(circle,#FF6F59 45%,#FFF6E5 47%)}.dz-blue{background:#00267F;box-shadow:inset 0 -6px 0 #FFC72C}.dz-sunset{background:linear-gradient(#E8566C,#FFB347 55%,#1B3A8A 56%)}
 .pclean{margin-top:10px}.pc-prev{width:150px;aspect-ratio:3/4;object-fit:cover;border-radius:12px;background:#fff;border:1px solid #E3E6EE;align-self:center}
 .plink{flex:1 1 100%;background:#FFF8EC;border:2px dashed #FFC72C;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px}
@@ -261,7 +264,7 @@ h1,h2,h3,h1.page{font-family:var(--display);font-weight:800;color:var(--pink);le
 </div></header>
 <nav class="tabs" id="tabs" role="tablist" hidden></nav>
 <main class="wrap" id="app"><p class="loading" data-sb="t4:8985170e">Loading your portal…</p></main>
-<footer>Shop Bajan · St. Thomas, Barbados · <a href="brands.html" data-sb="t5:8d82b8bb">For small businesses</a> · <a href="policies.html" data-sb="t6:62629617">Policies</a> · <a href="https://wa.me/12468504460" target="_blank" rel="noopener" data-sb="t7:19679e1a">WhatsApp help</a></footer>
+<footer>Shop Bajan · St. Thomas, Barbados · <a href="brands.html" data-sb="t5:8d82b8bb">For small businesses</a> · <a href="policies.html" data-sb="t6:62629617">Policies</a> · <a href="https://wa.me/12468504460" target="_blank" rel="noopener" data-sb="t7:19679e1a">Message Shop Bajan</a></footer>
 <div id="toast" class="toast" role="status" hidden></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.79.0/dist/umd/supabase.js"></script>
@@ -311,7 +314,7 @@ function friendly(e){var m=(e&&(e.message||e.error_description||e.msg))||String(
   if(/Invalid login/i.test(m))return"That email and password don't match. Try again or tap \"Forgot password\".";
   if(/Email not confirmed/i.test(m))return"Please confirm your email first: open the email we sent you and tap the link.";
   if(/already registered|already been registered/i.test(m))return"There's already an account with this email. Sign in instead.";
-  if(/rate limit|too many/i.test(m))return"Too many tries right now. Please wait a few minutes and try again, or WhatsApp us.";
+  if(/rate limit|too many/i.test(m))return"Too many tries right now. Please wait a few minutes and try again, or message us.";
   if(/Password should be/i.test(m))return"Your password needs at least 8 characters.";
   if(/Failed to fetch|NetworkError|network/i.test(m))return"No internet connection. Check your signal and try again.";
   return m||"Something went wrong. Please try again.";}
@@ -321,7 +324,7 @@ function busy(btn,on,label){if(!btn)return;if(on){btn.dataset.l=btn.textContent;
 var S={user:null,isAdmin:false,vendor:null,products:[],sales:[],payouts:[],tab:"home",
        all:{vendors:[],products:[],sales:[],payouts:[]},adminTab:"approve",viewAs:null};
 
-if(!sb){app.innerHTML='<div class="card"><h2>We couldn\'t load the portal.</h2><p class="muted" style="margin-top:8px">Please check your internet and refresh the page. If it keeps happening, WhatsApp us on 1 (246) 850-4460.</p></div>';return}
+if(!sb){app.innerHTML='<div class="card"><h2>We couldn\'t load the portal.</h2><p class="muted" style="margin-top:8px">Please check your internet and refresh the page. If it keeps happening, email us at hello@shopbajanbb.com.</p></div>';return}
 
 /* ---------- auth screens ---------- */
 var params=new URLSearchParams(location.search);
@@ -347,7 +350,7 @@ function authScreen(mode,msg){
     if(mode==="signup"||mode==="forgot")h+='<p style="margin-top:14px;text-align:center">Already have an account? <button class="linkbtn" type="button" data-go="signin">Sign in</button></p>';
   }
   h+='</form>';
-  if(mode==="signup")h+='<p class="small muted" style="margin-top:14px">Not sure yet? Read about the plans on <a href="brands.html">our Sell with us page</a> or WhatsApp us on <a href="https://wa.me/'+WA+'" target="_blank" rel="noopener">1 (246) 850-4460</a>.</p>';
+  if(mode==="signup")h+='<p class="small muted" style="margin-top:14px">Not sure yet? Read about the plans on <a href="brands.html">our Sell with us page</a> or <a href="https://wa.me/'+WA+'" target="_blank" rel="noopener">message us</a>.</p>';
   h+='</div>';
   app.innerHTML=h;
   qa("[data-go]").forEach(function(b){b.onclick=function(){authScreen(b.getAttribute("data-go"))}});
@@ -429,7 +432,7 @@ function setupShop(){
   '<fieldset><legend><i>1</i>Your business</legend>'+
   '<label class="f">Business name<input name="business" required maxlength="80" autocomplete="organization"></label>'+
   '<label class="f">Your full name<input name="owner_name" required maxlength="80" autocomplete="name"></label>'+
-  '<div class="two"><label class="f">WhatsApp number<input type="tel" name="phone" required maxlength="30" autocomplete="tel" inputmode="tel" placeholder="246 ..."></label>'+
+  '<div class="two"><label class="f">Phone number<input type="tel" name="phone" required maxlength="30" autocomplete="tel" inputmode="tel" placeholder="246 ..."></label>'+
   '<label class="f">Instagram <span class="hint">optional</span><input name="instagram" maxlength="60" placeholder="@yourbrand"></label></div>'+
   '<label class="f">What you sell<select name="category" required><option value="">Choose one</option>'+CATS.filter(function(c){return c!=="Digital"}).map(function(c){return'<option>'+esc(c)+'</option>'}).join("")+'</select></label>'+
   '<label class="f">About your business <span class="hint">optional · a few lines shoppers will see</span><textarea name="bio" maxlength="600"></textarea></label></fieldset>'+
@@ -438,7 +441,7 @@ function setupShop(){
   '</div><p class="hint">Prices in BBD. You can change your plan anytime.</p></fieldset>'+
   '<fieldset><legend><i>3</i>How you get paid</legend><div class="pick">'+
   ["Bank transfer","FirstPay","BPWCCUL"].map(function(m){return'<label><input type="radio" name="payout" value="'+m+'"><div><b>'+m+'</b></div></label>'}).join("")+
-  '</div><p class="hint">Paid every Sunday for the week before. We ask for your account details privately on WhatsApp. Never type card or bank numbers here.</p></fieldset>'+
+  '</div><p class="hint">Paid every Sunday for the week before. We\'ll contact you privately for your account details. Never type card or bank numbers here.</p></fieldset>'+
   '<fieldset><legend><i>4</i>Sign the agreement</legend><div class="note info" id="agSum">Pick a plan above to see your terms.</div>'+
   '<details><summary>Read the full agreement (18 points)</summary><ol class="agree" id="agList"></ol></details>'+
   '<label class="f">Sign: type your full name<input name="sign" required maxlength="80" autocomplete="name"></label>'+
@@ -454,9 +457,9 @@ function setupShop(){
   f.addEventListener("change",function(e){if(e.target.name==="plan")draw()});draw();
   f.onsubmit=function(e){e.preventDefault();var err=q("#serr");setErr(err,"");
     var v=function(n){return(f.elements[n]&&f.elements[n].value||"").trim()};
-    var need=[["business","your business name"],["owner_name","your full name"],["phone","your WhatsApp number"],["category","what you sell"]];
+    var need=[["business","your business name"],["owner_name","your full name"],["phone","your phone number"],["category","what you sell"]];
     for(var i=0;i<need.length;i++)if(!v(need[i][0])){f.elements[need[i][0]].focus();return setErr(err,"Please add "+need[i][1]+".")}
-    if(v("phone").replace(/\D/g,"").length<7)return setErr(err,"Please check your WhatsApp number.");
+    if(v("phone").replace(/\D/g,"").length<7)return setErr(err,"Please check your phone number.");
     var pr=f.querySelector("input[name=plan]:checked");if(!pr)return setErr(err,"Please pick a plan.");
     var po=f.querySelector("input[name=payout]:checked");if(!po)return setErr(err,"Please choose how you'd like to be paid.");
     if(v("sign").length<3)return setErr(err,"Please sign by typing your full name.");
@@ -497,7 +500,7 @@ function renderVendor(){
 }
 function statusNote(v){
   if(v.status==="pending")return'<div class="note warn">⏳ We are checking your shop. You can add products now: they go live on the website once we approve your shop and each product (normally within 2 working days).</div>';
-  if(v.status==="paused")return'<div class="note warn">Your shop is paused, so your products are not showing on the website right now. WhatsApp us if you have questions.</div>';
+  if(v.status==="paused")return'<div class="note warn">Your shop is paused, so your products are not showing on the website right now. Message us if you have questions.</div>';
   /* show the approved note for 3 hours from when it was approved (or first seen on this phone), then hide it */
   var k="sb_ok_"+v.id,t=Date.parse(v.approved_at||"")||0;
   if(!t){try{t=Number(localStorage.getItem(k))||0;if(!t){t=Date.now();localStorage.setItem(k,String(t))}}catch(e){t=Date.now()}}
@@ -564,7 +567,7 @@ function prodCard(p,admin,vend){
     if(p.status!=="hidden")h+='<button class="btn sm red" data-hide="'+p.id+'">Hide</button>';
   }else{
     h+='<button class="btn sm" data-edit="'+p.id+'">Edit</button>';
-    if((p.photos||[]).length&&!p.digital)h+='<button class="btn sm ghost" data-design="'+p.id+'">✨ Make a design</button>';
+    if((p.photos||[]).length)h+='<button class="btn sm ghost" data-design="'+p.id+'">✨ Make a design</button>';
     h+=p.status==="hidden"?'<button class="btn sm ghost" data-unhide="'+p.id+'">Show again</button>':'<button class="btn sm ghost" data-hidev="'+p.id+'">Hide</button>';
   }
   if(p.status==="live"){var lk=prodLink(p);h+='<div class="plink"><b>Product link</b><span>'+(p.digital?'Send this to customers. It opens your product so they can pay straight away.':'Put this in your posts and bio. It opens this product on Shop Bajan (from launch day, Thu 10 Dec).')+'</span><code>'+esc(lk)+'</code><div class="acts"><button class="btn sm" data-copylink="'+esc(lk)+'">Copy link</button>'+(navigator.share?'<button class="btn sm ghost" data-sharelink="'+esc(lk)+'" data-sharename="'+esc(p.name)+'">Share</button>':"")+'</div></div>';}
@@ -592,12 +595,12 @@ function vBusiness(v){
   var h='<h1 class="page">My business</h1>'+statusNote(v)+'<form class="card" id="bf" novalidate>'+
   '<label class="f">Business name<input name="business" maxlength="80" value="'+esc(v.business)+'"></label>'+
   '<label class="f">Your full name<input name="owner_name" maxlength="80" value="'+esc(v.owner_name)+'"></label>'+
-  '<div class="two"><label class="f">WhatsApp number<input type="tel" name="phone" maxlength="30" value="'+esc(v.phone)+'"></label>'+
+  '<div class="two"><label class="f">Phone number<input type="tel" name="phone" maxlength="30" value="'+esc(v.phone)+'"></label>'+
   '<label class="f">Instagram<input name="instagram" maxlength="60" value="'+esc(v.instagram)+'"></label></div>'+
   '<label class="f">About your business<textarea name="bio" maxlength="600">'+esc(v.bio)+'</textarea></label>'+
   '<label class="f">How you get paid<select name="payout_method">'+["Bank transfer","FirstPay","BPWCCUL"].map(function(m){return'<option'+(m===v.payout_method?" selected":"")+'>'+m+'</option>'}).join("")+'</select></label>'+
   '<p class="err" id="berr" role="alert"></p><div class="btnrow"><button class="btn" type="submit" id="bbtn">Save changes</button></div></form>';
-  h+='<div class="card"><h2 style="font-size:19px">Your plan: '+esc(pl.name||v.plan)+'</h2><p class="muted" style="margin-top:6px">'+(pl.fee?"$"+pl.fee+" a month + ":"Free, ")+esc(feeText(v))+'. To change your plan, WhatsApp us.</p><div class="btnrow"><a class="btn sm ghost" href="https://wa.me/'+WA+'?text='+encodeURIComponent("Hi Shop Bajan! I'd like to change my plan for "+v.business+".")+'" target="_blank" rel="noopener">Change my plan</a></div></div>';
+  h+='<div class="card"><h2 style="font-size:19px">Your plan: '+esc(pl.name||v.plan)+'</h2><p class="muted" style="margin-top:6px">'+(pl.fee?"$"+pl.fee+" a month + ":"Free, ")+esc(feeText(v))+'. To change your plan, message us.</p><div class="btnrow"><a class="btn sm ghost" href="https://wa.me/'+WA+'?text='+encodeURIComponent("Hi Shop Bajan! I'd like to change my plan for "+v.business+".")+'" target="_blank" rel="noopener">Change my plan</a></div></div>';
   h+=payBox(v,pl);
   var c=v.contract||{};
   h+='<div class="card"><h2 style="font-size:19px">Your agreement</h2><p class="muted" style="margin-top:6px">Signed by '+esc(c.name||"")+(c.signedAt?" on "+esc(fmtDate(c.signedAt)):"")+'.</p><details><summary>Read the agreement</summary><ol class="agree">'+A.clauses(c.plan||v.plan,c).map(function(x){return"<li><b>"+esc(x[0])+".</b> "+esc(x[1])+"</li>"}).join("")+'</ol></details></div>';
@@ -656,49 +659,115 @@ function cleanWhite(file){return cutOut(file).then(function(c0){var l=0,t=0,bw=c
   x.save();x.shadowColor="rgba(0,0,0,.10)";x.shadowBlur=40;x.shadowOffsetY=18;x.drawImage(c0,l,t,bw,bh,(W-dw)/2,(H-dh)/2,dw,dh);x.restore();
   return new Promise(function(res,rej){c.toBlob(function(bl){bl?res(bl):rej(new Error("Couldn't save the clean photo"))},"image/jpeg",.92)})})}
 
-/* ---------- Make a design: the product on a Bajan backdrop, as a picture or a 5-second clip ----------
-   Runs on the seller's own phone. Uses the same AI cut-out as the photo cleaner. Nothing is uploaded. */
-var DZ_BG=[["beach","Beach sand"],["hibiscus","Hibiscus"],["blue","Bajan blue"],["sunset","Sunset"]];
-var DZ_SIZE=[["post","Square post",1080,1080],["story","Story / Status",1080,1920]];
+/* ---------- Make a design: a free marketing kit made on the seller's phone ----------
+   Post types (show it off, new drop, sale, few left), Bajan backdrops, a podium or phone mockup,
+   square posts, Stories with a QR code, a 3-picture carousel, a 5-second clip, ready captions and posting tips.
+   Uses the same AI cut-out as the photo cleaner. Nothing is uploaded. */
+var DZ_TPL=[["show","Show it off"],["new","New drop"],["sale","On sale"],["few","Few left"]];
+var DZ_BG=[["beach","Beach sand"],["hibiscus","Hibiscus"],["blue","Bajan blue"],["sunset","Sunset"],["chattel","Chattel house"],["sea","Sea glass"]];
+var DZ_SIZE=[["post","Square post",1080,1080],["story","Story",1080,1920]];
+var DZ_TIP={show:"Post this on your feed and pin it to the top of your page. Evenings from 7 to 9 pm get the most eyes.",
+  new:"Post it the day the product goes live, then share it to your Story so people can tap straight through.",
+  sale:"Say when the sale ends in your caption. Fridays and the end of the month, when people get paid, work best.",
+  few:"Post this when stock is low. It nudges people who were thinking about it to order now. Share it to your Story too."};
+var QRL=null;function qrLoad(){return QRL||(QRL=new Promise(function(res,rej){if(window.qrcode)return res(window.qrcode);var s=document.createElement("script");s.src="/tools/qr/qrcode-1.4.4.min.js";s.onload=function(){res(window.qrcode)};s.onerror=function(){QRL=null;rej(new Error("QR"))};document.head.appendChild(s)}))}
+function dzQR(x,txt,cx,cy,size){if(!window.qrcode)return;var q0=window.qrcode(0,"M");q0.addData(txt);q0.make();var n=q0.getModuleCount(),pad=size*.08,cs=(size-pad*2)/n;
+  x.fillStyle="#fff";x.beginPath();if(x.roundRect)x.roundRect(cx-size/2,cy-size/2,size,size,size*.08);else x.rect(cx-size/2,cy-size/2,size,size);x.fill();x.fillStyle="#00267F";
+  for(var r=0;r<n;r++)for(var c=0;c<n;c++)if(q0.isDark(r,c))x.fillRect(Math.floor(cx-size/2+pad+c*cs),Math.floor(cy-size/2+pad+r*cs),Math.ceil(cs),Math.ceil(cs))}
+function dzRR(x,X,Y,w,h,r){x.beginPath();if(x.roundRect)x.roundRect(X,Y,w,h,r);else x.rect(X,Y,w,h)}
 function dzHib(x,cx,cy,r,rot,col){x.save();x.translate(cx,cy);x.rotate(rot);x.fillStyle=col;
   for(var i=0;i<5;i++){x.rotate(Math.PI*2/5);x.beginPath();x.ellipse(0,-r*.55,r*.42,r*.6,0,0,Math.PI*2);x.fill()}
   x.fillStyle="#FFC72C";x.beginPath();x.arc(0,0,r*.16,0,Math.PI*2);x.fill();x.restore()}
-function dzBack(x,W,H,bg,z){x.save();x.translate(W/2,H/2);x.scale(z,z);x.translate(-W/2,-H/2);var g;
+function dzBack(x,W,H,bg,z){x.save();x.translate(W/2,H/2);x.scale(z,z);x.translate(-W/2,-H/2);var g,i;
   if(bg==="beach"){g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,"#BFE6FF");g.addColorStop(.38,"#E9F7FF");x.fillStyle=g;x.fillRect(0,0,W,H);
     g=x.createLinearGradient(0,H*.36,0,H*.5);g.addColorStop(0,"#1FB5C9");g.addColorStop(1,"#7DDCE0");x.fillStyle=g;x.fillRect(0,H*.36,W,H*.16);
-    x.fillStyle="rgba(255,255,255,.75)";x.beginPath();x.moveTo(0,H*.5);for(var i=0;i<=W;i+=W/12)x.quadraticCurveTo(i+W/24,H*.48,i+W/12,H*.505);x.lineTo(W,H*.53);x.lineTo(0,H*.53);x.fill();
+    x.fillStyle="rgba(255,255,255,.75)";x.beginPath();x.moveTo(0,H*.5);for(i=0;i<=W;i+=W/12)x.quadraticCurveTo(i+W/24,H*.48,i+W/12,H*.505);x.lineTo(W,H*.53);x.lineTo(0,H*.53);x.fill();
     g=x.createLinearGradient(0,H*.5,0,H);g.addColorStop(0,"#F6E2BE");g.addColorStop(1,"#E9C98F");x.fillStyle=g;x.fillRect(0,H*.515,W,H*.49);
-    x.fillStyle="rgba(150,110,60,.10)";for(i=0;i<900;i++){var sx=(i*7919)%W,sy=H*.52+((i*104729)%Math.round(H*.48));x.fillRect(sx,sy,3,3)}}
+    x.fillStyle="rgba(150,110,60,.10)";for(i=0;i<900;i++){x.fillRect((i*7919)%W,H*.52+((i*104729)%Math.round(H*.48)),3,3)}}
   else if(bg==="hibiscus"){x.fillStyle="#FFF6E5";x.fillRect(0,0,W,H);
     dzHib(x,W*.06,H*.08,W*.2,.3,"#FF6F59");dzHib(x,W*.95,H*.2,W*.14,1.1,"#FF8FA3");dzHib(x,W*.92,H*.9,W*.22,2,"#FF6F59");dzHib(x,W*.1,H*.86,W*.12,.8,"#FF8FA3");
     x.fillStyle="rgba(46,139,87,.35)";[[.2,.04,.5],[.82,.07,-.6],[.8,.78,.9],[.22,.95,-.4]].forEach(function(a){x.save();x.translate(W*a[0],H*a[1]);x.rotate(a[2]);x.beginPath();x.ellipse(0,0,W*.09,W*.035,0,0,Math.PI*2);x.fill();x.restore()})}
   else if(bg==="blue"){g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,"#00267F");g.addColorStop(1,"#001447");x.fillStyle=g;x.fillRect(0,0,W,H);
     x.strokeStyle="rgba(255,199,44,.35)";x.lineWidth=W*.006;for(var k=0;k<4;k++){x.beginPath();var y0=H*(.8+k*.05);x.moveTo(0,y0);for(i=0;i<=W;i+=W/8)x.quadraticCurveTo(i+W/16,y0-H*.02,i+W/8,y0);x.stroke()}
     x.fillStyle="rgba(255,199,44,.10)";x.beginPath();x.arc(W*.85,H*.12,W*.22,0,Math.PI*2);x.fill();x.beginPath();x.arc(W*.1,H*.6,W*.14,0,Math.PI*2);x.fill()}
-  else{g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,"#2B2F7A");g.addColorStop(.35,"#E8566C");g.addColorStop(.55,"#FFB347");x.fillStyle=g;x.fillRect(0,0,W,H*.6);
+  else if(bg==="sunset"){g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,"#2B2F7A");g.addColorStop(.35,"#E8566C");g.addColorStop(.55,"#FFB347");x.fillStyle=g;x.fillRect(0,0,W,H*.6);
     x.fillStyle="#FFE08A";x.beginPath();x.arc(W*.5,H*.56,W*.2,Math.PI,0);x.fill();
-    g=x.createLinearGradient(0,H*.56,0,H);g.addColorStop(0,"#1B3A8A");g.addColorStop(1,"#0B1E52");x.fillStyle=g;x.fillRect(0,H*.56,W,H*.44);
-}
+    g=x.createLinearGradient(0,H*.56,0,H);g.addColorStop(0,"#1B3A8A");g.addColorStop(1,"#0B1E52");x.fillStyle=g;x.fillRect(0,H*.56,W,H*.44)}
+  else if(bg==="chattel"){var cols=["#5CC6C0","#F7A1B5","#FFD66B","#7FB7F2","#F49B6C"],bw=W/5;
+    for(i=0;i<5;i++){x.fillStyle=cols[i];x.fillRect(i*bw,0,bw+1,H*.82);x.fillStyle="rgba(0,0,0,.06)";for(var j=1;j<4;j++)x.fillRect(i*bw+j*bw/4,0,2,H*.82)}
+    x.fillStyle="#fff";for(i=0;i<=W;i+=W/18){x.beginPath();x.moveTo(i,H*.06);x.lineTo(i+W/36,H*.1);x.lineTo(i+W/18,H*.06);x.fill()}x.fillRect(0,0,W,H*.06);
+    g=x.createLinearGradient(0,H*.82,0,H);g.addColorStop(0,"#C98B5A");g.addColorStop(1,"#A86E42");x.fillStyle=g;x.fillRect(0,H*.82,W,H*.26);
+    x.fillStyle="rgba(0,0,0,.08)";for(i=0;i<6;i++)x.fillRect(0,H*(.82+i*.045),W,2);x.fillStyle="#fff";x.fillRect(0,H*.815,W,H*.012)}
+  else{g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,"#BFF3EC");g.addColorStop(.55,"#7EDBD6");g.addColorStop(1,"#3FB8C4");x.fillStyle=g;x.fillRect(0,0,W,H);
+    for(i=0;i<26;i++){x.fillStyle="rgba(255,255,255,"+(.06+(i%4)*.03)+")";x.beginPath();x.ellipse((i*7919)%W,(i*104729)%H,W*(.04+(i%5)*.02),W*(.02+(i%3)*.012),(i%7)*.4,0,Math.PI*2);x.fill()}}
   x.restore()}
-function dzWrap(x,txt,maxW){var w=String(txt).split(/\s+/),ls=[],l="";w.forEach(function(s){var tl=l?l+" "+s:s;if(x.measureText(tl).width>maxW&&l){ls.push(l);l=s}else l=tl});if(l)ls.push(l);return ls.slice(0,2)}
+function dzWrap(x,txt,maxW,max){var w=String(txt||"").split(/\s+/),ls=[],l="";w.forEach(function(s){var tl=l?l+" "+s:s;if(x.measureText(tl).width>maxW&&l){ls.push(l);l=s}else l=tl});if(l)ls.push(l);
+  if(ls.length>(max||2)){ls=ls.slice(0,max||2);ls[ls.length-1]=ls[ls.length-1].replace(/\s*\S*$/,"")+"…"}return ls}
 function dzEase(t){t=Math.max(0,Math.min(1,t));return 1-Math.pow(1-t,3)}
+function dzDark(bg){return bg==="blue"||bg==="sunset"}
+function dzMoney(n){return"$"+Number(n||0).toFixed(2)}
+/* the phone mockup for digital products: the product picture shown on a phone screen */
+function dzPhone(img){var w=600,h=1180,c=document.createElement("canvas");c.width=w;c.height=h;var x=c.getContext("2d");
+  dzRR(x,0,0,w,h,90);x.fillStyle="#111827";x.fill();dzRR(x,22,22,w-44,h-44,72);x.fillStyle="#fff";x.fill();
+  x.save();dzRR(x,22,22,w-44,h-44,72);x.clip();var sw=w-44,sh=h-44,s=Math.max(sw/img.width,sh/img.height);x.drawImage(img,22+(sw-img.width*s)/2,22+(sh-img.height*s)/2,img.width*s,img.height*s);x.restore();
+  dzRR(x,w/2-90,40,180,40,20);x.fillStyle="#111827";x.fill();return c}
+function dzBadge(x,o,W,H){var t=o.tpl==="new"?"NEW IN":o.tpl==="sale"?"SALE":o.tpl==="few"?(o.left>0?"ONLY "+o.left+" LEFT":"ALMOST GONE"):"";if(!t)return;
+  var fs=Math.round(W*.045);x.font="800 "+fs+"px Quicksand,Arial,sans-serif";var bw=x.measureText(t).width+fs*1.6,bh=fs*2;
+  x.save();x.translate(W*.06+bw/2,H*.05+bh/2);x.rotate(-.05);x.fillStyle=o.tpl==="sale"?"#FF6F59":o.tpl==="few"?"#00267F":"#FFC72C";dzRR(x,-bw/2,-bh/2,bw,bh,bh/2);x.fill();
+  x.fillStyle=o.tpl==="new"?"#00267F":"#fff";x.textAlign="center";x.textBaseline="middle";x.fillText(t,0,2);x.restore()}
 /* t: 0..5 seconds; t>=5 draws the finished picture */
-function dzDraw(c,o,t){var x=c.getContext("2d"),W=c.width,H=c.height,story=H>W,dark=o.bg==="blue"||o.bg==="sunset";
+function dzDraw(c,o,t){var x=c.getContext("2d"),W=c.width,H=c.height,story=H>W,dark=dzDark(o.bg),pod=o.look==="podium"&&!o.digital;
   dzBack(x,W,H,o.bg,1+.06*Math.min(t,5)/5);
-  var cut=o.cut,boxH=H*(story?.42:.5),boxW=W*(story?.8:.66),sc=Math.min(boxW/cut.width,boxH/cut.height),dw=cut.width*sc,dh=cut.height*sc;
-  var a=dzEase(t/1.2),cy=H*(story?.44:.42)+(1-a)*H*.06,s=.92+.08*a;
+  var cut=o.cut,boxH=H*(story?.38:.46)*(pod?.76:1),boxW=W*(story?.74:.6)*(pod?.8:1),sc=Math.min(boxW/cut.width,boxH/cut.height),dw=cut.width*sc,dh=cut.height*sc;
+  var a=dzEase(t/1.2),cy=H*(story?.36:pod?.36:.4)+(1-a)*H*.06,s=.92+.08*a;
+  if(pod){var py0=cy+dh/2,pw=Math.max(dw*1.25,W*.4),ph=W*.06;x.save();x.globalAlpha=Math.min(1,a*1.4);
+    var g=x.createLinearGradient(W/2-pw/2,0,W/2+pw/2,0);g.addColorStop(0,"#E9E2D6");g.addColorStop(.5,"#FFFFFF");g.addColorStop(1,"#DCD3C4");
+    x.fillStyle="rgba(0,0,0,.12)";x.beginPath();x.ellipse(W/2,py0+ph*1.9,pw*.56,ph*.55,0,0,Math.PI*2);x.fill();
+    x.fillStyle=g;x.fillRect(W/2-pw/2,py0,pw,ph*1.6);x.beginPath();x.ellipse(W/2,py0+ph*1.6,pw/2,ph/2,0,0,Math.PI);x.fill();
+    x.fillStyle="#FBF8F2";x.beginPath();x.ellipse(W/2,py0,pw/2,ph/2,0,0,Math.PI*2);x.fill();x.restore();cy+=ph*.05}
   x.save();x.globalAlpha=a;x.translate(W/2,cy);x.scale(s,s);x.shadowColor="rgba(0,0,0,.25)";x.shadowBlur=W*.04;x.shadowOffsetY=W*.025;x.drawImage(cut,-dw/2,-dh/2,dw,dh);x.restore();
-  var ty=cy+dh/2+H*(story?.05:.045),ta=dzEase((t-1)/.8);
-  x.save();x.globalAlpha=ta;x.textAlign="center";x.textBaseline="top";x.fillStyle=dark?"#fff":"#00267F";var fs=Math.round(W*(story?.068:.058));
-  x.font="800 "+fs+"px Fraunces,Georgia,serif";var ls=dzWrap(x,o.name,W*.86);ls.forEach(function(l,i){x.fillText(l,W/2,ty+(1-ta)*20+i*fs*1.12)});x.restore();
-  var py=ty+ls.length*fs*1.12+H*.02,pa=dzEase((t-1.8)/.6),pz=.6+.4*pa;
-  if(o.price){x.save();x.globalAlpha=pa;x.font="700 "+Math.round(W*.05)+"px Quicksand,Arial,sans-serif";var pt="$"+Number(o.price).toFixed(2)+" BBD",pw=x.measureText(pt).width+W*.08,ph=W*.085;
-    x.translate(W/2,py+ph/2);x.scale(pz,pz);x.fillStyle="#FFC72C";x.beginPath();if(x.roundRect)x.roundRect(-pw/2,-ph/2,pw,ph,ph/2);else x.rect(-pw/2,-ph/2,pw,ph);x.fill();
-    x.fillStyle="#00267F";x.textAlign="center";x.textBaseline="middle";x.fillText(pt,0,2);x.restore()}
-  var fa=dzEase((t-2.6)/.6),fh=H*(story?.07:.085);x.save();x.globalAlpha=fa;x.fillStyle="rgba(0,38,127,.92)";x.fillRect(0,H-fh,W,fh);
+  var ba=dzEase((t-.6)/.5);x.save();x.globalAlpha=ba;dzBadge(x,o,W,H);x.restore();
+  var ty=cy+dh/2+H*(story?.04:.04)+(pod?W*.15:0),ta=dzEase((t-1)/.8);
+  x.save();x.globalAlpha=ta;x.textAlign="center";x.textBaseline="top";x.fillStyle=dark?"#fff":"#00267F";var fs=Math.round(W*(story?.066:.056));
+  x.font="800 "+fs+"px Fraunces,Georgia,serif";var ls=dzWrap(x,o.name,W*.86,2);ls.forEach(function(l,i){x.fillText(l,W/2,ty+(1-ta)*20+i*fs*1.12)});x.restore();
+  var py=ty+ls.length*fs*1.12+H*.018,pa=dzEase((t-1.8)/.6),pz=.6+.4*pa,ph2=W*.085;
+  if(o.price){x.save();x.globalAlpha=pa;var pf=Math.round(W*.05);x.font="700 "+pf+"px Quicksand,Arial,sans-serif";
+    var now=o.tpl==="sale"&&o.sale>0&&o.sale<o.price?o.sale:o.price,pt=dzMoney(now)+" BBD",pw2=x.measureText(pt).width+W*.08,old=now!==o.price?dzMoney(o.price):"",ow=old?x.measureText(old).width+W*.04:0;
+    x.translate(W/2,py+ph2/2);x.scale(pz,pz);var X0=-(pw2+ow)/2;
+    if(old){x.fillStyle=dark?"rgba(255,255,255,.8)":"#4A5675";x.textAlign="left";x.textBaseline="middle";x.fillText(old,X0,2);x.fillRect(X0,0,ow-W*.04,Math.max(3,W*.004))}
+    x.fillStyle=o.tpl==="sale"?"#FF6F59":"#FFC72C";dzRR(x,X0+ow,-ph2/2,pw2,ph2,ph2/2);x.fill();x.fillStyle=o.tpl==="sale"?"#fff":"#00267F";x.textAlign="center";x.textBaseline="middle";x.fillText(pt,X0+ow+pw2/2,2);x.restore()}
+  var fh=H*(story?.07:.085),fa=dzEase((t-2.6)/.6);
+  if(story&&o.link&&window.qrcode){var qs=W*.22,qy=H-fh-qs/2-H*.03;x.save();x.globalAlpha=fa;x.fillStyle=dark?"rgba(0,20,71,.55)":"rgba(255,255,255,.88)";dzRR(x,W*.05,qy-qs/2-W*.03,W*.9,qs+W*.06,W*.04);x.fill();dzQR(x,o.link,W*.2+qs/2-W*.08,qy,qs);
+    x.fillStyle=dark?"#fff":"#00267F";x.textAlign="left";x.textBaseline="middle";x.font="800 "+Math.round(W*.045)+"px Fraunces,Georgia,serif";x.fillText(o.tpl==="sale"?"Grab it on sale":"Order yours",W*.42,qy-W*.03);
+    x.font="600 "+Math.round(W*.032)+"px Quicksand,Arial,sans-serif";x.fillText("Scan, or tap the link in my bio",W*.42,qy+W*.035);x.restore()}
+  x.save();x.globalAlpha=fa;x.fillStyle="rgba(0,38,127,.92)";x.fillRect(0,H-fh,W,fh);
   var ft=(o.biz?o.biz+"  ·  ":"")+"Shop Bajan  ·  shopbajanbb.com",fz=Math.round(W*.036);x.fillStyle="#FFC72C";x.textAlign="center";x.textBaseline="middle";
-  do{x.font="700 "+fz+"px Quicksand,Arial,sans-serif";fz-=2}while(x.measureText(ft).width>W*.92&&fz>14);
-  x.fillText(ft,W/2,H-fh/2);x.restore()}
+  do{x.font="700 "+fz+"px Quicksand,Arial,sans-serif";fz-=2}while(x.measureText(ft).width>W*.92&&fz>14);x.fillText(ft,W/2,H-fh/2);x.restore()}
+/* carousel slides 2 and 3: the details, then how to order */
+function dzSlide2(o){var W=1080,c=document.createElement("canvas");c.width=W;c.height=W;var x=c.getContext("2d"),dark=dzDark(o.bg);dzBack(x,W,W,o.bg,1);
+  x.fillStyle="rgba(255,255,255,.94)";dzRR(x,W*.06,W*.06,W*.88,W*.88,W*.05);x.fill();
+  var cut=o.cut,s=Math.min(W*.34/cut.width,W*.5/cut.height);x.drawImage(cut,W*.1+(W*.34-cut.width*s)/2,W*.22+(W*.5-cut.height*s)/2,cut.width*s,cut.height*s);
+  x.fillStyle="#00267F";x.textAlign="left";x.textBaseline="top";x.font="800 "+Math.round(W*.05)+"px Fraunces,Georgia,serif";x.fillText("The details",W*.1,W*.1);
+  x.font="700 "+Math.round(W*.042)+"px Fraunces,Georgia,serif";var y=W*.22;dzWrap(x,o.name,W*.42,3).forEach(function(l){x.fillText(l,W*.5,y);y+=W*.052});
+  x.font="600 "+Math.round(W*.032)+"px Quicksand,Arial,sans-serif";x.fillStyle="#16213E";y+=W*.02;
+  dzWrap(x,o.desc||"Made by a Bajan small business. Message us with any questions.",W*.42,8).forEach(function(l){x.fillText(l,W*.5,y);y+=W*.045});
+  x.fillStyle="#FFC72C";dzRR(x,W*.5,W*.8,W*.3,W*.075,W*.04);x.fill();x.fillStyle="#00267F";x.textAlign="center";x.textBaseline="middle";x.font="700 "+Math.round(W*.04)+"px Quicksand,Arial,sans-serif";
+  x.fillText(dzMoney(o.tpl==="sale"&&o.sale>0&&o.sale<o.price?o.sale:o.price)+" BBD",W*.65,W*.84);return c}
+function dzSlide3(o){var W=1080,c=document.createElement("canvas");c.width=W;c.height=W;var x=c.getContext("2d");dzBack(x,W,W,"blue",1);
+  x.textAlign="center";x.textBaseline="top";x.fillStyle="#fff";x.font="800 "+Math.round(W*.07)+"px Fraunces,Georgia,serif";x.fillText("How to order",W/2,W*.09);
+  x.font="600 "+Math.round(W*.036)+"px Quicksand,Arial,sans-serif";x.fillStyle="#FFE08A";x.fillText("Scan the code, or tap the link in my bio",W/2,W*.2);
+  if(window.qrcode&&o.link)dzQR(x,o.link,W/2,W*.52,W*.4);
+  x.fillStyle="#fff";x.font="700 "+Math.round(W*.034)+"px Quicksand,Arial,sans-serif";x.fillText(o.digital?"Pay by card on Shop Bajan · get it straight away":"Pay by card on Shop Bajan · delivered across Barbados",W/2,W*.76);
+  x.fillStyle="#FFC72C";x.font="800 "+Math.round(W*.04)+"px Quicksand,Arial,sans-serif";x.fillText((o.biz?o.biz+" · ":"")+"shopbajanbb.com",W/2,W*.84);return c}
+function dzCaps(o,p){var price=o.tpl==="sale"&&o.sale>0&&o.sale<o.price?dzMoney(o.sale)+" (was "+dzMoney(o.price)+")":dzMoney(o.price),n=o.name,lk=o.link,tags="#ShopBajan #Barbados #BajanBusiness #SupportLocal #246";
+  var a={show:[n+" is here and it's a must-have 💛 "+price+" BBD. Order on Shop Bajan and support a Bajan small business: "+lk+"\n\n"+tags,
+      "Treat yourself, you deserve it ✨ "+n+", "+price+" BBD. Tap to order: "+lk+"\n\n"+tags],
+    new:["NEW IN 🎉 "+n+" just dropped! "+price+" BBD. Be one of the first to get yours: "+lk+"\n\n"+tags+" #NewIn",
+      "Fresh off the shelf 🌺 Say hello to "+n+". "+price+" BBD on Shop Bajan: "+lk+"\n\n"+tags+" #JustDropped"],
+    sale:["SALE 🔥 "+n+" is now "+price+" BBD for a short time only. Grab yours before it ends: "+lk+"\n\n"+tags+" #Sale",
+      "Payday treat 💸 "+n+" is on sale at "+price+" BBD. Order here: "+lk+"\n\n"+tags+" #BajanDeals"],
+    few:[(o.left>0?"Only "+o.left+" left":"Almost gone")+" ⏳ "+n+", "+price+" BBD. Don't miss out: "+lk+"\n\n"+tags,
+      "Last call! 📣 "+n+" is nearly sold out. "+price+" BBD. Order yours now: "+lk+"\n\n"+tags]};return a[o.tpl]||a.show}
 function dzRecord(c,o,onDone,onFail){if(!window.MediaRecorder||!c.captureStream)return onFail("This phone can't make clips. Try the picture instead, or use Chrome or Safari.");
   var types=["video/mp4;codecs=avc1","video/mp4","video/webm;codecs=vp9","video/webm"],mt=types.filter(function(m){return MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(m)})[0]||"";
   var st=c.captureStream(30),rec,ch=[];try{rec=new MediaRecorder(st,mt?{mimeType:mt,videoBitsPerSecond:5e6}:{})}catch(e){return onFail("This phone can't make clips. Try the picture instead.")}
@@ -706,37 +775,54 @@ function dzRecord(c,o,onDone,onFail){if(!window.MediaRecorder||!c.captureStream)
   rec.onstop=function(){var ty=(rec.mimeType||mt||"video/webm").split(";")[0];onDone(new Blob(ch,{type:ty}),ty.indexOf("mp4")>-1?"mp4":"webm")};
   var t0=null;rec.start(200);(function fr(ts){if(t0===null)t0=ts;var t=(ts-t0)/1000;dzDraw(c,o,Math.min(t,5));if(t<5.4)requestAnimationFrame(fr);else rec.stop()})(performance.now())}
 function designSheet(p){
-  var o={bg:"beach",size:"post",name:p.name,price:p.price,biz:(S.vendor&&S.vendor.business)||"",cut:null},clip=null;
+  var o={tpl:"show",look:"classic",bg:"beach",size:"post",name:p.name,price:Number(p.price)||0,sale:0,left:Math.max(0,Number(p.stock)||0),biz:(S.vendor&&S.vendor.business)||"",
+    desc:String(p.description||"").replace(/\s+/g," ").trim(),digital:!!p.digital,link:p.status==="live"?prodLink(p):shopLink(S.vendor||{}),cut:null},clip=null;
   var d=document.createElement("div");d.className="sheet";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-label","Make a design");
+  var chips=function(id,list,attr){return'<div class="dz-opts" id="'+id+'">'+list.map(function(b){return'<button type="button" class="dz-o" data-'+attr+'="'+b[0]+'">'+(attr==="bg"?'<i class="dz-sw dz-'+b[0]+'"></i>':"")+b[1]+'</button>'}).join("")+'</div>'};
   d.innerHTML='<div class="panel"><div class="head"><h2>✨ Make a design</h2><button class="x" type="button" aria-label="Close">×</button></div>'+
-  '<p class="muted" style="margin:6px 0 12px">Put <b>'+esc(p.name)+'</b> on a Bajan backdrop for your posts, Stories and WhatsApp Status. Your shop photo stays on white.</p>'+
-  '<div class="dz-stage"><canvas id="dzC" aria-label="Design preview"></canvas><div class="dz-wait" id="dzW"><b>✨ Cutting out your product…</b><span>The first time takes about a minute.</span></div></div>'+
-  '<div class="f">Backdrop<div class="dz-opts" id="dzBg">'+DZ_BG.map(function(b){return'<button type="button" class="dz-o" data-bg="'+b[0]+'"><i class="dz-sw dz-'+b[0]+'"></i>'+b[1]+'</button>'}).join("")+'</div></div>'+
-  '<div class="f">Size<div class="dz-opts" id="dzSz">'+DZ_SIZE.map(function(s){return'<button type="button" class="dz-o" data-sz="'+s[0]+'">'+s[1]+'</button>'}).join("")+'</div></div>'+
+  '<p class="muted" style="margin:6px 0 12px">Ready-made posts, Stories and captions for <b>'+esc(p.name)+'</b>. Your shop photo stays on white.</p>'+
+  '<div class="f">What\'s the post for?'+chips("dzT",DZ_TPL,"tpl")+'</div>'+
+  '<div class="two" id="dzX"><label class="f" id="dzSaleF" hidden>Sale price (BBD)<input id="dzSale" type="number" inputmode="decimal" min="0" step="0.01" placeholder="e.g. '+esc(Math.max(1,Math.round(o.price*.8)))+'"></label><label class="f" id="dzLeftF" hidden>How many left<input id="dzLeft" type="number" inputmode="numeric" min="0" step="1" value="'+esc(o.left||"")+'"></label></div>'+
+  '<div class="dz-stage"><canvas id="dzC" aria-label="Design preview"></canvas><div class="dz-wait" id="dzW"><b>✨ Getting your product ready…</b><span>The first time takes about a minute.</span></div></div>'+
+  '<p class="dz-tip" id="dzTip"></p>'+
+  '<div class="f">Backdrop'+chips("dzBg",DZ_BG,"bg")+'</div>'+
+  (o.digital?"":'<div class="f">Look'+chips("dzL",[["classic","Floating"],["podium","On a podium"]],"look")+'</div>')+
+  '<div class="f">Size'+chips("dzSz",DZ_SIZE,"sz")+'</div>'+
   '<p class="err" id="dzE" role="alert"></p>'+
-  '<div class="btnrow"><button class="btn" type="button" id="dzPic" disabled>Save picture</button><button class="btn ghost" type="button" id="dzClip" disabled>🎬 Make a 5-second clip</button></div></div>';
+  '<div class="btnrow"><button class="btn" type="button" id="dzPic" disabled>Save picture</button><button class="btn ghost" type="button" id="dzClip" disabled>🎬 Make a 5-second clip</button><button class="btn ghost" type="button" id="dzCar" disabled>Save a 3-picture carousel</button></div>'+
+  '<h3 class="dz-h">Captions to copy</h3><div id="dzCap"></div></div>';
   document.body.appendChild(d);document.body.style.overflow="hidden";
-  var c=q("#dzC",d),busyRec=false;function close(){if(busyRec)return;d.remove();document.body.style.overflow=""}
+  var c=q("#dzC",d),busyRec=false,anim=0;function close(){if(busyRec)return;d.remove();document.body.style.overflow=""}
   q(".x",d).onclick=close;d.addEventListener("click",function(e){if(e.target===d)close()});
   function size(){var s=DZ_SIZE.filter(function(z){return z[0]===o.size})[0];c.width=s[2];c.height=s[3]}
-  function draw(){size();qa("[data-bg]",d).forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-bg")===o.bg)});qa("[data-sz]",d).forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-sz")===o.size)});
-    if(o.cut)dzDraw(c,o,5);else{dzBack(c.getContext("2d"),c.width,c.height,o.bg,1)}}
-  qa("[data-bg]",d).forEach(function(b){b.onclick=function(){if(busyRec)return;o.bg=b.getAttribute("data-bg");clip=null;draw()}});
-  qa("[data-sz]",d).forEach(function(b){b.onclick=function(){if(busyRec)return;o.size=b.getAttribute("data-sz");clip=null;draw()}});
-  function fname(ext){return(p.name||"design").replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"").toLowerCase().slice(0,40)+"-"+o.bg+"."+ext}
-  function give(blob,name,title){var file;try{file=new File([blob],name,{type:blob.type})}catch(e){}
-    if(file&&navigator.canShare&&navigator.canShare({files:[file]}))return navigator.share({files:[file],title:title}).catch(function(){});
-    var u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000);toast("Saved to your downloads 💕")}
-  q("#dzPic",d).onclick=function(){dzDraw(c,o,5);c.toBlob(function(b){if(b)give(b,fname("jpg"),p.name)},"image/jpeg",.92)};
-  var cb=q("#dzClip",d);cb.onclick=function(){if(clip)return give(clip.blob,fname(clip.ext),p.name);
-    busyRec=true;cb.disabled=true;q("#dzPic",d).disabled=true;cb.textContent="🎬 Making your clip…";q("#dzE",d).textContent="";
+  function caps(){q("#dzCap",d).innerHTML=dzCaps(o,p).map(function(t,i){return'<div class="dz-cap"><p>'+esc(t).replace(/\n/g,"<br>")+'</p><button type="button" class="btn sm ghost" data-cap="'+i+'">Copy caption</button></div>'}).join("");
+    qa("[data-cap]",d).forEach(function(b){b.onclick=function(){var t=dzCaps(o,p)[+b.getAttribute("data-cap")];function ok(){toast("Caption copied. Paste it with your post 💕")}
+      if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok,function(){toast(t)});else toast(t)}})}
+  function draw(animate){size();[["tpl","tpl"],["bg","bg"],["look","look"],["sz","size"]].forEach(function(k){qa("[data-"+k[0]+"]",d).forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-"+k[0])===o[k[1]])})});
+    q("#dzSaleF",d).hidden=o.tpl!=="sale";q("#dzLeftF",d).hidden=o.tpl!=="few";q("#dzTip",d).innerHTML="💡 <b>When to post:</b> "+esc(DZ_TIP[o.tpl]);caps();
+    if(!o.cut){dzBack(c.getContext("2d"),c.width,c.height,o.bg,1);return}
+    if(!animate)return dzDraw(c,o,5);var t0=performance.now(),me=++anim;(function fr(ts){if(!d.isConnected||busyRec||me!==anim)return;var t=(ts-t0)/1000;dzDraw(c,o,Math.min(t,5));if(t<5)requestAnimationFrame(fr)})(t0)}
+  function pick(attr,key){qa("[data-"+attr+"]",d).forEach(function(b){b.onclick=function(){if(busyRec)return;o[key]=b.getAttribute("data-"+attr);clip=null;anim++;draw(false)}})}
+  pick("tpl","tpl");pick("bg","bg");pick("look","look");pick("sz","size");
+  q("#dzSale",d).oninput=function(){o.sale=Number(this.value)||0;clip=null;draw(false)};q("#dzLeft",d).oninput=function(){o.left=Math.max(0,Math.round(Number(this.value)||0));clip=null;draw(false)};
+  function fname(ext,n){return(p.name||"design").replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"").toLowerCase().slice(0,40)+"-"+o.tpl+(n?"-"+n:"")+"."+ext}
+  function save(files,title){var ok=files.every(function(f){return f}),sh=ok&&navigator.canShare&&navigator.canShare({files:files});
+    if(sh)return navigator.share({files:files,title:title}).catch(function(){});
+    files.forEach(function(f,i){setTimeout(function(){var u=URL.createObjectURL(f),a=document.createElement("a");a.href=u;a.download=f.name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000)},i*400)});toast("Saved to your downloads 💕")}
+  function file(blob,name){try{return new File([blob],name,{type:blob.type})}catch(e){blob.name=name;return blob}}
+  function jpg(cv){return new Promise(function(res){cv.toBlob(function(b){res(b)},"image/jpeg",.92)})}
+  q("#dzPic",d).onclick=function(){anim++;dzDraw(c,o,5);jpg(c).then(function(b){if(b)save([file(b,fname("jpg"))],p.name)})};
+  q("#dzCar",d).onclick=function(){anim++;var s1=document.createElement("canvas");s1.width=1080;s1.height=1080;dzDraw(s1,o,5);
+    Promise.all([jpg(s1),jpg(dzSlide2(o)),jpg(dzSlide3(o))]).then(function(bs){save(bs.map(function(b,i){return file(b,fname("jpg",i+1))}),p.name)})};
+  var cb=q("#dzClip",d);cb.onclick=function(){if(clip)return save([file(clip.blob,fname(clip.ext))],p.name);
+    anim++;busyRec=true;cb.disabled=true;q("#dzPic",d).disabled=true;cb.textContent="🎬 Making your clip…";q("#dzE",d).textContent="";
     dzRecord(c,o,function(blob,ext){busyRec=false;clip={blob:blob,ext:ext};cb.disabled=false;q("#dzPic",d).disabled=false;cb.textContent="Save clip";dzDraw(c,o,5)},
       function(m){busyRec=false;cb.disabled=false;q("#dzPic",d).disabled=false;cb.textContent="🎬 Make a 5-second clip";q("#dzE",d).textContent=m})};
-  draw();
+  draw(false);qrLoad().then(function(){if(o.cut)draw(false)},function(){});
   var ph=(p.photos||[])[0];if(!ph){q("#dzW",d).innerHTML="<b>Add a photo to this product first.</b>";return}
-  fetch(photoUrl(ph)).then(function(r){if(!r.ok)throw new Error("We couldn't get your photo. Check your internet and try again.");return r.blob()}).then(cutOut).then(function(cut){
-    o.cut=cut;q("#dzW",d).hidden=true;q("#dzPic",d).disabled=false;cb.disabled=false;
-    var t0=performance.now();(function fr(ts){if(!d.isConnected||busyRec)return;var t=(ts-t0)/1000;dzDraw(c,o,Math.min(t,5));if(t<5)requestAnimationFrame(fr)})(t0)},
+  fetch(photoUrl(ph)).then(function(r){if(!r.ok)throw new Error("We couldn't get your photo. Check your internet and try again.");return r.blob()})
+  .then(function(bl){return o.digital?createImageBitmap(bl).then(dzPhone):cutOut(bl)}).then(function(cut){
+    o.cut=cut;q("#dzW",d).hidden=true;q("#dzPic",d).disabled=false;cb.disabled=false;q("#dzCar",d).disabled=false;draw(true)},
     function(e){q("#dzW",d).innerHTML="<b>We couldn't cut out this product</b><span>"+esc((e&&e.message)||"A photo on a plain background works best.")+"</span>"})}
 
 /* ---------- add / edit product sheet ---------- */
@@ -875,7 +961,7 @@ function vendorCard(v){
   '<div class="r"><div class="l"><b>Products</b><span>'+n.length+' total · '+n.filter(function(p){return p.status==="live"}).length+' live · '+n.filter(function(p){return p.status==="pending"}).length+' waiting</span></div></div></div>'+
   (v.bio?'<p class="small muted" style="margin-top:10px">'+esc(v.bio)+'</p>':"")+
   '<div class="btnrow">'+(v.status!=="approved"?'<button class="btn sm green" data-vst="'+v.id+':approved">Approve shop</button>':'<button class="btn sm ghost" data-vst="'+v.id+':paused">Pause shop</button>')+
-  '<a class="btn sm ghost" href="https://wa.me/'+esc(waNum(v.phone))+'" target="_blank" rel="noopener">WhatsApp</a><button class="btn sm ghost" data-viewas="'+v.id+'">See her view</button><button class="btn sm red" data-delv="'+v.id+'">Delete shop</button></div></div>';
+  (v.email?'<a class="btn sm ghost" href="mailto:'+esc(v.email)+'">Email</a>':"")+'<button class="btn sm ghost" data-viewas="'+v.id+'">See her view</button><button class="btn sm red" data-delv="'+v.id+'">Delete shop</button></div></div>';
 }
 function aApprove(){
   var pv=S.all.vendors.filter(function(v){return v.status==="pending"}),pp=S.all.products.filter(function(p){return p.status==="pending"});
@@ -932,9 +1018,9 @@ function sheet(title,inner){var d=document.createElement("div");d.className="she
 function noteSheet(p){var d=sheet("Ask for changes",'<p class="muted">'+esc(p.name)+'</p><form id="nf"><label class="f">What should she change?<textarea name="note" maxlength="500" required placeholder="e.g. Please add a brighter photo on a plain background">'+esc(p.note||"")+'</textarea></label><div class="btnrow"><button class="btn" type="submit">Send to vendor</button></div></form>');
   q("#nf",d).onsubmit=function(e){e.preventDefault();var n=e.target.note.value.trim();if(!n)return;d.close();
     var v=vById(p.vendor_id);updProduct(p.id,{status:"changes",note:n},"Sent. She'll see it in her portal").then(function(){
-      if(!v||!v.phone)return;
-      var wa="https://wa.me/"+waNum(v.phone)+"?text="+encodeURIComponent("Hi "+String(v.owner_name||"").split(" ")[0]+"! I checked your product \""+p.name+"\" in the Vendor Portal: "+n+" 💕 You can update it here: https://shopbajanbb.com/vendors");
-      var w=sheet("Tell her on WhatsApp?",'<p class="muted">She\'ll see your note when she signs in. A quick WhatsApp makes sure she knows.</p><div class="btnrow"><a class="btn" id="waGo" href="'+esc(wa)+'" target="_blank" rel="noopener">Open WhatsApp</a><button class="btn ghost" type="button" id="waNo">No thanks</button></div>');
+      if(!v||!v.email)return;
+      var wa="mailto:"+v.email+"?subject="+encodeURIComponent("Shop Bajan: changes for "+p.name)+"&body="+encodeURIComponent("Hi "+String(v.owner_name||"").split(" ")[0]+",\n\nI checked your product \""+p.name+"\" in the Vendor Portal: "+n+"\n\nYou can update it here: https://shopbajanbb.com/vendors\n\nShop Bajan");
+      var w=sheet("Email her too?",'<p class="muted">She\'ll see your note when she signs in. A quick email makes sure she knows.</p><div class="btnrow"><a class="btn" id="waGo" href="'+esc(wa)+'">Open email</a><button class="btn ghost" type="button" id="waNo">No thanks</button></div>');
       q("#waGo",w).onclick=function(){w.close()};q("#waNo",w).onclick=w.close})}}
 function viewSheet(p){var v=vById(p.vendor_id)||{};
   var d=sheet(p.name,'<div class="photos">'+(p.photos||[]).map(function(x){return'<a href="'+esc(photoUrl(x))+'" target="_blank" rel="noopener" class="photo" style="background-image:url(\''+esc(photoUrl(x))+'\')"></a>'}).join("")+'</div>'+
