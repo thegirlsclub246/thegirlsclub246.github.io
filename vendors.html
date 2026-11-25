@@ -137,6 +137,7 @@ details summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;alig
 .chip.changes{background:#FFE0E6;color:#A3123F}
 .chip.hidden,.chip.paused{background:#EEE;color:#555}
 .chip.approved{background:var(--okbg);color:var(--ok)}
+.pclean{margin-top:10px}.pc-prev{width:150px;aspect-ratio:3/4;object-fit:cover;border-radius:12px;background:#fff;border:1px solid #E3E6EE;align-self:center}
 .plink{flex:1 1 100%;background:#FFF8EC;border:2px dashed #FFC72C;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px}
 .plink b{color:#00267F}.plink span{font-size:14px;color:#555}
 .plink code{font-size:13px;word-break:break-all;background:#fff;border-radius:8px;padding:6px 8px;color:#00267F}
@@ -580,6 +581,22 @@ function compress(file){return new Promise(function(res,rej){
   img.onerror=function(){URL.revokeObjectURL(url);rej(new Error("That file isn't a photo we can read. Try a JPG or PNG."))};
   img.src=url;})}
 
+/* ---------- photo cleaner: AI removes the background and puts the product on clean white (tall 3:4) ----------
+   Runs on the seller's own phone (free). The AI files (about 50 MB) download once, the first time. */
+var BGR=null;
+function bgrLoad(){return BGR||(BGR=import("/tools/bg-remove/background-removal-1.4.5.min.mjs").catch(function(e){BGR=null;throw e}))}
+function cleanWhite(file){return bgrLoad().then(function(m){
+  var run=function(cfg){return m.removeBackground(file,Object.assign({model:"small",output:{format:"image/png"}},cfg))};
+  return run({}).catch(function(){return run({publicPath:"https://cdn.jsdelivr.net/npm/@imgly/background-removal-data@1.4.5/dist/"})})}).then(function(cut){return createImageBitmap(cut)}).then(function(bmp){
+  var c0=document.createElement("canvas");c0.width=bmp.width;c0.height=bmp.height;var x0=c0.getContext("2d");x0.drawImage(bmp,0,0);
+  var d=x0.getImageData(0,0,c0.width,c0.height).data,l=c0.width,t=c0.height,r=0,b=0,X,Y;
+  for(Y=0;Y<c0.height;Y+=2)for(X=0;X<c0.width;X+=2){if(d[(Y*c0.width+X)*4+3]>24){if(X<l)l=X;if(X>r)r=X;if(Y<t)t=Y;if(Y>b)b=Y}}
+  if(r<=l||b<=t)throw new Error("We couldn't find the product in that photo.");
+  var W=1200,H=1600,pad=.12,bw=r-l+1,bh=b-t+1,sc=Math.min(W*(1-2*pad)/bw,H*(1-2*pad)/bh),dw=bw*sc,dh=bh*sc;
+  var c=document.createElement("canvas");c.width=W;c.height=H;var x=c.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,W,H);
+  x.save();x.shadowColor="rgba(0,0,0,.10)";x.shadowBlur=40;x.shadowOffsetY=18;x.drawImage(c0,l,t,bw,bh,(W-dw)/2,(H-dh)/2,dw,dh);x.restore();
+  return new Promise(function(res,rej){c.toBlob(function(bl){bl?res(bl):rej(new Error("Couldn't save the clean photo"))},"image/jpeg",.92)})})}
+
 /* ---------- add / edit product sheet ---------- */
 function productSheet(p){
   if(S.viewAs)return toast("You're viewing as this vendor. Switch back to Overseer to make changes.");
@@ -590,7 +607,7 @@ function productSheet(p){
   d.innerHTML='<div class="panel"><div class="head"><h2>'+(isNew?"Add a product":"Edit product")+'</h2><button class="x" type="button" aria-label="Close">×</button></div>'+
   (p.status==="changes"&&p.note?'<div class="fromher">From Shop Bajan: '+esc(p.note)+'</div>':"")+
   '<form id="pf" novalidate>'+
-  '<div class="f">Photos <span class="hint">Up to 5. The first one is the main picture. Bright, clear photos sell best.</span><div class="photos" id="phs"></div></div>'+
+  '<div class="f">Photos <span class="hint">Up to 5. The first one is the main picture. Bright, clear photos sell best.</span><div class="photos" id="phs"></div><div class="plink pclean" id="pclean" hidden></div></div>'+
   '<label class="f">Product name<input name="name" maxlength="90" required value="'+esc(p.name)+'" placeholder="e.g. Vanilla body butter 8oz"></label>'+
   '<div class="two"><label class="f">Price (BBD)<input name="price" type="number" inputmode="decimal" min="0" step="0.01" required value="'+esc(p.price)+'"></label>'+
   '<label class="f" id="stockF">How many you have<input name="stock" type="number" inputmode="numeric" min="0" step="1" value="'+esc(p.stock)+'"></label></div>'+
@@ -611,10 +628,25 @@ function productSheet(p){
   var f=q("#pf",d);
   function close(){d.remove();document.body.style.overflow=""}
   q(".x",d).onclick=close;d.addEventListener("click",function(e){if(e.target===d)close()});
-  function drawPhotos(){var all=photos.map(function(x,i){return{u:photoUrl(x),i:i,kind:"old"}}).concat(newFiles.map(function(x,i){return{u:x.url,i:i,kind:"new"}}));
+  function mainNew(){return newFiles.filter(function(n){return n.front})[0]||(!photos.length?newFiles[0]:null)}
+  function cleanMain(nf){if(!nf||nf.state==="busy")return;nf.state="busy";nf.useClean=true;drawPhotos();
+    cleanWhite(nf.file).then(function(bl){nf.clean=bl;nf.cleanUrl=URL.createObjectURL(bl);nf.state="done";drawPhotos()},function(e){nf.state="fail";nf.useClean=false;nf.err=(e&&e.message)||"";drawPhotos()})}
+  function drawPhotos(){var mn=mainNew();if(mn&&!mn.state&&mn.auto!==false)cleanMain(mn);
+    var shown=function(n){return n.useClean&&n.cleanUrl?n.cleanUrl:n.url};
+    var all=(mn&&mn.front?[{u:shown(mn),i:newFiles.indexOf(mn),kind:"new"}]:[]).concat(photos.filter(function(x,i){return!(mn&&mn.front&&i===0)}).map(function(x){return{u:photoUrl(x),i:photos.indexOf(x),kind:"old"}})).concat(newFiles.filter(function(n){return!n.front}).map(function(x){return{u:shown(x),i:newFiles.indexOf(x),kind:"new"}}));
     var h=all.map(function(x,n){return'<div class="photo" style="background-image:url(\''+esc(x.u)+'\')">'+(n===0?'<span class="first">Main</span>':"")+'<button type="button" aria-label="Remove photo" data-rm="'+x.kind+':'+x.i+'">×</button></div>'}).join("");
     if(all.length<5)h+='<label class="addphoto">📷<br>Add photo<input type="file" accept="image/*" multiple id="pfile"></label>';
     q("#phs",d).innerHTML=h;
+    var cb=q("#pclean",d),ck="";
+    if(mn&&mn.state==="busy")ck='<b>✨ Cleaning up your main photo…</b><span>Putting it on a clean white background. The first time takes about a minute.</span>';
+    else if(mn&&mn.state==="done")ck='<b>✨ Main photo: clean white background</b><img class="pc-prev" src="'+esc(shown(mn))+'" alt="Your main photo as shoppers will see it"><span>All Shop Bajan products show on white, so yours looks neat beside everyone else\'s.</span><div class="acts"><button type="button" class="btn sm '+(mn.useClean?'':'ghost')+'" data-cl="1">White background</button><button type="button" class="btn sm '+(mn.useClean?'ghost':'')+'" data-cl="0">My original photo</button></div>';
+    else if(mn&&mn.state==="fail")ck='<b>We couldn\'t clean this photo</b><span>Your original photo will be used. A photo on a plain background works best.</span><div class="acts"><button type="button" class="btn sm ghost" data-clretry>Try again</button></div>';
+    else if(!mn&&photos.length)ck='<b>✨ Clean white background</b><span>Put your main photo on clean white like the rest of Shop Bajan.</span><div class="acts"><button type="button" class="btn sm" data-clold>Clean up my main photo</button></div>';
+    cb.innerHTML=ck;cb.hidden=!ck;
+    qa("[data-cl]",cb).forEach(function(b){b.onclick=function(){mn.useClean=b.getAttribute("data-cl")==="1";drawPhotos()}});
+    var rt=q("[data-clretry]",cb);if(rt)rt.onclick=function(){mn.state="";mn.auto=true;drawPhotos()};
+    var co=q("[data-clold]",cb);if(co)co.onclick=function(){co.disabled=true;co.textContent="Getting your photo…";
+      fetch(photoUrl(photos[0])).then(function(r){if(!r.ok)throw 0;return r.blob()}).then(function(bl){var nf={file:bl,url:URL.createObjectURL(bl),front:true};newFiles.unshift(nf);drawPhotos()}).catch(function(){co.disabled=false;co.textContent="Try again"})};
     qa("[data-rm]",d).forEach(function(b){b.onclick=function(){var a=b.getAttribute("data-rm").split(":");if(a[0]==="old")photos.splice(+a[1],1);else{URL.revokeObjectURL(newFiles[+a[1]].url);newFiles.splice(+a[1],1)}drawPhotos()}});
     var fi=q("#pfile",d);if(fi)fi.onchange=function(){var fs=Array.prototype.slice.call(fi.files||[]);
       fs.slice(0,5-photos.length-newFiles.length).forEach(function(file){newFiles.push({file:file,url:URL.createObjectURL(file)})});drawPhotos()};
@@ -644,13 +676,14 @@ function productSheet(p){
     var btn=q("#pbtn",d);busy(btn,true,newFiles.length?"Uploading photos…":"Saving…");
     var uid=S.user.id,uploaded=[];
     var chain=Promise.resolve();
-    newFiles.forEach(function(nf,i){chain=chain.then(function(){return compress(nf.file)}).then(function(blob){
+    var frontPath="";if(newFiles.some(function(n){return n.state==="busy"})){busy(btn,false);return setErr(err,"One moment: your main photo is still being cleaned up.")}
+    newFiles.forEach(function(nf,i){chain=chain.then(function(){return compress(nf.useClean&&nf.clean?nf.clean:nf.file)}).then(function(blob){
       var path=uid+"/"+Date.now()+"-"+Math.random().toString(36).slice(2,8)+".jpg";
-      return sb.storage.from(BUCKET).upload(path,blob,{contentType:"image/jpeg",upsert:false}).then(function(r){if(r.error)throw r.error;uploaded.push(path)})})});
+      return sb.storage.from(BUCKET).upload(path,blob,{contentType:"image/jpeg",upsert:false}).then(function(r){if(r.error)throw r.error;if(nf.front)frontPath=path;else uploaded.push(path)})})});
     chain.then(function(){
-      var removed=(p.photos||[]).filter(function(x){return photos.indexOf(x)<0});
+      var removed=(p.photos||[]).filter(function(x){return photos.indexOf(x)<0||(frontPath&&x===photos[0])});
       var row={name:name,price:Math.round(price*100)/100,stock:stock,digital:dig,delivery_link:dig?link:null,category:f.category.value,
-        variants:f.variants.value.split(",").map(function(s){return s.trim()}).filter(Boolean).slice(0,20),description:f.description.value.trim(),photos:photos.concat(uploaded)};
+        variants:f.variants.value.split(",").map(function(s){return s.trim()}).filter(Boolean).slice(0,20),description:f.description.value.trim(),photos:frontPath?[frontPath].concat(photos.slice(1),uploaded):photos.concat(uploaded)};
       var qy=isNew?sb.from("products").insert(row).select().single():sb.from("products").update(row).eq("id",p.id).select().single();
       return qy.then(function(r){if(r.error)throw r.error;
         if(removed.length)sb.storage.from(BUCKET).remove(removed).catch(function(){});
