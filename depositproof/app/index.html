@@ -1740,15 +1740,85 @@ function planLabel(){
   if (pl.tier === 'trial' && Date.now() < pl.trialEnds) { const dd = Math.max(1, Math.ceil((pl.trialEnds - Date.now()) / 864e5)); return `Trial · <b>${dd} day${dd > 1 ? 's' : ''}</b>`; }
   return 'Free · <b>Upgrade</b>';
 }
-const buyBtn = (key, label, cls) => CHECKOUT[key]
-  ? `<a class="btn ${cls}" href="${esc(CHECKOUT[key])}" target="_blank" rel="noopener">${label}</a>`
-  : `<button class="btn ${cls}" data-act="nocheckout">${label}</button>`;
+const buyBtn = (key, label, cls) => {
+  const link = CHECKOUT[key]
+    ? `<a class="btn ${cls}" href="${esc(CHECKOUT[key])}" target="_blank" rel="noopener">${label}</a>`
+    : `<button class="btn ${cls}" data-act="nocheckout">${label}</button>`;
+  return PP_ITEMS[key] ? `<div class="pp-slot stack" style="gap:6px" data-pp="${key}"><p class="small pp-label" style="margin:0" hidden><b>${label}</b></p><div class="pp-btns"></div><div class="pp-fallback">${link}</div></div>` : link;
+};
+
+/* PAY IN THE APP: PayPal buttons right on the plans page. When the payment goes through,
+   the plan unlocks straight away and the buyer sees their unlock code (no waiting for an email).
+   If PayPal's buttons can't load, the old payment links show instead. */
+const PP_CLIENT = 'BAAZkLN-1YQuwpFsSdH3p0fEY99MCiUNLh5m1aoRJQGX5pHj3ZO1Ab1ENTLnLsQpp9sT-6m5dIF-yS810M';
+const PP_ITEMS = {
+  single: { amount: '9.00', name: 'DepositProof Single Move', code: () => UNLOCK.single },
+  tour: { amount: '5.00', name: 'DepositProof AI virtual tour', code: () => UNLOCK.tour },
+  proMonthly: { plan: 'P-8TC015617D530674XNL543EA', code: () => UNLOCK.pro },
+  proYearly: { plan: 'P-9T111221AW342381FNL543VI', code: () => UNLOCK.pro },
+  biz25: { plan: 'P-3K039116P7915044CNL5RGMA', code: () => UNLOCK.biz25 },
+  biz75: { plan: 'P-33A865472B203925RNL5RGXY', code: () => UNLOCK.biz75 }
+};
+const ppSdk = {};
+function loadPP(kind){
+  if (ppSdk[kind]) return ppSdk[kind];
+  ppSdk[kind] = new Promise((resolve, reject) => {
+    const s = document.createElement('script'), ns = kind === 'sub' ? 'ppSub' : 'ppOnce';
+    s.src = 'https://www.paypal.com/sdk/js?client-id=' + encodeURIComponent(PP_CLIENT) + '&currency=USD' + (kind === 'sub' ? '&vault=true&intent=subscription' : '&intent=capture');
+    s.setAttribute('data-namespace', ns);
+    s.onload = () => window[ns] ? resolve(window[ns]) : reject();
+    s.onerror = () => { ppSdk[kind] = null; reject(); };
+    document.head.appendChild(s);
+  });
+  return ppSdk[kind];
+}
+function mountPayPal(){
+  document.querySelectorAll('.pp-slot').forEach(slot => {
+    const key = slot.dataset.pp, item = PP_ITEMS[key], box = slot.querySelector('.pp-btns'), fb = slot.querySelector('.pp-fallback');
+    if (!item || !box) return;
+    loadPP(item.plan ? 'sub' : 'once').then(pp => {
+      if (!document.body.contains(box)) return;
+      const opts = {
+        style: { shape: 'pill', color: 'gold', layout: 'vertical', label: item.plan ? 'subscribe' : 'pay', height: 40 },
+        onApprove: async (data, actions) => {
+          let ref = data.subscriptionID || data.orderID;
+          if (!item.plan) { const det = await actions.order.capture(); ref = (det && det.id) || ref; }
+          paidUnlock(item.code(), ref);
+        },
+        onError: () => toast('PayPal couldn\'t finish that. Nothing was charged. Please try again.')
+      };
+      if (item.plan) opts.createSubscription = (d, a) => a.subscription.create({ plan_id: item.plan });
+      else opts.createOrder = (d, a) => a.order.create({ purchase_units: [{ description: item.name, amount: { currency_code: 'USD', value: item.amount } }] });
+      return pp.Buttons(opts).render(box).then(() => { fb.hidden = true; const lb = slot.querySelector('.pp-label'); if (lb) lb.hidden = false; });
+    }).catch(() => { box.hidden = true; });
+  });
+}
+function applyCode(code, propId){
+  const pl = plan();
+  if (code === UNLOCK.tour) { pl.credits = (pl.credits || 0) + 1; save(); return 'AI tour unlocked. Open Virtual tour on any property to use it.'; }
+  if (code === UNLOCK.biz25 || code === UNLOCK.biz75 || code === UNLOCK.bizMax) { const k = code === UNLOCK.biz25 ? 'biz25' : code === UNLOCK.biz75 ? 'biz75' : 'bizMax'; pl.tier = 'business'; pl.units = BIZ[k].units; save(); return `Business plan unlocked for up to ${BIZ[k].units} units. Add your company details.`; }
+  if (code === UNLOCK.pro) { pl.tier = 'pro'; save(); return 'Landlord and host plan unlocked. Thank you!'; }
+  if (code === UNLOCK.single) {
+    const owned = S.properties.filter(x => !x.example), id = propId || (owned.length === 1 ? owned[0].id : null);
+    if (!id) { pl.pendingSingle = (pl.pendingSingle || 0) + 1; save(); return 'Paid. Add your property, then enter your code below to unlock clean PDFs for it.'; }
+    if (!pl.unlocked.includes(id)) pl.unlocked.push(id); save(); return 'Clean PDFs unlocked for ' + ((prop(id) || {}).name || 'that property');
+  }
+  return '';
+}
+function paidUnlock(code, ref){
+  const pl = plan(); pl.codes = pl.codes || [];
+  pl.codes.push({ code, ref: ref || '', at: Date.now() }); save();
+  const msg = applyCode(code, view.from || null);
+  go({ name: 'pricing', paid: code });
+  toast('Payment received. ' + (msg || 'Your plan is unlocked.'));
+}
 function vPricing(){
   const pl = plan(), pro = isPro(), from = view.from && prop(view.from);
   const why = { addprop: isBusiness() ? `Your Business plan covers up to ${plan().units} units. Move up a size to add more.` : isPro() ? `The landlord and host plan covers up to ${LIMITS.proProperties} properties. Companies can use the Business plan.` : 'The free plan covers one property. The landlord and host plan covers up to 5.', aitour: 'AI virtual tours are $5 each, or 5 a month on the landlord and host plan.', aitidy: 'AI tidy-up comes with an AI tour or the landlord and host plan.', welcomepdf: 'Welcome packs come with an AI tour or the landlord and host plan.', business: 'That is part of the Business plan for companies.' }[view.reason];
   const owned = S.properties.filter(x => !x.example);
   return `${topbar('<button class="btn sm" data-act="home">Close</button>')}
   <div class="stack-lg">
+    ${view.paid ? `<div class="card stack" style="border:2px solid #1f8a4c"><h3>Thank you! You're unlocked.</h3><p>Your unlock code is <b style="font-size:1.2em;letter-spacing:.04em">${esc(view.paid)}</b></p><p class="small muted">Screenshot it or write it down. You'll need it if you open DepositProof on another phone or laptop.</p></div>` : ''}
     <div class="stack"><p class="eyebrow">Plans</p><h1>Pick what fits your rentals</h1>
       ${why ? `<p class="lock-note">${esc(why)}</p>` : '<p class="muted">Every plan includes the walkthrough builder, photo reports, signatures and the move-out comparison.</p>'}
       ${pl.tier === 'trial' && !pro ? '<p class="lock-note">Your free trial has ended. Your reports are all still here.</p>' : ''}
@@ -1775,8 +1845,9 @@ function vPricing(){
         ${isBusiness() ? '<span class="pill" style="align-self:flex-start">Your plan</span>' : `<div class="stack" style="gap:8px">${buyBtn('biz25', 'Business 25 · $49/month', 'primary')}${buyBtn('biz75', 'Business 75 · $99/month', '')}</div>`}
         ${SALES_CONTACT ? `<p class="small">More than 75 units? Contact <b>${esc(SALES_CONTACT)}</b></p>` : '<p class="small muted">More than 75 units? Ask us for a custom plan.</p>'}</div>
     </div>
-    <p class="small muted" style="text-align:center">Secure checkout with PayPal. We email your unlock code within 24 hours of payment.</p>
-    <div class="card stack"><h3>Already paid?</h3><p class="small muted">Enter the unlock code from your email.</p>
+    <p class="small muted" style="text-align:center">Secure checkout with PayPal. Your plan unlocks the moment you pay, and your unlock code shows right here.</p>
+    ${(pl.codes || []).length ? `<div class="card stack"><h3>Your unlock codes</h3><p class="small muted">Keep these safe. Use them to unlock your plan again on a new phone or laptop.</p>${pl.codes.map(c => `<p style="margin:0"><b style="font-size:1.15em;letter-spacing:.04em">${esc(c.code)}</b> <span class="small muted">· ${new Date(c.at).toLocaleDateString()}</span></p>`).join('')}</div>` : ''}
+    <div class="card stack"><h3>Already paid?</h3><p class="small muted">Enter your unlock code.</p>
       <input type="text" id="code" placeholder="e.g. DP-XXXX-0" autocomplete="off" autocapitalize="characters">
       ${owned.length ? `<label class="field">For a per-move code, which property?<select id="codeprop">${owned.map(x => `<option value="${x.id}" ${from && from.id === x.id ? 'selected' : ''}>${esc(x.name || 'Untitled property')}</option>`).join('')}</select></label>` : ''}
       <button class="btn" data-act="redeem" style="align-self:flex-start">Unlock</button></div>
@@ -1962,6 +2033,7 @@ function render(scrollTop){
   renderNav();
   hydrateImages();
   if (view.name === 'run') setupPads();
+  if (view.name === 'pricing') mountPayPal();
   if (scrollTop) window.scrollTo(0, 0);
 }
 function go(v){ view = v; render(true); }
@@ -2239,13 +2311,11 @@ document.addEventListener('click', async e => {
     case 'trial': { const pl = plan(); pl.tier = 'trial'; pl.trialEnds = Date.now() + TRIAL_DAYS * 864e5; pl.trialUsed = true; save(); go({ name: 'home' }); toast(`Landlord and host plan trial started. ${TRIAL_DAYS} days, up to 5 properties and 5 AI tours.`); break; }
     case 'nocheckout': toast('Checkout isn\'t open yet. Start the free trial for now.'); break;
     case 'redeem': {
-      const code = (document.getElementById('code').value || '').trim().toUpperCase(), pl = plan();
-      if (code === UNLOCK.tour) { pl.credits = (pl.credits || 0) + 1; save(); go({ name: 'home' }); toast('AI tour unlocked. Open Virtual tour on any property to use it.'); }
-      else if (code === UNLOCK.biz25 || code === UNLOCK.biz75 || code === UNLOCK.bizMax) { const k = code === UNLOCK.biz25 ? 'biz25' : code === UNLOCK.biz75 ? 'biz75' : 'bizMax'; pl.tier = 'business'; pl.units = BIZ[k].units; save(); go({ name: 'company' }); toast(`Business plan unlocked for up to ${BIZ[k].units} units. Add your company details.`); }
-      else if (code === UNLOCK.pro) { pl.tier = 'pro'; save(); go({ name: 'home' }); toast('Landlord and host plan unlocked. Thank you!'); }
-      else if (code === UNLOCK.single) { const sel = document.getElementById('codeprop'); if (!sel) { toast('Add your property first, then enter the code.'); break; }
-        if (!pl.unlocked.includes(sel.value)) pl.unlocked.push(sel.value); save(); go({ name: 'home' }); toast('Clean PDFs unlocked for ' + (prop(sel.value).name || 'that property')); }
-      else toast('That code doesn\'t match. Check your payment confirmation.');
+      const code = (document.getElementById('code').value || '').trim().toUpperCase(), sel = document.getElementById('codeprop');
+      if (code === UNLOCK.single && !sel) { toast('Add your property first, then enter the code.'); break; }
+      const msg = applyCode(code, sel ? sel.value : null);
+      if (!msg) { toast('That code doesn\'t match. Check your payment confirmation.'); break; }
+      go({ name: (code === UNLOCK.biz25 || code === UNLOCK.biz75 || code === UNLOCK.bizMax) ? 'company' : 'home' }); toast(msg);
       break; }
     case 'vtour': go({ name: 'vtour', id: d.id, step: 0 }); break;
     case 'walk': go({ name: 'walk', id: d.id, step: 0 }); break;
