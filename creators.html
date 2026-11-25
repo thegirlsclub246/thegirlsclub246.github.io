@@ -241,5 +241,6 @@ function sync(){var on=!v.hero&&!v.ap&&!(done&&!done.hidden);st.classList.toggle
 new IntersectionObserver(function(es){es.forEach(function(e){v[e.target===hero?"hero":"ap"]=e.isIntersecting});sync()}).observe(hero);
 new IntersectionObserver(function(es){es.forEach(function(e){v.ap=e.isIntersecting});sync()}).observe(ap);})();
 </script>
+<script src="/chat.js?v=1" defer></script>
 </body>
 </html>
