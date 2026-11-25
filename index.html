@@ -2110,7 +2110,7 @@ function shopHome(){
   const tiles=LAUNCH_CATS.map((c,i)=>{const n=shopItems.filter(p=>p.cat==="v:"+c).length;
     return `<a class="sbx-tile" href="#shop/all/${encodeURIComponent("v:"+c)}"><span class="art">${CAT_ART[c]}</span><b>${esc(c)}</b>${n?`<small>${n} item${n>1?"s":""}</small>`:""}</a>`}).join("");
   const biz=mkBrands.map(b=>({b,its:shopItems.filter(p=>p.vendor===b.slug)})).filter(x=>x.its.length).slice(0,10);
-  return `<section class="sbx-hero" aria-label="Shop Bajan"><img src="img/sb-hero-swan-street.jpg" alt="Shopping on Swan Street in Bridgetown" width="896" height="1200">
+  return `<section class="sbx-hero" aria-label="Shop Bajan"><img src="img/sb-hero-madras-beach.jpg" alt="A Bajan woman in madras laughing by the beach with shopping bags" width="848" height="1264">
     <div class="sbx-hero-in"><p class="sbx-script sbx-hero-h">Shop Bajan</p><p class="sbx-script sbx-hero-s">Support Local. Shop Bajan!</p><p class="sbx-hero-p">Unique finds. Bajan vibes. Direct from our people.</p><a class="sbx-cta" href="#shop/products">Start Shopping →</a></div>${SB_HIB.replace('class="sb-hib"','class="sb-hib sbx-hero-hib"')}</section>
    <section class="sbx-home" aria-labelledby="sbxCatH"><h2 class="sbx-script sbx-sh" id="sbxCatH">Shop by Category</h2><div class="sbx-tiles6">${tiles}</div>
    ${biz.length?`<h2 class="sbx-script sbx-sh">Local Vendors</h2><div class="sbx-biz">${biz.map(({b,its})=>{const p=its.find(x=>x.img)||its[0];return `<a href="#s-${encodeURIComponent(slug(b.name))}"><span class="sbx-biz-img">${thumb(p)}</span><b>${esc(b.name)}</b><small>${b.story?esc(b.story.slice(0,48))+(b.story.length>48?"…":""):its.length+" item"+(its.length>1?"s":"")}</small></a>`}).join("")}</div>`:""}</section>`}
@@ -2723,7 +2723,7 @@ html[data-site=shop] .mk-tabs{display:none}
 .sbx-hero-p{margin:0 0 14px;font-size:.95rem;font-weight:600;color:#fff}
 .sbx-cta{display:inline-flex;align-items:center;min-height:48px;padding:0 22px;border-radius:999px;background:#FFC72C;color:#00267F;font-weight:800;text-decoration:none;box-shadow:0 4px 0 #C99400}
 .sbx-hero-hib{position:absolute;z-index:2;top:14px;right:14px;width:58px!important;height:58px!important;opacity:.95}
-@media (min-width:700px){.sbx-hero{height:480px;margin:14px 0 0;border-radius:18px}.sbx-hero:before{background:linear-gradient(90deg,rgba(0,20,71,.9) 0,rgba(0,38,127,.55) 45%,rgba(0,38,127,0) 75%)}.sbx-hero-in{top:50%;bottom:auto;transform:translateY(-50%);max-width:46%;left:40px}.sbx-hero-h{font-size:4.4rem}.sbx-hero>img{object-position:80% 25%}}
+@media (min-width:700px){.sbx-hero{height:480px;margin:14px 0 0;border-radius:18px}.sbx-hero:before{background:linear-gradient(90deg,rgba(0,20,71,.9) 0,rgba(0,38,127,.55) 45%,rgba(0,38,127,0) 75%)}.sbx-hero-in{top:50%;bottom:auto;transform:translateY(-50%);max-width:46%;left:40px}.sbx-hero-h{font-size:4.4rem}.sbx-hero>img{object-position:50% 18%}}
 /* category tiles */
 .sbx-sh{margin:22px 0 12px;font-size:1.85rem;line-height:1.1;color:#00267F!important;font-family:"Kaushan Script",cursive!important;font-weight:400!important}
 .sbx-sh:after{content:"";display:block;width:130px;height:7px;margin-top:2px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 130 7'%3E%3Cpath d='M2 5C40 1 90 1 128 4' fill='none' stroke='%23FFC72C' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E") left/contain no-repeat}
