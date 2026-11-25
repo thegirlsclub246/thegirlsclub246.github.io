@@ -169,6 +169,13 @@ details summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;alig
  body.has-vnav{padding-bottom:calc(70px + env(safe-area-inset-bottom,0px))}
 }
 @media (min-width:900px){.tabs.vnav button svg{display:none}}
+.dz-stage{position:relative;border-radius:16px;overflow:hidden;background:#E6E9F5;margin-bottom:12px}
+.dz-stage canvas{display:block;width:100%;height:auto;max-height:56vh;object-fit:contain;margin:0 auto}
+.dz-wait{position:absolute;inset:0;display:grid;place-content:center;gap:6px;text-align:center;padding:20px;background:rgba(255,248,231,.88);color:#00267F}.dz-wait[hidden]{display:none}.dz-wait span{color:#4A5675;font-size:14px}
+.dz-opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.dz-o{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:6px 14px;border-radius:999px;border:2px solid #D5DBEA;background:#fff;color:#16213E;font:inherit;font-weight:700;font-size:14px;cursor:pointer}
+.dz-o[aria-pressed=true]{border-color:#00267F;background:#EEF3FF;color:#00267F}
+.dz-sw{width:22px;height:22px;border-radius:50%;flex:none}.dz-beach{background:linear-gradient(#7DDCE0 50%,#F0D6A8 50%)}.dz-hibiscus{background:radial-gradient(circle,#FF6F59 45%,#FFF6E5 47%)}.dz-blue{background:#00267F;box-shadow:inset 0 -6px 0 #FFC72C}.dz-sunset{background:linear-gradient(#E8566C,#FFB347 55%,#1B3A8A 56%)}
 .pclean{margin-top:10px}.pc-prev{width:150px;aspect-ratio:3/4;object-fit:cover;border-radius:12px;background:#fff;border:1px solid #E3E6EE;align-self:center}
 .plink{flex:1 1 100%;background:#FFF8EC;border:2px dashed #FFC72C;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px}
 .plink b{color:#00267F}.plink span{font-size:14px;color:#555}
@@ -557,6 +564,7 @@ function prodCard(p,admin,vend){
     if(p.status!=="hidden")h+='<button class="btn sm red" data-hide="'+p.id+'">Hide</button>';
   }else{
     h+='<button class="btn sm" data-edit="'+p.id+'">Edit</button>';
+    if((p.photos||[]).length&&!p.digital)h+='<button class="btn sm ghost" data-design="'+p.id+'">✨ Make a design</button>';
     h+=p.status==="hidden"?'<button class="btn sm ghost" data-unhide="'+p.id+'">Show again</button>':'<button class="btn sm ghost" data-hidev="'+p.id+'">Hide</button>';
   }
   if(p.status==="live"){var lk=prodLink(p);h+='<div class="plink"><b>Product link</b><span>'+(p.digital?'Send this to customers. It opens your product so they can pay straight away.':'Put this in your posts and bio. It opens this product on Shop Bajan (from launch day, Thu 10 Dec).')+'</span><code>'+esc(lk)+'</code><div class="acts"><button class="btn sm" data-copylink="'+esc(lk)+'">Copy link</button>'+(navigator.share?'<button class="btn sm ghost" data-sharelink="'+esc(lk)+'" data-sharename="'+esc(p.name)+'">Share</button>':"")+'</div></div>';}
@@ -599,6 +607,7 @@ function vBusiness(v){
 function wireVendor(){
   qa("[data-add]").forEach(function(b){b.onclick=function(){productSheet(null)}});
   qa("[data-edit]").forEach(function(b){b.onclick=function(){productSheet(S.products.find(function(p){return p.id===b.getAttribute("data-edit")}))}});
+  qa("[data-design]").forEach(function(b){b.onclick=function(){designSheet(S.products.find(function(p){return p.id===b.getAttribute("data-design")}))}});
   qa("[data-t2]").forEach(function(b){b.onclick=function(){S.tab=b.getAttribute("data-t2");renderVendor()}});
   qa(".psearch").forEach(function(i){i.oninput=function(){var t=i.value.trim().toLowerCase(),w=t?t.split(/\s+/):[],n=0,l=i.parentNode.querySelectorAll(".plist .prod");Array.prototype.forEach.call(l,function(c){var q=c.getAttribute("data-q")||"",ok=w.every(function(x){return q.indexOf(x)>-1});c.hidden=!ok;if(ok)n++});var e=i.parentNode.querySelector(".psnone");if(e)e.hidden=n>0}});
   qa("[data-copylink]").forEach(function(b){b.onclick=function(){var u=b.getAttribute("data-copylink");function ok(){toast("Link copied. Paste it to your customer 💕")}function fb(){var t=document.createElement("textarea");t.value=u;t.setAttribute("readonly","");t.style.position="fixed";t.style.opacity="0";document.body.appendChild(t);t.select();try{document.execCommand("copy");ok()}catch(x){toast(u)}document.body.removeChild(t)}if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(u).then(ok,fb);else fb()}});
@@ -633,17 +642,102 @@ function compress(file){return new Promise(function(res,rej){
    Runs on the seller's own phone (free). The AI files (about 50 MB) download once, the first time. */
 var BGR=null;
 function bgrLoad(){return BGR||(BGR=import("/tools/bg-remove/background-removal-1.4.5.min.mjs").catch(function(e){BGR=null;throw e}))}
-function cleanWhite(file){return bgrLoad().then(function(m){
+function cutOut(file){return bgrLoad().then(function(m){
   var run=function(cfg){return m.removeBackground(file,Object.assign({model:"small",output:{format:"image/png"}},cfg))};
   return run({}).catch(function(){return run({publicPath:"https://cdn.jsdelivr.net/npm/@imgly/background-removal-data@1.4.5/dist/"})})}).then(function(cut){return createImageBitmap(cut)}).then(function(bmp){
   var c0=document.createElement("canvas");c0.width=bmp.width;c0.height=bmp.height;var x0=c0.getContext("2d");x0.drawImage(bmp,0,0);
   var d=x0.getImageData(0,0,c0.width,c0.height).data,l=c0.width,t=c0.height,r=0,b=0,X,Y;
   for(Y=0;Y<c0.height;Y+=2)for(X=0;X<c0.width;X+=2){if(d[(Y*c0.width+X)*4+3]>24){if(X<l)l=X;if(X>r)r=X;if(Y<t)t=Y;if(Y>b)b=Y}}
   if(r<=l||b<=t)throw new Error("We couldn't find the product in that photo.");
-  var W=1200,H=1600,pad=.12,bw=r-l+1,bh=b-t+1,sc=Math.min(W*(1-2*pad)/bw,H*(1-2*pad)/bh),dw=bw*sc,dh=bh*sc;
+  var c=document.createElement("canvas");c.width=r-l+1;c.height=b-t+1;c.getContext("2d").drawImage(c0,l,t,c.width,c.height,0,0,c.width,c.height);return c})}
+function cleanWhite(file){return cutOut(file).then(function(c0){var l=0,t=0,bw=c0.width,bh=c0.height;
+  var W=1200,H=1600,pad=.12,sc=Math.min(W*(1-2*pad)/bw,H*(1-2*pad)/bh),dw=bw*sc,dh=bh*sc;
   var c=document.createElement("canvas");c.width=W;c.height=H;var x=c.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,W,H);
   x.save();x.shadowColor="rgba(0,0,0,.10)";x.shadowBlur=40;x.shadowOffsetY=18;x.drawImage(c0,l,t,bw,bh,(W-dw)/2,(H-dh)/2,dw,dh);x.restore();
   return new Promise(function(res,rej){c.toBlob(function(bl){bl?res(bl):rej(new Error("Couldn't save the clean photo"))},"image/jpeg",.92)})})}
+
+/* ---------- Make a design: the product on a Bajan backdrop, as a picture or a 5-second clip ----------
+   Runs on the seller's own phone. Uses the same AI cut-out as the photo cleaner. Nothing is uploaded. */
+var DZ_BG=[["beach","Beach sand"],["hibiscus","Hibiscus"],["blue","Bajan blue"],["sunset","Sunset"]];
+var DZ_SIZE=[["post","Square post",1080,1080],["story","Story / Status",1080,1920]];
+function dzHib(x,cx,cy,r,rot,col){x.save();x.translate(cx,cy);x.rotate(rot);x.fillStyle=col;
+  for(var i=0;i<5;i++){x.rotate(Math.PI*2/5);x.beginPath();x.ellipse(0,-r*.55,r*.42,r*.6,0,0,Math.PI*2);x.fill()}
+  x.fillStyle="#FFC72C";x.beginPath();x.arc(0,0,r*.16,0,Math.PI*2);x.fill();x.restore()}
+function dzBack(x,W,H,bg,z){x.save();x.translate(W/2,H/2);x.scale(z,z);x.translate(-W/2,-H/2);var g;
+  if(bg==="beach"){g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,"#BFE6FF");g.addColorStop(.38,"#E9F7FF");x.fillStyle=g;x.fillRect(0,0,W,H);
+    g=x.createLinearGradient(0,H*.36,0,H*.5);g.addColorStop(0,"#1FB5C9");g.addColorStop(1,"#7DDCE0");x.fillStyle=g;x.fillRect(0,H*.36,W,H*.16);
+    x.fillStyle="rgba(255,255,255,.75)";x.beginPath();x.moveTo(0,H*.5);for(var i=0;i<=W;i+=W/12)x.quadraticCurveTo(i+W/24,H*.48,i+W/12,H*.505);x.lineTo(W,H*.53);x.lineTo(0,H*.53);x.fill();
+    g=x.createLinearGradient(0,H*.5,0,H);g.addColorStop(0,"#F6E2BE");g.addColorStop(1,"#E9C98F");x.fillStyle=g;x.fillRect(0,H*.515,W,H*.49);
+    x.fillStyle="rgba(150,110,60,.10)";for(i=0;i<900;i++){var sx=(i*7919)%W,sy=H*.52+((i*104729)%Math.round(H*.48));x.fillRect(sx,sy,3,3)}}
+  else if(bg==="hibiscus"){x.fillStyle="#FFF6E5";x.fillRect(0,0,W,H);
+    dzHib(x,W*.06,H*.08,W*.2,.3,"#FF6F59");dzHib(x,W*.95,H*.2,W*.14,1.1,"#FF8FA3");dzHib(x,W*.92,H*.9,W*.22,2,"#FF6F59");dzHib(x,W*.1,H*.86,W*.12,.8,"#FF8FA3");
+    x.fillStyle="rgba(46,139,87,.35)";[[.2,.04,.5],[.82,.07,-.6],[.8,.78,.9],[.22,.95,-.4]].forEach(function(a){x.save();x.translate(W*a[0],H*a[1]);x.rotate(a[2]);x.beginPath();x.ellipse(0,0,W*.09,W*.035,0,0,Math.PI*2);x.fill();x.restore()})}
+  else if(bg==="blue"){g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,"#00267F");g.addColorStop(1,"#001447");x.fillStyle=g;x.fillRect(0,0,W,H);
+    x.strokeStyle="rgba(255,199,44,.35)";x.lineWidth=W*.006;for(var k=0;k<4;k++){x.beginPath();var y0=H*(.8+k*.05);x.moveTo(0,y0);for(i=0;i<=W;i+=W/8)x.quadraticCurveTo(i+W/16,y0-H*.02,i+W/8,y0);x.stroke()}
+    x.fillStyle="rgba(255,199,44,.10)";x.beginPath();x.arc(W*.85,H*.12,W*.22,0,Math.PI*2);x.fill();x.beginPath();x.arc(W*.1,H*.6,W*.14,0,Math.PI*2);x.fill()}
+  else{g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,"#2B2F7A");g.addColorStop(.35,"#E8566C");g.addColorStop(.55,"#FFB347");x.fillStyle=g;x.fillRect(0,0,W,H*.6);
+    x.fillStyle="#FFE08A";x.beginPath();x.arc(W*.5,H*.56,W*.2,Math.PI,0);x.fill();
+    g=x.createLinearGradient(0,H*.56,0,H);g.addColorStop(0,"#1B3A8A");g.addColorStop(1,"#0B1E52");x.fillStyle=g;x.fillRect(0,H*.56,W,H*.44);
+}
+  x.restore()}
+function dzWrap(x,txt,maxW){var w=String(txt).split(/\s+/),ls=[],l="";w.forEach(function(s){var tl=l?l+" "+s:s;if(x.measureText(tl).width>maxW&&l){ls.push(l);l=s}else l=tl});if(l)ls.push(l);return ls.slice(0,2)}
+function dzEase(t){t=Math.max(0,Math.min(1,t));return 1-Math.pow(1-t,3)}
+/* t: 0..5 seconds; t>=5 draws the finished picture */
+function dzDraw(c,o,t){var x=c.getContext("2d"),W=c.width,H=c.height,story=H>W,dark=o.bg==="blue"||o.bg==="sunset";
+  dzBack(x,W,H,o.bg,1+.06*Math.min(t,5)/5);
+  var cut=o.cut,boxH=H*(story?.42:.5),boxW=W*(story?.8:.66),sc=Math.min(boxW/cut.width,boxH/cut.height),dw=cut.width*sc,dh=cut.height*sc;
+  var a=dzEase(t/1.2),cy=H*(story?.44:.42)+(1-a)*H*.06,s=.92+.08*a;
+  x.save();x.globalAlpha=a;x.translate(W/2,cy);x.scale(s,s);x.shadowColor="rgba(0,0,0,.25)";x.shadowBlur=W*.04;x.shadowOffsetY=W*.025;x.drawImage(cut,-dw/2,-dh/2,dw,dh);x.restore();
+  var ty=cy+dh/2+H*(story?.05:.045),ta=dzEase((t-1)/.8);
+  x.save();x.globalAlpha=ta;x.textAlign="center";x.textBaseline="top";x.fillStyle=dark?"#fff":"#00267F";var fs=Math.round(W*(story?.068:.058));
+  x.font="800 "+fs+"px Fraunces,Georgia,serif";var ls=dzWrap(x,o.name,W*.86);ls.forEach(function(l,i){x.fillText(l,W/2,ty+(1-ta)*20+i*fs*1.12)});x.restore();
+  var py=ty+ls.length*fs*1.12+H*.02,pa=dzEase((t-1.8)/.6),pz=.6+.4*pa;
+  if(o.price){x.save();x.globalAlpha=pa;x.font="700 "+Math.round(W*.05)+"px Quicksand,Arial,sans-serif";var pt="$"+Number(o.price).toFixed(2)+" BBD",pw=x.measureText(pt).width+W*.08,ph=W*.085;
+    x.translate(W/2,py+ph/2);x.scale(pz,pz);x.fillStyle="#FFC72C";x.beginPath();if(x.roundRect)x.roundRect(-pw/2,-ph/2,pw,ph,ph/2);else x.rect(-pw/2,-ph/2,pw,ph);x.fill();
+    x.fillStyle="#00267F";x.textAlign="center";x.textBaseline="middle";x.fillText(pt,0,2);x.restore()}
+  var fa=dzEase((t-2.6)/.6),fh=H*(story?.07:.085);x.save();x.globalAlpha=fa;x.fillStyle="rgba(0,38,127,.92)";x.fillRect(0,H-fh,W,fh);
+  var ft=(o.biz?o.biz+"  ·  ":"")+"Shop Bajan  ·  shopbajanbb.com",fz=Math.round(W*.036);x.fillStyle="#FFC72C";x.textAlign="center";x.textBaseline="middle";
+  do{x.font="700 "+fz+"px Quicksand,Arial,sans-serif";fz-=2}while(x.measureText(ft).width>W*.92&&fz>14);
+  x.fillText(ft,W/2,H-fh/2);x.restore()}
+function dzRecord(c,o,onDone,onFail){if(!window.MediaRecorder||!c.captureStream)return onFail("This phone can't make clips. Try the picture instead, or use Chrome or Safari.");
+  var types=["video/mp4;codecs=avc1","video/mp4","video/webm;codecs=vp9","video/webm"],mt=types.filter(function(m){return MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(m)})[0]||"";
+  var st=c.captureStream(30),rec,ch=[];try{rec=new MediaRecorder(st,mt?{mimeType:mt,videoBitsPerSecond:5e6}:{})}catch(e){return onFail("This phone can't make clips. Try the picture instead.")}
+  rec.ondataavailable=function(e){if(e.data&&e.data.size)ch.push(e.data)};
+  rec.onstop=function(){var ty=(rec.mimeType||mt||"video/webm").split(";")[0];onDone(new Blob(ch,{type:ty}),ty.indexOf("mp4")>-1?"mp4":"webm")};
+  var t0=null;rec.start(200);(function fr(ts){if(t0===null)t0=ts;var t=(ts-t0)/1000;dzDraw(c,o,Math.min(t,5));if(t<5.4)requestAnimationFrame(fr);else rec.stop()})(performance.now())}
+function designSheet(p){
+  var o={bg:"beach",size:"post",name:p.name,price:p.price,biz:(S.vendor&&S.vendor.business)||"",cut:null},clip=null;
+  var d=document.createElement("div");d.className="sheet";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-label","Make a design");
+  d.innerHTML='<div class="panel"><div class="head"><h2>✨ Make a design</h2><button class="x" type="button" aria-label="Close">×</button></div>'+
+  '<p class="muted" style="margin:6px 0 12px">Put <b>'+esc(p.name)+'</b> on a Bajan backdrop for your posts, Stories and WhatsApp Status. Your shop photo stays on white.</p>'+
+  '<div class="dz-stage"><canvas id="dzC" aria-label="Design preview"></canvas><div class="dz-wait" id="dzW"><b>✨ Cutting out your product…</b><span>The first time takes about a minute.</span></div></div>'+
+  '<div class="f">Backdrop<div class="dz-opts" id="dzBg">'+DZ_BG.map(function(b){return'<button type="button" class="dz-o" data-bg="'+b[0]+'"><i class="dz-sw dz-'+b[0]+'"></i>'+b[1]+'</button>'}).join("")+'</div></div>'+
+  '<div class="f">Size<div class="dz-opts" id="dzSz">'+DZ_SIZE.map(function(s){return'<button type="button" class="dz-o" data-sz="'+s[0]+'">'+s[1]+'</button>'}).join("")+'</div></div>'+
+  '<p class="err" id="dzE" role="alert"></p>'+
+  '<div class="btnrow"><button class="btn" type="button" id="dzPic" disabled>Save picture</button><button class="btn ghost" type="button" id="dzClip" disabled>🎬 Make a 5-second clip</button></div></div>';
+  document.body.appendChild(d);document.body.style.overflow="hidden";
+  var c=q("#dzC",d),busyRec=false;function close(){if(busyRec)return;d.remove();document.body.style.overflow=""}
+  q(".x",d).onclick=close;d.addEventListener("click",function(e){if(e.target===d)close()});
+  function size(){var s=DZ_SIZE.filter(function(z){return z[0]===o.size})[0];c.width=s[2];c.height=s[3]}
+  function draw(){size();qa("[data-bg]",d).forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-bg")===o.bg)});qa("[data-sz]",d).forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-sz")===o.size)});
+    if(o.cut)dzDraw(c,o,5);else{dzBack(c.getContext("2d"),c.width,c.height,o.bg,1)}}
+  qa("[data-bg]",d).forEach(function(b){b.onclick=function(){if(busyRec)return;o.bg=b.getAttribute("data-bg");clip=null;draw()}});
+  qa("[data-sz]",d).forEach(function(b){b.onclick=function(){if(busyRec)return;o.size=b.getAttribute("data-sz");clip=null;draw()}});
+  function fname(ext){return(p.name||"design").replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"").toLowerCase().slice(0,40)+"-"+o.bg+"."+ext}
+  function give(blob,name,title){var file;try{file=new File([blob],name,{type:blob.type})}catch(e){}
+    if(file&&navigator.canShare&&navigator.canShare({files:[file]}))return navigator.share({files:[file],title:title}).catch(function(){});
+    var u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000);toast("Saved to your downloads 💕")}
+  q("#dzPic",d).onclick=function(){dzDraw(c,o,5);c.toBlob(function(b){if(b)give(b,fname("jpg"),p.name)},"image/jpeg",.92)};
+  var cb=q("#dzClip",d);cb.onclick=function(){if(clip)return give(clip.blob,fname(clip.ext),p.name);
+    busyRec=true;cb.disabled=true;q("#dzPic",d).disabled=true;cb.textContent="🎬 Making your clip…";q("#dzE",d).textContent="";
+    dzRecord(c,o,function(blob,ext){busyRec=false;clip={blob:blob,ext:ext};cb.disabled=false;q("#dzPic",d).disabled=false;cb.textContent="Save clip";dzDraw(c,o,5)},
+      function(m){busyRec=false;cb.disabled=false;q("#dzPic",d).disabled=false;cb.textContent="🎬 Make a 5-second clip";q("#dzE",d).textContent=m})};
+  draw();
+  var ph=(p.photos||[])[0];if(!ph){q("#dzW",d).innerHTML="<b>Add a photo to this product first.</b>";return}
+  fetch(photoUrl(ph)).then(function(r){if(!r.ok)throw new Error("We couldn't get your photo. Check your internet and try again.");return r.blob()}).then(cutOut).then(function(cut){
+    o.cut=cut;q("#dzW",d).hidden=true;q("#dzPic",d).disabled=false;cb.disabled=false;
+    var t0=performance.now();(function fr(ts){if(!d.isConnected||busyRec)return;var t=(ts-t0)/1000;dzDraw(c,o,Math.min(t,5));if(t<5)requestAnimationFrame(fr)})(t0)},
+    function(e){q("#dzW",d).innerHTML="<b>We couldn't cut out this product</b><span>"+esc((e&&e.message)||"A photo on a plain background works best.")+"</span>"})}
 
 /* ---------- add / edit product sheet ---------- */
 function productSheet(p){
