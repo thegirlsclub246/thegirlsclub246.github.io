@@ -453,6 +453,10 @@ function renderVendor(){
 function statusNote(v){
   if(v.status==="pending")return'<div class="note warn">⏳ We are checking your shop. You can add products now: they go live on the website once we approve your shop and each product (normally within 2 working days).</div>';
   if(v.status==="paused")return'<div class="note warn">Your shop is paused, so your products are not showing on the website right now. WhatsApp us if you have questions.</div>';
+  /* show the approved note for 3 hours from when it was approved (or first seen on this phone), then hide it */
+  var k="sb_ok_"+v.id,t=Date.parse(v.approved_at||"")||0;
+  if(!t){try{t=Number(localStorage.getItem(k))||0;if(!t){t=Date.now();localStorage.setItem(k,String(t))}}catch(e){t=Date.now()}}
+  if(Date.now()-t>3*3600000)return"";
   return'<div class="note ok">✅ Your shop is approved. Live products show on <a href="./#shop">Shop Bajan</a>.</div>';
 }
 function vHome(v){
