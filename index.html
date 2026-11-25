@@ -15,8 +15,8 @@ document.documentElement.setAttribute("data-site",W.TGC_SITE);
 /* ==SHOP BAJAN WAITLIST MODE== true = shopbajanbb.com shows ONLY the Shop Bajan waitlist page (opens Thu 10 Dec 2026).
    To open the real shop on launch day set it to false (also swap the <title>, description and share tags below). The shop code is untouched. */
 W.TGC_SOON=(W.TGC_SITE==="shop")&&true;
-/* ==PRODUCT LINKS== a shared product link (#p-...) opens that one digital product with checkout, even before launch */
-W.TGC_LINK=W.TGC_SOON&&/^#p-/.test(location.hash);if(W.TGC_LINK){W.TGC_SOON=false;document.documentElement.classList.add("link-mode")}
+/* ==PRODUCT LINKS== a shared product link (#p-...) or shop link (#s-...) opens with checkout for digital products, even before launch */
+W.TGC_LINK=W.TGC_SOON&&/^#[ps]-/.test(location.hash);if(W.TGC_LINK){W.TGC_SOON=false;document.documentElement.classList.add("link-mode")}
 if(W.TGC_SOON)document.documentElement.classList.add("soon");
 var x="";try{x=decodeURIComponent(location.hash.slice(1))}catch(e){}
 if(W.TGC_SITE_FORCE)return;
@@ -1236,6 +1236,9 @@ html.shop-mode main>*:not(#shop){display:none!important}
 .mk-go{display:flex;justify-content:center;align-items:center;min-height:52px;margin:6px auto 0;max-width:420px;font-size:1.05rem}
 /* mini cards (strips) */
 .strip{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 14px;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+.st-in{padding-top:18px}.st-in h2{margin:8px 0 6px}
+.st-q{width:100%;box-sizing:border-box;margin:14px 0 0;min-height:46px;padding:10px 14px;border:2px solid #00267F;border-radius:999px;font:inherit;font-size:16px;background:#fff;color:#1d2340}.st-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0 28px}.st-grid .mini{width:auto}.st-grid .mini[hidden],.st-none[hidden]{display:none}
+@media(min-width:700px){.st-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .mini{flex:none;width:140px;scroll-snap-align:start;background:#fff;border:2px solid var(--pink-soft);border-radius:16px;overflow:hidden;color:inherit;text-decoration:none;display:flex;flex-direction:column;position:relative}
 .mini .thumb{margin:0;aspect-ratio:1;border-radius:0;position:relative}
 .mini .thumb img{border-radius:0}
@@ -1946,7 +1949,7 @@ function pdHTML(p){const o=offPct(p),out=isOut(p),dig=isDig(p);
   <div class="pd-in"><div class="pd-main">
    <div class="pd-img"><div class="thumb">${thumb(p)}${p.tag?`<span class="tag">${esc(p.tag)}</span>`:""}${o?`<span class="off">-${o}%</span>`:""}</div></div>
    <div class="pd-info">
-    <span class="mk-sold">${dig?"Digital · ":""}By ${esc(p.brand||"Shop Bajan")}</span>
+    <span class="mk-sold">${dig?"Digital · ":""}By ${p.vendor?`<a href="#s-${encodeURIComponent(slug(p.brand))}" style="color:inherit;text-decoration:underline">${esc(p.brand)}</a>`:esc(p.brand||"Shop Bajan")}</span>
     <h2 id="pdName" tabindex="-1">${esc(p.name)}</h2>${p.type?`<p class="pd-type">${esc(p.type)}</p>`:""}
     <div class="pd-price"><span class="price">${p.usd?"":"<small>BBD</small> "}${priceHTML(p)}</span>${o?`<span class="pd-save">You save ${money(p.was-p.price)}</span>`:""}</div>
     ${p.desc?`<p class="pd-desc">${esc(p.desc)}</p>`:""}
@@ -1963,16 +1966,28 @@ function pdHTML(p){const o=offPct(p),out=isOut(p),dig=isDig(p);
    ${rel.length?`<div class="pd-sec"><h3>You may also like</h3><div class="strip">${rel.map(miniCard).join("")}</div></div>`:""}
   </div>`}
 const baseTitle=document.title;
+/* ==SHOP LINKS== #s-<business> shows one Bajan business's shop: their story and products (before launch: digital products only) */
+let lastStore="";
+function storeOf(k){k=String(k||"").toLowerCase();return mkBrands.find(b=>b.slug===k||slug(b.name)===k)||null}
+function storeShow(b){if(pd.hidden)lastFocus=document.activeElement;const items=shopItems.filter(x=>x.vendor===b.slug&&(!window.TGC_LINK||isDig(x)));
+  cur={id:"",name:b.name,price:0,opts:[],isStore:true,store:b};
+  pd.innerHTML=`<div class="pd-bar"><button type="button" class="pd-back" data-pd-close>‹ Back</button><button type="button" data-st-share aria-label="Share this shop">↗ Share</button><button type="button" class="pd-bag" data-pd-bag aria-label="Open bag">Bag ${cart.reduce((a,c)=>a+c.qty,0)}</button></div>
+  <div class="pd-in st-in"><span class="mk-sold">A Bajan business on Shop Bajan</span><h2 id="pdName" tabindex="-1">${esc(b.name)}</h2>${b.story?`<p class="pd-desc">${esc(b.story)}</p>`:""}
+  ${items.length>1?`<input type="search" class="st-q" placeholder="Search ${esc(b.name)}" aria-label="Search this shop" autocomplete="off">`:""}${items.length?`<div class="st-grid">${items.map(x=>miniCard(x).replace("<a ",`<a data-q="${esc((x.name+" "+(x.type||"")+" "+(x.cat||"")).toLowerCase())}" `)).join("")}</div><p class="pd-desc st-none" hidden>No products match that search.</p>`:`<p class="pd-desc">${window.TGC_LINK?"This shop opens with Shop Bajan on Thursday 10 December. Check back then.":"New products are on the way. Check back soon."}</p>`}</div>`;
+  const sq=pd.querySelector(".st-q");if(sq)sq.oninput=()=>{const t=sq.value.trim().toLowerCase();let n=0;pd.querySelectorAll(".st-grid .mini").forEach(a=>{const ok=!t||t.split(/\s+/).every(w=>(a.dataset.q||"").includes(w));a.hidden=!ok;if(ok)n++});pd.querySelector(".st-none").hidden=n>0};
+  pd.hidden=false;pd.scrollTop=0;document.documentElement.style.overflow="hidden";document.title=b.name+" · Shop Bajan";const h=pd.querySelector("#pdName");h&&h.focus({preventScroll:true});
+  try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/shop-view/"+slug(b.name),title:"Shop: "+b.name,event:true})}catch(x){}}
 function pdShow(p){if(pd.hidden)lastFocus=document.activeElement;cur=p;qty=1;opt=p.opts[0]||"";pd.innerHTML=pdHTML(p);pd.hidden=false;pd.scrollTop=0;document.documentElement.style.overflow="hidden";
   document.title=p.name+" · Shop Bajan";const h=pd.querySelector("#pdName");h&&h.focus({preventScroll:true});
   try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/product-view/"+slug(p.id),title:"View: "+p.name,event:true})}catch(x){}
   window.tgcTrack&&tgcTrack("ViewContent",{content_name:p.name,value:p.price,currency:"BBD"})}
 function pdHide(){if(pd.hidden)return;pd.hidden=true;pd.innerHTML="";cur=null;document.documentElement.style.overflow="";document.title=mode==="shop"?"Shop Bajan · Barbados":baseTitle;
   if(lastFocus&&document.contains(lastFocus))try{lastFocus.focus({preventScroll:true})}catch(x){}}
-function pdClose(){if(window.TGC_LINK){location.replace(location.pathname+location.search);return}if(pdFromSite&&pushOK){pdFromSite=false;pushOK=false;history.back();return}pdFromSite=false;setH(mode==="shop"?mkHash():"#market");pdHide()}
+function pdClose(){if(window.TGC_LINK){if(lastStore&&curHash!==lastStore){if(pdFromSite&&pushOK){pdFromSite=false;pushOK=false;history.back();return}nav(lastStore);return}location.replace(location.pathname+location.search);return}if(pdFromSite&&pushOK){pdFromSite=false;pushOK=false;history.back();return}pdFromSite=false;setH(mode==="shop"?mkHash():"#market");pdHide()}
 window.tgcOpenProduct=id=>{pdFromSite=true;const h="#p-"+encodeURIComponent(id);if(curHash===h)route();else nav(h)};
 pd.addEventListener("click",e=>{const t=e.target;if(!cur)return;
   if(t.closest("[data-pd-close]"))return pdClose();
+  if(t.closest("[data-st-share]")&&cur.store){const url=location.origin+location.pathname+"#s-"+encodeURIComponent(slug(cur.store.name)),title=cur.store.name+" · Shop Bajan";if(navigator.share)navigator.share({title,url}).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(url).then(()=>{const b=t.closest("[data-st-share]");b.textContent="Link copied";setTimeout(()=>{b.textContent="↗ Share"},1800)},()=>{});return}
   if(t.closest("[data-pd-bag]"))return openCart();
   const s=t.closest("[data-pd-search]");if(s){mkQ.value=s.dataset.pdSearch;view.q=mkQ.value;view.tab="all";view.cat="";pdFromSite=false;setH("#shop");route();mkTrack();return}
   const op=t.closest("[data-pd-opt]");if(op){opt=op.dataset.pdOpt;pd.querySelectorAll("[data-pd-opt]").forEach(b=>b.setAttribute("aria-checked",b===op));return}
@@ -1992,8 +2007,9 @@ function enterShop(){if(mode==="shop")return;homeY=window.scrollY;mode="shop";do
   try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"/shop",title:"Shop Bajan"})}catch(x){}window.tgcShowPlay&&tgcShowPlay()}
 function leaveShop(){if(mode!=="shop")return false;mode="home";document.documentElement.classList.remove("shop-mode");shopSec.hidden=true;document.title=baseTitle;return true}
 function route(fromClick){const h=curHash;
-  if(window.TGC_LINK&&!/^#p-/.test(h)){location.replace(location.pathname+location.search);return}
+  if(window.TGC_LINK&&!/^#[ps]-/.test(h)){location.replace(location.pathname+location.search);return}
   if(ACAD&&/^#(shop|lashes|marketplace|products|digital)(\/|$)/.test(h)){location.href=window.TGC_HOME+h;return}
+  const sm=h.match(/^#s-(.+)$/);if(sm){let k="";try{k=decodeURIComponent(sm[1])}catch(x){}const b=storeOf(k);if(window.TGC_LINK&&!b){location.replace(location.pathname+location.search);return}if(b){if(!pdFromSite&&!routed)enterShop();routed=true;lastStore=h;return storeShow(b)}}
   const m=h.match(/^#p-(.+)$/);if(m){let id="";try{id=decodeURIComponent(m[1])}catch(x){}const p=findItem(id);if(window.TGC_LINK&&!(p&&isDig(p))){location.replace(location.pathname+location.search);return}if(p){if(!pdFromSite&&!routed)enterShop();routed=true;return pdShow(p)}}
   routed=true;pdFromSite=false;pdHide();
   const s=h.match(/^#(shop|lashes|marketplace|products|digital)(?:\/([a-z]+))?(?:\/(.+))?$/);
