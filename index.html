@@ -81,7 +81,7 @@ html[data-site=academy] #market,html[data-site=academy] #shop,html[data-site=aca
 <meta name="apple-mobile-web-app-title" content="Shop Bajan">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;0,9..144,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Kaushan+Script&family=Quicksand:wght@500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;0,9..144,800&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#fff4f8;--card:#ffffff;--ink:#4a1636;--muted:#85506b;--pink:#ff4d94;--pink-soft:#ffc9df;--yellow:#fff27a;--yellow-soft:#fffbd1;--line:#e8418a;--edge:#e8418a;--shade:#c4256b;--plum:#4a1636;--on-pink:#ffffff}
 
@@ -1184,19 +1184,25 @@ try{var s=JSON.parse(store()||"null");if(s&&s.name)showDone(s.name,s.role,s.via)
 
   <section id="shop" class="market shop-page" hidden aria-labelledby="shopTitle">
     <div class="wrap">
+      <div class="sbx-head">
+      <div class="sbx-strip"><span>Support Local. Shop Bajan!</span></div>
+      <div class="sbx-appbar"><div class="sbx-logorow"><a class="sbx-logo" href="#shop" aria-label="Shop Bajan home"><img src="shop-bajan-mark.png" alt="" width="40" height="40"><span>Shop Bajan<small>Barbados</small></span></a>
+        <a class="sbx-ico" href="#me" aria-label="Me"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></a>
+        <button type="button" class="sbx-ico" data-sbx-bag aria-label="Open bag"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3.5h3l2.4 11.2a1.6 1.6 0 0 0 1.6 1.3h8.4a1.6 1.6 0 0 0 1.6-1.2L21.5 8H6.6"/></svg><b class="sbx-n2" hidden>0</b></button></div>
+      <form class="mk-search" role="search" action="#shop" onsubmit="return false">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="mkQ" type="search" placeholder="Search for Bajan goodies…" aria-label="Search products and small businesses" autocomplete="off" enterkeyhint="search">
+        <button type="button" class="x" id="mkQx" aria-label="Clear search" hidden>×</button>
+      </form>
+      </div>
+      <nav class="sbx-nav" id="sbxNav" aria-label="Shop sections"><a href="#shop" data-nv="home">Home</a><a href="#shop/products" data-nv="products">Shop All</a><a href="#vendors" data-nv="vendors">Local Vendors</a><a href="#categories" data-nv="cats">Categories</a><a href="#shop/digital" data-nv="digital">Digital</a></nav>
+      </div>
       <div id="pgShop">
       <div class="shop-nav"><a class="shop-home" href="#top">‹ Home</a><a class="shop-sell" href="brands.html">Sell with us</a></div>
       <div class="shop-top">
         <span class="eyebrow">Local small businesses · Barbados</span>
         <h1 class="shop-title" id="shopTitle">Shop Bajan</h1>
         <p class="promo" id="promoPill2" hidden></p>
-      </div>
-      <div class="sbx-appbar"><a class="sbx-mark" href="#shop" aria-label="Shop Bajan"><img src="shop-bajan-mark.png" alt="" width="34" height="34"></a>
-      <form class="mk-search" role="search" action="#shop" onsubmit="return false">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <input id="mkQ" type="search" placeholder="Search Shop Bajan" aria-label="Search products and small businesses" autocomplete="off" enterkeyhint="search">
-        <button type="button" class="x" id="mkQx" aria-label="Clear search" hidden>×</button>
-      </form>
       </div>
       <div class="mk-tabs" role="tablist" aria-label="Shop Bajan sections">
         <button type="button" role="tab" data-tab="all" aria-selected="true">Shop all</button>
@@ -1915,7 +1921,7 @@ function renderShop(){
   let items=shopItems.filter(p=>inSec(p,view.tab)&&(!view.cat||dCat(p)===view.cat)&&mkMatch(p,q));
   if(q){const nq=mkNorm(q),sc=p=>{const n=" "+mkNorm(p.name+" "+p.type)+" ";return(n.includes(nq)?10:0)+(p.isCourse?1:0)+nq.split(" ").filter(t=>t&&n.includes(mkStem(t))).length*3};items=items.map((p,i)=>[sc(p)-i*.001,p]).sort((a,b)=>b[0]-a[0]).map(r=>r[1])}
   const empty=`<div class="mk-empty">${SB_HIB}<p><b>${q?`No match for “${esc(q)}” yet.`:"Nothing here yet."}</b><br>Tell us what you're looking for and we'll help you find it.</p><a class="btn" target="_blank" rel="noopener" href="${esc(waLink("Hi "+WHO+"! I'm looking for "+(q||"something")+" on Shop Bajan. Do you have it?"))}">Ask us on WhatsApp</a>${q?`<button type="button" class="btn white" data-mk-clear>Clear search</button>`:""}</div>`;
-  const home=view.tab==="all"&&!view.cat&&!q?shopHome():"";document.getElementById("sbxHome").innerHTML=home;shopSec.classList.toggle("is-home",!!home);const love=`<p class="sb-love sb-love-in">${SB_HIB}Support a Bajan business by buying someting</p>`;
+  const home=view.tab==="all"&&!view.cat&&!q?shopHome():"";document.getElementById("sbxHome").innerHTML=home;shopSec.classList.toggle("is-home",!!home);sbxNavMark();const love=(home?shopTail():"")+`<p class="sb-love sb-love-in">${SB_HIB}Support a Bajan business by buying someting</p>`;
   if(!shopItems.length&&!view.cat){const jb=document.getElementById("mkJoin");if(jb)jb.hidden=true;mkOut.innerHTML=`<div class="mk-empty sbx-fresh">${SB_HIB}<p><b>Bajan businesses are setting up their shops.</b><br>New products land here soon, so check back.</p><a class="btn" href="brands.html">Sell with us</a></div>`;mkOut.insertAdjacentHTML("beforeend",love);return}
   if(!items.length){mkOut.innerHTML=empty;return}
   if(view.tab==="all"&&!view.cat){
@@ -2078,7 +2084,7 @@ function route(fromClick){const h=curHash;
   const sm=h.match(/^#s-(.+)$/);if(sm){let k="";try{k=decodeURIComponent(sm[1])}catch(x){}const b=storeOf(k);if(window.TGC_LINK&&!b){location.replace(location.pathname+location.search);return}if(b){if(!pdFromSite&&!routed)enterShop();routed=true;lastStore=h;return storeShow(b)}}
   const m=h.match(/^#p-(.+)$/);if(m){let id="";try{id=decodeURIComponent(m[1])}catch(x){}const p=findItem(id);if(window.TGC_LINK&&!(p&&isDig(p))){location.replace(location.pathname+location.search);return}if(p){if(!pdFromSite&&!routed)enterShop();routed=true;return pdShow(p)}}
   routed=true;pdFromSite=false;pdHide();
-  const pg=h.match(/^#(me|categories)$/);if(pg&&!ACAD){enterShop();sbxShow(pg[1]==="me"?"me":"cats");window.scrollTo(0,0);return}
+  const pg=h.match(/^#(me|categories|vendors)$/);if(pg&&!ACAD){if(pg[1]==="vendors")sbxRail="biz";else if(pg[1]==="categories")sbxRail="products";enterShop();sbxShow(pg[1]==="me"?"me":"cats");window.scrollTo(0,0);return}
   const s=h.match(/^#(shop|lashes|marketplace|products|digital)(?:\/([a-z]+))?(?:\/(.+))?$/);
   if(s){let tab=s[2]||(s[1]==="products"||s[1]==="digital"?s[1]:"all");if(!["all","products","digital"].includes(tab))tab="all";let cat="";try{cat=s[3]?decodeURIComponent(s[3]):""}catch(x){}
     view.tab=tab;view.cat=cat;if(s[1]!=="shop")setH(mkHash());const wasPg=sbxPage;enterShop();sbxShow("shop");renderShop();if(wasPg!=="shop")window.scrollTo(0,0);return}
@@ -2091,12 +2097,28 @@ window.addEventListener("popstate",()=>{if(location.hash===curHash)return;curHas
    Orders are kept on this phone only (localStorage "sb-orders"), since shoppers don't need an account to buy. */
 const CAT_ICON={"Fashion & Accessories":`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4a2 2 0 1 1 2 2c-1 0-2 .8-2 2v1"/><path d="M12 9 3 15.5c-.8.6-.4 1.5.6 1.5h16.8c1 0 1.4-.9.6-1.5z"/></svg>`,"Beauty & Personal Care":`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="11" width="8" height="10" rx="1.5"/><path d="M9.5 11V7.5L12 4l2.5 3.5V11"/><path d="M18.5 4.5l.6 1.4 1.4.6-1.4.6-.6 1.4-.6-1.4-1.4-.6 1.4-.6z"/></svg>`,"Home & Living":`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M12 20v-4"/><path d="M12 13.2c-1-1.3-3-.6-3 .9 0 1.4 3 3.2 3 3.2s3-1.8 3-3.2c0-1.5-2-2.2-3-.9z"/></svg>`,"Gifts & Handmade":`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="9" width="17" height="11.5" rx="1.5"/><path d="M2.5 9h19v-3h-19zM12 6v14.5"/><path d="M12 6C10.5 3 7.5 3 7.5 4.8 7.5 6 12 6 12 6s4.5 0 4.5-1.2C16.5 3 13.5 3 12 6z"/></svg>`,"Stationery & Lifestyle":`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3.5h11a2 2 0 0 1 2 2v15H7a2 2 0 0 1-2-2z"/><path d="M5 18.5a2 2 0 0 1 2-2h11M9 8h5"/><path d="m20.5 6.5-3 9"/></svg>`,"Tech Accessories":`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M11 18.5h2"/><path d="M3.5 9v6M20.5 9v6"/></svg>`};
 /* Shop home: Shop by Category tiles (the 6 launch categories), then featured Bajan businesses */
+/* Category tile art: little illustrated scenes in Shop Bajan colours */
+const CAT_ART={
+"Fashion & Accessories":`<svg viewBox="0 0 120 90" aria-hidden="true"><rect width="120" height="90" fill="#FFE9A8"/><circle cx="96" cy="18" r="10" fill="#FFC72C"/><path d="M44 18a6 6 0 1 1 7 6c-2 .4-3 2-3 4v3" fill="none" stroke="#16213E" stroke-width="2.5" stroke-linecap="round"/><path d="M48 31 22 50h52z" fill="none" stroke="#16213E" stroke-width="2.5" stroke-linejoin="round"/><path d="M30 50h36l-4 32H34z" fill="#00267F"/><path d="M38 50v32M48 50v32M58 50v32" stroke="#FFC72C" stroke-width="2"/><path d="M80 52c0-8 6-13 12-13s12 5 12 13v26H80z" fill="#FF6F59"/><path d="M85 52c0-6 3-9 7-9s7 3 7 9" fill="none" stroke="#16213E" stroke-width="2.5"/></svg>`,
+"Beauty & Personal Care":`<svg viewBox="0 0 120 90" aria-hidden="true"><rect width="120" height="90" fill="#FFE1DA"/><path d="M0 70c20-8 40 8 60 0s40-8 60 0v20H0z" fill="#FFC9BD"/><rect x="26" y="34" width="18" height="44" rx="4" fill="#00267F"/><rect x="29" y="24" width="12" height="12" rx="2" fill="#FFC72C"/><path d="M30 24c0-8 4-12 5-14 1 2 5 6 5 14z" fill="#FF6F59"/><rect x="54" y="44" width="22" height="34" rx="6" fill="#fff" stroke="#16213E" stroke-width="2"/><rect x="58" y="36" width="14" height="9" rx="2" fill="#16213E"/><circle cx="92" cy="66" r="13" fill="#FFC72C"/><circle cx="92" cy="66" r="7" fill="#fff"/><path d="M98 20l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#FFC72C"/></svg>`,
+"Home & Living":`<svg viewBox="0 0 120 90" aria-hidden="true"><rect width="120" height="90" fill="#DCE8FF"/><path d="M0 74h120v16H0z" fill="#B8CBF2"/><path d="M22 44 50 22l28 22v32H22z" fill="#FF6F59"/><path d="M16 46 50 18l34 28" fill="none" stroke="#00267F" stroke-width="5" stroke-linejoin="round"/><rect x="42" y="54" width="16" height="22" fill="#FFC72C"/><rect x="27" y="50" width="10" height="10" fill="#fff"/><rect x="63" y="50" width="10" height="10" fill="#fff"/><rect x="88" y="56" width="16" height="20" rx="3" fill="#fff" stroke="#16213E" stroke-width="2"/><path d="M96 56v-5" stroke="#16213E" stroke-width="2"/><path d="M96 51c-3-4 0-8 0-8s3 4 0 8z" fill="#FFC72C"/></svg>`,
+"Gifts & Handmade":`<svg viewBox="0 0 120 90" aria-hidden="true"><rect width="120" height="90" fill="#FFF3C7"/><rect x="30" y="40" width="48" height="38" rx="3" fill="#00267F"/><rect x="26" y="30" width="56" height="12" rx="3" fill="#0B3AA8"/><rect x="50" y="30" width="8" height="48" fill="#FFC72C"/><path d="M54 30c-6-12-20-12-18-4 1 4 18 4 18 4zm0 0c6-12 20-12 18-4-1 4-18 4-18 4z" fill="#FF6F59"/><g transform="translate(92 54)"><g fill="#FF6F59"><ellipse cy="-8" rx="5" ry="7"/><ellipse cy="-8" rx="5" ry="7" transform="rotate(72)"/><ellipse cy="-8" rx="5" ry="7" transform="rotate(144)"/><ellipse cy="-8" rx="5" ry="7" transform="rotate(216)"/><ellipse cy="-8" rx="5" ry="7" transform="rotate(288)"/></g><circle r="3" fill="#FFC72C"/></g></svg>`,
+"Stationery & Lifestyle":`<svg viewBox="0 0 120 90" aria-hidden="true"><rect width="120" height="90" fill="#E3F3EC"/><rect x="24" y="18" width="46" height="60" rx="4" fill="#00267F"/><rect x="30" y="18" width="40" height="60" rx="3" fill="#fff" stroke="#16213E" stroke-width="2"/><path d="M38 32h24M38 42h24M38 52h16" stroke="#C9CEDB" stroke-width="3" stroke-linecap="round"/><rect x="24" y="18" width="7" height="60" fill="#FFC72C"/><path d="m84 70 16-46 6 2-16 46-7 4z" fill="#FF6F59"/><path d="m100 24 2-6 6 2-2 6" fill="#16213E"/><circle cx="92" cy="20" r="0"/></svg>`,
+"Tech Accessories":`<svg viewBox="0 0 120 90" aria-hidden="true"><rect width="120" height="90" fill="#E6E9F5"/><rect x="40" y="12" width="34" height="66" rx="7" fill="#16213E"/><rect x="44" y="18" width="26" height="50" rx="3" fill="#FFC72C"/><path d="M44 50c8-6 18 6 26-2v20H44z" fill="#00267F"/><circle cx="62" cy="30" r="5" fill="#FF6F59"/><path d="M84 40c10 0 12 12 4 16M84 46c4 0 5 5 2 7" fill="none" stroke="#00267F" stroke-width="3" stroke-linecap="round"/><rect x="16" y="52" width="16" height="22" rx="4" fill="#fff" stroke="#16213E" stroke-width="2"/><path d="M24 52v-8c0-4 6-4 6-8" fill="none" stroke="#16213E" stroke-width="2"/></svg>`};
+/* Shop home, like the owner's concept: hero, Shop by Category tiles, Local Vendors */
 function shopHome(){
   const tiles=LAUNCH_CATS.map((c,i)=>{const n=shopItems.filter(p=>p.cat==="v:"+c).length;
-    return `<a class="sbx-tile t${i}" href="#shop/all/${encodeURIComponent("v:"+c)}"><span class="ic">${CAT_ICON[c]}</span><b>${esc(c)}</b>${n?`<small>${n} item${n>1?"s":""}</small>`:""}</a>`}).join("");
+    return `<a class="sbx-tile" href="#shop/all/${encodeURIComponent("v:"+c)}"><span class="art">${CAT_ART[c]}</span><b>${esc(c)}</b>${n?`<small>${n} item${n>1?"s":""}</small>`:""}</a>`}).join("");
   const biz=mkBrands.map(b=>({b,its:shopItems.filter(p=>p.vendor===b.slug)})).filter(x=>x.its.length).slice(0,10);
-  return `<section class="sbx-home" aria-labelledby="sbxCatH"><div class="sbx-sec-h">${SB_TRI}<h2 id="sbxCatH">Shop by Category</h2></div><div class="sbx-tiles6">${tiles}</div>
-   ${biz.length?`<div class="sbx-sec-h">${SB_TRI}<h2>Featured Bajan businesses</h2></div><div class="sbx-biz">${biz.map(({b,its})=>{const p=its.find(x=>x.img)||its[0];return `<a href="#s-${encodeURIComponent(slug(b.name))}"><span class="sbx-biz-img">${thumb(p)}</span><b>${esc(b.name)}</b><small>${its.length} item${its.length>1?"s":""}</small></a>`}).join("")}</div>`:""}</section>`}
+  return `<section class="sbx-hero" aria-label="Shop Bajan"><img src="img/sb-hero-swan-street.jpg" alt="Shopping on Swan Street in Bridgetown" width="896" height="1200">
+    <div class="sbx-hero-in"><p class="sbx-script sbx-hero-h">Shop Bajan</p><p class="sbx-script sbx-hero-s">Support Local. Shop Bajan!</p><p class="sbx-hero-p">Unique finds. Bajan vibes. Direct from our people.</p><a class="sbx-cta" href="#shop/products">Start Shopping →</a></div>${SB_HIB.replace('class="sb-hib"','class="sb-hib sbx-hero-hib"')}</section>
+   <section class="sbx-home" aria-labelledby="sbxCatH"><h2 class="sbx-script sbx-sh" id="sbxCatH">Shop by Category</h2><div class="sbx-tiles6">${tiles}</div>
+   ${biz.length?`<h2 class="sbx-script sbx-sh">Local Vendors</h2><div class="sbx-biz">${biz.map(({b,its})=>{const p=its.find(x=>x.img)||its[0];return `<a href="#s-${encodeURIComponent(slug(b.name))}"><span class="sbx-biz-img">${thumb(p)}</span><b>${esc(b.name)}</b><small>${b.story?esc(b.story.slice(0,48))+(b.story.length>48?"…":""):its.length+" item"+(its.length>1?"s":"")}</small></a>`}).join("")}</div>`:""}</section>`}
+/* bottom of the shop home: From Barbados, With Love + what we stand for */
+function shopTail(){
+  return `<section class="sbx-love" aria-label="From Barbados, With Love"><svg class="sbx-love-art" viewBox="0 0 360 160" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="sbSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2B3F8F"/><stop offset=".55" stop-color="#FF8A5B"/><stop offset="1" stop-color="#FFC72C"/></linearGradient></defs><rect width="360" height="160" fill="url(#sbSky)"/><circle cx="270" cy="104" r="26" fill="#FFE38A"/><rect y="112" width="360" height="48" fill="#0B3AA8"/><path d="M0 118c30-6 60 6 90 0s60-6 90 0 60 6 90 0 60-6 90 0" fill="none" stroke="#FFE38A" stroke-opacity=".5" stroke-width="2"/><g fill="#16213E"><path d="M196 112V84l22-16 22 16v28z"/><path d="M190 86l28-21 28 21" fill="none" stroke="#16213E" stroke-width="5"/><path d="M300 112c2-30 4-44 2-60" stroke="#16213E" stroke-width="5" fill="none"/><path d="M302 54c-12-8-26-6-34 2 12-2 22 0 34-2zm0 0c12-10 26-8 34 0-12-2-22 0-34 0zm0 0c-4-12-14-18-24-16 8 4 16 8 24 16zm0 0c6-12 16-16 26-12-10 2-18 6-26 12z"/></g><rect x="211" y="92" width="12" height="20" fill="#FFC72C"/></svg>
+   <div class="sbx-love-in"><p class="sbx-script">From Barbados,<br>With Love <span aria-hidden="true">❤️</span></p><a class="sbx-cta" href="#vendors">Shop Local →</a></div></section>
+   <ul class="sbx-why"><li>${SB_TRI}<b>Support Local Businesses</b></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1.5" y="6" width="13" height="10" rx="1"/><path d="M14.5 9.5h4l3 3.2V16h-7z"/><circle cx="6" cy="18" r="2"/><circle cx="17.5" cy="18" r="2"/></svg><b>Get It Delivered Across Barbados</b></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z"/></svg><b>Celebrate Bajan Culture</b></li></ul>`}
 const ORD_KEY="sb-orders";
 const myOrders=()=>{try{const a=JSON.parse(localStorage.getItem(ORD_KEY)||"[]");return Array.isArray(a)?a:[]}catch(e){return[]}};
 function saveOrder(o){try{const a=myOrders().filter(x=>x.id!==o.id);a.unshift({id:o.id,at:o.at||Date.now(),items:o.items,total:o.total,method:o.method,paid:!!o.paid,delivery:o.delivery||"",name:o.name||""});localStorage.setItem(ORD_KEY,JSON.stringify(a.slice(0,30)))}catch(e){}}
@@ -2104,25 +2126,27 @@ const sbxPages={shop:document.getElementById("pgShop"),cats:document.getElementB
 const sbxTabs=document.getElementById("sbxTabs");
 let sbxPage="shop",sbxRail="products";
 function sbxMark(){const on=mode==="shop"?sbxPage:"";sbxTabs.querySelectorAll("[data-sbx]").forEach(a=>{const k=a.dataset.sbx;if(k==="bag")return;if(k===on)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")})}
-function sbxShow(pg){sbxPage=pg;Object.keys(sbxPages).forEach(k=>sbxPages[k].hidden=k!==pg);
+function sbxShow(pg){sbxPage=pg;setTimeout(sbxNavMark,0);Object.keys(sbxPages).forEach(k=>sbxPages[k].hidden=k!==pg);
   document.documentElement.setAttribute("data-sbx",pg);
   if(pg==="cats")renderCats();if(pg==="me")renderMe();
   document.title=pg==="me"?"Me · Shop Bajan":pg==="cats"?"Categories · Shop Bajan":"Shop Bajan · Barbados";sbxMark()}
 sbxTabs.addEventListener("click",e=>{if(e.target.closest('[data-sbx="bag"]')){stage="bag";openCart()}});
-setTimeout(()=>{const cnt=document.getElementById("sbxCount");new MutationObserver(()=>{const n=+countEl.textContent||0;cnt.textContent=n;cnt.hidden=!n}).observe(countEl,{childList:true,characterData:true,subtree:true})},0)
+shopSec.addEventListener("click",e=>{if(e.target.closest("[data-sbx-bag]")){stage="bag";openCart()}});
+function sbxNavMark(){const k=sbxPage==="cats"?(sbxRail==="biz"?"vendors":"cats"):sbxPage==="shop"?(view.tab==="all"&&!view.cat&&!view.q?"home":view.tab==="digital"?"digital":view.tab==="products"?"products":""):"";document.querySelectorAll("#sbxNav [data-nv]").forEach(a=>{if(a.dataset.nv===k)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")})}
+setTimeout(()=>{const cnt=document.getElementById("sbxCount"),c2=document.querySelector(".sbx-n2");new MutationObserver(()=>{const n=+countEl.textContent||0;cnt.textContent=n;cnt.hidden=!n;c2.textContent=n;c2.hidden=!n}).observe(countEl,{childList:true,characterData:true,subtree:true})},0)
 /* Categories: Shein-style rail on the left, round category pictures on the right */
 function renderCats(){
   const sec=sbxRail,box=sbxPages.cats;
-  const rail=[["products","Products"],["digital","Digital"],["biz","Bajan businesses"]].filter(([k])=>k==="products"||(k==="biz"?shopItems.some(p=>p.brand):shopItems.some(p=>inSec(p,k))));
+  const rail=[["products","Products"],["digital","Digital"],["biz","Bajan businesses"]].filter(([k])=>k!=="digital"||shopItems.some(p=>inSec(p,k)));
   let right="";
   if(sec==="biz"){const bz=[];shopItems.forEach(p=>{if(p.brand&&!bz.some(b=>b.n===p.brand))bz.push({n:p.brand,p})});
-    right=`<h2 class="sbx-h">Shop by small business</h2><div class="sbx-bubbles">${bz.map(b=>`<button type="button" data-biz="${esc(b.n)}"><span class="sbx-bub">${thumb(b.p)}</span><b>${esc(b.n)}</b><small>${shopItems.filter(x=>x.brand===b.n).length} items</small></button>`).join("")}</div>`}
+    right=`<h2 class="sbx-h">Local Vendors</h2>${bz.length?"":`<p class="sbx-soon">${SB_HIB}<br>Bajan businesses are setting up their shops. Check back soon.</p>`}<div class="sbx-bubbles">${bz.map(b=>`<button type="button" data-bizs="${esc(slug(b.n))}"><span class="sbx-bub">${thumb(b.p)}</span><b>${esc(b.n)}</b><small>${shopItems.filter(x=>x.brand===b.n).length} items</small></button>`).join("")}</div>`}
   else{const cs=sec==="products"?LAUNCH_CATS.map(c=>"v:"+c).concat(catsOf(sec).filter(c=>!LAUNCH_CATS.includes(c.slice(2)))):catsOf(sec);
     right=`<h2 class="sbx-h">${sec==="digital"?"Digital products":"Products"}</h2><a class="sbx-all" href="#shop/${sec}">See all ${sec==="digital"?"digital":"products"} ›</a><div class="sbx-bubbles">${cs.map(c=>{const its=shopItems.filter(p=>dCat(p)===c&&inSec(p,sec)),p=its.find(x=>x.img)||its[0];
       return `<a href="#shop/${sec}/${encodeURIComponent(c)}"><span class="sbx-bub">${p&&p.img?thumb(p):(CAT_ICON[c.slice(2)]||(p?thumb(p):""))}</span><b>${esc(catName(c).replace(/^[^A-Za-z]+/,""))}</b>${its.length?`<small>${its.length} item${its.length>1?"s":""}</small>`:""}</a>`}).join("")}</div>`}
   box.innerHTML=`<h1 class="sbx-title" id="pgCatsH">Categories</h1><div class="sbx-cats"><div class="sbx-rail" role="tablist" aria-label="Category groups">${rail.map(([k,l])=>`<button type="button" role="tab" data-rail="${k}" aria-selected="${k===sec}">${l}</button>`).join("")}</div><div class="sbx-right">${right}</div></div>`}
 sbxPages.cats.addEventListener("click",e=>{const r=e.target.closest("[data-rail]");if(r){sbxRail=r.dataset.rail;renderCats();return}
-  const b=e.target.closest("[data-biz]");if(b){mkQ.value=b.dataset.biz;view.q=mkQ.value;view.tab="all";view.cat="";nav("#shop")}});
+  const b=e.target.closest("[data-bizs]");if(b){pdFromSite=true;nav("#s-"+encodeURIComponent(b.dataset.bizs))}});
 /* Me: orders, returns, problems, rewards and earnings in one place */
 function renderMe(){
   const os=myOrders(),name=(os.find(o=>o.name)||{}).name||"",first=String(name).split(" ")[0];
@@ -2541,13 +2565,13 @@ html[data-site=shop]:not(.soon) .pd-toast{bottom:calc(env(safe-area-inset-bottom
  html.shop-mode[data-site=shop] .shop-page{padding-top:0}
  html.shop-mode[data-site=shop] .shop-nav,html.shop-mode[data-site=shop] .shop-top{display:none}
 }
-html[data-site=shop] .sbx-appbar{position:sticky;top:0;z-index:12;display:flex;align-items:center;gap:8px;margin:0 -16px;padding:calc(env(safe-area-inset-top,0px) + 8px) 16px 8px;background:#FFF9EC}
+
 html[data-site=shop] .sbx-mark{flex:none;display:grid;place-items:center;width:40px;height:40px}
 html[data-site=shop] .sbx-mark img{width:34px;height:34px;border-radius:8px}
 html[data-site=shop] .sbx-appbar .mk-search{flex:1;margin:0;min-height:42px;border:1.5px solid #00267F;padding:0 2px 0 12px}
 html[data-site=shop] .sbx-appbar .mk-search input{padding:8px 4px;font-size:16px}
 html[data-site=shop] .sbx-appbar .mk-search .x{width:36px;height:36px}
-@media (min-width:900px){html[data-site=shop] .sbx-appbar{position:static;max-width:560px;margin:6px auto 10px;padding:0;background:none}html[data-site=shop] .sbx-mark{display:none}}
+/* (desktop header rules are in the concept look block) */
 /* Shein-style text tabs: underline, not pills */
 html[data-site=shop] .mk-tabs{display:flex;gap:22px;background:none;border:0;border-bottom:1px solid #E3E6EE;border-radius:0;padding:0 2px;max-width:none;overflow-x:auto;scrollbar-width:none}
 html[data-site=shop] .mk-tabs button{flex:none;min-height:42px;border-radius:0;padding:0;font-size:.95rem;color:#4A5675;border-bottom:3px solid transparent;background:none}
@@ -2668,6 +2692,67 @@ footer .sb-love{justify-content:flex-start;margin:.2rem 0 .6rem!important}footer
 .sbx-biz b{font-size:.8rem;line-height:1.2;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sbx-biz small{font-size:.68rem;color:#4A5675}
 .sbx-bub svg{padding:22%;box-sizing:border-box}.sbx-bub img+svg{padding:0}
 html[data-site=shop] .drawer .done h3{font-size:1.35rem;line-height:1.3}
+
+/* ==CONCEPT LOOK== header, hero, category tiles, Local Vendors, From Barbados With Love, benefits (owner's concept design, phone first) */
+.sbx-script{font-family:"Kaushan Script","Brush Script MT",cursive;font-weight:400;letter-spacing:0}
+html[data-site=shop] .sbx-head{margin:0 -16px;position:sticky;top:0;z-index:12;background:#FFF9EC;box-shadow:0 4px 14px rgba(0,38,127,.08)}
+.sbx-strip{background:#00267F;color:#FFC72C;font-weight:800;font-size:.8rem;text-align:center;padding:calc(env(safe-area-inset-top,0px) + 6px) 12px 6px}
+.sbx-strip span:before{content:"";display:inline-block;width:13px;height:13px;margin-right:6px;vertical-align:-2px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3v18M12 3l-1.6 2.6h3.2zM5 6c0 5 2.5 7.5 7 7.5S19 11 19 6M9 17h6' fill='none' stroke='%23FFC72C' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat}
+html[data-site=shop] .sbx-appbar{position:static;display:block;margin:0;padding:8px 16px 10px;background:#FFF9EC}
+.sbx-logorow{display:flex;align-items:center;gap:4px;margin-bottom:8px}
+.sbx-logo{display:flex;align-items:center;gap:8px;text-decoration:none;margin-right:auto;min-width:0}
+.sbx-logo img{width:40px;height:40px;border-radius:10px}
+.sbx-logo span{font-family:"Fraunces",Georgia,serif;font-weight:800;font-size:1.35rem;line-height:1;color:#00267F}
+.sbx-logo small{display:block;font-family:"Quicksand",system-ui,sans-serif;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:#16213E;margin-top:3px}
+.sbx-ico{position:relative;display:grid;place-items:center;width:44px;height:44px;border:0;background:none;color:#00267F;cursor:pointer;text-decoration:none}
+.sbx-n2{position:absolute;top:2px;right:0;min-width:18px;height:18px;line-height:18px;border-radius:999px;background:#FFC72C;color:#00267F;font-size:.66rem;text-align:center;padding:0 4px}
+html[data-site=shop] .sbx-appbar .mk-search{min-height:46px;border:1.5px solid #C9D3EC;background:#fff;border-radius:999px;padding:0 4px 0 16px;flex-direction:row-reverse}
+html[data-site=shop] .sbx-appbar .mk-search svg{color:#00267F}
+.sbx-nav{display:flex;justify-content:flex-start!important;order:0;flex-basis:auto;border:0!important;gap:2px;overflow-x:auto;background:#00267F;padding:0 8px;scrollbar-width:none}.sbx-nav::-webkit-scrollbar{display:none}
+.sbx-nav a{flex:none;display:flex;align-items:center;min-height:44px;padding:0 12px;color:#fff;font-weight:700;font-size:.88rem;text-decoration:none;border-bottom:3px solid transparent}
+.sbx-nav a[aria-current=page]{color:#FFC72C;border-bottom-color:#FFC72C;background:rgba(255,255,255,.06)}
+html[data-site=shop] .mk-tabs{display:none}
+@media (min-width:900px){html[data-site=shop] .sbx-head{margin:0;border-radius:0 0 16px 16px}.sbx-nav{justify-content:center}html[data-site=shop] .sbx-appbar{display:flex;align-items:center;gap:16px}.sbx-logorow{margin:0;flex:none;gap:8px}html[data-site=shop] .sbx-appbar .mk-search{flex:1;max-width:560px;margin:0 auto}}
+/* hero */
+.sbx-hero{position:relative;margin:0 -16px;height:440px;overflow:hidden;background:#00267F;color:#fff}
+.sbx-hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 25%}
+.sbx-hero:before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,38,127,0) 30%,rgba(0,38,127,.55) 58%,rgba(0,20,71,.92) 100%)}
+.sbx-hero-in{position:absolute;z-index:2;left:18px;right:18px;bottom:22px;text-align:left}
+.sbx-hero-h{margin:0;font-size:3.1rem;line-height:1;color:#FFC72C;text-shadow:0 3px 0 #001447}
+.sbx-hero-s{margin:2px 0 6px;font-size:1.45rem;line-height:1.15;color:#fff}
+.sbx-hero-p{margin:0 0 14px;font-size:.95rem;font-weight:600;color:#fff}
+.sbx-cta{display:inline-flex;align-items:center;min-height:48px;padding:0 22px;border-radius:999px;background:#FFC72C;color:#00267F;font-weight:800;text-decoration:none;box-shadow:0 4px 0 #C99400}
+.sbx-hero-hib{position:absolute;z-index:2;top:14px;right:14px;width:58px!important;height:58px!important;opacity:.95}
+@media (min-width:700px){.sbx-hero{height:480px;margin:14px 0 0;border-radius:18px}.sbx-hero:before{background:linear-gradient(90deg,rgba(0,20,71,.9) 0,rgba(0,38,127,.55) 45%,rgba(0,38,127,0) 75%)}.sbx-hero-in{top:50%;bottom:auto;transform:translateY(-50%);max-width:46%;left:40px}.sbx-hero-h{font-size:4.4rem}.sbx-hero>img{object-position:80% 25%}}
+/* category tiles */
+.sbx-sh{margin:22px 0 12px;font-size:1.85rem;line-height:1.1;color:#00267F!important;font-family:"Kaushan Script",cursive!important;font-weight:400!important}
+.sbx-sh:after{content:"";display:block;width:130px;height:7px;margin-top:2px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 130 7'%3E%3Cpath d='M2 5C40 1 90 1 128 4' fill='none' stroke='%23FFC72C' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E") left/contain no-repeat}
+html[data-site=shop] .sbx-tiles6{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+html[data-site=shop] .sbx-tile{padding:0;min-height:0;border-radius:14px;box-shadow:0 3px 10px rgba(0,38,127,.1);gap:0;background:#FFF3DC}
+html[data-site=shop] .sbx-tile:after{display:none}
+.sbx-tile .art{display:block;width:100%;aspect-ratio:4/3}.sbx-tile .art svg{display:block;width:100%;height:100%}
+html[data-site=shop] .sbx-tile b{display:flex;align-items:center;justify-content:center;min-height:42px;padding:6px 4px 2px;font-size:.74rem;line-height:1.2;color:#00267F}
+html[data-site=shop] .sbx-tile small{padding-bottom:6px}
+@media (min-width:820px){html[data-site=shop] .sbx-tiles6{grid-template-columns:repeat(6,minmax(0,1fr))}}
+.sbx-biz small{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+/* From Barbados, With Love */
+.sbx-love{position:relative;margin:26px -16px 0;min-height:200px;overflow:hidden;background:#00267F}
+.sbx-love-art{position:absolute;inset:0;width:100%;height:100%}
+.sbx-love:before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(0,38,127,.92) 0,rgba(0,38,127,.6) 48%,rgba(0,38,127,0) 75%)}
+.sbx-love-in{position:relative;z-index:2;padding:26px 18px}
+.sbx-love-in p{margin:0 0 14px;font-size:1.8rem;line-height:1.15;color:#fff}
+@media (min-width:700px){.sbx-love{margin:30px 0 0;border-radius:18px;min-height:240px}.sbx-love-in{padding:40px}}
+.sbx-why{list-style:none;margin:0 -16px;padding:16px 12px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;background:#fff;border-bottom:4px solid #FFC72C}
+.sbx-why li{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px}
+.sbx-why svg{width:40px;height:40px;padding:8px;border-radius:50%;background:#FFC72C;color:#00267F;box-sizing:border-box}
+.sbx-why b{font-size:.72rem;line-height:1.25;color:#00267F}
+@media (min-width:700px){.sbx-why{margin:0;border-radius:0 0 18px 18px}}
+.shop-page.is-home .shop-show{display:none}
+section.sbx-home,section.sbx-hero,section.sbx-love{padding:0}
+.sbx-home .sbx-sh,.sbx-sh{margin:18px 0 12px!important;padding:0!important}
+html[data-site=shop] .market .mk-box{border:2px solid #00267F;border-radius:16px;background:#fff}
+html[data-site=shop] .market .mk-box .btn.ghost{box-shadow:none}
+.sbx-soon{text-align:center;color:#4A5675;font-size:.88rem;line-height:1.5;margin:8px 0}.sbx-soon .sb-hib{width:36px;height:36px}
 #pdName:focus{outline:none}
 html[data-site=shop] .pd-bar{background:#fff;border-bottom:1px solid #E3E6EE}html[data-site=shop] .pd-bar button{border-width:1.5px;min-height:40px}html[data-site=shop] .pd-bar .pd-back{border-color:#00267F;color:#00267F}html[data-site=shop] .pd-bar .pd-bag{background:#00267F;border-color:#00267F}
 html[data-site=shop] .pd-in{padding-bottom:90px}
