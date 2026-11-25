@@ -172,6 +172,9 @@ details summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;alig
 .r .v{font-weight:700;white-space:nowrap;text-align:right}
 .r .v span{display:block;font-size:13px;color:var(--muted);font-weight:600}
 .empty{background:#fff;border:2px dashed var(--line);border-radius:16px;padding:20px;text-align:center;color:var(--muted);font-weight:600;margin-top:12px}
+.empty:before{content:"";display:block;width:34px;height:34px;margin:0 auto 8px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cg fill='%23FF6F59'%3E%3Cellipse cx='20' cy='10' rx='7' ry='9'/%3E%3Cellipse cx='20' cy='10' rx='7' ry='9' transform='rotate(72 20 20)'/%3E%3Cellipse cx='20' cy='10' rx='7' ry='9' transform='rotate(144 20 20)'/%3E%3Cellipse cx='20' cy='10' rx='7' ry='9' transform='rotate(216 20 20)'/%3E%3Cellipse cx='20' cy='10' rx='7' ry='9' transform='rotate(288 20 20)'/%3E%3C/g%3E%3Ccircle cx='20' cy='20' r='4' fill='%23FFC72C'/%3E%3C/svg%3E") center/contain no-repeat}
+/* Bajan sea-wave under the header */
+.top{position:relative}.top:after{content:"";position:absolute;left:0;right:0;bottom:-12px;height:12px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12' preserveAspectRatio='none'%3E%3Cpath d='M0 0h120v4c-10 0-10 6-20 6S90 4 80 4 70 10 60 10 50 4 40 4 30 10 20 10 10 4 0 4z' fill='%2300267F' opacity='.14'/%3E%3C/svg%3E") 0 0/120px 12px repeat-x;pointer-events:none}
 
 /* sheet (add/edit) */
 .sheet{position:fixed;inset:0;z-index:20;background:rgba(0,20,71,.45);display:flex;align-items:flex-end;justify-content:center}
@@ -231,8 +234,9 @@ var SB_KEY="sb_publishable_hk2JKCG5HZZrWR5enw9MfQ_-S8R7W_1"; /* public key: safe
 var BUCKET="product-photos";
 var WA="12468504460";
 var FORM="https://docs.google.com/forms/d/e/1FAIpQLSfGTId0Oa7jR23yfKmouDejd1AVFxPNZA8QMfMkK3JWV0mCFA/formResponse", FIELD="entry.858011822";
-var PRICE_GUIDE={"Lashes & brows":"$12 to $25","Makeup & lips":"$10 to $20","Skincare & body":"$20 to $40","Hair & bonnets":"$15 to $30 (bundles and wigs $100 to $500)","Nails":"$25 to $45","Jewellery":"$15 to $60","Candles & self-care":"$20 to $45"};
-var CATS=["Hair & bonnets","Nails","Lashes & brows","Skincare & body","Perfume & scents","Makeup & lips","Jewellery","Bags & accessories","Candles & self-care","Digital","Other"];
+var PRICE_GUIDE={"Beauty & Personal Care":"$10 to $45","Fashion & Accessories":"$15 to $60","Lashes & brows":"$12 to $25","Makeup & lips":"$10 to $20","Skincare & body":"$20 to $40","Hair & bonnets":"$15 to $30 (bundles and wigs $100 to $500)","Nails":"$25 to $45","Jewellery":"$15 to $60","Candles & self-care":"$20 to $45"};
+/* the 6 launch categories shoppers browse by, plus Digital */
+var CATS=["Fashion & Accessories","Beauty & Personal Care","Home & Living","Gifts & Handmade","Stationery & Lifestyle","Tech Accessories","Digital"];
 var A=window.TGC_AGREE||{PLANS:{},clauses:function(){return[]},VERSION:""};
 var PLANS=A.PLANS;
 /* PayPal subscribe links: card set up now, first month free, charged from month 2 (USD = BBD/2) */
@@ -457,7 +461,7 @@ function statusNote(v){
   var k="sb_ok_"+v.id,t=Date.parse(v.approved_at||"")||0;
   if(!t){try{t=Number(localStorage.getItem(k))||0;if(!t){t=Date.now();localStorage.setItem(k,String(t))}}catch(e){t=Date.now()}}
   if(Date.now()-t>3*3600000)return"";
-  return'<div class="note ok">✅ Your shop is approved. Live products show on <a href="./#shop">Shop Bajan</a>.</div>';
+  return'<div class="note ok">✅ Ya get approved! De people can find you now. <a href="./#shop">See Shop Bajan</a></div>';
 }
 function vHome(v){
   var m=money_owed(S.sales,S.payouts),pl=PLANS[v.plan]||{};
@@ -466,7 +470,7 @@ function vHome(v){
   var ch=S.products.filter(function(p){return p.status==="changes"});
   var wk=S.sales.filter(function(s){return s.sale_date>=iso(weekStart())});
   var nm=String(v.owner_name||"").trim().split(/\s+/)[0];
-  var h='<h1 class="page">'+greet()+(nm?', '+esc(nm):'')+'</h1><p class="lead">'+esc(v.business)+' · '+esc(pl.name||"")+' plan</p>'+statusNote(v);
+  var h='<h1 class="page">'+greet()+(nm?', '+esc(nm):'')+'</h1><p class="lead">'+esc(v.business)+' · '+esc(pl.name||"")+' plan</p>'+statusNote(v)+(S.sales.length===1?'<div class="note ok">🎉 You made your first sale!</div>':"");
   if(v.status!=="pending"&&v.status!=="paused"){var sl=shopLink(v);
     h+=live?'<div class="plink" style="margin-top:14px"><b>Your shop link</b><span>Send this to customers. It opens your shop page with all your live products.</span><code>'+esc(sl)+'</code><div class="acts"><button class="btn sm" data-copylink="'+esc(sl)+'">Copy link</button>'+(navigator.share?'<button class="btn sm ghost" data-sharelink="'+esc(sl)+'" data-sharename="'+esc(v.business)+'">Share</button>':"")+'</div></div>':'<div class="note">Your shop link appears here once your first product is live.</div>';}
   h+='<div class="stats"><div class="stat big"><span>Coming to you on '+esc(fmtDate(iso(nextSunday())))+'</span><b>'+money2(m.dueSunday)+'</b></div>'+
@@ -506,13 +510,13 @@ function prodCard(p,admin,vend){
     h+='<button class="btn sm" data-edit="'+p.id+'">Edit</button>';
     h+=p.status==="hidden"?'<button class="btn sm ghost" data-unhide="'+p.id+'">Show again</button>':'<button class="btn sm ghost" data-hidev="'+p.id+'">Hide</button>';
   }
-  if(p.digital&&p.status==="live"){var lk=prodLink(p);h+='<div class="plink"><b>Product link</b><span>Send this to customers. It opens your product so they can pay straight away.</span><code>'+esc(lk)+'</code><div class="acts"><button class="btn sm" data-copylink="'+esc(lk)+'">Copy link</button>'+(navigator.share?'<button class="btn sm ghost" data-sharelink="'+esc(lk)+'" data-sharename="'+esc(p.name)+'">Share</button>':"")+'</div></div>';}
+  if(p.status==="live"){var lk=prodLink(p);h+='<div class="plink"><b>Product link</b><span>'+(p.digital?'Send this to customers. It opens your product so they can pay straight away.':'Put this in your posts and bio. It opens this product on Shop Bajan (from launch day, Thu 10 Dec).')+'</span><code>'+esc(lk)+'</code><div class="acts"><button class="btn sm" data-copylink="'+esc(lk)+'">Copy link</button>'+(navigator.share?'<button class="btn sm ghost" data-sharelink="'+esc(lk)+'" data-sharename="'+esc(p.name)+'">Share</button>':"")+'</div></div>';}
   return h+'</div></div>';
 }
 function vProducts(v){
   var h='<h1 class="page">My products</h1><p class="lead">Add photos, prices and stock. We approve each new product or change before it shows on the website.</p>';
   h+='<div class="btnrow"><button class="btn full" data-add>+ Add a product</button></div>';
-  if(!S.products.length)h+='<div class="empty">No products yet. Tap "Add a product" to list your first one 💕</div>';
+  if(!S.products.length)h+='<div class="empty">De shop empty. Add ya first product.</div>';
   else h+=(S.products.length>1?SRCH:"")+'<div class="plist">'+S.products.map(function(p){return prodCard(p,false)}).join("")+'</div>';
   h+='<p class="small muted" style="margin-top:16px">Changing only the stock keeps a live product live. Changing the name, price, photos or description sends it back to us to approve.</p>';
   return h;

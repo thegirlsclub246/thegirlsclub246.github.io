@@ -1203,6 +1203,7 @@ try{var s=JSON.parse(store()||"null");if(s&&s.name)showDone(s.name,s.role,s.via)
         <button type="button" role="tab" data-tab="products" aria-selected="false">Products</button>
         <button type="button" role="tab" data-tab="digital" aria-selected="false">Digital</button>
       </div>
+      <div id="sbxHome"></div>
       <div class="shop-show" id="shopShow" hidden></div>
       <div class="mk-catrow" id="mkCats" role="group" aria-label="Categories"></div>
       <div id="mkOut"></div>
@@ -1513,6 +1514,7 @@ html.shop-mode main>*:not(#shop){display:none!important}
       <div><h4>Contact us</h4><ul><li><a class="wa-link" href="#" target="_blank" rel="noopener">WhatsApp us</a></li><li><a href="https://ig.me/m/shopbajan" target="_blank" rel="noopener">DM on Instagram</a></li><li><span class="wa-num"></span></li><li>Collection: <span class="collect-area">St. Thomas</span>, Barbados</li></ul></div>
       <div><h4>We accept</h4><ul id="accepts"><li>Debit &amp; credit cards</li><li>PayPal</li><li>Dodo</li></ul></div>
     </div>
+    <p class="sb-love"><svg class="sb-hib" viewBox="0 0 40 40" aria-hidden="true"><g fill="#FF6F59"><ellipse cx="20" cy="10" rx="7" ry="9"/><ellipse cx="20" cy="10" rx="7" ry="9" transform="rotate(72 20 20)"/><ellipse cx="20" cy="10" rx="7" ry="9" transform="rotate(144 20 20)"/><ellipse cx="20" cy="10" rx="7" ry="9" transform="rotate(216 20 20)"/><ellipse cx="20" cy="10" rx="7" ry="9" transform="rotate(288 20 20)"/></g><circle cx="20" cy="20" r="4" fill="#FFC72C"/></svg>Support a Bajan business by buying someting</p>
     <p class="legal">&copy; 2026 Shop Bajan · Shop online 24/7 · Island-wide delivery &amp; collection in St. Thomas · Prices in BBD (Barbados dollars) · <a href="policies.html" style="color:inherit">Shop policies</a></p>
   </div>
 </footer>
@@ -1671,6 +1673,12 @@ const seenIds=new Set();
 const products=list(PR.products).filter(p=>p.show!==false&&p.name).map(p=>{
   let id=p.id||slug(p.name);while(seenIds.has(id))id+="-2";seenIds.add(id);
   return{id,img:U(p.image),alt:p.image_alt||"",name:String(p.name),type:String(p.type||""),cat:p.category||"lashes",price:num(p.price),was:num(p.was_price)>num(p.price)?num(p.was_price):0,desc:String(p.description||""),tag:String(p.tag||""),opts:list(p.options).map(String),digital:!!p.digital,course:String(p.course||"")}});
+/* the 6 launch categories (vendor portal uses the same names); older portal categories are folded in */
+const LAUNCH_CATS=["Fashion & Accessories","Beauty & Personal Care","Home & Living","Gifts & Handmade","Stationery & Lifestyle","Tech Accessories"];
+function launchCat(c,dig){c=String(c||"").trim();if(LAUNCH_CATS.includes(c))return c;if(dig||/digital/i.test(c))return "Digital";
+  if(/jewel|bag|accessor|cloth|fashion|wear/i.test(c))return "Fashion & Accessories";if(/hair|nail|lash|brow|skin|body|perfume|scent|makeup|lip|beauty|self-care/i.test(c))return "Beauty & Personal Care";
+  if(/candle|home|living|decor/i.test(c))return "Home & Living";if(/station|book|planner|lifestyle/i.test(c))return "Stationery & Lifestyle";if(/tech|phone|charger|case/i.test(c))return "Tech Accessories";return "Gifts & Handmade"}
+const SB_HIB=`<svg class="sb-hib" viewBox="0 0 40 40" aria-hidden="true"><g fill="#FF6F59"><ellipse cx="20" cy="10" rx="7" ry="9"/><ellipse cx="20" cy="10" rx="7" ry="9" transform="rotate(72 20 20)"/><ellipse cx="20" cy="10" rx="7" ry="9" transform="rotate(144 20 20)"/><ellipse cx="20" cy="10" rx="7" ry="9" transform="rotate(216 20 20)"/><ellipse cx="20" cy="10" rx="7" ry="9" transform="rotate(288 20 20)"/></g><circle cx="20" cy="20" r="4" fill="#FFC72C"/></svg>`,SB_TRI=`<svg class="sb-tri" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M12 3l-1.6 2.6h3.2zM5 6c0 5 2.5 7.5 7 7.5S19 11 19 6M5 6 3.6 8.2M5 6l1.6 2M19 6l-1.6 2M19 6l1.4 2.2M9 17h6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 /* ==MARKETPLACE== partner brands (content/marketplace.json, synced from the vendor portal) sit in the same grid as our own products */
 let MK={};try{MK=await load("marketplace")}catch(e){MK={}}
 const mkBrands=list(MK.brands).filter(b=>b&&b.slug&&b.name);
@@ -1688,7 +1696,7 @@ try{
     MK.products.push({id:p.id,brand:p.vendor_slug,name:p.name,category:p.category,price:p.price,description:p.description,options:p.variants,stock:p.digital?null:p.stock,image:pic((p.photos||[])[0]),images:(p.photos||[]).map(pic).filter(Boolean),digital:p.digital});
   });
 }catch(e){}
-list(MK.products).filter(p=>p&&p.id&&p.name&&brandName(p.brand)).forEach(p=>products.push({id:"mp-"+String(p.id),pid:String(p.id),vendor:String(p.brand),brand:brandName(p.brand),img:String(p.image||""),imgs:list(p.images).map(String),alt:String(p.name)+" by "+brandName(p.brand),name:String(p.name),type:String(p.category||""),cat:"v:"+String(p.category||"Other"),price:num(p.price),was:0,desc:String(p.description||""),tag:"",opts:list(p.options).map(String),digital:!!p.digital||/digital/i.test(String(p.category||"")),course:"",stock:(p.stock===null||p.stock===undefined||p.stock==="")?null:num(p.stock)}));
+list(MK.products).filter(p=>p&&p.id&&p.name&&brandName(p.brand)).forEach(p=>products.push({id:"mp-"+String(p.id),pid:String(p.id),vendor:String(p.brand),brand:brandName(p.brand),img:String(p.image||""),imgs:list(p.images).map(String),alt:String(p.name)+" by "+brandName(p.brand),name:String(p.name),type:String(p.category||""),cat:"v:"+launchCat(p.category,p.digital),price:num(p.price),was:0,desc:String(p.description||""),tag:"",opts:list(p.options).map(String),digital:!!p.digital||/digital/i.test(String(p.category||"")),course:"",stock:(p.stock===null||p.stock===undefined||p.stock==="")?null:num(p.stock)}));
 /* Shop Bajan (shopbajanbb.com) lists only small businesses' products. Our own products and the courses stay on the Academy site. */
 if(!ACAD)for(let i=products.length-1;i>=0;i--)if(!products[i].vendor)products.splice(i,1);
 
@@ -1868,7 +1876,7 @@ const RMV_HTML=`<p class="rmv-co" style="font-size:.85em;opacity:.8;margin:8px 0
 const dCat=p=>p.isCourse?"courses":isDig(p)&&(p.cat==="gifts"||p.cat==="vouchers")?"vouchers":p.cat;
 const CAT_NAME={lashes:"Lashes",kits:"Kits & tools",tools:"Tools",lips:"Lips",bundles:"Bundles",gifts:"Gifts",courses:"Courses",vouchers:"Gift vouchers",guides:"Guides & templates"};
 const catName=c=>CAT_NAME[c]||String(c).replace(/^v:/,"");
-const CAT_ORDER=["lashes","kits","tools","lips","bundles","gifts","courses","vouchers","guides"];
+const CAT_ORDER=[...LAUNCH_CATS.map(c=>"v:"+c),"v:Digital","lashes","kits","tools","lips","bundles","gifts","courses","vouchers","guides"];
 const inSec=(p,sec)=>sec==="all"||(sec==="digital")===isDig(p);
 function catsOf(sec){const s=[];shopItems.filter(p=>inSec(p,sec)).forEach(p=>{const c=dCat(p);if(!s.includes(c))s.push(c)});
   return s.sort((a,b)=>{const i=CAT_ORDER.indexOf(a),j=CAT_ORDER.indexOf(b);return(i<0?99:i)-(j<0?99:j)})}
@@ -1900,19 +1908,20 @@ function mkMatch(p,q){const toks=mkNorm(q).split(" ").filter(t=>t&&!["the","a","
 function mkHash(){return "#shop"+(view.tab!=="all"?"/"+view.tab:"")+(view.cat?"/"+encodeURIComponent(view.cat):"")}
 function renderShop(){
   shopSec.querySelectorAll("[data-tab]").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===view.tab));
-  const cats=catsOf(view.tab);if(view.cat&&!cats.includes(view.cat))view.cat="";
+  const cats=catsOf(view.tab);if(view.cat&&!cats.includes(view.cat)&&!LAUNCH_CATS.includes(view.cat.slice(2)))view.cat="";
   const allLbl={all:"Everything",products:"All products",digital:"All digital"}[view.tab];
   mkCats.innerHTML=`<button type="button" class="chip" data-cat="" aria-pressed="${!view.cat}">${allLbl}</button>`+cats.map(c=>`<button type="button" class="chip" data-cat="${esc(c)}" aria-pressed="${view.cat===c}">${esc(catName(c))}</button>`).join("");
   const q=view.q.trim();mkQx.hidden=!q;
   let items=shopItems.filter(p=>inSec(p,view.tab)&&(!view.cat||dCat(p)===view.cat)&&mkMatch(p,q));
   if(q){const nq=mkNorm(q),sc=p=>{const n=" "+mkNorm(p.name+" "+p.type)+" ";return(n.includes(nq)?10:0)+(p.isCourse?1:0)+nq.split(" ").filter(t=>t&&n.includes(mkStem(t))).length*3};items=items.map((p,i)=>[sc(p)-i*.001,p]).sort((a,b)=>b[0]-a[0]).map(r=>r[1])}
-  const empty=`<div class="mk-empty"><p><b>${q?`No match for “${esc(q)}” yet.`:"Nothing here yet."}</b><br>Tell us what you're looking for and we'll help you find it.</p><a class="btn" target="_blank" rel="noopener" href="${esc(waLink("Hi "+WHO+"! I'm looking for "+(q||"something")+" on Shop Bajan. Do you have it?"))}">Ask us on WhatsApp</a>${q?`<button type="button" class="btn white" data-mk-clear>Clear search</button>`:""}</div>`;
-  if(!shopItems.length){const jb=document.getElementById("mkJoin");if(jb)jb.hidden=true;mkOut.innerHTML=`<div class="mk-empty sbx-fresh"><span class="sbx-fresh-ico" aria-hidden="true">🛍️</span><p><b>Bajan businesses are setting up their shops.</b><br>New products land here soon, so check back.</p><a class="btn" href="brands.html">Sell with us</a></div>`;return}
+  const empty=`<div class="mk-empty">${SB_HIB}<p><b>${q?`No match for “${esc(q)}” yet.`:"Nothing here yet."}</b><br>Tell us what you're looking for and we'll help you find it.</p><a class="btn" target="_blank" rel="noopener" href="${esc(waLink("Hi "+WHO+"! I'm looking for "+(q||"something")+" on Shop Bajan. Do you have it?"))}">Ask us on WhatsApp</a>${q?`<button type="button" class="btn white" data-mk-clear>Clear search</button>`:""}</div>`;
+  const home=view.tab==="all"&&!view.cat&&!q?shopHome():"";document.getElementById("sbxHome").innerHTML=home;shopSec.classList.toggle("is-home",!!home);const love=`<p class="sb-love sb-love-in">${SB_HIB}Support a Bajan business by buying someting</p>`;
+  if(!shopItems.length&&!view.cat){const jb=document.getElementById("mkJoin");if(jb)jb.hidden=true;mkOut.innerHTML=`<div class="mk-empty sbx-fresh">${SB_HIB}<p><b>Bajan businesses are setting up their shops.</b><br>New products land here soon, so check back.</p><a class="btn" href="brands.html">Sell with us</a></div>`;mkOut.insertAdjacentHTML("beforeend",love);return}
   if(!items.length){mkOut.innerHTML=empty;return}
   if(view.tab==="all"&&!view.cat){
     const shelf=(sec,title,more)=>{const its=items.filter(p=>inSec(p,sec));if(!its.length)return "";
       return `<div class="mk-shelf${sec==="digital"?" dig":""}"><div class="mk-shelf-head"><h2>${title}<small>${its.length}</small></h2><a href="#shop/${sec}" data-tab-go="${sec}">${more} →</a></div><div class="pgrid">${its.map(pcard).join("")}</div></div>`};
-    mkOut.innerHTML=(q?`<p class="mk-count">${items.length} result${items.length>1?"s":""} for “${esc(q)}”</p>`:"")+shelf("products","Products","See all")+shelf("digital","Digital products","See all");return}
+    mkOut.innerHTML=(q?`<p class="mk-count">${items.length} result${items.length>1?"s":""} for “${esc(q)}”</p>`:"")+shelf("products","Products","See all")+shelf("digital","Digital products","See all")+love;return}
   mkOut.innerHTML=`<p class="mk-count">${items.length} ${view.tab==="digital"?"digital ":""}item${items.length>1?"s":""}${view.cat?" in "+esc(catName(view.cat).replace(/^[^A-Za-z]+/,"")):""}${q?` for “${esc(q)}”`:""}</p><div class="pgrid">${items.map(pcard).join("")}</div>`}
 /* hash helpers that also work where the browser blocks hash links/history (e.g. previews inside an app) */
 let curHash=location.hash,pushOK=false;
@@ -2080,6 +2089,14 @@ window.addEventListener("popstate",()=>{if(location.hash===curHash)return;curHas
 
 /* ==APP NAV== bottom tab bar (Shop · Categories · Bag · Me), a Categories page (#categories) and a Me page (#me).
    Orders are kept on this phone only (localStorage "sb-orders"), since shoppers don't need an account to buy. */
+const CAT_ICON={"Fashion & Accessories":`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4a2 2 0 1 1 2 2c-1 0-2 .8-2 2v1"/><path d="M12 9 3 15.5c-.8.6-.4 1.5.6 1.5h16.8c1 0 1.4-.9.6-1.5z"/></svg>`,"Beauty & Personal Care":`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="11" width="8" height="10" rx="1.5"/><path d="M9.5 11V7.5L12 4l2.5 3.5V11"/><path d="M18.5 4.5l.6 1.4 1.4.6-1.4.6-.6 1.4-.6-1.4-1.4-.6 1.4-.6z"/></svg>`,"Home & Living":`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M12 20v-4"/><path d="M12 13.2c-1-1.3-3-.6-3 .9 0 1.4 3 3.2 3 3.2s3-1.8 3-3.2c0-1.5-2-2.2-3-.9z"/></svg>`,"Gifts & Handmade":`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="9" width="17" height="11.5" rx="1.5"/><path d="M2.5 9h19v-3h-19zM12 6v14.5"/><path d="M12 6C10.5 3 7.5 3 7.5 4.8 7.5 6 12 6 12 6s4.5 0 4.5-1.2C16.5 3 13.5 3 12 6z"/></svg>`,"Stationery & Lifestyle":`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3.5h11a2 2 0 0 1 2 2v15H7a2 2 0 0 1-2-2z"/><path d="M5 18.5a2 2 0 0 1 2-2h11M9 8h5"/><path d="m20.5 6.5-3 9"/></svg>`,"Tech Accessories":`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M11 18.5h2"/><path d="M3.5 9v6M20.5 9v6"/></svg>`};
+/* Shop home: Shop by Category tiles (the 6 launch categories), then featured Bajan businesses */
+function shopHome(){
+  const tiles=LAUNCH_CATS.map((c,i)=>{const n=shopItems.filter(p=>p.cat==="v:"+c).length;
+    return `<a class="sbx-tile t${i}" href="#shop/all/${encodeURIComponent("v:"+c)}"><span class="ic">${CAT_ICON[c]}</span><b>${esc(c)}</b>${n?`<small>${n} item${n>1?"s":""}</small>`:""}</a>`}).join("");
+  const biz=mkBrands.map(b=>({b,its:shopItems.filter(p=>p.vendor===b.slug)})).filter(x=>x.its.length).slice(0,10);
+  return `<section class="sbx-home" aria-labelledby="sbxCatH"><div class="sbx-sec-h">${SB_TRI}<h2 id="sbxCatH">Shop by Category</h2></div><div class="sbx-tiles6">${tiles}</div>
+   ${biz.length?`<div class="sbx-sec-h">${SB_TRI}<h2>Featured Bajan businesses</h2></div><div class="sbx-biz">${biz.map(({b,its})=>{const p=its.find(x=>x.img)||its[0];return `<a href="#s-${encodeURIComponent(slug(b.name))}"><span class="sbx-biz-img">${thumb(p)}</span><b>${esc(b.name)}</b><small>${its.length} item${its.length>1?"s":""}</small></a>`}).join("")}</div>`:""}</section>`}
 const ORD_KEY="sb-orders";
 const myOrders=()=>{try{const a=JSON.parse(localStorage.getItem(ORD_KEY)||"[]");return Array.isArray(a)?a:[]}catch(e){return[]}};
 function saveOrder(o){try{const a=myOrders().filter(x=>x.id!==o.id);a.unshift({id:o.id,at:o.at||Date.now(),items:o.items,total:o.total,method:o.method,paid:!!o.paid,delivery:o.delivery||"",name:o.name||""});localStorage.setItem(ORD_KEY,JSON.stringify(a.slice(0,30)))}catch(e){}}
@@ -2096,13 +2113,13 @@ setTimeout(()=>{const cnt=document.getElementById("sbxCount");new MutationObserv
 /* Categories: Shein-style rail on the left, round category pictures on the right */
 function renderCats(){
   const sec=sbxRail,box=sbxPages.cats;
-  const rail=[["products","Products"],["digital","Digital"],["biz","Bajan businesses"]].filter(([k])=>k==="biz"?shopItems.some(p=>p.brand):shopItems.some(p=>inSec(p,k)));
+  const rail=[["products","Products"],["digital","Digital"],["biz","Bajan businesses"]].filter(([k])=>k==="products"||(k==="biz"?shopItems.some(p=>p.brand):shopItems.some(p=>inSec(p,k))));
   let right="";
   if(sec==="biz"){const bz=[];shopItems.forEach(p=>{if(p.brand&&!bz.some(b=>b.n===p.brand))bz.push({n:p.brand,p})});
     right=`<h2 class="sbx-h">Shop by small business</h2><div class="sbx-bubbles">${bz.map(b=>`<button type="button" data-biz="${esc(b.n)}"><span class="sbx-bub">${thumb(b.p)}</span><b>${esc(b.n)}</b><small>${shopItems.filter(x=>x.brand===b.n).length} items</small></button>`).join("")}</div>`}
-  else{const cs=catsOf(sec);
+  else{const cs=sec==="products"?LAUNCH_CATS.map(c=>"v:"+c).concat(catsOf(sec).filter(c=>!LAUNCH_CATS.includes(c.slice(2)))):catsOf(sec);
     right=`<h2 class="sbx-h">${sec==="digital"?"Digital products":"Products"}</h2><a class="sbx-all" href="#shop/${sec}">See all ${sec==="digital"?"digital":"products"} ›</a><div class="sbx-bubbles">${cs.map(c=>{const its=shopItems.filter(p=>dCat(p)===c&&inSec(p,sec)),p=its.find(x=>x.img)||its[0];
-      return `<a href="#shop/${sec}/${encodeURIComponent(c)}"><span class="sbx-bub">${p?thumb(p):""}</span><b>${esc(catName(c).replace(/^[^A-Za-z]+/,""))}</b><small>${its.length} item${its.length>1?"s":""}</small></a>`}).join("")}</div>`}
+      return `<a href="#shop/${sec}/${encodeURIComponent(c)}"><span class="sbx-bub">${p&&p.img?thumb(p):(CAT_ICON[c.slice(2)]||(p?thumb(p):""))}</span><b>${esc(catName(c).replace(/^[^A-Za-z]+/,""))}</b>${its.length?`<small>${its.length} item${its.length>1?"s":""}</small>`:""}</a>`}).join("")}</div>`}
   box.innerHTML=`<h1 class="sbx-title" id="pgCatsH">Categories</h1><div class="sbx-cats"><div class="sbx-rail" role="tablist" aria-label="Category groups">${rail.map(([k,l])=>`<button type="button" role="tab" data-rail="${k}" aria-selected="${k===sec}">${l}</button>`).join("")}</div><div class="sbx-right">${right}</div></div>`}
 sbxPages.cats.addEventListener("click",e=>{const r=e.target.closest("[data-rail]");if(r){sbxRail=r.dataset.rail;renderCats();return}
   const b=e.target.closest("[data-biz]");if(b){mkQ.value=b.dataset.biz;view.q=mkQ.value;view.tab="all";view.cat="";nav("#shop")}});
@@ -2133,7 +2150,7 @@ function renderMe(){
    <a href="creator-dashboard.html"><b>My earnings</b><span>Your affiliate dashboard: sales, earnings and payouts.</span></a>
    <a href="brands.html"><b>Sell on Shop Bajan</b><span>Own a small business? Open your shop here.</span></a>
    <a href="vendors.html"><b>Business log in</b><span>Your products, sales and payouts.</span></a></div></section>
-  <section class="sbx-card"><h2>Help</h2><div class="sbx-menu"><a href="policies.html">Delivery, returns &amp; privacy<i>›</i></a><a href="${esc(waLink(gen))}" target="_blank" rel="noopener">WhatsApp us<i>›</i></a><a href="${esc(IG_DM)}" target="_blank" rel="noopener">DM on Instagram<i>›</i></a></div></section>`}
+  <section class="sbx-card"><h2>Help</h2><div class="sbx-menu"><a href="policies.html">Delivery, returns &amp; privacy<i>›</i></a><a href="${esc(waLink(gen))}" target="_blank" rel="noopener">WhatsApp us<i>›</i></a><a href="${esc(IG_DM)}" target="_blank" rel="noopener">DM on Instagram<i>›</i></a></div></section><p class="sb-love sb-love-in">${SB_HIB}Support a Bajan business by buying someting</p>`}
 sbxPages.me.addEventListener("click",e=>{const a=e.target.closest('a[href^="#me-"]');if(!a)return;e.preventDefault();e.stopPropagation();const el=document.getElementById(a.getAttribute("href").slice(1));if(el)el.scrollIntoView({behavior:"smooth",block:"start"})},true);
 /* handle in-page links ourselves so they work everywhere */
 document.addEventListener("click",e=>{if(e.defaultPrevented||e.button||e.metaKey||e.ctrlKey||e.shiftKey)return;const a=e.target.closest('a[href^="#"]');if(!a||a.target)return;const h=a.getAttribute("href");if(h.length<2||h==="#search")return;e.preventDefault();if(/^#p-/.test(h))pdFromSite=true;nav(h)});
@@ -2161,7 +2178,7 @@ function renderDrawer(){
       :o.method==="paypal"?(o.paid?{t:"Tell us you've paid",p:"Tap below so we can match your card payment and confirm faster.",b:"Tell us on WhatsApp",x:""}:{t:"After you pay",p:"You'll see it confirmed here once your card payment goes through. Questions? Message us on WhatsApp.",b:"Message us on WhatsApp",x:""})
       :{t:"Send us your payment screenshot",p:"Once you've paid, send us your order and a screenshot of your payment on WhatsApp so we can confirm faster.",b:"Send order + screenshot",x:"\nHere's my payment screenshot:"};
     body.innerHTML=`<div class="done">
-      <h3>${o.paid?"Thank you, gorgeous!":"Order placed, gorgeous!"}</h3>
+      <h3>Oh Lordy, thank ya! I sending ya order shortly.</h3>
       <p class="muted">Your order number</p><div class="order-id">${o.id}</div>
       <div class="wa-sent">${o.paid?"<b>Paid and confirmed.</b> We've got your order.":(o.method==="cash"?"<b>Order saved.</b> Pay in cash when you collect.":"<b>Order saved.</b> Now complete your payment below.")}</div>
       <div class="pay-step"><span class="step-n">1</span><div><b>${o.method==="cash"?"Pay BBD "+money(o.total)+" in cash when you collect":"Pay "+(o.method==="paypal"||o.method==="dodo"?usd(o.total)+" (BBD "+money(o.total)+")":"BBD "+money(o.total))+" by "+P.label}</b><p>${P.how}</p>${o.method==="dodo"&&!o.paid?`<a class="btn" href="${esc(dodoHref(o))}" target="_blank" rel="noopener" style="width:100%;margin:.4rem 0">Pay ${usd(o.total)} with Dodo</a>`:""}${o.method==="paypal"?(o.paid?`<div class="paid-ok"><b>Card payment received. Thank you!</b>${o.paidRef?`<br><small>Payment ref: ${esc(o.paidRef)}</small>`:""}</div>`:`<div id="cardPay" class="card-pay"><p class="muted">Loading secure card form…</p></div>`):""}
@@ -2176,7 +2193,7 @@ function renderDrawer(){
     body.querySelectorAll("[data-copy]").forEach(b=>b.onclick=()=>copy(b.dataset.copy,b));
     document.getElementById("copyOrder").onclick=e=>copy(summary,e.currentTarget);
     document.getElementById("keep").onclick=()=>{closeCart()};if(o.method==="paypal"&&!o.paid)mountCardPay(o);return}
-  if(!cart.length){body.innerHTML=`<p class="empty">Your bag is empty. Time to fix that.</p>`;return}
+  if(!cart.length){body.innerHTML=`<p class="empty">${SB_HIB}<br>Put something in this bag, man. You got to spend on you too!</p>`;return}
   const lines=cart.map((c,i)=>`<div class="line"><b>${c.name}</b><span class="price" style="font-size:16px">${money(c.price*c.qty)}</span>
     <div class="qty">${c.single?`<span class="muted">${c.note}</span>`:`<button data-q="${i}" data-d="-1" aria-label="Fewer">−</button><span>${c.qty}</span><button data-q="${i}" data-d="1" aria-label="More">+</button>`}</div>
     <button class="muted" data-rm="${i}" style="border:0;background:none;text-decoration:underline;justify-self:end">Remove</button></div>`).join("");
@@ -2620,6 +2637,37 @@ html[data-site=shop] .pcard .add .xl{display:none}
 @media (min-width:900px){#pgMe,#pgCats{max-width:720px;margin:0 auto}.sbx-me-head{margin:0;border-radius:16px}}
 html[data-sbx=me] .shop-page,html[data-sbx=cats] .shop-page{padding-top:0}
 html[data-site=shop] .mk-catrow:empty,html[data-site=shop] .mk-catrow:has(.chip:only-child){display:none}
+
+/* ==BAJAN TOUCHES== hibiscus, trident and sea-wave accents; Shop by Category tiles; featured Bajan businesses */
+.sb-hib{width:30px;height:30px;display:inline-block;vertical-align:middle}
+.sb-tri{width:22px;height:22px;color:#00267F;flex:none}
+.sb-love{display:flex;align-items:center;justify-content:center;gap:8px;font-weight:700;color:#FFC72C}
+footer .sb-love{justify-content:flex-start;margin:.2rem 0 .6rem!important}footer .sb-love .sb-hib{width:24px;height:24px}
+.sb-love-in{color:#00267F;font-size:.92rem;margin:22px 0 6px;padding-top:26px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12' preserveAspectRatio='none'%3E%3Cpath d='M0 6c10 0 10-5 20-5s10 5 20 5 10-5 20-5 10 5 20 5 10-5 20-5 10 5 20 5' fill='none' stroke='%2300267F' stroke-opacity='.25' stroke-width='2'/%3E%3C/svg%3E") top/120px 12px repeat-x}
+.sb-love-in .sb-hib{width:22px;height:22px}
+@media (min-width:900px){#mkOut .sb-love-in{display:none}}
+.mk-empty .sb-hib,.drawer .empty .sb-hib,.sbx-empty .sb-hib{width:40px;height:40px}
+.sbx-me-head{position:relative}.sbx-me-head:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:14px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 14' preserveAspectRatio='none'%3E%3Cpath d='M0 6c10 0 10 6 20 6s10-6 20-6 10 6 20 6 10-6 20-6 10 6 20 6 10-6 20-6v8H0z' fill='%23FFC72C' opacity='.55'/%3E%3C/svg%3E") bottom/120px 14px repeat-x}
+.sbx-home{margin:8px 0 6px}
+.shop-page.is-home .mk-catrow{display:none}.shop-page.is-home .shop-show{margin-top:0}
+.sbx-fresh .sb-hib{width:44px;height:44px}
+.sbx-sec-h{display:flex;align-items:center;gap:8px;margin:4px 0 10px}.sbx-sec-h h2{margin:0;font-size:1.15rem;color:#16213E}
+.sbx-tiles6{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:20px}
+@media (min-width:820px){.sbx-tiles6{grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}}
+.sbx-tile{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:6px;text-align:center;text-decoration:none;color:#16213E;background:#fff;border-radius:14px;padding:12px 6px 10px;min-height:118px;position:relative;overflow:hidden}
+.sbx-tile .ic{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:#EEF3FF;color:#00267F}
+.sbx-tile .ic svg{width:28px;height:28px}
+.sbx-tile.t1 .ic,.sbx-tile.t4 .ic{background:#FFF3C7}.sbx-tile.t2 .ic,.sbx-tile.t5 .ic{background:#FFE6E1;color:#C2412D}
+.sbx-tile b{font-size:.74rem;line-height:1.2;font-weight:800}
+.sbx-tile small{font-size:.66rem;color:#4A5675;font-weight:600}
+.sbx-tile:after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:#00267F}.sbx-tile.t1:after,.sbx-tile.t4:after{background:#FFC72C}.sbx-tile.t2:after,.sbx-tile.t5:after{background:#FF6F59}
+.sbx-biz{display:flex;gap:10px;overflow-x:auto;margin:0 -16px 20px;padding:0 16px 4px;scrollbar-width:none}.sbx-biz::-webkit-scrollbar{display:none}
+.sbx-biz a{flex:none;width:118px;display:flex;flex-direction:column;gap:2px;text-decoration:none;color:#16213E}
+.sbx-biz-img{display:block;width:118px;height:118px;border-radius:14px;overflow:hidden;background:#FFF3C7;color:#00267F}
+.sbx-biz-img img,.sbx-biz-img svg{width:100%;height:100%;object-fit:cover;display:block}
+.sbx-biz b{font-size:.8rem;line-height:1.2;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sbx-biz small{font-size:.68rem;color:#4A5675}
+.sbx-bub svg{padding:22%;box-sizing:border-box}.sbx-bub img+svg{padding:0}
+html[data-site=shop] .drawer .done h3{font-size:1.35rem;line-height:1.3}
 #pdName:focus{outline:none}
 html[data-site=shop] .pd-bar{background:#fff;border-bottom:1px solid #E3E6EE}html[data-site=shop] .pd-bar button{border-width:1.5px;min-height:40px}html[data-site=shop] .pd-bar .pd-back{border-color:#00267F;color:#00267F}html[data-site=shop] .pd-bar .pd-bag{background:#00267F;border-color:#00267F}
 html[data-site=shop] .pd-in{padding-bottom:90px}
