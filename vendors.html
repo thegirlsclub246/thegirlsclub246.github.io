@@ -714,7 +714,7 @@ function designSheet(p){
   var o={bg:"beach",size:"post",name:p.name,price:p.price,biz:(S.vendor&&S.vendor.business)||"",cut:null},clip=null;
   var d=document.createElement("div");d.className="sheet";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-label","Make a design");
   d.innerHTML='<div class="panel"><div class="head"><h2>✨ Make a design</h2><button class="x" type="button" aria-label="Close">×</button></div>'+
-  '<p class="muted" style="margin:6px 0 12px">Put <b>'+esc(p.name)+'</b> on a Bajan backdrop for your posts, Stories and WhatsApp Status. Your shop photo stays on white.</p>'+
+  '<p class="muted" style="margin:6px 0 12px">Put <b>'+esc(p.name)+'</b> on a Bajan backdrop for your posts and Stories. Your shop photo stays on white.</p>'+
   '<div class="dz-stage"><canvas id="dzC" aria-label="Design preview"></canvas><div class="dz-wait" id="dzW"><b>✨ Cutting out your product…</b><span>The first time takes about a minute.</span></div></div>'+
   '<div class="f">Backdrop<div class="dz-opts" id="dzBg">'+DZ_BG.map(function(b){return'<button type="button" class="dz-o" data-bg="'+b[0]+'"><i class="dz-sw dz-'+b[0]+'"></i>'+b[1]+'</button>'}).join("")+'</div></div>'+
   '<div class="f">Size<div class="dz-opts" id="dzSz">'+DZ_SIZE.map(function(s){return'<button type="button" class="dz-o" data-sz="'+s[0]+'">'+s[1]+'</button>'}).join("")+'</div></div>'+
@@ -758,7 +758,7 @@ function reqSheet(){
   var files=[],kind="page";
   var d=document.createElement("div");d.className="sheet";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-label","Design it for me");
   d.innerHTML='<div class="panel"><div class="head"><h2>🎨 Design it for me</h2><button class="x" type="button" aria-label="Close">×</button></div>'+
-  '<p class="muted" style="margin:6px 0 12px">Tell us what you know and we\'ll design it for you. We\'ll WhatsApp you if we have questions.</p><form id="drf" novalidate>'+
+  '<p class="muted" style="margin:6px 0 12px">Tell us what you know and we\'ll design it for you. We\'ll email you if we have questions.</p><form id="drf" novalidate>'+
   '<div class="f">What do you need?<div class="dz-opts" id="drK">'+DR_KIND.map(function(k){return'<button type="button" class="dz-o" data-k="'+k[0]+'">'+k[1]+'</button>'}).join("")+'</div></div>'+
   '<label class="f">Which product? <span class="hint">optional</span><input name="product_name" maxlength="120" list="drP" placeholder="e.g. Vanilla body butter"><datalist id="drP">'+(S.products||[]).map(function(p){return'<option value="'+esc(p.name)+'">'}).join("")+'</datalist></label>'+
   '<label class="f">Tell us what you know <span class="hint">what it is, size, price, ingredients, who it\'s for, colours you like</span><textarea name="notes" maxlength="2000" required placeholder="e.g. Whipped shea body butter, 8oz, smells like vanilla and coconut. $35. I like soft pink and gold."></textarea></label>'+
@@ -784,7 +784,7 @@ function reqSheet(){
     files.forEach(function(x){chain=chain.then(function(){return compress(x.file)}).then(function(blob){var path=uid+"/req-"+Date.now()+"-"+Math.random().toString(36).slice(2,8)+".jpg";
       return sb.storage.from(BUCKET).upload(path,blob,{contentType:"image/jpeg",upsert:false}).then(function(r){if(r.error)throw r.error;paths.push(path)})})});
     chain.then(function(){return sb.from("design_requests").insert({vendor_id:uid,kind:kind,product_name:pn||null,notes:notes,link:link||null,photos:paths}).select().single()}).then(function(r){
-      if(r.error)throw r.error;S.reqs=[r.data].concat(S.reqs||[]);close();renderVendor();toast("Sent! We'll be in touch on WhatsApp 💕")})
+      if(r.error)throw r.error;S.reqs=[r.data].concat(S.reqs||[]);close();renderVendor();toast("Sent! We'll be in touch by email 💕")})
     .catch(function(x){busy(btn,false);if(paths.length)sb.storage.from(BUCKET).remove(paths).catch(function(){});setErr(err,friendly(x))})}}
 function aReqs(){var l=S.all.reqs||[];
   var h='<h1 class="page">Design requests</h1><p class="lead">Sellers asking you to design a product page, description or template. Newest first.</p>';
@@ -794,7 +794,7 @@ function aReqs(){var l=S.all.reqs||[];
     (x.link?'<p class="small"><a href="'+esc(x.link)+'" target="_blank" rel="noopener noreferrer">Open their files ↗</a></p>':"")+
     ((x.photos||[]).length?'<div class="photos">'+x.photos.map(function(p){return'<a class="photo" href="'+esc(photoUrl(p))+'" target="_blank" rel="noopener" style="background-image:url(\''+esc(photoUrl(p))+'\')" aria-label="Open photo"></a>'}).join("")+'</div>':"")+
     '<div class="btnrow">'+(x.status==="new"?'<button class="btn sm" data-drst="'+x.id+':doing">Start</button>':"")+(x.status!=="done"?'<button class="btn sm green" data-drst="'+x.id+':done">Mark done</button>':'<button class="btn sm ghost" data-drst="'+x.id+':doing">Reopen</button>')+
-    (v.phone?'<a class="btn sm ghost" href="https://wa.me/'+esc(waNum(v.phone))+'?text='+encodeURIComponent("Hi "+(v.owner_name||"")+"! It's Shop Bajan about your design request for "+(x.product_name||drKind(x.kind).toLowerCase())+".")+'" target="_blank" rel="noopener">WhatsApp</a>':"")+'</div></div>'}).join("")}
+    (v.email?'<a class="btn sm ghost" href="mailto:'+esc(v.email)+'?subject='+encodeURIComponent("Your Shop Bajan design request")+'&body='+encodeURIComponent("Hi "+String(v.owner_name||"").split(" ")[0]+",\n\nIt's Shop Bajan about your design request for "+(x.product_name||drKind(x.kind).toLowerCase())+".\n\n")+'">Email seller</a>':"")+'</div></div>'}).join("")}
 
 /* ---------- add / edit product sheet ---------- */
 function productSheet(p){
