@@ -169,6 +169,8 @@ details summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;alig
  body.has-vnav{padding-bottom:calc(70px + env(safe-area-inset-bottom,0px))}
 }
 @media (min-width:900px){.tabs.vnav button svg{display:none}}
+.drcard{display:flex;gap:14px;align-items:flex-start;background:linear-gradient(135deg,#FFF3C7,#FFE6E1);border:0;margin-top:14px}.drcard h2{font-size:18px;margin:0 0 4px}.drcard p{margin:0 0 10px;color:#4A5675;font-size:15px}.dr-ic{font-size:30px;line-height:1}
+.chip.dr-new{background:#FFF3C7;color:#7A5A00}.chip.dr-doing{background:#EEF3FF;color:#00267F}.chip.dr-done{background:#E3F6EC;color:#1C6B3F}
 .dz-stage{position:relative;border-radius:16px;overflow:hidden;background:#E6E9F5;margin-bottom:12px}
 .dz-stage canvas{display:block;width:100%;height:auto;max-height:56vh;object-fit:contain;margin:0 auto}
 .dz-wait{position:absolute;inset:0;display:grid;place-content:center;gap:6px;text-align:center;padding:20px;background:rgba(255,248,231,.88);color:#00267F}.dz-wait[hidden]{display:none}.dz-wait span{color:#4A5675;font-size:14px}
@@ -411,7 +413,7 @@ function loadVendor(){
     sb.from("products").select("*").eq("vendor_id",uid).order("updated_at",{ascending:false}),
     sb.from("sales").select("*").eq("vendor_id",uid).order("sale_date",{ascending:false}),
     sb.from("payouts").select("*").eq("vendor_id",uid).order("paid_on",{ascending:false})
-  ]).then(function(r){S.vendor=must(r[0]);S.products=must(r[1])||[];S.sales=must(r[2])||[];S.payouts=must(r[3])||[]});
+  ]).then(function(r){S.vendor=must(r[0]);S.products=must(r[1])||[];S.sales=must(r[2])||[];S.payouts=must(r[3])||[]}).then(function(){return loadReqs(false)});
 }
 function money_owed(sales,payouts){
   var ws=iso(weekStart()),earned=0,due=0,thisWeek=0,paid=0;
@@ -537,6 +539,7 @@ function vHome(v){
      (open&&live.length?'<code>'+esc(sl)+'</code><div class="acts"><button class="btn sm" data-copylink="'+esc(sl)+'">Copy shop link</button>'+(navigator.share?'<button class="btn sm ghost" data-sharelink="'+esc(sl)+'" data-sharename="'+esc(v.business)+'">Share</button>':"")+'</div>':'<p class="small muted" style="margin-top:6px">Your shop link appears here once your first product is live.</p>')+
      '<button type="button" class="btn sm ghost" data-t2="business" style="margin-top:8px">Edit store</button></div>';
   h+='<div class="vcard"><div class="vc-h"><h2>Quick links</h2></div><div class="vquick"><button type="button" data-add>'+vi("plus")+'Add product</button><button type="button" data-t2="products">'+vi("products")+'Manage products</button><button type="button" data-t2="money">'+vi("money")+'View payouts</button><a href="https://wa.me/'+WA+'" target="_blank" rel="noopener">'+vi("help")+'Get help</a></div></div>';
+  h+=drCard();
   if(low.length)h+='<h2 class="sec">Running low</h2><div class="rows">'+low.map(function(p){return'<div class="r"><div class="l"><b>'+esc(p.name)+'</b><span>'+(Number(p.stock)<=0?"Sold out":"Only "+p.stock+" left")+'</span></div><div class="v"><button class="btn sm ghost" data-edit="'+p.id+'">Update stock</button></div></div>'}).join("")+'</div>';
   h+=payBox(v,pl);
   if(pl.fee&&v.trial_ends)h+='<p class="small muted" style="margin-top:16px">Your free month runs until '+esc(fmtDate(v.trial_ends))+'.</p>';
@@ -572,9 +575,10 @@ function prodCard(p,admin,vend){
 }
 function vProducts(v){
   var h='<h1 class="page">My products</h1><p class="lead">Add photos, prices and stock. We approve each new product or change before it shows on the website.</p>';
-  h+='<div class="btnrow"><button class="btn full" data-add>+ Add a product</button></div>';
+  h+='<div class="btnrow"><button class="btn full" data-add>+ Add a product</button></div>'+drCard();
   if(!S.products.length)h+='<div class="empty">De shop empty. Add ya first product.</div>';
   else h+=(S.products.length>1?SRCH:"")+'<div class="plist">'+S.products.map(function(p){return prodCard(p,false)}).join("")+'</div>';
+  h+=drMine();
   h+='<p class="small muted" style="margin-top:16px">Changing only the stock keeps a live product live. Changing the name, price, photos or description sends it back to us to approve.</p>';
   return h;
 }
@@ -606,6 +610,7 @@ function vBusiness(v){
 }
 function wireVendor(){
   qa("[data-add]").forEach(function(b){b.onclick=function(){productSheet(null)}});
+  qa("[data-dreq]").forEach(function(b){b.onclick=reqSheet});
   qa("[data-edit]").forEach(function(b){b.onclick=function(){productSheet(S.products.find(function(p){return p.id===b.getAttribute("data-edit")}))}});
   qa("[data-design]").forEach(function(b){b.onclick=function(){designSheet(S.products.find(function(p){return p.id===b.getAttribute("data-design")}))}});
   qa("[data-t2]").forEach(function(b){b.onclick=function(){S.tab=b.getAttribute("data-t2");renderVendor()}});
@@ -739,6 +744,58 @@ function designSheet(p){
     var t0=performance.now();(function fr(ts){if(!d.isConnected||busyRec)return;var t=(ts-t0)/1000;dzDraw(c,o,Math.min(t,5));if(t<5)requestAnimationFrame(fr)})(t0)},
     function(e){q("#dzW",d).innerHTML="<b>We couldn't cut out this product</b><span>"+esc((e&&e.message)||"A photo on a plain background works best.")+"</span>"})}
 
+/* ---------- Design it for me: sellers ask Shop Bajan to design a product page, description or template ---------- */
+var DR_KIND=[["page","Product page"],["description","Product description"],["template","Digital product template"],["other","Something else"]];
+var DR_ST={new:"Sent",doing:"We're working on it",done:"Done"};
+function drKind(k){var x=DR_KIND.filter(function(a){return a[0]===k})[0];return x?x[1]:k}
+function loadReqs(all){var r=sb.from("design_requests").select("*").order("created_at",{ascending:false}).limit(200);if(!all)r=r.eq("vendor_id",S.user.id);
+  return r.then(function(x){if(x&&!x.error){if(all)S.all.reqs=x.data||[];else S.reqs=x.data||[]}},function(){})}
+function drCard(){return'<div class="vcard drcard"><div class="dr-ic">🎨</div><div><h2>Let us design it for you</h2><p>No product page, description or digital template yet? Tell us what you know, add a pic, and we\'ll design one for you.</p><button class="btn sm" type="button" data-dreq>Design it for me</button></div></div>'}
+function drMine(){var l=S.reqs||[];if(!l.length)return"";
+  return'<h2 class="sec">My design requests</h2><div class="rows">'+l.map(function(x){return'<div class="r"><div class="l"><b>'+esc(drKind(x.kind))+(x.product_name?" · "+esc(x.product_name):"")+'</b><span>'+esc(fmtDate(x.created_at))+'</span></div><div class="v"><span class="chip dr-'+esc(x.status)+'">'+esc(DR_ST[x.status]||x.status)+'</span></div></div>'}).join("")+'</div>'}
+function reqSheet(){
+  if(S.viewAs)return toast("You're viewing as this vendor. Switch back to Overseer to make changes.");
+  var files=[],kind="page";
+  var d=document.createElement("div");d.className="sheet";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-label","Design it for me");
+  d.innerHTML='<div class="panel"><div class="head"><h2>🎨 Design it for me</h2><button class="x" type="button" aria-label="Close">×</button></div>'+
+  '<p class="muted" style="margin:6px 0 12px">Tell us what you know and we\'ll design it for you. We\'ll WhatsApp you if we have questions.</p><form id="drf" novalidate>'+
+  '<div class="f">What do you need?<div class="dz-opts" id="drK">'+DR_KIND.map(function(k){return'<button type="button" class="dz-o" data-k="'+k[0]+'">'+k[1]+'</button>'}).join("")+'</div></div>'+
+  '<label class="f">Which product? <span class="hint">optional</span><input name="product_name" maxlength="120" list="drP" placeholder="e.g. Vanilla body butter"><datalist id="drP">'+(S.products||[]).map(function(p){return'<option value="'+esc(p.name)+'">'}).join("")+'</datalist></label>'+
+  '<label class="f">Tell us what you know <span class="hint">what it is, size, price, ingredients, who it\'s for, colours you like</span><textarea name="notes" maxlength="2000" required placeholder="e.g. Whipped shea body butter, 8oz, smells like vanilla and coconut. $35. I like soft pink and gold."></textarea></label>'+
+  '<div class="f">Photos <span class="hint">optional · up to 3</span><div class="photos" id="drPh"></div></div>'+
+  '<label class="f">Link to your files <span class="hint">optional · Google Drive, Canva or Dropbox, for templates or anything that isn\'t a photo</span><input name="link" type="url" inputmode="url" maxlength="500" placeholder="https://"></label>'+
+  '<p class="err" id="drE" role="alert"></p><div class="btnrow"><button class="btn" type="submit" id="drB">Send to Shop Bajan</button></div></form></div>';
+  document.body.appendChild(d);document.body.style.overflow="hidden";
+  function close(){d.remove();document.body.style.overflow=""}
+  q(".x",d).onclick=close;d.addEventListener("click",function(e){if(e.target===d)close()});
+  function marks(){qa("[data-k]",d).forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-k")===kind)})}
+  qa("[data-k]",d).forEach(function(b){b.onclick=function(){kind=b.getAttribute("data-k");marks()}});marks();
+  function draw(){var h=files.map(function(f,i){return'<div class="photo" style="background-image:url(\''+esc(f.url)+'\')"><button type="button" aria-label="Remove photo" data-drm="'+i+'">×</button></div>'}).join("");
+    if(files.length<3)h+='<label class="addphoto">📷<br>Add photo<input type="file" accept="image/*" multiple id="drFile"></label>';
+    q("#drPh",d).innerHTML=h;
+    qa("[data-drm]",d).forEach(function(b){b.onclick=function(){var i=+b.getAttribute("data-drm");URL.revokeObjectURL(files[i].url);files.splice(i,1);draw()}});
+    var fi=q("#drFile",d);if(fi)fi.onchange=function(){Array.prototype.slice.call(fi.files||[]).slice(0,3-files.length).forEach(function(f){files.push({file:f,url:URL.createObjectURL(f)})});draw()}}
+  draw();
+  var f=q("#drf",d);f.onsubmit=function(e){e.preventDefault();var err=q("#drE",d),btn=q("#drB",d);setErr(err,"");
+    var notes=f.elements.notes.value.trim(),link=f.elements.link.value.trim(),pn=f.elements.product_name.value.trim();
+    if(notes.length<3)return setErr(err,"Tell us a little about what you need.");
+    if(link&&!/^https?:\/\//i.test(link))return setErr(err,"The link should start with https://");
+    busy(btn,true,files.length?"Uploading photos…":"Sending…");var uid=S.user.id,paths=[],chain=Promise.resolve();
+    files.forEach(function(x){chain=chain.then(function(){return compress(x.file)}).then(function(blob){var path=uid+"/req-"+Date.now()+"-"+Math.random().toString(36).slice(2,8)+".jpg";
+      return sb.storage.from(BUCKET).upload(path,blob,{contentType:"image/jpeg",upsert:false}).then(function(r){if(r.error)throw r.error;paths.push(path)})})});
+    chain.then(function(){return sb.from("design_requests").insert({vendor_id:uid,kind:kind,product_name:pn||null,notes:notes,link:link||null,photos:paths}).select().single()}).then(function(r){
+      if(r.error)throw r.error;S.reqs=[r.data].concat(S.reqs||[]);close();renderVendor();toast("Sent! We'll be in touch on WhatsApp 💕")})
+    .catch(function(x){busy(btn,false);if(paths.length)sb.storage.from(BUCKET).remove(paths).catch(function(){});setErr(err,friendly(x))})}}
+function aReqs(){var l=S.all.reqs||[];
+  var h='<h1 class="page">Design requests</h1><p class="lead">Sellers asking you to design a product page, description or template. Newest first.</p>';
+  if(!l.length)return h+'<div class="empty">No design requests yet.</div>';
+  return h+l.map(function(x){var v=vById(x.vendor_id)||{};return'<div class="card"><div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start"><div><h3 style="font-size:18px">'+esc(drKind(x.kind))+(x.product_name?" · "+esc(x.product_name):"")+'</h3><div class="muted small">'+esc(v.business||"Seller")+' · '+esc(fmtDate(x.created_at))+'</div></div><span class="chip dr-'+esc(x.status)+'">'+esc(DR_ST[x.status]||x.status)+'</span></div>'+
+    '<p style="margin:10px 0;white-space:pre-wrap">'+esc(x.notes)+'</p>'+
+    (x.link?'<p class="small"><a href="'+esc(x.link)+'" target="_blank" rel="noopener noreferrer">Open their files ↗</a></p>':"")+
+    ((x.photos||[]).length?'<div class="photos">'+x.photos.map(function(p){return'<a class="photo" href="'+esc(photoUrl(p))+'" target="_blank" rel="noopener" style="background-image:url(\''+esc(photoUrl(p))+'\')" aria-label="Open photo"></a>'}).join("")+'</div>':"")+
+    '<div class="btnrow">'+(x.status==="new"?'<button class="btn sm" data-drst="'+x.id+':doing">Start</button>':"")+(x.status!=="done"?'<button class="btn sm green" data-drst="'+x.id+':done">Mark done</button>':'<button class="btn sm ghost" data-drst="'+x.id+':doing">Reopen</button>')+
+    (v.phone?'<a class="btn sm ghost" href="https://wa.me/'+esc(waNum(v.phone))+'?text='+encodeURIComponent("Hi "+(v.owner_name||"")+"! It's Shop Bajan about your design request for "+(x.product_name||drKind(x.kind).toLowerCase())+".")+'" target="_blank" rel="noopener">WhatsApp</a>':"")+'</div></div>'}).join("")}
+
 /* ---------- add / edit product sheet ---------- */
 function productSheet(p){
   if(S.viewAs)return toast("You're viewing as this vendor. Switch back to Overseer to make changes.");
@@ -849,19 +906,19 @@ function loadAdmin(){
     sb.from("payouts").select("*").order("paid_on",{ascending:false})
   ]).then(function(r){S.all={vendors:must(r[0])||[],products:must(r[1])||[],sales:must(r[2])||[],payouts:must(r[3])||[],reviews:[]};
     /* reviews load on their own, so the portal still works before the reviews table is set up */
-    return sb.from("product_reviews").select("*").order("created_at",{ascending:false}).limit(300).then(function(x){S.all.reviews=(x&&x.data)||[]},function(){})});
+    return sb.from("product_reviews").select("*").order("created_at",{ascending:false}).limit(300).then(function(x){S.all.reviews=(x&&x.data)||[]},function(){})}).then(function(){return loadReqs(true)});
 }
 function vById(id){return S.all.vendors.find(function(v){return v.id===id})}
 function adminTabs(){tabsEl.classList.remove("vnav");document.body.classList.remove("has-vnav");
   var pend=S.all.products.filter(function(p){return p.status==="pending"}).length+S.all.vendors.filter(function(v){return v.status==="pending"}).length+(S.all.reviews||[]).filter(function(x){return x.status==="pending"}).length;
-  var t=[["approve","To approve"+(pend?'<span class="count">'+pend+'</span>':"")],["vendors","Vendors"],["products","All products"],["money","Sales & payouts"]];
+  var t=[["approve","To approve"+(pend?'<span class="count">'+pend+'</span>':"")],["vendors","Vendors"],["products","All products"],["reqs","Design requests"+((S.all.reqs||[]).filter(function(x){return x.status==="new"}).length?'<span class="count">'+(S.all.reqs||[]).filter(function(x){return x.status==="new"}).length+'</span>':"")],["money","Sales & payouts"]];
   tabsEl.innerHTML=t.map(function(x){return'<button type="button" role="tab" data-at="'+x[0]+'" aria-selected="'+(S.adminTab===x[0])+'">'+x[1]+'</button>'}).join("");tabsEl.hidden=false;
   qa("[data-at]",tabsEl).forEach(function(b){b.onclick=function(){S.adminTab=b.getAttribute("data-at");renderAdmin();window.scrollTo(0,0)}});
 }
 function renderAdmin(){
   adminTabs();whoEl.textContent="Overseer · "+(S.user.email||"");
   var h="";
-  if(S.adminTab==="approve")h=aApprove();else if(S.adminTab==="vendors")h=aVendors();else if(S.adminTab==="products")h=aProducts();else h=aMoney();
+  if(S.adminTab==="approve")h=aApprove();else if(S.adminTab==="vendors")h=aVendors();else if(S.adminTab==="products")h=aProducts();else if(S.adminTab==="reqs")h=aReqs();else h=aMoney();
   app.innerHTML=h;wireAdmin();
 }
 function vendorCard(v){
@@ -920,6 +977,7 @@ function wireAdmin(){
     S.products=S.all.products.filter(function(p){return p.vendor_id===id});S.sales=S.all.sales.filter(function(s){return s.vendor_id===id});S.payouts=S.all.payouts.filter(function(p){return p.vendor_id===id});S.tab="home";renderVendor();window.scrollTo(0,0)}});
   qa("[data-pay]").forEach(function(b){b.onclick=function(){payoutSheet(vById(b.getAttribute("data-pay")))}});
   function updRev(id,st,msg){sb.from("product_reviews").update({status:st}).eq("id",id).select().single().then(function(r){if(r.error)return toast(friendly(r.error));var i=S.all.reviews.findIndex(function(x){return x.id===id});S.all.reviews[i]=r.data;renderAdmin();toast(msg)})}
+  qa("[data-drst]").forEach(function(b){b.onclick=function(){var a=b.getAttribute("data-drst").split(":");sb.from("design_requests").update({status:a[1]}).eq("id",a[0]).select().single().then(function(r){if(r.error)return toast(friendly(r.error));var i=S.all.reqs.findIndex(function(x){return x.id===a[0]});S.all.reqs[i]=r.data;renderAdmin();toast(a[1]==="done"?"Marked done 🎉":"Marked in progress")})}});
   qa("[data-rvok]").forEach(function(b){b.onclick=function(){updRev(b.getAttribute("data-rvok"),"live","Review is live 💕")}});
   qa("[data-rvhide]").forEach(function(b){b.onclick=function(){updRev(b.getAttribute("data-rvhide"),"hidden","Review hidden")}});
   qa("[data-delv]").forEach(function(b){b.onclick=function(){deleteShopSheet(vById(b.getAttribute("data-delv")))}});
