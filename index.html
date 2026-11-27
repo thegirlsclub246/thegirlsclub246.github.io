@@ -21,7 +21,7 @@ if(W.TGC_SOON)document.documentElement.classList.add("soon");
 var x="";try{x=decodeURIComponent(location.hash.slice(1))}catch(e){}
 if(W.TGC_SITE_FORCE)return;
 if(W.TGC_BOOK&&/^(book|booking|appointment|appointments)$/i.test(x)){location.replace(W.TGC_BOOK);return}
-if(!ac&&/^(academy|eyelash|cluster|results|courses|course-.+)$/.test(x)){location.replace(W.TGC_ACAD+q+"#"+x.replace(/^courses$/,"academy"));return}
+if(!ac&&/^(academy|eyelash|cluster|results|courses|course-.+)$/.test(x)){location.replace(W.TGC_ACAD+(q?"&"+q.slice(1):"")+"#"+x.replace(/^courses$/,"academy"));return}
 if(ac&&/^(shop|lashes|marketplace|products|digital)(\/|$)/.test(x)){location.replace(W.TGC_HOME+"#"+x);return}
 if(ac&&/^p-course-/.test(x)){try{history.replaceState(null,"",location.pathname+q+"#"+x.slice(2))}catch(e){}}
 if(ac)W.goatcounter={path:function(p){return "/academy"+p}};
@@ -1841,7 +1841,7 @@ function lashSvg(n,cx=150,cy=100,r=120,color="currentColor"){
   let s="";for(let i=0;i<n;i++){const t=n===1?.5:i/(n-1);const a=Math.PI*(0.18+0.64*t);const x=cx-Math.cos(a)*r*.9,y=cy-30+Math.sin(a)*48;const len=22+Math.sin(Math.PI*t)*20;const tilt=(t-.5)*0.9;
   for(let k=-1;k<=1;k++){const ang=tilt+k*.22;s+=`<path d="M${x.toFixed(1)} ${y.toFixed(1)} q ${(Math.sin(ang)*len*.4).toFixed(1)} ${(len*.5).toFixed(1)} ${(Math.sin(ang)*len).toFixed(1)} ${len.toFixed(1)}" stroke="${color}" stroke-width="2.5" fill="none" stroke-linecap="round"/>`}}return s}
 function thumb(p){
-  if(p.isCourse&&!p.img)return `<svg class="cv" viewBox="0 0 300 300" aria-hidden="true"><rect width="300" height="300" fill="#4a1636"/><text x="150" y="92" text-anchor="middle" fill="#ffc9df" font-family="Quicksand,sans-serif" font-size="20" font-weight="700" letter-spacing="4">THE GIRLS CLUB</text><text x="150" y="158" text-anchor="middle" fill="#fff" font-family="Pacifico,cursive" font-size="52">Academy</text><svg x="0" y="168" width="300" height="110" viewBox="0 0 300 110"><path d="M30 40 Q150 120 270 40" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><g transform="translate(0,-48)">${lashSvg(9,150,100,120,"#fff")}</g></svg></svg>`;
+  if(p.isCourse&&!p.img)return `<svg class="cv" viewBox="0 0 300 300" aria-hidden="true"><rect width="300" height="300" fill="#4a1636"/><text x="150" y="92" text-anchor="middle" fill="#ffc9df" font-family="Quicksand,sans-serif" font-size="20" font-weight="700" letter-spacing="4">SHOP BAJAN</text><text x="150" y="158" text-anchor="middle" fill="#fff" font-family="Pacifico,cursive" font-size="52">Academy</text><svg x="0" y="168" width="300" height="110" viewBox="0 0 300 110"><path d="M30 40 Q150 120 270 40" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><g transform="translate(0,-48)">${lashSvg(9,150,100,120,"#fff")}</g></svg></svg>`;
   if(!p.img&&p.cat==="kits")return `<svg viewBox="0 0 300 220" aria-hidden="true">
     <rect x="18" y="18" width="264" height="184" rx="26" fill="#fff" opacity=".75"/>
     <circle cx="70" cy="70" r="24" fill="none" stroke="#ff4d94" stroke-width="10"/><ellipse cx="70" cy="70" rx="11" ry="11" fill="#ffd1e4"/>
