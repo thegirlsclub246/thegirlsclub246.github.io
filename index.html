@@ -60,6 +60,7 @@ if(ac)W.goatcounter={path:function(p){return "/academy"+p}};
 .course-card .localpay .btn{width:100%;padding:0 .6rem;font-size:.95rem;background:var(--plum,#4A143D);border-color:var(--plum,#4A143D);color:#fff}
 @media (max-width:380px){.course-card .localpay{grid-template-columns:1fr}}
 .course-card{scroll-margin-top:84px}
+.course-card .pp-alt{display:flex;align-items:center;justify-content:center;min-height:44px;margin:.1rem 0 .3rem;color:#00267F;font-weight:700;text-decoration:underline;font-size:.95rem}
 .course-card .ask-wa{display:flex;align-items:center;justify-content:center;gap:.4rem;min-height:46px;margin:.2rem 0 .4rem;border-radius:999px;border:2px solid #1f9d55;color:#157a41;background:#fff;font-weight:700;text-decoration:none;font-size:.98rem}
 .academy .proof{display:inline-block;margin:1.1rem 0 0!important;background:var(--yellow);color:var(--plum)!important;border:2px solid var(--plum);border-radius:16px;padding:.55rem .9rem;font-weight:700;font-size:1rem!important}
 .academy .how-title{color:#fff;margin:2.4rem 0 0;font-size:1.4rem}
@@ -1818,12 +1819,14 @@ function renderAcademy(){
     <p class="muted rmv" style="font-size:.85em;margin:6px 0 0">Results may vary. Not a promise of income.</p>
     ${c.payhip_id&&c.free_lesson!==false?`<a class="free-lesson" data-free="${esc(c.title)}" href="https://payhip.com/order?link=${encodeURIComponent(c.payhip_id)}&free_preview_mode=1" target="_blank" rel="noopener">🎁 Watch a free lesson first</a><p class="muted free-note">Free · just your email · no card needed</p>`:""}
     <p class="paywith">Choose how to pay</p>
-    ${creatorCode&&CC_PCT&&!ccUsed()?`<p class="muted paynote" style="color:#1E7B4F;font-weight:700">Affiliate code ${esc(creatorCode)}: ${CC_PCT}% off${S.creator_codes_payhip?`. Paying by card? Type ${esc(creatorCode)} in the coupon box`:""}.</p>`:""}
-    ${c.payhip_id?`<a class="btn payhip-buy-button" href="https://payhip.com/b/${encodeURIComponent(c.payhip_id)}" data-theme="none" data-product="${esc(c.payhip_id)}" style="display:flex;width:100%;text-align:center">Pay by card</a>${c.usd_note?`<p class="muted paynote">${esc(c.usd_note)}</p>`:""}`:""}
+    ${creatorCode&&CC_PCT&&!ccUsed()?`<p class="muted paynote" style="color:#1E7B4F;font-weight:700">Affiliate code ${esc(creatorCode)}: ${CC_PCT}% off${S.creator_codes_payhip?`. ${c.dodo_link?"Paying with PayPal":"Paying by card"}? Type ${esc(creatorCode)} in the coupon box`:""}.</p>`:""}
+    ${c.dodo_link?`<a class="btn dodo-course" data-dodo="${esc(c.title)}" href="${esc(c.dodo_link)}" rel="noopener" style="display:flex;width:100%;text-align:center">Pay by card</a><p class="muted paynote">${esc(c.dodo_note||"Debit or credit card · instant access")}</p>`:""}
+    ${c.payhip_id?(c.dodo_link?`<a class="payhip-buy-button pp-alt" href="https://payhip.com/b/${encodeURIComponent(c.payhip_id)}" data-theme="none" data-product="${esc(c.payhip_id)}">Or pay with PayPal</a>`:`<a class="btn payhip-buy-button" href="https://payhip.com/b/${encodeURIComponent(c.payhip_id)}" data-theme="none" data-product="${esc(c.payhip_id)}" style="display:flex;width:100%;text-align:center">Pay by card</a>${c.usd_note?`<p class="muted paynote">${esc(c.usd_note)}</p>`:""}`):""}
         <a class="ask-wa" data-ask="${esc(c.title)}" href="${waLink("Hi Shop Bajan Academy! I'm interested in the "+c.title+" ("+(usd?"US$"+usd:"BBD "+money(pr))+"). Can you help me enrol?")}" target="_blank" rel="noopener">Questions? Enrol on WhatsApp</a>
   </div>`}).join("");
   const pf=document.getElementById("academyProof");if(pf&&A.proof){pf.textContent=A.proof;pf.hidden=false}
   el.addEventListener("click",e=>{const f=e.target.closest("[data-free]");if(f){try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/course-free-lesson/"+slug(f.dataset.free),event:true});window.fbq&&fbq("track","Lead",{content_name:f.dataset.free})}catch(x){}}});
+  el.addEventListener("click",e=>{const d=e.target.closest("[data-dodo]");if(d){try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/course-dodo/"+slug(d.dataset.dodo),event:true});window.fbq&&fbq("track","InitiateCheckout",{content_name:d.dataset.dodo})}catch(x){}}});
   el.addEventListener("click",e=>{const a=e.target.closest("[data-ask]");if(a){try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:"event/course-wa-ask/"+slug(a.dataset.ask),event:true})}catch(x){}}});
   el.onclick=e=>{const b=e.target.closest("[data-course]");if(!b)return;e.preventDefault();const c=cs[+b.dataset.course];window.tgcPrefPay=b.dataset.pay||"";
     addItem({id:"course-"+slug(c.title),course:c.title,name:"Shop Bajan Academy · "+c.title,price:num(c.price),single:true,note:"Digital · sent after payment"});if(window.tgcPrefPay){stage="checkout";renderDrawer()}};
@@ -1872,7 +1875,7 @@ const offPct=p=>p.was>p.price?Math.round((1-p.price/p.was)*100):0;
 const pHref=p=>"#p-"+encodeURIComponent(p.id);
 const priceHTML=p=>p.usd?`US$${p.usd}`:`${p.was?`<s class="was" aria-label="Was ${money(p.was)}">${money(p.was)}</s> `:""}${money(p.price)}`;
 const courseItems=A.show===false?[]:list(A.courses).filter(c=>c&&c.show!==false&&c.title).map(c=>{const pr=num(c.price),w=num(c.was_price),usd=num(c.usd_price);
-  return{id:"course-"+slug(c.title),isCourse:true,digital:true,course:String(c.title),img:U(c.image),alt:"",name:String(c.title),type:"Online course",cat:"courses",price:pr,usd,was:w>pr?w:0,desc:String(c.description||c.subtitle||""),tag:String(c.badge||""),opts:[],points:list(c.points).map(String),payhip:String(c.payhip_id||""),usdNote:String(c.usd_note||""),stock:null}});
+  return{id:"course-"+slug(c.title),isCourse:true,digital:true,course:String(c.title),img:U(c.image),alt:"",name:String(c.title),type:"Online course",cat:"courses",price:pr,usd,was:w>pr?w:0,desc:String(c.description||c.subtitle||""),tag:String(c.badge||""),opts:[],points:list(c.points).map(String),payhip:String(c.payhip_id||""),usdNote:String(c.usd_note||""),dodo:String(c.dodo_link||""),stock:null}});
 const shopItems=ACAD?products.concat(courseItems):products;
 const isDig=p=>!!(p.digital||p.isCourse||p.cat==="vouchers"||p.cat==="guides");
 /* Anything that talks about earning (courses, and bundles or vouchers that include a course) shows the income disclaimer at checkout. */
@@ -1988,7 +1991,7 @@ function pdHTML(p){const o=offPct(p),out=isOut(p),dig=isDig(p);
     ${p.opts.length?`<p class="pd-lbl" id="pdOptL">Choose one</p><div class="pd-opts" role="radiogroup" aria-labelledby="pdOptL">${p.opts.map((x,i)=>`<button type="button" role="radio" aria-checked="${i===0}" data-pd-opt="${esc(x)}">${esc(x)}</button>`).join("")}</div>`:""}
     <div class="pd-buy">${out?`<button class="add" type="button" disabled>Sold out</button>`:dig&&!p.isCourse?`<button class="add" type="button" data-pd-buynow style="flex:1 1 100%;width:100%">Buy now · ${money(p.price)}</button><button type="button" data-pd-add style="flex:1 1 100%;background:none;border:0;color:#00267F;font:inherit;font-weight:700;text-decoration:underline;min-height:44px;cursor:pointer">Add to bag</button>`:p.isCourse?`<button class="add" type="button" data-pd-add>Enrol · ${p.usd?"BBD ":""}${money(p.price)}</button>`:`<div class="qty"><button type="button" data-pd-q="-1" aria-label="One less">−</button><output aria-live="polite" id="pdQty">1</output><button type="button" data-pd-q="1" aria-label="One more">+</button></div><button class="add" type="button" data-pd-add>Add to bag · ${money(p.price)}</button>`}</div>
     ${p.isCourse&&!ACAD?`<a class="pd-wa" href="${esc(window.TGC_ACAD+"#course-"+slug(p.course))}">See the full course on the Academy site</a>`:""}
-    ${p.isCourse&&p.payhip?`<a class="pd-card" href="https://payhip.com/b/${encodeURIComponent(p.payhip)}" target="_blank" rel="noopener">Pay by card · instant access</a>${p.usdNote?`<p class="pd-note">${esc(p.usdNote)}</p>`:""}`:""}
+    ${p.isCourse&&p.dodo?`<a class="pd-card" href="${esc(p.dodo)}" rel="noopener">Pay by card · instant access</a>`:p.isCourse&&p.payhip?`<a class="pd-card" href="https://payhip.com/b/${encodeURIComponent(p.payhip)}" target="_blank" rel="noopener">Pay by card · instant access</a>${p.usdNote?`<p class="pd-note">${esc(p.usdNote)}</p>`:""}`:""}
     <ul class="pd-facts">${facts.map(f=>`<li>${f}</li>`).join("")}</ul>
    </div></div>
    <div class="pd-sec pd-revs" id="pdRevs" data-rev="${esc(p.pid||p.id)}">${revHTML(p)}</div>
