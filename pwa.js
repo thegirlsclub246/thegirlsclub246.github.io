@@ -42,6 +42,7 @@
   var KEY = "sb-a2hs-off";
   try { if (localStorage.getItem(KEY)) return; } catch (e) {}
   if (/\/vendors(\.html)?$/.test(location.pathname)) return; /* keep the vendor portal clean */
+  if (document.documentElement.getAttribute("data-site") === "academy") return; /* course buyers from ads: nothing covering the course or price */
 
   var ua = navigator.userAgent || "";
   var isIOS = /iPhone|iPad|iPod/.test(ua) && !/CriOS|FxiOS|EdgiOS/.test(ua);

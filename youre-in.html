@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="only light">
+<meta name="supported-color-schemes" content="light">
+<meta name="robots" content="noindex">
+<title>You're in! · Shop Bajan Academy</title>
+<script>
+/* Card checkout sends buyers here with ?c=cluster|eyelash plus Dodo's payment_id, status and email.
+   Read them, then wipe them from the address bar BEFORE any analytics loads, so no email is ever recorded. */
+(function(){
+var p=new URLSearchParams(location.search.replace(/^\?/,"").replace(/\?/g,"&")); /* tolerate a second "?" if Dodo appends one */
+window.SB_PAID={c:(p.get("c")||"").toLowerCase(),status:(p.get("status")||"succeeded").toLowerCase(),email:p.get("email")||""};
+try{history.replaceState(null,"",location.pathname+(window.SB_PAID.c?"?c="+encodeURIComponent(window.SB_PAID.c):""))}catch(e){}
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,800&family=Quicksand:wght@500;600;700&display=swap">
+<style>
+:root{--bg:#FFF9EC;--card:#fff;--ink:#16213E;--muted:#4A5675;--blue:#00267F;--gold:#FFC72C;--coral:#FF6F59;--sun:#FFF3C7;--sky:#EEF3FF;--line:#DCE4F5;color-scheme:only light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Quicksand",system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:500;font-size:16.5px;line-height:1.55}
+.wrap{max-width:560px;margin:0 auto;padding:0 max(18px,env(safe-area-inset-left,0px)) 40px}
+header{background:#fff;border-bottom:2px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:center;padding-block:12px}
+header img{height:34px;width:auto}
+h1{font-family:"Fraunces",Georgia,serif;font-weight:800;color:var(--blue);font-size:clamp(34px,9vw,46px);margin:26px 0 4px;line-height:1.1;text-align:center}
+.lead{text-align:center;color:var(--muted);margin:0 0 20px;font-weight:600}
+.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+.steps li{counter-increment:s;background:var(--card);border:2px solid var(--line);border-radius:20px;padding:16px 16px 16px 62px;margin:0 0 12px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:16px;top:16px;width:32px;height:32px;border-radius:50%;background:var(--gold);color:var(--blue);font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid var(--blue)}
+.steps b{color:var(--blue)}
+.small{font-size:14.5px;color:var(--muted);margin:6px 0 0}
+.btn{display:block;text-align:center;font-weight:800;font-size:17px;color:var(--blue);text-decoration:none;background:var(--gold);border:2.5px solid var(--blue);border-radius:999px;padding:13px 18px;box-shadow:0 4px 0 var(--blue);margin:12px 0 0}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--blue)}
+.help{text-align:center;margin:20px 0 0;font-weight:600}
+.help a{color:var(--blue);font-weight:800}
+.oops{background:var(--sun);border-radius:18px;padding:16px;text-align:center}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a href="/?site=academy"><img src="/shop-bajan-mark.png" alt="Shop Bajan"></a></div></header>
+<main class="wrap">
+
+<section id="ok">
+<h1>You're in! 🎉</h1>
+<p class="lead">Thank you for joining <span id="course">your course</span>. Two quick steps and you're learning.</p>
+<ol class="steps">
+<li><b>Check your email for your access code.</b> It comes from <b>Dodo Payments</b>, subject "Your payment to Shop Bajan was successful"<span id="to"></span>. Open your <b>course access card</b> in that email and copy the code.
+<p class="small">Not there in 2 minutes? Check Spam or Promotions.</p></li>
+<li><b>Open your course and add the code.</b> Tap the button, then Sign Up, then "Add coupon". Paste your code and the price drops to $0.00. Pick a password and you're straight into lesson 1.
+<a class="btn" id="go" href="/?site=academy#academy">Open my course</a></li>
+</ol>
+<p class="help">Stuck? <a href="#chat" data-sb-chat="1" data-sb-note="Help getting into my course" role="button">Chat with us</a> and we'll get you in.</p>
+</section>
+
+<section id="fail" hidden>
+<h1>Payment didn't go through</h1>
+<p class="oops">No money was taken. You can try again, or use another card.</p>
+<a class="btn" href="/?site=academy#academy">Back to the courses</a>
+<p class="help">Need help? <a href="#chat" data-sb-chat="1" data-sb-note="My course payment didn't go through" role="button">Chat with us</a></p>
+</section>
+
+</main>
+<script>
+(function(){
+var C={cluster:{name:"the Cluster Lash Course",url:"https://payhip.com/b/9WzwH",value:25},
+       eyelash:{name:"the Eyelash Extension Course",url:"https://payhip.com/b/RXtba",value:49}};
+var d=window.SB_PAID||{},c=C[d.c];
+if(d.status&&d.status!=="succeeded"){document.getElementById("ok").hidden=true;document.getElementById("fail").hidden=false;return}
+if(c){document.getElementById("course").textContent=c.name;document.getElementById("go").href=c.url}
+if(d.email){var t=document.getElementById("to");t.textContent=", sent to "+d.email}
+/* count the sale once per payment, so a refresh doesn't double it */
+try{var k="sb-paid-"+(d.c||"x")+"-"+new Date().toDateString();if(!sessionStorage.getItem(k)){sessionStorage.setItem(k,"1");window.SB_COUNT_SALE=c?{content_name:c.name.replace(/^the /,""),value:c.value,currency:"USD"}:{}}}catch(e){}
+})();
+</script>
+<script>
+window.TGC_PIXEL_ID="990883537366488";
+if(window.TGC_PIXEL_ID&&window.SB_COUNT_SALE){!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init',window.TGC_PIXEL_ID);fbq('track','PageView');fbq('track','Purchase',window.SB_COUNT_SALE);}
+</script>
+<script data-goatcounter="https://thegirlsclub246.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script src="/chat.js?v=1" defer></script>
+</body>
+</html>
