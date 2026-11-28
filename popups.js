@@ -9,6 +9,7 @@ var SPOTS_MSG={t:"Vendor spots open",s:"Sell with us",href:"brands.html"};
 var MAX_AGE=7*864e5, FIRST=6000, SHOW=6500, GAP=18000, MAX_PER_VISIT=4;
 
 if(window.__sbPop)return;window.__sbPop=1;
+if(document.documentElement.getAttribute("data-site")==="academy")return; /* vendor messages mean nothing to course buyers */
 var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
 try{if(sessionStorage.getItem("sb-pop-off"))return}catch(e){}
 
