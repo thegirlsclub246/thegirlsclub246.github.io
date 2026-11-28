@@ -64,6 +64,16 @@ p.lead{color:var(--muted);margin:0 0 22px}
 html{scroll-behavior:smooth}
 footer{text-align:center;font-size:.85rem;color:var(--muted);margin-top:32px}
 [hidden]{display:none!important}
+.sign,.done{padding:8px 6px 6px}
+.sign h3,.done h3{font-family:var(--serif);font-weight:800;color:var(--blue);font-size:1.35rem;margin:0 0 4px;line-height:1.2}
+.sign p,.done p{margin:0 0 14px;color:var(--muted)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.sign input{display:block;width:100%;min-height:54px;padding:0 16px;border:2.5px solid var(--blue);border-radius:14px;background:#fff;color:var(--ink);font:600 1.05rem var(--body);margin:0 0 12px;-webkit-appearance:none;appearance:none}
+.sign input:focus{outline:3px solid var(--gold);outline-offset:1px}
+.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;border-radius:999px;background:var(--gold);color:var(--blue);font:800 1.1rem var(--body);border:2.5px solid var(--blue);box-shadow:0 4px 0 var(--blue);text-decoration:none;cursor:pointer;margin:0 0 10px;padding:8px 18px;text-align:center;line-height:1.2}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--blue)}
+.btn:disabled{opacity:.7}
+.sign .err{color:#B3261E;font-weight:700;margin:4px 0 0}
 </style>
 </head>
 <body>
@@ -79,7 +89,19 @@ footer{text-align:center;font-size:.85rem;color:var(--muted);margin-top:32px}
   <div class="label">YOUR FREEBIE</div>
   <h2 id="getTitle"></h2>
   <div class="card">
-    <div class="ml-embedded" id="mlform"></div>
+    <form class="sign" id="signup" novalidate>
+      <h3 id="askT">Get your free guide</h3>
+      <p id="askP">Pop in your email and your guide opens straight away.</p>
+      <label class="sr" for="em">Email</label>
+      <input id="em" type="email" name="email" autocomplete="email" inputmode="email" placeholder="Your email" required>
+      <button type="submit" class="btn" id="btn">Get my guide</button>
+      <p class="err" id="err" role="alert" hidden></p>
+    </form>
+    <div class="done" id="done" hidden>
+      <h3>You're in! 🎉</h3>
+      <p id="doneP">Here's your free guide. Tap below to open it.</p>
+      <div id="doneLinks"></div>
+    </div>
   </div>
   <div class="band" id="next"></div>
 </section>
@@ -98,23 +120,23 @@ footer{text-align:center;font-size:.85rem;color:var(--muted);margin-top:32px}
 /* Each key is one sign-up: ?g=digital|paid|ready|journey|founding.
    form = MailerLite embedded form id. Its success message holds the download link. */
 var GUIDES = {
-  digital: {form:"qpX8d2", title:"Make your first <span>digital product</span>", lead:"Free guide 1 of 2, made for you. Read it in 15 minutes, make your product this week.",
+  digital: {mlid:"204615275141662064", links:[["Shop-Bajan-Guide-1-Create-a-Digital-Product.pdf","Open my guide"]], form:"qpX8d2", title:"Make your first <span>digital product</span>", lead:"Free guide 1 of 2, made for you. Read it in 15 minutes, make your product this week.",
             next:'Want guide 2, on getting paid in Barbados? <a href="?g=paid">Get it here</a>.'},
-  paid:    {form:"0KfmOj", title:"Get paid in <span>Barbados</span>", lead:"Free guide 2 of 2: what works from Barbados, what doesn't, and how to set up step by step.",
+  paid:    {mlid:"204615544119232302", links:[["Shop-Bajan-Guide-2-Get-Paid-in-Barbados.pdf","Open my guide"]], form:"0KfmOj", title:"Get paid in <span>Barbados</span>", lead:"Free guide 2 of 2: what works from Barbados, what doesn't, and how to set up step by step.",
             next:'Missed guide 1, on making your first digital product? <a href="?g=digital">Get it here</a>.'},
-  ready:   {form:"X4EwlU", title:"Your free <span>starter guides</span>", lead:"Both Shop Bajan guides in one: make your first digital product, then get paid for it from Barbados.",
+  ready:   {mlid:"204615934198940852", links:[["Shop-Bajan-Guide-1-Create-a-Digital-Product.pdf","Open guide 1"],["Shop-Bajan-Guide-2-Get-Paid-in-Barbados.pdf","Open guide 2"]], ask:"Get your free guides", btn:"Get my guides", done:"Here are your free guides. Tap each one to open it.", form:"X4EwlU", title:"Your free <span>starter guides</span>", lead:"Both Shop Bajan guides in one: make your first digital product, then get paid for it from Barbados.",
             next:'Want to sell it on Shop Bajan? <a href="?g=founding">See our founding vendor spots</a>.'},
-  journey: {form:"vbhLfX", title:"Your free <span>task tracker</span>", lead:"A simple tracker to help you get things out of your head and get them done.",
+  journey: {mlid:"204616912001303786", links:[["../journey/","Open my task tracker"]], ask:"Get your free tracker", btn:"Get my tracker", done:"Here's your free tracker. Tap below to open it.", form:"vbhLfX", title:"Your free <span>task tracker</span>", lead:"A simple tracker to help you get things out of your head and get them done.",
             next:'Ready to make something to sell? <a href="?g=ready">Get our free starter guides</a>.'},
-  start:   {form:"usKdtF", file:"Shop-Bajan-Free-Guide-START-Start-With-0.pdf", title:"Start with <span>$0</span>", lead:"The free tools list: every free tool you need to make, sell and track your first digital product.", next:'Next: make your first product. <a href="?g=digital">Get the DIGITAL guide</a>.'},
-  posts:   {form:"2UuBtA", file:"Shop-Bajan-Free-Guide-POSTS-The-Post-Kit.pdf", title:"The <span>Post Kit</span>", lead:"Free guide: what to post so people stop scrolling and start asking.", next:'Want more free guides? Scroll down to the shop.'},
-  sales:   {form:"NjDIp4", file:"Shop-Bajan-Free-Guide-SALES-Views-to-Sales-Checklist.pdf", title:"Views to <span>sales</span>", lead:"Free checklist: turn views and likes into people who actually buy.", next:'Want more free guides? Scroll down to the shop.'},
-  price:   {form:"oLt1q9", file:"Shop-Bajan-Free-Guide-PRICE-Pricing-Cheat-Sheet.pdf", title:"Pricing <span>cheat sheet</span>", lead:"Free guide: set a price that sells and still pays you.", next:'Want more free guides? Scroll down to the shop.'},
-  reel:    {form:"wMdEAE", file:"Shop-Bajan-Free-Guide-REEL-15-Minute-Reel-Kit.pdf", title:"15-minute <span>reel kit</span>", lead:"Free guide: plan, film and post a reel in 15 minutes.", next:'Want more free guides? Scroll down to the shop.'},
-  spark:   {form:"4BjXw7", file:"Shop-Bajan-Free-Guide-SPARK-Product-Idea-Finder.pdf", title:"Product <span>idea finder</span>", lead:"Free guide: find a product idea people already want.", next:'Got your idea? <a href="?g=digital">Get the DIGITAL guide</a> to make it.'},
-  track:   {form:"dseAOn", file:"Shop-Bajan-Free-Guide-TRACK-Sales-and-Money-Tracker.pdf", title:"Sales and <span>money tracker</span>", lead:"Free tracker: log every sale and know where your money goes.", next:'Want more free guides? Scroll down to the shop.'},
-  email:   {form:"OYahhp", file:"Shop-Bajan-Free-Guide-EMAIL-Email-Templates.pdf", title:"Email <span>templates</span>", lead:"Free templates: ready-to-send emails for your customers and your list.", next:'Want more free guides? Scroll down to the shop.'},
-  founding:{form:"CNC8hq", title:"Founding <span>vendor spots</span>", lead:"The online marketplace for Barbados small businesses opens Thursday 10 December.",
+  start:   {mlid:"204680277879949054", form:"usKdtF", file:"Shop-Bajan-Free-Guide-START-Start-With-0.pdf", title:"Start with <span>$0</span>", lead:"The free tools list: every free tool you need to make, sell and track your first digital product.", next:'Next: make your first product. <a href="?g=digital">Get the DIGITAL guide</a>.'},
+  posts:   {mlid:"204680299525703672", form:"2UuBtA", file:"Shop-Bajan-Free-Guide-POSTS-The-Post-Kit.pdf", title:"The <span>Post Kit</span>", lead:"Free guide: what to post so people stop scrolling and start asking.", next:'Want more free guides? Scroll down to the shop.'},
+  sales:   {mlid:"204680321190331475", form:"NjDIp4", file:"Shop-Bajan-Free-Guide-SALES-Views-to-Sales-Checklist.pdf", title:"Views to <span>sales</span>", lead:"Free checklist: turn views and likes into people who actually buy.", next:'Want more free guides? Scroll down to the shop.'},
+  price:   {mlid:"204680331977033190", form:"oLt1q9", file:"Shop-Bajan-Free-Guide-PRICE-Pricing-Cheat-Sheet.pdf", title:"Pricing <span>cheat sheet</span>", lead:"Free guide: set a price that sells and still pays you.", next:'Want more free guides? Scroll down to the shop.'},
+  reel:    {mlid:"204680342950380963", form:"wMdEAE", file:"Shop-Bajan-Free-Guide-REEL-15-Minute-Reel-Kit.pdf", title:"15-minute <span>reel kit</span>", lead:"Free guide: plan, film and post a reel in 15 minutes.", next:'Want more free guides? Scroll down to the shop.'},
+  spark:   {mlid:"204680364412634246", form:"4BjXw7", file:"Shop-Bajan-Free-Guide-SPARK-Product-Idea-Finder.pdf", title:"Product <span>idea finder</span>", lead:"Free guide: find a product idea people already want.", next:'Got your idea? <a href="?g=digital">Get the DIGITAL guide</a> to make it.'},
+  track:   {mlid:"204680375275882483", form:"dseAOn", file:"Shop-Bajan-Free-Guide-TRACK-Sales-and-Money-Tracker.pdf", title:"Sales and <span>money tracker</span>", lead:"Free tracker: log every sale and know where your money goes.", next:'Want more free guides? Scroll down to the shop.'},
+  email:   {mlid:"204680386851112172", form:"OYahhp", file:"Shop-Bajan-Free-Guide-EMAIL-Email-Templates.pdf", title:"Email <span>templates</span>", lead:"Free templates: ready-to-send emails for your customers and your list.", next:'Want more free guides? Scroll down to the shop.'},
+  founding:{mlid:"204615662466761835", links:[["../brands.html","See founding spot details"]], ask:"Save your founding spot", btn:"Save my spot", sub:"Pop in your email and we'll hold your spot. We open Thursday 10 December.", done:"You're on the list. Tap below for the details.", form:"CNC8hq", title:"Founding <span>vendor spots</span>", lead:"The online marketplace for Barbados small businesses opens Thursday 10 December.",
             next:'Questions? Message us on Instagram <a href="https://instagram.com/shopbajan">@shopbajan</a>.'}
 };
 
@@ -155,29 +177,33 @@ var g = GUIDES[key];
 document.getElementById("title").innerHTML = g.title;
 document.getElementById("lead").textContent = g.lead;
 document.getElementById("next").innerHTML = g.next;
-document.getElementById("mlform").setAttribute("data-form", g.form);
-/* READY's MailerLite form still says "bundle"; reword it so the free guides aren't confused with the paid bundles. */
-if (key === "ready"){
-  new MutationObserver(function(){
-    var c = document.querySelector("#mlform .ml-form-embedBody .ml-form-embedContent");
-    if (!c || c.getAttribute("data-sb")) return;
-    c.setAttribute("data-sb","1");
-    var h = c.querySelector("h4"); if (h) h.textContent = "Get your free guides";
-    var p = c.querySelector("p"); if (p) p.textContent = "Pop in your name and email and both free guides open straight away. We'll send the occasional Shop Bajan update too. Unsubscribe any time.";
-    var b = document.querySelector("#mlform .ml-form-embedSubmit button[type=submit]"); if (b) b.textContent = "Get my guides";
-    var sp = document.querySelector("#mlform .ml-form-successContent p"); if (sp) sp.textContent = "Here are your free guides. Tap each one to open it.";
-  }).observe(document.getElementById("mlform"), {childList:true, subtree:true});
-}
-/* For guides with a file, write our own success message with the right download link. */
-if (g.file){
-  var fixSuccess = function(){
-    var s = document.querySelector("#mlform .ml-form-successContent");
-    if (!s || s.getAttribute("data-sb")) return;
-    s.setAttribute("data-sb","1");
-    s.innerHTML = '<h4>You\'re in!</h4><p>Here\'s your free guide. Tap below to open it.</p><p><a href="' + g.file + '" target="_blank" rel="noopener"><strong>Open my guide</strong></a></p>';
-  };
-  new MutationObserver(fixSuccess).observe(document.getElementById("mlform"), {childList:true, subtree:true});
-}
+/* Our own sign-up box: email only, posts straight to the MailerLite form (reCAPTCHA is off on these forms). */
+if (g.ask) document.getElementById("askT").textContent = g.ask;
+if (g.sub) document.getElementById("askP").textContent = g.sub;
+else if (key === "ready") document.getElementById("askP").textContent = "Pop in your email and both guides open straight away.";
+else if (key === "journey") document.getElementById("askP").textContent = "Pop in your email and your tracker opens straight away.";
+if (g.btn) document.getElementById("btn").textContent = g.btn;
+var links = g.links || (g.file ? [[g.file, "Open my guide"]] : []);
+document.getElementById("signup").addEventListener("submit", function(ev){
+  ev.preventDefault();
+  var em = document.getElementById("em"), btn = document.getElementById("btn"), err = document.getElementById("err");
+  var v = em.value.trim();
+  err.hidden = true;
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){ err.textContent = "Please check your email address."; err.hidden = false; em.focus(); return; }
+  var label = btn.textContent; btn.disabled = true; btn.textContent = "One sec...";
+  var fd = new FormData(); fd.append("fields[email]", v); fd.append("ml-submit", "1"); fd.append("anticsrf", "true");
+  fetch("https://assets.mailerlite.com/jsonp/2810799/forms/" + g.mlid + "/subscribe", {method:"POST", body:fd})
+    .then(function(r){ return r.json(); })
+    .then(function(j){
+      if (!j || !j.success) throw new Error((j && j.message) || "fail");
+      if (g.done) document.getElementById("doneP").textContent = g.done;
+      var box = document.getElementById("doneLinks");
+      links.forEach(function(l){ var a = document.createElement("a"); a.className = "btn"; a.href = l[0]; a.target = "_blank"; a.rel = "noopener"; a.textContent = l[1] + " →"; box.appendChild(a); });
+      document.getElementById("signup").hidden = true; document.getElementById("done").hidden = false;
+      if (window.fbq) try { fbq("track", "Lead"); } catch(e){}
+    })
+    .catch(function(){ err.textContent = "That didn't go through. Please try again in a moment."; err.hidden = false; btn.disabled = false; btn.textContent = label; });
+});
 
 var mine = SHOP.filter(function(it){ return it.key === key; })[0];
 document.getElementById("getTitle").textContent = mine ? mine.name : "Your freebie";
@@ -228,10 +254,6 @@ GROUPS.forEach(function(gr){
     list.appendChild(el);
   });
 });
-</script>
-<script>
-(function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[]).push(arguments);},l=d.createElement(e),l.async=1,l.src=u,n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})(window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
-ml('account', '2810799');
 </script>
 </body>
 </html>
